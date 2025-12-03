@@ -205,15 +205,10 @@
       padding: 3.2rem 0 3.8rem;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
-      gap: 2.4rem;
-      align-items: center;
-    }
-
-    .hero-text {
-      max-width: 640px;
+    .hero-heading {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 2.2rem;
     }
 
     .hero-kicker {
@@ -236,21 +231,25 @@
     }
 
     .hero-title {
-      font-size: clamp(2.2rem, 3.5vw, 2.9rem);
+      font-size: clamp(2.1rem, 3.2vw, 2.8rem);
       line-height: 1.12;
       font-weight: 800;
       color: var(--text-strong);
       margin-bottom: 0.8rem;
+      max-width: 40rem;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .hero-title br {
-      display: none;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 2.4rem;
+      align-items: center;
     }
 
-    @media (min-width: 720px) {
-      .hero-title br {
-        display: inline;
-      }
+    .hero-text {
+      max-width: 640px;
     }
 
     .hero-subtitle {
@@ -684,15 +683,18 @@
     <!-- Hero -->
     <section class="hero" id="start">
       <div class="container">
+        <div class="hero-heading">
+          <div class="hero-kicker">
+            <span class="label">New</span>
+            <span>Prompt-based learning for Physics</span>
+          </div>
+          <h1 class="hero-title">
+            Stop guessing what to ask AI and start mastering Physics with purpose.
+          </h1>
+        </div>
+
         <div class="hero-grid">
           <div class="hero-text">
-            <div class="hero-kicker">
-              <span class="label">New</span>
-              <span>Prompt-based learning for Physics</span>
-            </div>
-            <h1 class="hero-title">
-              Stop guessing what to ask AI —<br>start mastering Physics with purpose.
-            </h1>
             <p class="hero-subtitle">
               PromptSchola turns Physics into a guided 7-step conversation. You always know where to begin,
               what to ask next, and how to move toward mastery.
