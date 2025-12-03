@@ -2,117 +2,1156 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PromptSchola — Master Physics with AI</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <title>PromptSchola – Master Physics with Purpose</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="PromptSchola helps you master Physics through a 7-step prompt-based mastery system, with more STEM subjects coming soon. Stop guessing what to ask AI — start learning with purpose."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.4rem;
+    }
+
+    /* Header / Nav */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #f9fafb;
+      box-shadow: none;
+    }
+
+    .logo-text span:first-child {
+      display: block;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      color: var(--text-strong);
+    }
+
+    .logo-text span:last-child {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-subtle);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.3rem;
+      font-size: 0.85rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      opacity: 0.9;
+      transition: opacity var(--transition-fast), color var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      color: var(--accent-strong);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 0.95rem;
+      font-size: 0.8rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 1.2rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: none;
+      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+    }
+
+    .btn-ghost {
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 1.2rem;
+      font-size: 0.84rem;
+      font-weight: 500;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: transparent;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .btn-ghost:hover {
+      background: #eef2ff;
+      transform: translateY(-1px);
+      border-color: #7e22ce;
+      color: #4c1d95;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 3rem 0 3.4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+      gap: 2.4rem;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-kicker span.label {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-main);
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3.2vw, 2.7rem);
+      line-height: 1.1;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-title br {
+      display: none;
+    }
+
+    @media (min-width: 720px) {
+      .hero-title br {
+        display: inline;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      max-width: 32rem;
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-bullets {
+      list-style: none;
+      margin-bottom: 1.5rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .hero-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      margin-top: 0.35rem;
+      background: linear-gradient(135deg, #a855f7, #22c55e);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .hero-note {
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+      margin-top: 0.35rem;
+    }
+
+    /* Hero right panel */
+    .hero-panel {
+      background: radial-gradient(circle at 10% 0%, rgba(219, 234, 254, 0.8), #ffffff);
+      border-radius: 22px;
+      border: 1px solid rgba(209, 213, 219, 0.6);
+      padding: 1.3rem 1.4rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-panel-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .hero-panel-header small {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .hero-panel-pill {
+      font-size: 0.7rem;
+      padding: 0.18rem 0.7rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(129, 140, 248, 0.9);
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .steps-list {
+      margin-top: 0.5rem;
+      border-radius: 14px;
+      padding: 0.6rem 0.7rem;
+      background: #f9fafb;
+      border: 1px solid rgba(209, 213, 219, 0.6);
+      max-height: 280px;
+      overflow: hidden;
+    }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.3rem 0.25rem;
+      border-radius: 10px;
+      margin-bottom: 0.15rem;
+    }
+
+    .step-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-index {
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+      min-width: 1.4rem;
+      text-align: right;
+    }
+
+    .step-main {
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .step-main span {
+      font-weight: 600;
+      margin-right: 0.25rem;
+    }
+
+    .step-tag {
+      font-size: 0.68rem;
+      padding: 0.1rem 0.55rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      color: #4338ca;
+      background: #eef2ff;
+      white-space: nowrap;
+    }
+
+    .step-row.free {
+      background: linear-gradient(to right, rgba(219, 234, 254, 0.9), #f9fafb);
+      border: 1px solid rgba(191, 219, 254, 0.9);
+    }
+
+    .step-row.paid {
+      background: linear-gradient(to right, rgba(221, 214, 254, 0.8), #f9fafb);
+      border: 1px solid rgba(196, 181, 253, 0.9);
+    }
+
+    .hero-panel-footer {
+      margin-top: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .hero-panel-footer span strong {
+      color: var(--text-main);
+    }
+
+    .badge {
+      font-size: 0.68rem;
+      padding: 0.1rem 0.6rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-main);
+    }
+
+    /* Sections */
+    section {
+      padding: 2.4rem 0 2.7rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 1.6rem;
+    }
+
+    .section-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+      margin-bottom: 0.35rem;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      color: var(--text-strong);
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 32rem;
+      margin: 0 auto;
+    }
+
+    /* How it works */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 0.6rem;
+    }
+
+    .step-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 0.95rem 1rem;
+      box-shadow: var(--shadow-card);
+      font-size: 0.86rem;
+      position: relative;
+    }
+
+    .step-card .step-label {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-card h3 {
+      font-size: 0.96rem;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-card p {
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .step-badge {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.75rem;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.6rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .step-card.free .step-badge {
+      border-color: rgba(22, 163, 74, 0.8);
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .steps-note {
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+      margin-top: 0.8rem;
+      text-align: center;
+    }
+
+    /* Subjects */
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .subject-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 0.8rem 0.85rem 0.9rem;
+      box-shadow: var(--shadow-card);
+      font-size: 0.82rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .subject-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .subject-topline {
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+      margin-bottom: 0.5rem;
+    }
+
+    .subject-list {
+      list-style: none;
+      margin-bottom: 0.6rem;
+      color: var(--text-muted);
+    }
+
+    .subject-list li {
+      margin-bottom: 0.2rem;
+    }
+
+    .subject-cta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      margin-top: 0.3rem;
+    }
+
+    .link-soft {
+      font-size: 0.78rem;
+      color: #4f46e5;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+
+    .link-soft:hover {
+      color: #7e22ce;
+    }
+
+    .pill-mini {
+      font-size: 0.7rem;
+      padding: 0.05rem 0.55rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-subtle);
+      background: #f9fafb;
+    }
+
+    .link-soft.disabled {
+      cursor: default;
+      opacity: 0.6;
+      text-decoration: none;
+    }
+
+    /* Why section */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .why-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 0.9rem 1rem;
+      font-size: 0.86rem;
+    }
+
+    .why-card h3 {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    .why-card p {
+      color: var(--text-muted);
+    }
+
+    /* Pricing teaser */
+    .pricing-teaser {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.1fr);
+      gap: 1.5rem;
+      align-items: center;
+      margin-top: 0.6rem;
+    }
+
+    .pricing-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-text ul {
+      margin-top: 0.4rem;
+      list-style: none;
+    }
+
+    .pricing-text li {
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 1rem 1.1rem;
+      font-size: 0.86rem;
+    }
+
+    .pricing-plan-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-price {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.1rem;
+    }
+
+    .pricing-note {
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+      margin-bottom: 0.6rem;
+    }
+
+    .btn-full {
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 0.9rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: none;
+      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+    }
+
+    .btn-full:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 1.6rem 0 2rem;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: center;
+      border-top: 1px solid rgba(209, 213, 219, 0.9);
+      padding-top: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.9rem;
+    }
+
+    .footer-links a {
+      color: var(--text-subtle);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero {
+        padding-top: 2.3rem;
+      }
+      .hero-panel {
+        order: -1;
+      }
+      .pricing-teaser {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .subjects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .why-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .steps-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-title {
+        font-size: 1.9rem;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .subject-card {
+        min-height: 0;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <!-- NAVIGATION -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <span class="logo-icon">P</span>
-      <span class="logo-text">PromptSchola</span>
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="physics.html">Physics</a></li>
-      <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="auth.html">Login</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO SECTION -->
-  <header class="hero">
-    <div class="hero-content">
-      <h1>Master Physics Faster with AI-Powered Prompts</h1>
-      <p>
-        PromptSchola transforms the way you learn Physics. Our 7-Step Guided Prompt System
-        helps you build intuition, solve problems, and run AI-powered reasoning steps directly
-        inside each lesson — no guessing, no confusion, just clarity.
-      </p>
-      <a href="physics.html" class="btn-primary">Start Learning Physics</a>
+<div class="page">
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="#how-it-works">How it works</a>
+          <a href="#subjects">Subjects roadmap</a>
+          <a href="physics.html">Physics</a>
+          <a href="#pricing">Pricing</a>
+        </nav>
+        <div class="nav-right">
+          <a href="auth.html" class="btn-pill">Log in / Create account</a>
+          <a href="#start" class="btn-primary">Start free</a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- WHY PROMPTSCHOLA -->
-  <section class="why-section">
-    <h2>Why PromptSchola?</h2>
-    <p>
-      Most students don't struggle with Physics because it's hard — they struggle because
-      they don't know how to ask the right questions. PromptSchola fixes this by
-      turning learning into a structured conversation.
-    </p>
-  </section>
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="start">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-kicker">
+              <span class="label">New</span>
+              <span>Prompt-based learning for Physics</span>
+            </div>
+            <h1 class="hero-title">
+              Stop guessing what to ask AI —<br>start mastering Physics with purpose.
+            </h1>
+            <p class="hero-subtitle">
+              PromptSchola turns Physics into a guided 7-step conversation — so you always know what to ask,
+              what to do next, and how to reach mastery. More STEM subjects will join the platform over time.
+            </p>
+            <ul class="hero-bullets">
+              <li>
+                <span class="hero-dot"></span>
+                Learn Physics with a structured 7-step flow instead of random Q&amp;A.
+              </li>
+              <li>
+                <span class="hero-dot"></span>
+                Start free with Orient, Understand, and Apply for every Physics topic.
+              </li>
+              <li>
+                <span class="hero-dot"></span>
+                Unlock worked examples, practice sets, summaries, and experiments when you’re ready.
+              </li>
+            </ul>
+            <div class="hero-actions">
+              <a href="physics.html" class="btn-primary">Start with Physics</a>
+              <a href="#pricing" class="btn-ghost">Unlock Mastery</a>
+            </div>
+            <p class="hero-note">
+              No credit card needed to explore. Designed for university and advanced high school learners.
+            </p>
+          </div>
 
-  <!-- SUBJECTS SECTION – ROADMAP -->
-  <section class="subjects">
-    <h2>Subjects Roadmap</h2>
-    <p class="subjects-subtext">
-      We're starting strong with Physics. More STEM subjects will join the platform later as we scale.
-    </p>
-
-    <div class="subject-grid">
-      <!-- ACTIVE SUBJECT -->
-      <div class="subject-card available">
-        <h3>Physics</h3>
-        <p>Available Now — 7-Step Mastery System</p>
-        <a href="physics.html" class="btn-primary small">Explore Physics</a>
+          <aside class="hero-panel">
+            <div class="hero-panel-header">
+              <div>
+                <div class="hero-panel-title">PromptSchola 7-Step Mastery System™</div>
+                <small>Same flow for every Physics topic (and future STEM tracks).</small>
+              </div>
+              <span class="hero-panel-pill">Free → Mastery</span>
+            </div>
+            <div class="steps-list">
+              <div class="step-row free">
+                <div class="step-index">1</div>
+                <div class="step-main">
+                  <span>Orient</span>
+                  Check what you already know and set a learning path.
+                </div>
+                <div class="step-tag">Free</div>
+              </div>
+              <div class="step-row free">
+                <div class="step-index">2</div>
+                <div class="step-main">
+                  <span>Understand</span>
+                  Build an intuitive picture in simple language.
+                </div>
+                <div class="step-tag">Free</div>
+              </div>
+              <div class="step-row free">
+                <div class="step-index">3</div>
+                <div class="step-main">
+                  <span>Apply</span>
+                  Connect the idea to real-world systems and problems.
+                </div>
+                <div class="step-tag">Free</div>
+              </div>
+              <div class="step-row paid">
+                <div class="step-index">4</div>
+                <div class="step-main">
+                  <span>Work Through It</span>
+                  Follow step-by-step solved examples with reasoning.
+                </div>
+                <div class="step-tag">Mastery</div>
+              </div>
+              <div class="step-row paid">
+                <div class="step-index">5</div>
+                <div class="step-main">
+                  <span>Summary</span>
+                  Capture key ideas, formulas, and common mistakes.
+                </div>
+                <div class="step-tag">Mastery</div>
+              </div>
+              <div class="step-row paid">
+                <div class="step-index">6</div>
+                <div class="step-main">
+                  <span>Practice</span>
+                  Answer graded questions with full solutions &amp; PDFs.
+                </div>
+                <div class="step-tag">Mastery</div>
+              </div>
+              <div class="step-row paid">
+                <div class="step-index">7</div>
+                <div class="step-main">
+                  <span>Experiment</span>
+                  Explore labs, visualizations, or simulations for the topic.
+                </div>
+                <div class="step-tag">Mastery</div>
+              </div>
+            </div>
+            <div class="hero-panel-footer">
+              <span>Start at <strong>Step 1–3</strong> for free.</span>
+              <span class="badge">Unlock all steps across all Physics topics with Mastery Access.</span>
+            </div>
+          </aside>
+        </div>
       </div>
+    </section>
 
-      <!-- FUTURE SUBJECTS -->
-      <div class="subject-card disabled">
-        <h3>Math</h3>
-        <span class="badge">Coming Soon</span>
+    <!-- How it works -->
+    <section id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">How PromptSchola works</div>
+          <h2 class="section-title">A repeatable 7-step flow for every Physics topic</h2>
+          <p class="section-subtitle">
+            Whether you’re learning Newton’s Laws, Work &amp; Energy, Electric Fields, Waves, or Thermodynamics,
+            PromptSchola guides you through the same mastery path.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card free">
+            <div class="step-badge">Free</div>
+            <div class="step-label">Step 1</div>
+            <h3>Orient</h3>
+            <p>Get a quick overview of the topic and short diagnostic questions to see where you’re starting from.</p>
+          </article>
+
+          <article class="step-card free">
+            <div class="step-badge">Free</div>
+            <div class="step-label">Step 2</div>
+            <h3>Understand</h3>
+            <p>Build an intuitive, plain-language understanding with simple explanations and everyday examples.</p>
+          </article>
+
+          <article class="step-card free">
+            <div class="step-badge">Free</div>
+            <div class="step-label">Step 3</div>
+            <h3>Apply</h3>
+            <p>See how the concept appears in real systems so it stops feeling abstract.</p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-badge">Mastery</div>
+            <div class="step-label">Step 4</div>
+            <h3>Work Through It</h3>
+            <p>Follow carefully chosen solved examples with full reasoning, not just final answers.</p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-badge">Mastery</div>
+            <div class="step-label">Step 5</div>
+            <h3>Summary</h3>
+            <p>Compress the topic into a short summary, key formulas, and common pitfalls to avoid.</p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-badge">Mastery</div>
+            <div class="step-label">Step 6 &amp; 7</div>
+            <h3>Practice &amp; Experiment</h3>
+            <p>Solve problems with detailed solutions, then “see” the idea through labs, visualizations, or simulations.</p>
+          </article>
+        </div>
+
+        <p class="steps-note">
+          Each step is driven by a carefully crafted prompt. You copy, paste, and learn — no more guessing what to ask AI.
+        </p>
       </div>
+    </section>
 
-      <div class="subject-card disabled">
-        <h3>Chemistry</h3>
-        <span class="badge">Coming Soon</span>
+    <!-- Subjects -->
+    <section id="subjects">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">Subjects</div>
+          <h2 class="section-title">Start with Physics, expand into full STEM</h2>
+          <p class="section-subtitle">
+            PromptSchola is built to support multiple STEM tracks. Today, Physics is available. Math, Chemistry,
+            Biology, and Earth Science are planned as future additions.
+          </p>
+        </div>
+
+        <div class="subjects-grid">
+          <article class="subject-card">
+            <div>
+              <h3 class="subject-title">Physics</h3>
+              <p class="subject-topline">Mechanics, EM, Thermo, Modern Physics</p>
+              <ul class="subject-list">
+                <li>• Forces &amp; Newton’s Laws</li>
+                <li>• Energy, Work &amp; Power</li>
+                <li>• Electric Fields &amp; Circuits</li>
+                <li>• Waves &amp; Optics</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <a href="physics.html" class="link-soft">Explore Physics</a>
+              <span class="pill-mini">Available now</span>
+            </div>
+          </article>
+
+          <article class="subject-card">
+            <div>
+              <h3 class="subject-title">Mathematics</h3>
+              <p class="subject-topline">Algebra, Calculus, Probability &amp; more</p>
+              <ul class="subject-list">
+                <li>• Functions &amp; Graphs</li>
+                <li>• Limits &amp; Derivatives</li>
+                <li>• Integrals &amp; Applications</li>
+                <li>• Probability &amp; Statistics</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <span class="link-soft disabled">Coming soon</span>
+              <span class="pill-mini">In roadmap</span>
+            </div>
+          </article>
+
+          <article class="subject-card">
+            <div>
+              <h3 class="subject-title">Chemistry</h3>
+              <p class="subject-topline">Structure, bonding, reactions, thermochemistry</p>
+              <ul class="subject-list">
+                <li>• Atomic Structure &amp; Periodic Table</li>
+                <li>• Chemical Bonding</li>
+                <li>• Stoichiometry</li>
+                <li>• Acids, Bases &amp; Equilibrium</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <span class="link-soft disabled">Coming soon</span>
+              <span class="pill-mini">In roadmap</span>
+            </div>
+          </article>
+
+          <article class="subject-card">
+            <div>
+              <h3 class="subject-title">Biology</h3>
+              <p class="subject-topline">Cells, genetics, physiology, ecology</p>
+              <ul class="subject-list">
+                <li>• Cell Structure &amp; Function</li>
+                <li>• Genetics &amp; Inheritance</li>
+                <li>• Human Physiology</li>
+                <li>• Ecology &amp; Ecosystems</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <span class="link-soft disabled">Coming soon</span>
+              <span class="pill-mini">In roadmap</span>
+            </div>
+          </article>
+
+          <article class="subject-card">
+            <div>
+              <h3 class="subject-title">Earth Science</h3>
+              <p class="subject-topline">Geology, oceans, atmosphere, climate</p>
+              <ul class="subject-list">
+                <li>• Plate Tectonics</li>
+                <li>• Rocks &amp; Minerals</li>
+                <li>• Atmosphere &amp; Weather</li>
+                <li>• Climate &amp; Climate Change</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <span class="link-soft disabled">Coming soon</span>
+              <span class="pill-mini">In roadmap</span>
+            </div>
+          </article>
+        </div>
       </div>
+    </section>
 
-      <div class="subject-card disabled">
-        <h3>Biology</h3>
-        <span class="badge">Coming Soon</span>
+    <!-- Why PromptSchola -->
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">Why PromptSchola</div>
+          <h2 class="section-title">Built for serious Physics learners</h2>
+          <p class="section-subtitle">
+            PromptSchola is designed for students who want more than quick answers — they want understanding,
+            structure, and a path to mastery.
+          </p>
+        </div>
+
+        <div class="why-grid">
+          <article class="why-card">
+            <h3>Structured, not chaotic</h3>
+            <p>
+              Instead of asking random questions to AI, you follow a proven 7-step flow that takes you from
+              orientation to experimentation.
+            </p>
+          </article>
+          <article class="why-card">
+            <h3>Physics-first design</h3>
+            <p>
+              Every prompt, explanation, and example is tuned for Physics learners — mechanics, E&amp;M,
+              thermodynamics, and beyond.
+            </p>
+          </article>
+          <article class="why-card">
+            <h3>Fits your tools</h3>
+            <p>
+              Use our prompts with your favorite AI tool, or run them directly inside PromptSchola as we roll out
+              native integrations.
+            </p>
+          </article>
+        </div>
       </div>
+    </section>
 
-      <div class="subject-card disabled">
-        <h3>Earth Science</h3>
-        <span class="badge">Coming Soon</span>
+    <!-- Pricing teaser -->
+    <section id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">Pricing</div>
+          <h2 class="section-title">Start free, upgrade when Physics clicks</h2>
+          <p class="section-subtitle">
+            Explore the first three steps of every Physics lesson for free. When you’re ready for full mastery,
+            unlock worked examples, practice sets, summaries, and experiments.
+          </p>
+        </div>
+
+        <div class="pricing-teaser">
+          <div class="pricing-text">
+            <p>
+              PromptSchola uses a freemium model so you can try the full 7-step system in a risk-free way:
+            </p>
+            <ul>
+              <li>• Steps 1–3 (Orient, Understand, Apply) are free across all Physics topics.</li>
+              <li>• Steps 4–7 (Work Through It, Summary, Practice, Experiment) are part of Mastery Access.</li>
+              <li>• Upgrade only when you feel the structure is genuinely helping you learn faster.</li>
+            </ul>
+          </div>
+          <div class="pricing-card">
+            <div class="pricing-plan-name">Mastery Access (Physics)</div>
+            <div class="pricing-price">$X / month</div>
+            <div class="pricing-note">
+              Exact pricing TBD — your account will clearly show the plan and benefits before you subscribe.
+            </div>
+            <button class="btn-full" onclick="window.location.href='pricing.html'">
+              View full pricing details
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span>&copy; 2025 PromptSchola. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="#how-it-works">How it works</a>
+          <a href="#subjects">Subjects roadmap</a>
+          <a href="#pricing">Pricing</a>
+          <a href="auth.html">Account</a>
+        </div>
       </div>
     </div>
-  </section>
-
-  <!-- 7 STEP SYSTEM -->
-  <section class="steps">
-    <h2>The 7-Step PromptSchola Physics System</h2>
-
-    <ol class="step-list">
-      <li><strong>Orient </strong>— establish your starting point</li>
-      <li><strong>Understand </strong>— build conceptual clarity</li>
-      <li><strong>Apply </strong>— connect concepts to real systems</li>
-      <li><strong>Work Through It </strong>— solve guided examples (requires Mastery)</li>
-      <li><strong>Summary </strong>— extract core ideas and formulas</li>
-      <li><strong>Practice </strong>— test yourself with graded problems</li>
-      <li><strong>Experiment </strong>— explore virtual labs and scenarios</li>
-    </ol>
-
-    <p class="steps-note">
-      In every Physics lesson, Steps 1–3 are free to explore. Steps 4–7 unlock deeper mastery and require
-      a subscription plan.
-    </p>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Your Physics Journey Starts Now</h2>
-    <p>Everything you need to truly understand Physics — no more guesswork.</p>
-    <a href="physics.html" class="btn-primary large">Begin with Physics</a>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p>&copy; 2025 PromptSchola. All rights reserved.</p>
   </footer>
+</div>
 </body>
 </html>
