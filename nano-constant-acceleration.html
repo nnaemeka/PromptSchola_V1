@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Constant Acceleration – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Nano-lesson on constant acceleration in 1D motion using PromptSchola’s 6-step prompt-based mastery flow."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.08);
+      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+      --border-subtle: rgba(209, 213, 219, 0.7);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, sans-serif;
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.3rem;
+    }
+
+    /* NAV */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(249, 250, 251, 0.96);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
+    }
+
+    .logo-text span:first-child {
+      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
+    }
+    .logo-text span:last-child {
+      font-size: 0.72rem; color: var(--text-subtle);
+    }
+
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      transition: var(--transition-fast);
+    }
+    .btn-pill:hover {
+      background: #f3f4f6; transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 3rem 0 2.1rem;
+      text-align: center;
+    }
+    .hero-kicker {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 800; color: var(--text-strong);
+      margin: 0.3rem 0;
+    }
+    .hero-subtitle {
+      font-size: 0.96rem; color: var(--text-muted);
+      max-width: 38rem; margin: 0.4rem auto 0;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+    .hero-breadcrumbs a { color: var(--accent-strong); }
+
+    /* Access banner */
+    .access-banner {
+      margin: 0 auto 1.6rem;
+      max-width: 720px;
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 0.9rem;
+      background: linear-gradient(to right, #eef2ff, #faf5ff);
+      border: 1px solid var(--accent-soft-border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-free {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      background: #dcfce7;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      color: #166534;
+    }
+    .badge-mastery {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      background: #f5f3ff;
+      border: 1px solid rgba(129, 140, 248, 0.9);
+      color: #4c1d95;
+    }
+
+    /* Steps layout */
+    main { padding-bottom: 2.5rem; }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .step-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem 1.15rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .step-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .step-index {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .step-access-pill {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      border: 1px solid rgba(209, 213, 219, 0.85);
+      background: #f9fafb;
+      color: var(--text-subtle);
+      white-space: nowrap;
+    }
+    .step-access-pill.free {
+      border-color: rgba(22, 163, 74, 0.9);
+      background: #dcfce7;
+      color: #166534;
+    }
+    .step-access-pill.locked {
+      border-style: dashed;
+    }
+
+    .step-body {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .prompt-preview {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px dashed rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+      font-family: var(--font-main);
+      min-height: 2.2rem;
+      white-space: pre-wrap;
+    }
+
+    .ai-response {
+      margin-top: 0.4rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 10px;
+      background: #eef2ff;
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      font-size: 0.82rem;
+      color: #111827;
+      white-space: pre-wrap;
+    }
+
+    .step-footer {
+      margin-top: auto;
+      padding-top: 0.6rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+    }
+
+    .btn-ghost {
+      padding: 0.42rem 0.8rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      padding: 0.42rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-primary.locked,
+    .btn-ghost.locked {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .locked-note {
+      color: var(--text-subtle);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .steps-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <a href="auth.html" class="btn-pill">Account</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Nano-lesson · Kinematics in 1D</div>
+        <h1 class="hero-title">Constant Acceleration</h1>
+        <p class="hero-subtitle">
+          Learn what it really means for acceleration to be constant, how it shapes velocity and displacement,
+          and why sign conventions and direction matter.
+        </p>
+        <div class="hero-breadcrumbs">
+          <a href="mechanics.html">Mechanics</a> ·
+          <a href="kinematics-1d.html">Kinematics in 1D</a> ·
+          <span>Constant Acceleration</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESS BANNER -->
+    <section>
+      <div class="container">
+        <div class="access-banner">
+          <span class="badge-free">Steps 1–3 free</span>
+          <span class="badge-mastery">Steps 4–6 for Mastery access</span>
+          <span>Use “Run with AI” to explore constant acceleration with the PromptSchola tutor.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEPS -->
+    <section>
+      <div class="container">
+        <div class="steps-grid">
+
+          <!-- STEP 1: ORIENT -->
+          <article class="step-card">
+            <div class="step-header">
+              <div>
+                <div class="step-index">Step 1 · Orient</div>
+                <div class="step-title">What does “constant acceleration” mean?</div>
+              </div>
+              <span class="step-access-pill free">Free · Core idea</span>
+            </div>
+            <div class="step-body">
+              Frame the central questions for this nano-lesson:
+              <ul style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem;">
+                <li>What does it mean for acceleration to be constant in 1D?</li>
+                <li>How does constant acceleration affect velocity vs time?</li>
+                <li>What are common real-world examples (like free fall)?</li>
+              </ul>
+            </div>
+            <div class="prompt-preview" id="preview-step1">
+              Prompt preview will appear here when you click “Show prompt”.
+            </div>
+            <div class="ai-response" id="response-step1">
+              <!-- AI response for Step 1 will appear here after "Run with AI" -->
+            </div>
+            <div class="step-footer">
+              <div>
+                <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
+              </div>
+              <span>Goal: set up the meaning and examples of constant acceleration.</span>
+            </div>
+          </article>
+
+          <!-- STEP 2: UNDERSTAND -->
+          <article class="step-card">
+            <div class="step-header">
+              <div>
+                <div class="step-index">Step 2 · Understand</div>
+                <div class="step-title">Build intuition using stories and graphs</div>
+              </div>
+              <span class="step-access-pill free">Free · Concept focus</span>
+            </div>
+            <div class="step-body">
+              Focus on intuition:
+              think of a car that speeds up steadily, a ball dropped from rest, or
+              an object thrown straight up and then falling back.
+            </div>
+            <div class="prompt-preview" id="preview-step2">
+              Prompt preview will appear here when you click “Show prompt”.
+            </div>
+            <div class="ai-response" id="response-step2">
+              <!-- AI response for Step 2 will appear here after "Run with AI" -->
+            </div>
+            <div class="step-footer">
+              <div>
+                <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                <button class="btn-primary" onclick="runWithAI(2)">Run with AI</button>
+              </div>
+              <span>Goal: see how constant acceleration shapes v–t and x–t qualitatively.</span>
+            </div>
+          </article>
+
+          <!-- STEP 3: APPLY -->
+          <article class="step-card">
+            <div class="step-header">
+              <div>
+                <div class="step-index">Step 3 · Apply</div>
+                <div class="step-title">Simple calculations with constant a</div>
+              </div>
+              <span class="step-access-pill free">Free · Light practice</span>
+            </div>
+            <div class="step-body">
+              Work through small numerical problems:
+              <ul style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem;">
+                <li>Given initial velocity and constant acceleration, find velocity after a time.</li>
+                <li>Given starting from rest and constant acceleration, find displacement.</li>
+                <li>Use sign conventions (up positive vs down positive) in free-fall examples.</li>
+              </ul>
+            </div>
+            <div class="prompt-preview" id="preview-step3">
+              Prompt preview will appear here when you click “Show prompt”.
+            </div>
+            <div class="ai-response" id="response-step3">
+              <!-- AI response for Step 3 will appear here after "Run with AI" -->
+            </div>
+            <div class="step-footer">
+              <div>
+                <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                <button class="btn-primary" onclick="runWithAI(3)">Run with AI</button>
+              </div>
+              <span>Goal: turn constant-acceleration language into numbers.</span>
+            </div>
+          </article>
+
+          <!-- STEP 4: WORK THROUGH IT (LOCKED) -->
+          <article class="step-card">
+            <div class="step-header">
+              <div>
+                <div class="step-index">Step 4 · Work Through It</div>
+                <div class="step-title">Step-by-step examples with constant a</div>
+              </div>
+              <span class="step-access-pill locked">Locked · Mastery</span>
+            </div>
+            <div class="step-body">
+              Detailed worked problems with diagrams, sign-choice explanations, and
+              clear use of constant-acceleration relationships for velocity and displacement.
+            </div>
+            <div class="prompt-preview">
+              This step is part of Mastery access. Once unlocked, it will walk through
+              full constant-acceleration problems step-by-step.
+            </div>
+            <div class="step-footer">
+              <div>
+                <button class="btn-ghost locked" disabled>Show prompt</button>
+                <button class="btn-primary locked" disabled>Run with AI</button>
+              </div>
+              <span class="locked-note">Unlock with Mastery to see detailed worked examples.</span>
+            </div>
+          </article>
+
+          <!-- STEP 5: REVIEW & PRACTICE (LOCKED) -->
+          <article class="step-card">
+            <div class="step-header">
+              <div>
+                <div class="step-index">Step 5 · Review &amp; Practice</div>
+                <div class="step-title">Targeted problems on constant a</div>
+              </div>
+              <span class="step-access-pill locked">Locked · Mastery</span>
+            </div>
+            <div class="step-body">
+              A structured set of questions involving speed-up, slow-down, and free-fall situations,
+              designed to test your understanding of constant acceleration in many contexts.
+            </div>
+            <div class="prompt-preview">
+              This step is part of Mastery access and will generate focused practice problems.
+            </div>
+            <div class="step-footer">
+              <div>
+                <button class="btn-ghost locked" disabled>Show prompt</button>
+                <button class="btn-primary locked" disabled>Run with AI</button>
+              </div>
+              <span class="locked-note">Use this step before quizzes and exams.</span>
+            </div>
+          </article>
+
+          <!-- STEP 6: SIMULATION LAB (LOCKED) -->
+          <article class="step-card">
+            <div class="step-header">
+              <div>
+                <div class="step-index">Step 6 · Simulation Lab</div>
+                <div class="step-title">Visualizing constant acceleration</div>
+              </div>
+              <span class="step-access-pill locked">Locked · Mastery</span>
+            </div>
+            <div class="step-body">
+              Use AI-guided prompts to experiment with different initial velocities,
+              accelerations, and time intervals, and imagine (or later view) how the motion
+              would look on v–t and x–t graphs.
+            </div>
+            <div class="prompt-preview">
+              This step is part of Mastery access. In future, it can connect to interactive graphs.
+            </div>
+            <div class="step-footer">
+              <div>
+                <button class="btn-ghost locked" disabled>Show prompt</button>
+                <button class="btn-primary locked" disabled>Run with AI</button>
+              </div>
+              <span class="locked-note">Great for deep intuition and visualization.</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
+</div>
+
+<script>
+  const prompts = {
+    1: `You are a Physics tutor for a first-year student.\n\nExplain clearly what “constant acceleration” means in one-dimensional motion. Include:\n• A simple verbal definition\n• How velocity changes with time when acceleration is constant\n• At least two everyday examples (e.g., a car speeding up steadily, an object in free fall)\n\nEnd with a very short summary in 2–3 sentences.`,
+    2: `You are a Physics tutor.\n\nHelp a student build intuition about constant acceleration by:\n• Describing a car that speeds up at a steady rate\n• Describing a ball dropped from rest (free fall)\n• Describing a ball thrown straight up and then falling back, with an explanation of why acceleration is (approximately) constant and downward the whole time\n\nUse simple language and encourage the student to imagine or sketch v–t and x–t graphs qualitatively (no equations yet).`,
+    3: `You are a Physics tutor.\n\nCreate 3 short numerical problems involving constant acceleration in 1D. They should include:\n1) Starting from rest and speeding up with a known constant acceleration\n2) An initial non-zero velocity with a constant acceleration\n3) A free-fall example using g ≈ 9.8 m/s^2 (or 10 m/s^2 for simplicity)\n\nFor each problem:\n• State the problem clearly\n• Then show a step-by-step solution after the student has tried it.\n\nKeep the numbers easy (small integers or simple decimals).`
+  };
+
+  function showPrompt(step) {
+    const preview = document.getElementById('preview-step' + step);
+    if (!preview) return;
+    preview.textContent = prompts[step] || 'Prompt coming soon.';
+  }
+
+  async function runWithAI(step) {
+    const prompt = prompts[step];
+    if (!prompt) {
+      alert('No prompt defined for this step yet.');
+      return;
+    }
+
+    const output = document.getElementById('response-step' + step);
+    if (!output) {
+      alert('No response area found for this step.');
+      return;
+    }
+
+    try {
+      output.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt })
+      });
+
+      if (!res.ok) {
+        output.textContent = 'There was an error contacting the AI. Please try again later.';
+        return;
+      }
+
+      const data = await res.json();
+      output.textContent = data.content || 'No response received from AI.';
+    } catch (err) {
+      console.error(err);
+      output.textContent = 'Unexpected error. Please try again.';
+    }
+  }
+</script>
+
+</body>
+</html>
