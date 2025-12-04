@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Learn Physics with PromptSchola’s 6-step prompt-based mastery system. Start with Newton’s First Law, then expand into Mechanics, E&M, Waves, Thermodynamics, and Modern Physics."
+    content="Learn Physics with PromptSchola’s 6-step prompt-based mastery system. Start with an introduction to What Physics is, then dive into Mechanics, E&M, Waves, Thermodynamics, and Modern Physics."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -220,6 +220,30 @@
       border: 1px dashed rgba(148, 163, 184, 0.9);
       color: var(--text-subtle);
       background: #f9fafb;
+    }
+
+    /* NEW: subject-style primary button for topic cards */
+    .btn-subject-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.42rem 0.95rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-subject-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
     }
 
     /* Hero */
@@ -443,7 +467,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.55rem;
-      min-height: 170px;
+      min-height: 190px;
     }
 
     .topic-header {
@@ -475,6 +499,12 @@
       margin-bottom: 0.25rem;
     }
 
+    .topic-note {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      margin-top: 0.2rem;
+    }
+
     .topic-footer {
       display: flex;
       justify-content: space-between;
@@ -482,6 +512,7 @@
       margin-top: auto;
       padding-top: 0.4rem;
       font-size: 0.8rem;
+      gap: 0.5rem;
     }
 
     .link-soft {
@@ -503,7 +534,7 @@
       text-decoration: none;
     }
 
-    /* Mechanics feature section */
+    /* Mechanics / Intro feature section */
     .feature-layout {
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
@@ -652,7 +683,7 @@
           </div>
         </div>
         <nav class="nav-links">
-          <a href="index.html">Overview</a>
+          <a href="index.html">Home</a>
           <a href="#track" class="active">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
@@ -677,7 +708,7 @@
               Learn Physics one topic at a time, with prompts that guide you from orientation to simulation.
             </h1>
             <p class="hero-subtitle">
-              Start with Newton’s First Law, then expand into the rest of Mechanics, E&amp;M, Waves, Thermodynamics,
+              Start with an introduction to what Physics is, then expand into Mechanics, E&amp;M, Waves, Thermodynamics,
               and Modern Physics — all using the same 6-step flow.
             </p>
             <ul class="hero-bullets">
@@ -691,11 +722,11 @@
               </li>
             </ul>
             <div class="hero-actions">
-              <a href="lesson-newton-first-law.html" class="btn-primary">
-                Start with Newton’s First Law
+              <a href="intro-what-is-physics.html" class="btn-primary">
+                Start with “What is Physics?”
               </a>
               <a href="index.html" class="btn-ghost">
-                Back to PromptSchola overview
+                Back to Home
               </a>
             </div>
             <p class="hero-note">
@@ -754,50 +785,49 @@
               </li>
             </ul>
             <p class="hero-side-footer">
-              One system, many topics: Mechanics now, with E&amp;M, Waves, Thermodynamics, and Modern Physics in the roadmap.
+              One system, many topics: begin with an overview of Physics, then move into Mechanics, E&amp;M, Waves,
+              Thermodynamics, and Modern Physics.
             </p>
           </aside>
         </div>
       </div>
     </section>
 
-    <!-- Mechanics module / first lesson -->
+    <!-- Introduction: What is Physics? -->
     <section>
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker">Mechanics</div>
-          <h2 class="section-title">Begin with forces and motion</h2>
+          <div class="section-kicker">Start here</div>
+          <h2 class="section-title">Introduction: What is Physics?</h2>
           <p class="section-subtitle">
-            The Physics track opens with Newton’s Laws, then grows into kinematics, work &amp; energy,
-            momentum, and rotational dynamics.
+            Before diving into equations and problems, get a big-picture view of what Physics is and how it developed
+            over time.
           </p>
         </div>
 
         <div class="feature-layout">
           <div class="feature-text">
             <p>
-              We start with a single flagship lesson you can explore end-to-end:
-              <strong>Newton’s First Law – Inertia &amp; Equilibrium.</strong>
+              The Physics track starts with a gentle but serious introduction:
+              <strong>What is Physics?</strong> You’ll see Physics as the study of matter, motion, energy, and the
+              laws governing the universe — not just a list of formulas.
             </p>
             <ul>
-              <li>• Use Steps 1–3 free to build intuition and connect to everyday experiences.</li>
-              <li>• Unlock Steps 4–6 for fully worked examples, review &amp; practice, and a simple Simulation Lab.</li>
+              <li>• Meet historical figures like Archimedes, Galileo, Newton, Faraday, Maxwell, and Einstein.</li>
+              <li>• See how ideas evolved from simple observations to powerful mathematical laws.</li>
+              <li>• Understand how modern fields (quantum, relativity, nuclear, particle physics) grow from the same core ideas.</li>
             </ul>
             <p>
-              As the track expands, new lessons in Mechanics will reuse the same structure so you never feel
-              lost or overwhelmed. You’ll see a clear ladder from “I’ve heard of this” to “I can solve problems
-              and explain it to someone else.”
+              This “Chapter 0” sets the tone and motivation. After it, you’ll be ready to explore Mechanics and the other
+              major branches with more context and curiosity.
             </p>
-            <p>
-              Ready to see how it feels in practice?
-            </p>
-            <a href="lesson-newton-first-law.html" class="btn-primary">
-              Open Newton’s First Law lesson
+            <a href="intro-what-is-physics.html" class="btn-primary">
+              Open “What is Physics?” lesson
             </a>
           </div>
 
           <aside class="feature-card">
-            <h3>Newton’s First Law – Lesson overview</h3>
+            <h3>Inside the “What is Physics?” lesson</h3>
             <div class="feature-meta">
               <span class="badge">Level: Late high school / first-year university</span>
             </div>
@@ -806,16 +836,18 @@
               <span class="pill pill-mastery">Steps 4–6: Mastery</span>
             </div>
             <p>
-              Within the lesson, each step comes with a carefully designed prompt. You can:
+              The lesson introduces Physics using the same 6-step structure:
             </p>
             <ul class="topic-list">
-              <li>• Copy a prompt into your AI tool of choice.</li>
-              <li>• Run it as-is, or lightly tweak variables (context, difficulty, examples).</li>
-              <li>• Come back here any time to re-enter at a later step.</li>
+              <li>• <strong>Orient:</strong> What Physics asks and why it matters.</li>
+              <li>• <strong>Understand:</strong> Big ideas like forces, fields, energy, and symmetry.</li>
+              <li>• <strong>Apply:</strong> Everyday examples that reveal hidden Physics.</li>
+              <li>• <strong>Work Through It:</strong> Guided prompts to connect history and concepts.</li>
+              <li>• <strong>Review &amp; Practice:</strong> Key ideas and quick questions.</li>
+              <li>• <strong>Simulation Lab:</strong> Simple visualizations to see how physical quantities change.</li>
             </ul>
             <p style="margin-top:0.6rem; font-size:0.8rem; color:var(--text-subtle);">
-              As PromptSchola grows, you’ll be able to run these prompts directly within the platform,
-              with your account automatically tracking where you stopped in the 6-step flow.
+              From there, you can jump into Mechanics or any other branch, knowing how Physics fits together as a whole.
             </p>
           </aside>
         </div>
@@ -829,11 +861,12 @@
           <div class="section-kicker">Roadmap</div>
           <h2 class="section-title">Where Physics is going next</h2>
           <p class="section-subtitle">
-            Newton’s First Law is only the beginning. The same 6-step system will power a full Physics library.
+            After “What is Physics?”, the same 6-step system will power a full Physics library across major areas.
           </p>
         </div>
 
         <div class="topics-grid">
+          <!-- Mechanics -->
           <article class="topic-card">
             <header class="topic-header">
               <h3 class="topic-title">Mechanics</h3>
@@ -847,13 +880,17 @@
                 <li>• Work, Energy &amp; Power</li>
                 <li>• Momentum &amp; Collisions</li>
               </ul>
+              <p class="topic-note">
+                You can choose to start Mechanics with a focused lesson on Newton’s First Law.
+              </p>
             </div>
             <footer class="topic-footer">
-              <a href="lesson-newton-first-law.html" class="link-soft">Start Newton’s First Law</a>
-              <span class="badge-outline">More lessons coming</span>
+              <a href="mechanics.html" class="btn-subject-primary">Start Mechanics</a>
+              <a href="lesson-newton-first-law.html" class="link-soft">or jump to Newton’s First Law</a>
             </footer>
           </article>
 
+          <!-- Electricity & Magnetism -->
           <article class="topic-card">
             <header class="topic-header">
               <h3 class="topic-title">Electricity &amp; Magnetism</h3>
@@ -869,11 +906,12 @@
               </ul>
             </div>
             <footer class="topic-footer">
-              <span class="link-soft disabled">Coming soon</span>
+              <a href="electricity-magnetism.html" class="btn-subject-primary">Start Electricity &amp; Magnetism</a>
               <span class="badge-outline">Will use same 6 steps</span>
             </footer>
           </article>
 
+          <!-- Waves & Optics -->
           <article class="topic-card">
             <header class="topic-header">
               <h3 class="topic-title">Waves &amp; Optics</h3>
@@ -889,11 +927,12 @@
               </ul>
             </div>
             <footer class="topic-footer">
-              <span class="link-soft disabled">Coming soon</span>
+              <a href="waves-optics.html" class="btn-subject-primary">Start Waves &amp; Optics</a>
               <span class="badge-outline">Physics roadmap</span>
             </footer>
           </article>
 
+          <!-- Thermodynamics -->
           <article class="topic-card">
             <header class="topic-header">
               <h3 class="topic-title">Thermodynamics</h3>
@@ -909,11 +948,12 @@
               </ul>
             </div>
             <footer class="topic-footer">
-              <span class="link-soft disabled">Coming soon</span>
+              <a href="thermodynamics.html" class="btn-subject-primary">Start Thermodynamics</a>
               <span class="badge-outline">Physics roadmap</span>
             </footer>
           </article>
 
+          <!-- Modern Physics -->
           <article class="topic-card">
             <header class="topic-header">
               <h3 class="topic-title">Modern Physics</h3>
@@ -929,11 +969,12 @@
               </ul>
             </div>
             <footer class="topic-footer">
-              <span class="link-soft disabled">Coming soon</span>
+              <a href="modern-physics.html" class="btn-subject-primary">Start Modern Physics</a>
               <span class="badge-outline">Physics roadmap</span>
             </footer>
           </article>
 
+          <!-- Problem-solving labs -->
           <article class="topic-card">
             <header class="topic-header">
               <h3 class="topic-title">Problem-solving labs</h3>
@@ -962,7 +1003,7 @@
       <div class="footer-inner">
         <span>&copy; 2025 PromptSchola. All rights reserved.</span>
         <div class="footer-links">
-          <a href="index.html">Overview</a>
+          <a href="index.html">Home</a>
           <a href="#track">Physics</a>
           <a href="pricing.html">Pricing</a>
           <a href="auth.html">Account</a>
