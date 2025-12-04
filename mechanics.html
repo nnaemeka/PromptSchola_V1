@@ -180,43 +180,6 @@
       background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
     }
 
-    .btn-ghost {
-      border-radius: var(--radius-pill);
-      padding: 0.6rem 1.3rem;
-      font-size: 0.86rem;
-      font-weight: 500;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: transparent;
-      color: var(--text-main);
-      cursor: pointer;
-      transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-    }
-
-    .btn-ghost:hover {
-      background: #eef2ff;
-      transform: translateY(-1px);
-      border-color: #7e22ce;
-      color: #4c1d95;
-    }
-
-    .badge {
-      font-size: 0.72rem;
-      padding: 0.12rem 0.7rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #ffffff;
-      color: var(--text-main);
-    }
-
-    .badge-outline {
-      font-size: 0.72rem;
-      padding: 0.12rem 0.7rem;
-      border-radius: var(--radius-pill);
-      border: 1px dashed rgba(148, 163, 184, 0.9);
-      color: var(--text-subtle);
-      background: #f9fafb;
-    }
-
     .btn-subject-primary {
       display: inline-flex;
       align-items: center;
@@ -238,6 +201,25 @@
       transform: translateY(-1px);
       filter: brightness(1.03);
       box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      padding: 0.12rem 0.7rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      color: #ffffff;
+      color: var(--text-main);
+    }
+
+    .badge-outline {
+      font-size: 0.72rem;
+      padding: 0.12rem 0.7rem;
+      border-radius: var(--radius-pill);
+      border: 1px dashed rgba(148, 163, 184, 0.9);
+      color: var(--text-subtle);
+      background: #f9fafb;
     }
 
     /* Hero */
@@ -277,9 +259,9 @@
     .hero-inner {
       margin-top: 2rem;
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
       gap: 2rem;
-      align-items: flex-start;
+      align-items: center;
     }
 
     .hero-main {
@@ -306,89 +288,17 @@
       margin-top: 0.4rem;
     }
 
-    .hero-side {
-      background: var(--bg-card);
-      border-radius: 20px;
-      border: 1px solid var(--border-subtle);
-      padding: 1.2rem 1.25rem;
-      box-shadow: var(--shadow-card);
-      font-size: 0.86rem;
-    }
-
-    .hero-side-title {
-      font-size: 0.94rem;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 0.4rem;
-    }
-
-    .hero-side-note {
-      font-size: 0.8rem;
-      color: var(--text-subtle);
-      margin-bottom: 0.7rem;
-    }
-
-    .steps-mini-list {
-      list-style: none;
-      margin-bottom: 0.8rem;
-    }
-
-    .steps-mini-list li {
+    .hero-image {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.28rem 0;
-      border-bottom: 1px dashed rgba(229, 231, 235, 0.9);
-      font-size: 0.82rem;
+      justify-content: center;
     }
 
-    .steps-mini-list li:last-child {
-      border-bottom: none;
-    }
-
-    .steps-mini-main {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .steps-mini-index {
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-      min-width: 1.4rem;
-    }
-
-    .steps-mini-label {
-      font-weight: 500;
-      color: var(--text-main);
-    }
-
-    .steps-mini-tag {
-      font-size: 0.72rem;
-      padding: 0.06rem 0.6rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #eef2ff;
-      color: #4338ca;
-      white-space: nowrap;
-    }
-
-    .steps-mini-tag.free {
-      background: #dcfce7;
-      border-color: rgba(22, 163, 74, 0.9);
-      color: #166534;
-    }
-
-    .steps-mini-tag.mastery {
-      background: #f5f3ff;
-      border-color: rgba(129, 140, 248, 0.9);
-      color: #4c1d95;
-    }
-
-    .hero-side-footer {
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-      margin-top: 0.3rem;
+    .hero-illustration {
+      max-width: 100%;
+      border-radius: 22px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.25);
+      border: 1px solid rgba(15, 23, 42, 0.2);
+      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.14), rgba(243, 244, 246, 1));
     }
 
     /* Sections */
@@ -528,7 +438,7 @@
       .hero-inner {
         grid-template-columns: minmax(0, 1fr);
       }
-      .hero-side {
+      .hero-image {
         margin-top: 1.3rem;
       }
       .topics-grid {
@@ -605,34 +515,14 @@
             </p>
           </div>
 
-          <aside class="hero-side">
-            <div class="hero-side-title">Suggested starting point</div>
-            <p class="hero-side-note">
-              A natural place to begin is with <strong>Newton’s First Law – Inertia &amp; Equilibrium.</strong>
-            </p>
-            <ul class="steps-mini-list">
-              <li>
-                <div class="steps-mini-main">
-                  <span class="steps-mini-index">Lesson</span>
-                  <span class="steps-mini-label">Newton’s First Law</span>
-                </div>
-                <span class="steps-mini-tag free">Steps 1–3 free</span>
-              </li>
-              <li>
-                <div class="steps-mini-main">
-                  <span class="steps-mini-index"></span>
-                  <span class="steps-mini-label">Work &amp; Practice</span>
-                </div>
-                <span class="steps-mini-tag mastery">Steps 4–6</span>
-              </li>
-            </ul>
-            <button class="btn-primary" onclick="window.location.href='lesson-newton-first-law.html'">
-              Open Newton’s First Law lesson
-            </button>
-            <p class="hero-side-footer">
-              You can always come back here to choose another Mechanics topic once you’ve built confidence.
-            </p>
-          </aside>
+          <div class="hero-image">
+            <!-- Replace src with your actual illustration file -->
+            <img
+              src="assets/img/mechanics-hero.png"
+              alt="Illustration of mechanics concepts: projectiles, forces, and motion graphs"
+              class="hero-illustration"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -644,8 +534,7 @@
           <div class="section-kicker">Topics</div>
           <h2 class="section-title">Mechanics subtopics (with nano-lessons)</h2>
           <p class="section-subtitle">
-            Each card represents a subtopic. Inside each, you’ll eventually find nano-lessons, each following the
-            same 6-step prompt-based structure.
+            Each card is a subtopic containing 6-step nano-lessons. Follow the chronological order, but feel free to jump to any topic.
           </p>
         </div>
 
@@ -709,7 +598,7 @@
             </div>
             <footer class="topic-footer">
               <a href="lesson-newton-laws-overview.html" class="btn-subject-primary">Open lesson</a>
-              <span class="pill-mini">Includes First Law lesson</span>
+              <span class="pill-mini">Nano-lessons coming</span>
             </footer>
           </article>
 
