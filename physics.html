@@ -251,15 +251,11 @@
       padding: 3rem 0 3.6rem;
     }
 
-    .hero-inner {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
-      gap: 2.3rem;
-      align-items: center;
-    }
-
-    .hero-main {
-      max-width: 640px;
+    /* NEW: centered hero heading spanning both columns */
+    .hero-heading {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 2rem;
     }
 
     .hero-kicker {
@@ -286,7 +282,18 @@
       line-height: 1.15;
       font-weight: 800;
       color: var(--text-strong);
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2.3rem;
+      align-items: center;
+    }
+
+    .hero-main {
+      max-width: 640px;
     }
 
     .hero-subtitle {
@@ -698,15 +705,18 @@
     <!-- Hero -->
     <section class="hero">
       <div class="container">
+        <div class="hero-heading">
+          <div class="hero-kicker">
+            <span class="label">Physics track</span>
+            <span>6-step prompt-based mastery</span>
+          </div>
+          <h1 class="hero-title">
+            Learn Physics one topic at a time, with prompts that guide you from orientation to simulation.
+          </h1>
+        </div>
+
         <div class="hero-inner">
           <div class="hero-main">
-            <div class="hero-kicker">
-              <span class="label">Physics track</span>
-              <span>6-step prompt-based mastery</span>
-            </div>
-            <h1 class="hero-title">
-              Learn Physics one topic at a time, with prompts that guide you from orientation to simulation.
-            </h1>
             <p class="hero-subtitle">
               Start with an introduction to what Physics is, then expand into Mechanics, E&amp;M, Waves, Thermodynamics,
               and Modern Physics — all using the same 6-step flow.
