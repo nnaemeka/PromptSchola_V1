@@ -16,7 +16,6 @@
       --bg-card: #ffffff;
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.12);
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
@@ -35,16 +34,11 @@
       color: var(--text-main);
       margin: 0;
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
     }
 
     a { text-decoration: none; color: inherit; }
 
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
 
     .container {
       max-width: 1120px;
@@ -96,10 +90,7 @@
     }
 
     /* HERO */
-    .hero {
-      padding: 3rem 0 2.4rem;
-      text-align: center;
-    }
+    .hero { padding: 3rem 0 2.4rem; text-align: center; }
     .hero-kicker {
       font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--text-subtle);
@@ -113,33 +104,17 @@
       font-size: 0.96rem; color: var(--text-muted);
       max-width: 36rem; margin: 0.4rem auto 0;
     }
-
     .hero-back {
       display: inline-block; margin-top: 1rem;
       font-size: 0.85rem; color: var(--accent-strong);
     }
 
-    /* Roadmap */
-    .roadmap {
-      margin: 2rem auto 1rem; max-width: 640px;
-      border-radius: var(--radius-card);
-      padding: 1.2rem 1.4rem;
-      background: #fff;
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-card);
-      font-size: 0.9rem;
-    }
-
-    .roadmap h3 { margin-bottom: 0.4rem; font-size: 1rem; }
-    .roadmap ol { padding-left: 1rem; }
-    .roadmap li { margin: 0.25rem 0; }
-
-    /* Nano-lesson cards */
+    /* NANO-LESSON GRID */
     .nano-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
-      margin-top: 1.2rem;
+      margin-top: 1rem;
     }
 
     .nano-card {
@@ -167,15 +142,14 @@
     .tag-free { border-color: var(--accent-strong); color: var(--accent-strong); }
 
     .nano-footer {
-      display: flex; justify-content: space-between; align-items: center;
       margin-top: auto; padding-top: 0.6rem;
-      font-size: 0.8rem;
+      display: flex; justify-content: flex-end;
     }
 
     .btn-open {
-      padding: 0.42rem 0.95rem;
+      padding: 0.45rem 1rem;
       border-radius: var(--radius-pill);
-      font-size: 0.8rem; font-weight: 600;
+      font-size: 0.82rem; font-weight: 600;
       border: none; cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color: #fff;
@@ -185,9 +159,9 @@
     .btn-open:hover { transform: translateY(-1px); }
 
     footer {
-      margin-top: auto;
-      font-size: 0.8rem; padding: 1.8rem 0;
-      text-align: center; color: var(--text-subtle);
+      margin-top: auto; text-align: center;
+      padding: 1.8rem 0; font-size: 0.8rem;
+      color: var(--text-subtle);
     }
 
     @media(max-width: 760px) {
@@ -226,47 +200,30 @@
       <h1 class="hero-title">Kinematics in 1D</h1>
       <p class="hero-subtitle">
         Understand how motion along a straight line is described using displacement, velocity, and acceleration — before
-        we worry about what causes motion. This is where problem solving begins.
+        we ask what causes motion. This is where problem-solving begins.
       </p>
       <a href="mechanics.html" class="hero-back">← Back to Mechanics</a>
-    </div>
-  </section>
-
-  <!-- ROADMAP -->
-  <section>
-    <div class="container">
-      <article class="roadmap">
-        <h3>Recommended nano-lesson order</h3>
-        <ol>
-          <li>Displacement, Speed & Velocity</li>
-          <li>Constant Acceleration & its meaning</li>
-          <li>Equations of Motion (SUVAT)</li>
-          <li>Graphs of Motion (x–t, v–t, a–t)</li>
-          <li>Problem-Solving Strategy for Motion</li>
-        </ol>
-      </article>
     </div>
   </section>
 
   <!-- NANO-LESSON GRID -->
   <section>
     <div class="container">
-
       <div class="nano-grid">
 
         <!-- Card 1 -->
         <article class="nano-card">
           <div class="nano-title">Displacement, Speed & Velocity</div>
           <div class="nano-desc">
-            Learn the difference between distance and displacement, how to compute average speed and velocity, and why
-            direction matters in motion.
+            Learn the difference between distance and displacement, compute average speed and velocity,
+            and understand why direction matters in motion.
           </div>
           <div class="nano-tags">
             <span class="tag-pill tag-free">Steps 1–3 free</span>
             <span class="tag-pill">Core</span>
           </div>
           <div class="nano-footer">
-            <button class="btn-open" onclick="window.location.href='nano-displacement-speed-velocity.html'">Open nano-lesson</button>
+            <button class="btn-open" onclick="window.location.href='nano-displacement-speed-velocity.html'">Open Lesson</button>
           </div>
         </article>
 
@@ -274,15 +231,14 @@
         <article class="nano-card">
           <div class="nano-title">Constant Acceleration</div>
           <div class="nano-desc">
-            Explore how uniform acceleration shapes motion, including the meaning of “a”, sign conventions, and everyday
-            examples like free fall.
+            Explore how uniform acceleration shapes motion, including sign conventions and real-world examples like free fall.
           </div>
           <div class="nano-tags">
             <span class="tag-pill tag-free">Steps 1–3 free</span>
             <span class="tag-pill">Core</span>
           </div>
           <div class="nano-footer">
-            <button class="btn-open" onclick="window.location.href='nano-constant-acceleration.html'">Open nano-lesson</button>
+            <button class="btn-open" onclick="window.location.href='nano-constant-acceleration.html'">Open Lesson</button>
           </div>
         </article>
 
@@ -290,15 +246,14 @@
         <article class="nano-card">
           <div class="nano-title">Equations of Motion (SUVAT)</div>
           <div class="nano-desc">
-            Master the five equations connecting displacement, velocity, acceleration, and time — your main tools for
-            solving motion problems.
+            Learn the five equations connecting displacement, velocity, acceleration, and time — your essential tools for solving motion problems.
           </div>
           <div class="nano-tags">
             <span class="tag-pill tag-free">Steps 1–3 free</span>
             <span class="tag-pill">Core</span>
           </div>
           <div class="nano-footer">
-            <button class="btn-open" onclick="window.location.href='nano-equations-of-motion.html'">Open nano-lesson</button>
+            <button class="btn-open" onclick="window.location.href='nano-equations-of-motion.html'">Open Lesson</button>
           </div>
         </article>
 
@@ -306,14 +261,14 @@
         <article class="nano-card">
           <div class="nano-title">Graphs of Motion</div>
           <div class="nano-desc">
-            Learn how to interpret and sketch x–t, v–t, and a–t graphs, and how areas under graphs reveal motion details.
+            Master x–t, v–t, and a–t graphs and see how slopes and areas reveal hidden motion details.
           </div>
           <div class="nano-tags">
             <span class="tag-pill tag-free">Steps 1–3 free</span>
             <span class="tag-pill">Core</span>
           </div>
           <div class="nano-footer">
-            <button class="btn-open" onclick="window.location.href='nano-motion-graphs.html'">Open nano-lesson</button>
+            <button class="btn-open" onclick="window.location.href='nano-motion-graphs.html'">Open Lesson</button>
           </div>
         </article>
 
@@ -321,23 +276,21 @@
         <article class="nano-card">
           <div class="nano-title">Problem-Solving Strategy</div>
           <div class="nano-desc">
-            A structured approach to solving motion problems using diagrams, known–unknown tables, and stepwise logic.
+            A structured approach to motion problems using diagrams, known–unknown tables, and logical steps.
           </div>
           <div class="nano-tags">
             <span class="tag-pill tag-free">Steps 1–3 free</span>
             <span class="tag-pill">Practice</span>
           </div>
           <div class="nano-footer">
-            <button class="btn-open" onclick="window.location.href='nano-kinematics-strategy.html'">Open nano-lesson</button>
+            <button class="btn-open" onclick="window.location.href='nano-kinematics-strategy.html'">Open Lesson</button>
           </div>
         </article>
 
       </div>
-
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     © 2025 PromptSchola. All rights reserved.
   </footer>
