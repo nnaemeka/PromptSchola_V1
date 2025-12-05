@@ -5,7 +5,6 @@
   <title>My account – PromptSchola</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg-body: #f3f4f6;
@@ -187,7 +186,10 @@
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <a href="auth.html" class="btn-pill">Account</a>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
+          <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
+          <a href="auth.html" class="btn-pill">Account</a>
+        </div>
       </div>
     </div>
   </header>
@@ -239,12 +241,11 @@
   </footer>
 </div>
 
-<script>
-  // Configure Supabase (same project as in auth.html)
-  const SUPABASE_URL = "https://YOUR_PROJECT_REF.supabase.co";
-  const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+<!-- Supabase + shared auth helpers -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 
+<script>
   const accountEmailEl = document.getElementById('account-email');
   const fullNameInput = document.getElementById('full-name');
   const goalInput = document.getElementById('goal');
@@ -258,9 +259,8 @@
   }
 
   async function loadProfile() {
-    const { data: { user }, error } = await supabase.auth.getUser();
-    if (error || !user) {
-      // Not logged in → redirect to auth.html
+    const user = await getCurrentUser();
+    if (!user) {
       const redirect = encodeURIComponent('account.html');
       window.location.href = `auth.html?redirect=${redirect}`;
       return;
@@ -268,22 +268,21 @@
 
     accountEmailEl.textContent = user.email || '(no email)';
 
-    // Fetch profile row from "profiles" table (we define schema below)
-    const { data: profiles, error: profileError } = await supabase
+    const { data: profile, error: profileError } = await supabaseClient
       .from('profiles')
       .select('full_name, goal')
       .eq('id', user.id)
       .maybeSingle();
 
-    if (!profileError && profiles) {
-      fullNameInput.value = profiles.full_name || '';
-      goalInput.value = profiles.goal || '';
+    if (!profileError && profile) {
+      fullNameInput.value = profile.full_name || '';
+      goalInput.value = profile.goal || '';
     }
   }
 
   saveProfileBtn.addEventListener('click', async () => {
     showMessage('');
-    const { data: { user } } = await supabase.auth.getUser();
+    const user = await getCurrentUser();
     if (!user) {
       showMessage('You are not signed in. Please log in again.');
       return;
@@ -292,8 +291,7 @@
     const fullName = fullNameInput.value.trim();
     const goal = goalInput.value.trim();
 
-    // Upsert into profiles table
-    const { error } = await supabase
+    const { error } = await supabaseClient
       .from('profiles')
       .upsert({
         id: user.id,
@@ -311,7 +309,7 @@
   });
 
   logoutBtn.addEventListener('click', async () => {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
     window.location.href = 'index.html';
   });
 
