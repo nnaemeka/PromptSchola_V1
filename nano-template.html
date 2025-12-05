@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>{{TITLE}} – PromptSchola Physics</title>
+  <title><!-- Nano lesson title here --> – PromptSchola Physics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="{{DESCRIPTION}}"
+    content="Prompt-based nano-lesson in Physics."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- MathJax configuration for LaTeX rendering -->
+  <!-- MathJax for LaTeX -->
   <script>
     window.MathJax = {
       tex: {
@@ -29,8 +29,7 @@
       --bg-body: #f3f4f6;
       --bg-card: #ffffff;
       --accent: #7e22ce;
-      --accent-strong: #6d28d9;
-      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --accent-strong: #4c1d95;
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
@@ -40,7 +39,6 @@
       --radius-pill: 999px;
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
       --font-main: 'Inter', system-ui, sans-serif;
-      --transition-fast: 0.25s ease-out;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,12 +54,7 @@
     a { text-decoration: none; color: inherit; }
 
     .page { min-height: 100vh; display: flex; flex-direction: column; }
-
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 1.3rem;
-    }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.3rem; }
 
     /* NAV */
     header {
@@ -70,26 +63,22 @@
       background: rgba(249, 250, 251, 0.96);
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
-
     .nav {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.75rem 0;
     }
-
     .logo-mark {
       width: 34px; height: 34px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
       display: flex; align-items: center; justify-content: center;
       font-weight: 800; color: #fff;
     }
-
     .logo-text span:first-child {
       font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
     }
     .logo-text span:last-child {
       font-size: 0.72rem; color: var(--text-subtle);
     }
-
     .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
     .nav-links a { opacity: .9; }
     .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
@@ -100,16 +89,12 @@
       background: #ffffff;
       border: 1px solid rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
-      transition: var(--transition-fast);
       cursor: pointer;
-    }
-    .btn-pill:hover {
-      background: #f3f4f6; transform: translateY(-1px);
     }
 
     /* HERO */
     .hero {
-      padding: 3rem 0 2.1rem;
+      padding: 2.4rem 0 1.6rem;
       text-align: center;
     }
     .hero-kicker {
@@ -117,7 +102,7 @@
       color: var(--text-subtle);
     }
     .hero-title {
-      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
       font-weight: 800; color: var(--text-strong);
       margin: 0.3rem 0;
     }
@@ -125,8 +110,14 @@
       font-size: 0.96rem; color: var(--text-muted);
       max-width: 40rem; margin: 0.4rem auto 0;
     }
+    .hero-breadcrumbs {
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+    .hero-breadcrumbs a { color: var(--accent-strong); }
 
-    /* Steps layout */
+    /* Steps */
     main { padding-bottom: 2.5rem; }
 
     .steps-grid {
@@ -156,7 +147,6 @@
       align-items: center;
       gap: 0.75rem;
     }
-
     .step-header-left {
       display: flex;
       flex-direction: column;
@@ -175,7 +165,6 @@
       padding: 0.16rem 0.7rem;
       font-weight: 600;
     }
-
     .step-title {
       font-size: 1.06rem;
       font-weight: 650;
@@ -201,27 +190,10 @@
       justify-content: center;
       cursor: pointer;
       padding: 0;
-      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
-      transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        background 0.15s ease;
-    }
-    .toggle-btn:hover {
-      transform: translateY(-1px) scale(1.07);
-      box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75);
-      background: #e0e7ff;
     }
 
-    .step-content {
-      margin-top: 0.4rem;
-      display: block;
-    }
-
-    .step-body {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-    }
+    .step-content { margin-top: 0.4rem; display: block; }
+    .step-body { font-size: 0.86rem; color: var(--text-muted); }
 
     .prompt-preview {
       margin-top: 0.45rem;
@@ -231,8 +203,6 @@
       border: 1px dashed rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
       color: var(--text-subtle);
-      font-family: var(--font-main);
-      min-height: 2.2rem;
       white-space: pre-wrap;
     }
 
@@ -247,17 +217,15 @@
       white-space: pre-wrap;
       line-height: 1.55;
     }
-
     .ai-response p { margin-bottom: 0.75rem; }
     .ai-response ul,
     .ai-response ol { margin: 0.6rem 0 0.6rem 1.2rem; }
-    .ai-response strong { font-weight: 700; }
-    .ai-response em { font-style: italic; }
 
     .copy-row {
       margin-top: 0.35rem;
       display: flex;
       justify-content: flex-end;
+      gap: 0.4rem;
     }
 
     .btn-ghost,
@@ -266,7 +234,6 @@
       align-items: center;
       gap: 0.25rem;
     }
-
     .btn-ghost {
       padding: 0.42rem 0.8rem;
       border-radius: var(--radius-pill);
@@ -274,13 +241,7 @@
       border: 1px solid rgba(209, 213, 219, 0.9);
       background: #ffffff;
       cursor: pointer;
-      transition: var(--transition-fast);
     }
-    .btn-ghost:hover {
-      background: #f3f4f6;
-      transform: translateY(-1px);
-    }
-
     .btn-primary {
       padding: 0.42rem 1rem;
       border-radius: var(--radius-pill);
@@ -290,14 +251,19 @@
       cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color: #fff;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: var(--transition-fast);
     }
-    .btn-primary:hover { transform: translateY(-1px); }
 
-    .btn-copy {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.75rem;
+    .step-footer {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
     }
 
     footer {
@@ -313,7 +279,6 @@
     }
   </style>
 </head>
-
 <body>
 <div class="page">
 
@@ -333,61 +298,66 @@
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <a href="auth.html" class="btn-pill">Account</a>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
+          <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
+          <a href="auth.html" class="btn-pill">Account</a>
+        </div>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <div class="hero-kicker">{{KICKER}}</div>
-        <h1 class="hero-title">{{TITLE}}</h1>
+        <div class="hero-kicker">Nano-lesson · <!-- Category --></div>
+        <h1 class="hero-title"><!-- Lesson title --></h1>
         <p class="hero-subtitle">
-          {{SUBTITLE}}
+          <!-- Short description of this nano lesson. -->
         </p>
+        <div class="hero-breadcrumbs">
+          <a href="physics.html">Physics</a> ·
+          <!-- Add more breadcrumbs if needed -->
+          <span><!-- Lesson name --></span>
+        </div>
       </div>
     </section>
 
-    <!-- STEPS -->
     <section>
       <div class="container">
         <div class="steps-grid">
 
-          <!-- Repeat this block for steps 1–6, editing titles/body per nano-lesson -->
-          <article class="step-card">
+          <!-- Repeat this step-card block (1–6) and adjust text per lesson -->
+
+          <article class="step-card" id="step-1-card">
             <div class="step-header">
               <div class="step-header-left">
                 <div class="step-index">STEP 1</div>
-                <div class="step-title">{{STEP1_TITLE}}</div>
+                <div class="step-title"><!-- Step 1 title --></div>
               </div>
               <div class="step-header-right">
-                <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+                <button class="toggle-btn" onclick="toggleStep(1)">−</button>
               </div>
             </div>
             <div class="step-content" id="step-content-1">
               <div class="step-body">
-                {{STEP1_BODY}}
+                <!-- Short explanation of what this step does -->
               </div>
               <div class="prompt-preview" id="preview-step1">
                 Prompt preview will appear here when you click “Show prompt”.
               </div>
               <div class="ai-response" id="response-step1"></div>
               <div class="copy-row">
-                <button class="btn-ghost btn-copy" onclick="copyAnswer(1)">Copy answer</button>
+                <button class="btn-ghost" onclick="copyPrompt(1)">Copy prompt</button>
+                <button class="btn-ghost" onclick="copyAnswer(1)">Copy answer</button>
+                <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
               </div>
-              <div style="margin-top:0.6rem; display:flex; justify-content:space-between; gap:0.5rem; flex-wrap:wrap; font-size:0.78rem; color:var(--text-subtle); border-top:1px solid rgba(209,213,219,0.7); padding-top:0.6rem;">
-                <div>
-                  <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
-                  <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
-                </div>
-                <span>{{STEP1_GOAL}}</span>
+              <div class="step-footer">
+                <span><!-- Goal sentence for this step --></span>
               </div>
             </div>
           </article>
 
-          <!-- Copy/paste and adjust for steps 2–6 as needed -->
+          <!-- Steps 2–6 follow similarly... -->
 
         </div>
       </div>
@@ -399,25 +369,82 @@
   </footer>
 </div>
 
+<!-- Shared Supabase + helpers -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
 <script>
-  // PROMPTS TEMPLATE: fill in {{PROMPT1}} ... {{PROMPT6}} when creating a real nano-lesson
+  // ========= LESSON-SPECIFIC CONFIG =========
+  const NANO_SLUG = 'REPLACE_WITH_SLUG'; // e.g. 'kinematics-1d-displacement-speed-velocity'
+
+  // Prompts per step for this nano lesson
   const prompts = {
-    1: `{{PROMPT1}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    2: `{{PROMPT2}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    3: `{{PROMPT3}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    4: `{{PROMPT4}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    5: `{{PROMPT5}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    6: `{{PROMPT6}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`
+    1: 'Prompt text for step 1...',
+    2: 'Prompt text for step 2...',
+    3: 'Prompt text for step 3...',
+    4: 'Prompt text for step 4...',
+    5: 'Prompt text for step 5...',
+    6: 'Prompt text for step 6...',
   };
 
   const lastAiResponses = {};
-  const STORAGE_KEY = '{{NANO_KEY}}_collapse';
+  const STORAGE_KEY = 'ps_nano_' + NANO_SLUG + '_collapse';
   let collapseState = {};
 
+  // ========= Analytics helper =========
+  async function logEvent(eventType, step) {
+    try {
+      await fetch('/api/log-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventType,
+          nanoSlug: NANO_SLUG,
+          step
+        })
+      });
+    } catch (e) {
+      console.error('Failed to log event:', e);
+    }
+  }
+
+  // ========= UI logic =========
+  function toggleStep(step) {
+    const content = document.getElementById(`step-content-${step}`);
+    const card = document.getElementById(`step-${step}-card`);
+    const btn = card?.querySelector('.toggle-btn');
+    if (!content || !btn) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? '−' : '+';
+
+    collapseState[step] = !isHidden;
+    saveCollapseState();
+  }
+
+  function loadCollapseState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      collapseState = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      collapseState = {};
+    }
+  }
+  function saveCollapseState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
+    } catch (e) {
+      console.error('Unable to save collapse state', e);
+    }
+  }
+
+  // ========= Prompt / AI output handling =========
   function showPrompt(step) {
     const preview = document.getElementById('preview-step' + step);
     if (!preview) return;
-    preview.textContent = prompts[step] || 'Prompt coming soon.';
+    const text = prompts[step];
+    preview.textContent = text || 'Prompt coming soon.';
 
     if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise([preview]).catch(err =>
@@ -426,26 +453,16 @@
     }
   }
 
-  // Format AI output while keeping LaTeX \[ ... \] intact
   function formatOutput(text) {
     if (!text) return '';
-
-    // Normalize backslashes if model returns \\[ ... \\]
     let safe = text
       .replace(/\\\\\[/g, '\\[')
       .replace(/\\\\\]/g, '\\]');
 
-    // Convert markdown headings "### Title" etc → bold line
     safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
-
-    // Convert markdown bullets ("- item" or "* item") → "• item"
     safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
-
-    // Basic markdown-style bold/italic (after bullet cleanup)
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
-
-    // Paragraphs & line breaks
     safe = safe.replace(/\n\n+/g, '</p><p>');
     safe = safe.replace(/\n/g, '<br>');
     safe = '<p>' + safe + '</p>';
@@ -454,6 +471,10 @@
   }
 
   async function runWithAI(step) {
+    // Require login for all Run with AI actions
+    const user = await ensureLoggedInOrRedirect();
+    if (!user) return;
+
     const prompt = prompts[step];
     if (!prompt) {
       alert('No prompt defined for this step yet.');
@@ -468,6 +489,9 @@
 
     try {
       output.textContent = 'Running with AI…';
+
+      // Log analytics event
+      logEvent('run_ai', step);
 
       const res = await fetch('/api/run-step', {
         method: 'POST',
@@ -492,9 +516,29 @@
       }
     } catch (err) {
       console.error(err);
-      const out = document.getElementById('response-step' + step);
-      if (out) out.textContent = 'Unexpected error. Please try again.';
+      output.textContent = 'Unexpected error. Please try again.';
     }
+  }
+
+  function copyPrompt(step) {
+    const text = prompts[step];
+    if (!text) {
+      alert('No prompt defined for this step yet.');
+      return;
+    }
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        alert('Prompt copied to clipboard.');
+        logEvent('copy_prompt', step);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy to clipboard. Please try again.');
+      });
   }
 
   function copyAnswer(step) {
@@ -503,56 +547,25 @@
       alert('No AI answer to copy yet. Run with AI first.');
       return;
     }
-
     if (!navigator.clipboard || !navigator.clipboard.writeText) {
       alert('Clipboard not supported in this browser.');
       return;
     }
-
     navigator.clipboard.writeText(text)
-      .then(() => { alert('Answer copied to clipboard.'); })
+      .then(() => alert('Answer copied to clipboard.'))
       .catch(err => {
         console.error(err);
         alert('Could not copy to clipboard. Please try again.');
       });
   }
 
-  function loadCollapseState() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      collapseState = raw ? JSON.parse(raw) : {};
-    } catch (e) {
-      collapseState = {};
-    }
-  }
-
-  function saveCollapseState() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
-    } catch (e) {
-      console.error('Unable to save collapse state', e);
-    }
-  }
-
-  function toggleStep(step) {
-    const content = document.getElementById(`step-content-${step}`);
-    const btn = document.getElementById(`toggle-btn-${step}`);
-    if (!content || !btn) return;
-
-    const isHidden = content.style.display === 'none';
-    content.style.display = isHidden ? 'block' : 'none';
-    btn.textContent = isHidden ? '−' : '+';
-
-    collapseState[step] = !isHidden;
-    saveCollapseState();
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
     loadCollapseState();
-    const steps = [1, 2, 3, 4, 5, 6];
+    const steps = [1,2,3,4,5,6];
     steps.forEach(step => {
       const content = document.getElementById(`step-content-${step}`);
-      const btn = document.getElementById(`toggle-btn-${step}`);
+      const card = document.getElementById(`step-${step}-card`);
+      const btn = card?.querySelector('.toggle-btn');
       if (!content || !btn) return;
 
       const expanded = collapseState[step];
@@ -572,6 +585,5 @@
     }
   });
 </script>
-
 </body>
 </html>
