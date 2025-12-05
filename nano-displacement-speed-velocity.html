@@ -374,6 +374,21 @@
       .nav-links { display: none; }
     }
   </style>
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(','\\)'], ['$', '$']],
+      displayMath: [['\\[','\\]'], ['$$','$$']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 </head>
 
 <body>
@@ -724,6 +739,15 @@
       const output = document.getElementById('response-step' + step);
       if (output) output.textContent = 'Unexpected error. Please try again.';
     }
+    const raw = data.content || 'No response received from AI.';
+lastAiResponses[step] = raw;
+output.innerHTML = formatOutput(raw);
+
+// Ask MathJax to re-render this element
+if (window.MathJax && window.MathJax.typesetPromise) {
+  MathJax.typesetPromise([output]).catch(err => console.error('MathJax error:', err));
+}
+
   }
 
   function copyAnswer(step) {
