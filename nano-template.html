@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>{{TITLE}} – PromptSchola Physics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="{{DESCRIPTION}}" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- MathJax for LaTeX rendering -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(','\\)'], ['$', '$']],
+      displayMath: [['\\[','\\]'], ['$$','$$']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+</script>
+
+<style>
+  /* --------------------- Core Design Tokens --------------------- */
+  :root {
+    --accent: #7e22ce;
+    --accent-light: #ede9fe;
+    --accent-strong: #4c1d95;
+    --bg-card: #ffffff;
+    --text-main: #111827;
+    --text-muted: #4b5563;
+    --radius-pill: 999px;
+    --radius-card: 18px;
+    --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+    --transition-fast: 0.2s ease;
+    --border: 1px solid rgba(209,213,219,0.7);
+  }
+
+  body {
+    margin: 0;
+    font-family: Inter, sans-serif;
+    background: #f3f4f6;
+    color: var(--text-main);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 1.2rem;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: var(--border);
+    z-index: 30;
+  }
+
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; }
+  nav a { text-decoration: none; color: var(--text-main); margin: 0 0.6rem; }
+  nav a:hover { color: var(--accent-strong); }
+
+  .btn-pill {
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-pill);
+    background: #fff;
+    border: var(--border);
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .hero { text-align: center; padding: 2.5rem 0 1.5rem; }
+  .hero-title {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 800;
+    margin: 0.2rem 0;
+  }
+
+  .hero-sub {
+    color: var(--text-muted);
+    max-width: 42rem;
+    margin: 0.5rem auto 0;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin: 1.6rem 0;
+  }
+
+  /* --------------------- STEP CARD --------------------- */
+  .step-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-card);
+    border-left: 4px solid var(--accent);
+    padding: 1.1rem 1.3rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .step-index {
+    background: var(--accent-light);
+    color: var(--accent-strong);
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    font-weight: 600;
+  }
+
+  .step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 0.3rem;
+  }
+
+  .toggle-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 1px solid rgba(129,140,248,0.7);
+    font-size: 1.2rem;
+    background: #eef2ff;
+    cursor: pointer;
+  }
+
+  .ai-response {
+    background: #eef2ff;
+    border: 1px solid rgba(129,140,248,0.35);
+    margin-top: 0.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+    line-height: 1.6;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    margin-top: 0.7rem;
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-pill);
+    color: #fff;
+    background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-copy {
+    float: right;
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .prompt-preview {
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 0.6rem;
+    margin-top: 0.4rem;
+    border: 1px dashed rgba(209,213,219,0.8);
+    white-space: pre-wrap;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <div><strong>PromptSchola</strong></div>
+      <div>
+        <a href="index.html">Home</a>
+        <a href="physics.html">Physics</a>
+        <a href="pricing.html">Pricing</a>
+      </div>
+      <a href="auth.html" class="btn-pill">Account</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <h1 class="hero-title">{{TITLE}}</h1>
+  <p class="hero-sub">{{SUBTITLE}}</p>
+</section>
+
+<main class="container">
+
+<div class="steps-grid">
+
+  <!-- STEP TEMPLATE (repeat for steps 1-6) -->
+  <article class="step-card">
+    <div class="step-header">
+      <div>
+        <div class="step-index">STEP {{N}}</div>
+        <div class="step-title">{{STEP_TITLE}}</div>
+      </div>
+      <button class="toggle-btn" id="toggle-btn-{{N}}" onclick="toggleStep({{N}})">−</button>
+    </div>
+
+    <div id="step-content-{{N}}">
+      <div class="prompt-preview" id="preview-step{{N}}"></div>
+      <div class="ai-response" id="response-step{{N}}"></div>
+      <button class="btn-primary" onclick="runWithAI({{N}})">Run with AI</button>
+      <button class="btn-pill btn-copy" onclick="copyAnswer({{N}})">Copy answer</button>
+    </div>
+  </article>
+
+</div>
+
+</main>
+
+<script>
+/* ------------------- PROMPT ENGINE -------------------
+Each prompt auto-includes strict LaTeX safety */
+const prompts = {
+  1: `{{PROMPT1}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
+  2: `{{PROMPT2}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
+  3: `{{PROMPT3}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
+  4: `{{PROMPT4}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
+  5: `{{PROMPT5}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
+  6: `{{PROMPT6}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`
+};
+
