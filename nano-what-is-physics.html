@@ -17,13 +17,11 @@
         inlineMath: [['\\(','\\)'], ['$', '$']],
         displayMath: [['\\[','\\]'], ['$$','$$']]
       },
-      svg: {
-        fontCache: 'global'
-      }
+      svg: { fontCache: 'global' }
     };
   </script>
   <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
   </script>
 
   <style>
@@ -180,7 +178,7 @@
       flex-direction: column;
       gap: 0.55rem;
       font-size: 0.9rem;
-      /* polished spine */
+      /* purple spine */
       border-left: 4px solid rgba(126, 34, 206, 0.55);
       padding-left: 1.2rem;
     }
@@ -673,7 +671,7 @@
     if (!preview) return;
     preview.textContent = prompts[step] || 'Prompt coming soon.';
 
-    // Also typeset LaTeX in the preview area (if any)
+    // Typeset LaTeX in the preview area (if any)
     if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise([preview]).catch(err =>
         console.error('MathJax error in preview:', err)
@@ -681,22 +679,20 @@
     }
   }
 
-  function escapeHTML(str) {
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
-
+  // Format AI output while keeping LaTeX \[ ... \] intact
   function formatOutput(text) {
     if (!text) return '';
-    let safe = escapeHTML(text);
 
-    // Allow simple markdown-like bold/italics from the model
+    // Normalize backslashes if model returns \\[ ... \\]
+    let safe = text
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]');
+
+    // Simple markdown-like bold/italic; do NOT escape < or >
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-    // Paragraphs & line breaks (outside of LaTeX; MathJax will still see \[...\])
+    // Paragraphs & line breaks
     safe = safe.replace(/\n\n+/g, '</p><p>');
     safe = safe.replace(/\n/g, '<br>');
     safe = '<p>' + safe + '</p>';
@@ -821,7 +817,7 @@
       }
     });
 
-    // Safety: typeset any LaTeX already on the page once MathJax is ready
+    // Initial typeset for any LaTeX already on the page
     if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise().catch(err =>
         console.error('MathJax initial typeset error:', err)
