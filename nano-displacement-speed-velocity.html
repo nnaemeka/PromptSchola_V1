@@ -10,6 +10,22 @@
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- MathJax configuration for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
   <style>
     :root {
       --bg-body: #f3f4f6;
@@ -374,21 +390,6 @@
       .nav-links { display: none; }
     }
   </style>
-  <script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['\\(','\\)'], ['$', '$']],
-      displayMath: [['\\[','\\]'], ['$$','$$']]
-    },
-    svg: {
-      fontCache: 'global'
-    }
-  };
-</script>
-<script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
-
 </head>
 
 <body>
@@ -663,11 +664,11 @@
 </div>
 
 <script>
-  // Prompts with formatting and math instructions
+  // Prompts with LaTeX display math instructions
   const prompts = {
-    1: `You are a Physics tutor for a first-year student.\n\nExplain the difference between distance and displacement, and between average speed and average velocity, using:\n• A student walking from 0 m → +5 m → +1 m on a straight line\n• Clear definitions and one short summary at the end.\n\nFormat your response with:\n• short paragraphs (2–4 lines),\n• bullet points where helpful,\n• bold for key terms,\n• and clear spacing between ideas.\n\nWhen you write any math, put each equation on its own line.\n format the math formular or equation you use.`,
-    2: `You are a Physics tutor.\n\nBuild intuition for displacement, speed, and velocity using:\n• Everyday examples (walking, car trips, running on a track)\n• At least one case where displacement is zero but distance is not\n\nAvoid formulas at first; focus on stories and simple numbers.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each example,\n• bold key concepts,\n• and clear spacing between ideas.\n\nIf you need to include math, put each equation on its own line in plain text.\n  format the math formular or equation you use`,
-    3: `You are a Physics tutor.\n\nCreate 3 short calculation questions about displacement, average speed, and average velocity in 1D motion. For each question:\n• State the problem clearly\n• Then show the solution step-by-step after the student has tried it.\n\nKeep the numbers simple (small integers or simple decimals).\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.\n\nWhen you write equations, put them on their own line in plain text\n format the math formular/equation you use.`
+    1: `You are a Physics tutor for a first-year student.\n\nExplain the difference between distance and displacement, and between average speed and average velocity, using:\n• A student walking from 0 m → +5 m → +1 m on a straight line\n• Clear definitions and one short summary at the end.\n\nFormat your response with:\n• short paragraphs (2–4 lines),\n• bullet points where helpful,\n• bold for key terms if useful,\n• and clear spacing between ideas.\n\nWhen you write any math, use LaTeX in display mode, one equation per line. For example:\n  \\[ v_\\text{avg} = \\frac{\\text{total distance}}{\\text{total time}} \\]\n  \\[ v_\\text{avg} = \\frac{\\text{total displacement}}{\\text{total time}} \\]\nDo not use LaTeX environments like align; just simple display equations with \\\\[ ... \\\\].`,
+    2: `You are a Physics tutor.\n\nBuild intuition for displacement, speed, and velocity using:\n• Everyday examples (walking, car trips, running on a track)\n• At least one case where displacement is zero but distance is not\n\nStart without formulas; focus on stories and simple numbers.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each example,\n• bold key concepts where helpful,\n• and clear spacing between ideas.\n\nIf you need to include math, write each equation as a LaTeX display equation on its own line, for example:\n  \\[ s = vt \\]\nKeep equations simple and readable.`,
+    3: `You are a Physics tutor.\n\nCreate 3 short calculation questions about displacement, average speed, and average velocity in 1D motion. For each question:\n• State the problem clearly\n• Then show the solution step-by-step after the student has tried it.\n\nKeep the numbers simple (small integers or simple decimals).\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.\n\nWhen you write equations, use LaTeX display equations on their own lines. For example:\n  \\[ v_\\text{avg} = \\frac{s}{t} \\]\n  \\[ v_\\text{avg} = \\frac{\\text{total displacement}}{\\text{total time}} \\]\nAvoid LaTeX environments beyond simple display equations.`
   };
 
   // Store last AI responses for copy
@@ -692,8 +693,11 @@
     if (!text) return '';
     let safe = escapeHTML(text);
 
+    // Light markdown-style formatting (if model uses ** or *)
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // Paragraphs and line breaks
     safe = safe.replace(/\n\n+/g, '</p><p>');
     safe = safe.replace(/\n/g, '<br>');
     safe = '<p>' + safe + '</p>';
@@ -734,20 +738,16 @@
       const raw = data.content || 'No response received from AI.';
       lastAiResponses[step] = raw;
       output.innerHTML = formatOutput(raw);
+
+      // Trigger MathJax rendering for this response
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([output]).catch(err => console.error('MathJax error:', err));
+      }
     } catch (err) {
       console.error(err);
-      const output = document.getElementById('response-step' + step);
-      if (output) output.textContent = 'Unexpected error. Please try again.';
+      const out = document.getElementById('response-step' + step);
+      if (out) out.textContent = 'Unexpected error. Please try again.';
     }
-    const raw = data.content || 'No response received from AI.';
-lastAiResponses[step] = raw;
-output.innerHTML = formatOutput(raw);
-
-// Ask MathJax to re-render this element
-if (window.MathJax && window.MathJax.typesetPromise) {
-  MathJax.typesetPromise([output]).catch(err => console.error('MathJax error:', err));
-}
-
   }
 
   function copyAnswer(step) {
