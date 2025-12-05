@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My account – PromptSchola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #4c1d95;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --border-subtle: rgba(209, 213, 219, 0.7);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.3rem; }
+
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(249, 250, 251, 0.96);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
+    }
+    .logo-text span:first-child {
+      font-weight: 700; font-size: 0.98rem; color: #020617;
+    }
+    .logo-text span:last-child {
+      font-size: 0.72rem; color: #9ca3af;
+    }
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    main {
+      flex: 1;
+      padding: 2.5rem 1.3rem 3rem;
+    }
+
+    .account-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      padding: 1.4rem 1.5rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      font-size: 0.9rem;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+    .card p.sub {
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      margin-bottom: 0.9rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+    input[type="text"] {
+      margin-top: 0.15rem;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      padding: 0.55rem 0.65rem;
+      font-size: 0.88rem;
+      outline: none;
+      margin-bottom: 0.7rem;
+    }
+    input[type="text"]:focus {
+      border-color: var(--accent-strong);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.55);
+    }
+
+    .field-row { margin-bottom: 0.7rem; }
+
+    .muted-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      border: none;
+      padding: 0.45rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      cursor: pointer;
+      margin-top: 0.3rem;
+    }
+
+    .btn-ghost {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      padding: 0.42rem 1rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: #ffffff;
+    }
+
+    .account-message {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      min-height: 1.2rem;
+    }
+    .account-message.error { color: #b91c1c; }
+    .account-message.success { color: #166534; }
+
+    footer {
+      text-align: center;
+      padding: 1.4rem 0;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 860px) {
+      .account-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <a href="auth.html" class="btn-pill">Account</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="account-grid">
+        <section class="card">
+          <h2>Profile</h2>
+          <p class="sub">Manage your PromptSchola account and learning preferences.</p>
+
+          <div class="field-row">
+            <label>Email</label>
+            <p class="muted-text" id="account-email">Loading…</p>
+          </div>
+
+          <div class="field-row">
+            <label for="full-name">Full name</label>
+            <input type="text" id="full-name" placeholder="Your name" />
+          </div>
+
+          <div class="field-row">
+            <label for="goal">Learning goal (optional)</label>
+            <input type="text" id="goal" placeholder="e.g., Ace my first-year physics course" />
+          </div>
+
+          <button class="btn-primary" id="save-profile">Save profile</button>
+          <div id="account-message" class="account-message"></div>
+        </section>
+
+        <section class="card">
+          <h2>Session & security</h2>
+          <p class="sub">You can sign out of this device at any time.</p>
+
+          <div class="field-row">
+            <p class="muted-text">
+              If you want to change your password, use the “Forgot password?” link on the sign-in page.
+            </p>
+          </div>
+
+          <button class="btn-ghost" id="logout-btn">Log out</button>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
+</div>
+
+<script>
+  // Configure Supabase (same project as in auth.html)
+  const SUPABASE_URL = "https://YOUR_PROJECT_REF.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const accountEmailEl = document.getElementById('account-email');
+  const fullNameInput = document.getElementById('full-name');
+  const goalInput = document.getElementById('goal');
+  const saveProfileBtn = document.getElementById('save-profile');
+  const logoutBtn = document.getElementById('logout-btn');
+  const accountMessage = document.getElementById('account-message');
+
+  function showMessage(msg, type = 'error') {
+    accountMessage.textContent = msg;
+    accountMessage.className = 'account-message ' + (type === 'success' ? 'success' : 'error');
+  }
+
+  async function loadProfile() {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      // Not logged in → redirect to auth.html
+      const redirect = encodeURIComponent('account.html');
+      window.location.href = `auth.html?redirect=${redirect}`;
+      return;
+    }
+
+    accountEmailEl.textContent = user.email || '(no email)';
+
+    // Fetch profile row from "profiles" table (we define schema below)
+    const { data: profiles, error: profileError } = await supabase
+      .from('profiles')
+      .select('full_name, goal')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    if (!profileError && profiles) {
+      fullNameInput.value = profiles.full_name || '';
+      goalInput.value = profiles.goal || '';
+    }
+  }
+
+  saveProfileBtn.addEventListener('click', async () => {
+    showMessage('');
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      showMessage('You are not signed in. Please log in again.');
+      return;
+    }
+
+    const fullName = fullNameInput.value.trim();
+    const goal = goalInput.value.trim();
+
+    // Upsert into profiles table
+    const { error } = await supabase
+      .from('profiles')
+      .upsert({
+        id: user.id,
+        full_name: fullName || null,
+        goal: goal || null,
+        updated_at: new Date().toISOString()
+      });
+
+    if (error) {
+      console.error(error);
+      showMessage('Could not save profile.');
+    } else {
+      showMessage('Profile saved.', 'success');
+    }
+  });
+
+  logoutBtn.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    window.location.href = 'index.html';
+  });
+
+  loadProfile();
+</script>
+</body>
+</html>
