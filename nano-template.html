@@ -1,234 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>{{TITLE}} – PromptSchola Physics</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="{{DESCRIPTION}}" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>{{TITLE}} – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="{{DESCRIPTION}}"
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- MathJax for LaTeX rendering -->
-<script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['\\(','\\)'], ['$', '$']],
-      displayMath: [['\\[','\\]'], ['$$','$$']]
-    },
-    svg: { fontCache: 'global' }
-  };
-</script>
-<script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
-</script>
+  <!-- MathJax configuration for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
 
-<style>
-  /* --------------------- Core Design Tokens --------------------- */
-  :root {
-    --accent: #7e22ce;
-    --accent-light: #ede9fe;
-    --accent-strong: #4c1d95;
-    --bg-card: #ffffff;
-    --text-main: #111827;
-    --text-muted: #4b5563;
-    --radius-pill: 999px;
-    --radius-card: 18px;
-    --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-    --transition-fast: 0.2s ease;
-    --border: 1px solid rgba(209,213,219,0.7);
-  }
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+      --border-subtle: rgba(209, 213, 219, 0.7);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, sans-serif;
+      --transition-fast: 0.25s ease-out;
+    }
 
-  body {
-    margin: 0;
-    font-family: Inter, sans-serif;
-    background: #f3f4f6;
-    color: var(--text-main);
-  }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 0 1.2rem;
-  }
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  header {
-    position: sticky;
-    top: 0;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(12px);
-    border-bottom: var(--border);
-    z-index: 30;
-  }
+    a { text-decoration: none; color: inherit; }
 
-  nav { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; }
-  nav a { text-decoration: none; color: var(--text-main); margin: 0 0.6rem; }
-  nav a:hover { color: var(--accent-strong); }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
 
-  .btn-pill {
-    padding: 0.45rem 1rem;
-    border-radius: var(--radius-pill);
-    background: #fff;
-    border: var(--border);
-    font-size: 0.8rem;
-    cursor: pointer;
-  }
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.3rem;
+    }
 
-  .hero { text-align: center; padding: 2.5rem 0 1.5rem; }
-  .hero-title {
-    font-size: clamp(2rem, 3vw, 2.5rem);
-    font-weight: 800;
-    margin: 0.2rem 0;
-  }
+    /* NAV */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(249, 250, 251, 0.96);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
 
-  .hero-sub {
-    color: var(--text-muted);
-    max-width: 42rem;
-    margin: 0.5rem auto 0;
-  }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
 
-  .steps-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    margin: 1.6rem 0;
-  }
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
+    }
 
-  /* --------------------- STEP CARD --------------------- */
-  .step-card {
-    background: var(--bg-card);
-    border-radius: var(--radius-card);
-    border-left: 4px solid var(--accent);
-    padding: 1.1rem 1.3rem;
-    box-shadow: var(--shadow-card);
-  }
+    .logo-text span:first-child {
+      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
+    }
+    .logo-text span:last-child {
+      font-size: 0.72rem; color: var(--text-subtle);
+    }
 
-  .step-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
 
-  .step-index {
-    background: var(--accent-light);
-    color: var(--accent-strong);
-    padding: 0.2rem 0.7rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.13em;
-    font-weight: 600;
-  }
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      transition: var(--transition-fast);
+      cursor: pointer;
+    }
+    .btn-pill:hover {
+      background: #f3f4f6; transform: translateY(-1px);
+    }
 
-  .step-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-top: 0.3rem;
-  }
+    /* HERO */
+    .hero {
+      padding: 3rem 0 2.1rem;
+      text-align: center;
+    }
+    .hero-kicker {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 800; color: var(--text-strong);
+      margin: 0.3rem 0;
+    }
+    .hero-subtitle {
+      font-size: 0.96rem; color: var(--text-muted);
+      max-width: 40rem; margin: 0.4rem auto 0;
+    }
 
-  .toggle-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 999px;
-    border: 1px solid rgba(129,140,248,0.7);
-    font-size: 1.2rem;
-    background: #eef2ff;
-    cursor: pointer;
-  }
+    /* Steps layout */
+    main { padding-bottom: 2.5rem; }
 
-  .ai-response {
-    background: #eef2ff;
-    border: 1px solid rgba(129,140,248,0.35);
-    margin-top: 0.5rem;
-    padding: 1rem;
-    border-radius: 12px;
-    line-height: 1.6;
-  }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
 
-  .btn-primary {
-    display: inline-block;
-    margin-top: 0.7rem;
-    padding: 0.45rem 1rem;
-    border-radius: var(--radius-pill);
-    color: #fff;
-    background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-    border: none;
-    cursor: pointer;
-  }
+    .step-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem 1.15rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+      padding-left: 1.2rem;
+    }
 
-  .btn-copy {
-    float: right;
-    margin-top: 0.4rem;
-    font-size: 0.75rem;
-    padding: 0.3rem 0.6rem;
-  }
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-  .prompt-preview {
-    background: #f9fafb;
-    border-radius: 10px;
-    padding: 0.6rem;
-    margin-top: 0.4rem;
-    border: 1px dashed rgba(209,213,219,0.8);
-    white-space: pre-wrap;
-    color: var(--text-muted);
-  }
-</style>
+    .step-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .step-index {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #4c1d95;
+      background: #ede9fe;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      font-weight: 600;
+    }
+
+    .step-title {
+      font-size: 1.06rem;
+      font-weight: 650;
+      color: #111827;
+    }
+
+    .step-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .toggle-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      color: #4c1d95;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+    }
+    .toggle-btn:hover {
+      transform: translateY(-1px) scale(1.07);
+      box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75);
+      background: #e0e7ff;
+    }
+
+    .step-content {
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    .step-body {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .prompt-preview {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px dashed rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+      font-family: var(--font-main);
+      min-height: 2.2rem;
+      white-space: pre-wrap;
+    }
+
+    .ai-response {
+      margin-top: 0.4rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      background: #eef2ff;
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      font-size: 0.92rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.55;
+    }
+
+    .ai-response p { margin-bottom: 0.75rem; }
+    .ai-response ul,
+    .ai-response ol { margin: 0.6rem 0 0.6rem 1.2rem; }
+    .ai-response strong { font-weight: 700; }
+    .ai-response em { font-style: italic; }
+
+    .copy-row {
+      margin-top: 0.35rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-ghost,
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .btn-ghost {
+      padding: 0.42rem 0.8rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      padding: 0.42rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-copy {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+    }
+  </style>
 </head>
 
 <body>
+<div class="page">
 
-<header>
-  <div class="container">
-    <nav>
-      <div><strong>PromptSchola</strong></div>
-      <div>
-        <a href="index.html">Home</a>
-        <a href="physics.html">Physics</a>
-        <a href="pricing.html">Pricing</a>
+  <!-- NAV -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <a href="auth.html" class="btn-pill">Account</a>
       </div>
-      <a href="auth.html" class="btn-pill">Account</a>
-    </nav>
-  </div>
-</header>
+    </div>
+  </header>
 
-<section class="hero">
-  <h1 class="hero-title">{{TITLE}}</h1>
-  <p class="hero-sub">{{SUBTITLE}}</p>
-</section>
-
-<main class="container">
-
-<div class="steps-grid">
-
-  <!-- STEP TEMPLATE (repeat for steps 1-6) -->
-  <article class="step-card">
-    <div class="step-header">
-      <div>
-        <div class="step-index">STEP {{N}}</div>
-        <div class="step-title">{{STEP_TITLE}}</div>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">{{KICKER}}</div>
+        <h1 class="hero-title">{{TITLE}}</h1>
+        <p class="hero-subtitle">
+          {{SUBTITLE}}
+        </p>
       </div>
-      <button class="toggle-btn" id="toggle-btn-{{N}}" onclick="toggleStep({{N}})">−</button>
-    </div>
+    </section>
 
-    <div id="step-content-{{N}}">
-      <div class="prompt-preview" id="preview-step{{N}}"></div>
-      <div class="ai-response" id="response-step{{N}}"></div>
-      <button class="btn-primary" onclick="runWithAI({{N}})">Run with AI</button>
-      <button class="btn-pill btn-copy" onclick="copyAnswer({{N}})">Copy answer</button>
-    </div>
-  </article>
+    <!-- STEPS -->
+    <section>
+      <div class="container">
+        <div class="steps-grid">
 
+          <!-- Repeat this block for steps 1–6, editing titles/body per nano-lesson -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">STEP 1</div>
+                <div class="step-title">{{STEP1_TITLE}}</div>
+              </div>
+              <div class="step-header-right">
+                <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-1">
+              <div class="step-body">
+                {{STEP1_BODY}}
+              </div>
+              <div class="prompt-preview" id="preview-step1">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step1"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(1)">Copy answer</button>
+              </div>
+              <div style="margin-top:0.6rem; display:flex; justify-content:space-between; gap:0.5rem; flex-wrap:wrap; font-size:0.78rem; color:var(--text-subtle); border-top:1px solid rgba(209,213,219,0.7); padding-top:0.6rem;">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
+                </div>
+                <span>{{STEP1_GOAL}}</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Copy/paste and adjust for steps 2–6 as needed -->
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
 </div>
 
-</main>
-
 <script>
-/* ------------------- PROMPT ENGINE -------------------
-Each prompt auto-includes strict LaTeX safety */
-const prompts = {
-  1: `{{PROMPT1}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
-  2: `{{PROMPT2}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
-  3: `{{PROMPT3}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
-  4: `{{PROMPT4}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
-  5: `{{PROMPT5}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`,
-  6: `{{PROMPT6}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.`
-};
+  // PROMPTS TEMPLATE: fill in {{PROMPT1}} ... {{PROMPT6}} when creating a real nano-lesson
+  const prompts = {
+    1: `{{PROMPT1}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    2: `{{PROMPT2}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    3: `{{PROMPT3}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    4: `{{PROMPT4}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    5: `{{PROMPT5}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    6: `{{PROMPT6}}\n\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\[ and \\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`
+  };
 
+  const lastAiResponses = {};
+  const STORAGE_KEY = '{{NANO_KEY}}_collapse';
+  let collapseState = {};
+
+  function showPrompt(step) {
+    const preview = document.getElementById('preview-step' + step);
+    if (!preview) return;
+    preview.textContent = prompts[step] || 'Prompt coming soon.';
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise([preview]).catch(err =>
+        console.error('MathJax error in preview:', err)
+      );
+    }
+  }
+
+  // Format AI output while keeping LaTeX \[ ... \] intact
+  function formatOutput(text) {
+    if (!text) return '';
+
+    // Normalize backslashes if model returns \\[ ... \\]
+    let safe = text
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]');
+
+    // Convert markdown headings "### Title" etc → bold line
+    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+
+    // Convert markdown bullets ("- item" or "* item") → "• item"
+    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
+
+    // Basic markdown-style bold/italic (after bullet cleanup)
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // Paragraphs & line breaks
+    safe = safe.replace(/\n\n+/g, '</p><p>');
+    safe = safe.replace(/\n/g, '<br>');
+    safe = '<p>' + safe + '</p>';
+
+    return safe;
+  }
+
+  async function runWithAI(step) {
+    const prompt = prompts[step];
+    if (!prompt) {
+      alert('No prompt defined for this step yet.');
+      return;
+    }
+
+    const output = document.getElementById('response-step' + step);
+    if (!output) {
+      alert('No response area found for this step.');
+      return;
+    }
+
+    try {
+      output.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+
+      if (!res.ok) {
+        output.textContent = 'There was an error contacting the AI. Please try again later.';
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastAiResponses[step] = raw;
+      output.innerHTML = formatOutput(raw);
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([output]).catch(err =>
+          console.error('MathJax error in response:', err)
+        );
+      }
+    } catch (err) {
+      console.error(err);
+      const out = document.getElementById('response-step' + step);
+      if (out) out.textContent = 'Unexpected error. Please try again.';
+    }
+  }
+
+  function copyAnswer(step) {
+    const text = lastAiResponses[step];
+    if (!text) {
+      alert('No AI answer to copy yet. Run with AI first.');
+      return;
+    }
+
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+
+    navigator.clipboard.writeText(text)
+      .then(() => { alert('Answer copied to clipboard.'); })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy to clipboard. Please try again.');
+      });
+  }
+
+  function loadCollapseState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      collapseState = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      collapseState = {};
+    }
+  }
+
+  function saveCollapseState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
+    } catch (e) {
+      console.error('Unable to save collapse state', e);
+    }
+  }
+
+  function toggleStep(step) {
+    const content = document.getElementById(`step-content-${step}`);
+    const btn = document.getElementById(`toggle-btn-${step}`);
+    if (!content || !btn) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? '−' : '+';
+
+    collapseState[step] = !isHidden;
+    saveCollapseState();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadCollapseState();
+    const steps = [1, 2, 3, 4, 5, 6];
+    steps.forEach(step => {
+      const content = document.getElementById(`step-content-${step}`);
+      const btn = document.getElementById(`toggle-btn-${step}`);
+      if (!content || !btn) return;
+
+      const expanded = collapseState[step];
+      if (expanded === false) {
+        content.style.display = 'none';
+        btn.textContent = '+';
+      } else {
+        content.style.display = 'block';
+        btn.textContent = '−';
+      }
+    });
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(err =>
+        console.error('MathJax initial typeset error:', err)
+      );
+    }
+  });
+</script>
+
+</body>
+</html>
