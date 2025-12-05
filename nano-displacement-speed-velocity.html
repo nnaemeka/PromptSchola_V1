@@ -229,17 +229,34 @@
       white-space: pre-wrap;
     }
 
-    .ai-response {
+      .ai-response {
       margin-top: 0.4rem;
-      padding: 0.55rem 0.65rem;
+      padding: 0.85rem 1rem;
       border-radius: 10px;
       background: #eef2ff;
       border: 1px solid rgba(129, 140, 248, 0.5);
-      font-size: 0.82rem;
+      font-size: 0.92rem;
       color: #111827;
       white-space: pre-wrap;
+      line-height: 1.55;
     }
-
+    
+    .ai-response p {
+      margin-bottom: 0.75rem;
+    }
+    
+    .ai-response ul,
+    .ai-response ol {
+      margin: 0.6rem 0 0.6rem 1.2rem;
+    }
+    
+    .ai-response strong {
+      font-weight: 700;
+    }
+    
+    .ai-response em {
+      font-style: italic;
+    }
     .step-footer {
       margin-top: auto;
       padding-top: 0.6rem;
@@ -553,15 +570,44 @@
 
 <script>
   const prompts = {
-    1: `You are a Physics tutor for a first-year student.\n\nExplain the difference between distance and displacement, and between average speed and average velocity, using:\n• A student walking from 0 m → +5 m → +1 m on a straight line\n• Clear definitions and one short summary at the end.\n\nKeep the explanation concise, but include at least one diagram description the student could sketch.`,
-    2: `You are a Physics tutor.\n\nBuild intuition for displacement, speed, and velocity using:\n• Everyday examples (walking, car trips, running on a track)\n• At least one case where displacement is zero but distance is not\n\nAvoid formulas for now; focus on stories and simple numbers.`,
-    3: `You are a Physics tutor.\n\nGive the student 3 short calculation questions about displacement, average speed, and average velocity in 1D motion. For each question:\n• State the problem clearly\n• After the student tries, reveal the solution step-by-step.\n\nMake the numbers simple (whole numbers, small integers).`
+    1: `You are a Physics tutor for a first-year student.\n\nExplain the difference between distance and displacement, and between average speed and average velocity, using:\n• A student walking from 0 m → +5 m → +1 m on a straight line\n• Clear definitions and one short summary at the end.\n\nFormat your response with:\n• short paragraphs (2–4 lines),\n• bullet points where helpful,\n• bold for key terms,\n• and clear spacing between ideas.\nAvoid long, dense blocks of text.`,
+    2: `You are a Physics tutor.\n\nBuild intuition for displacement, speed, and velocity using:\n• Everyday examples (walking, car trips, running on a track)\n• At least one case where displacement is zero but distance is not\n\nAvoid formulas for now; focus on stories and simple numbers.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each example,\n• bold key concepts,\n• and clear spacing between ideas.`,
+    3: `You are a Physics tutor.\n\nCreate 3 short calculation questions about displacement, average speed, and average velocity in 1D motion. For each question:\n• State the problem clearly\n• Then show the solution step-by-step after the student has tried it.\n\nKeep the numbers simple (small integers or simple decimals).\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.`
   };
 
   function showPrompt(step) {
     const preview = document.getElementById('preview-step' + step);
     if (!preview) return;
     preview.textContent = prompts[step] || 'Prompt coming soon.';
+  }
+
+  // Escape HTML before we do simple formatting
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  // Light-weight formatter: bold, italics, paragraphs, line breaks
+  function formatOutput(text) {
+    if (!text) return '';
+    let safe = escapeHTML(text);
+
+    // Markdown-style bold and italics
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // Paragraphs: double newlines → paragraph breaks
+    safe = safe.replace(/\n\n+/g, '</p><p>');
+
+    // Single newlines → <br>
+    safe = safe.replace(/\n/g, '<br>');
+
+    // Wrap in <p> if not already wrapped
+    safe = '<p>' + safe + '</p>';
+
+    return safe;
   }
 
   async function runWithAI(step) {
@@ -594,13 +640,12 @@
       }
 
       const data = await res.json();
-      output.textContent = data.content || 'No response received from AI.';
+      output.innerHTML = formatOutput(data.content || 'No response received from AI.');
     } catch (err) {
       console.error(err);
       output.textContent = 'Unexpected error. Please try again.';
     }
   }
 </script>
-
 </body>
 </html>
