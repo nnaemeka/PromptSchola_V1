@@ -29,7 +29,7 @@
       --bg-body: #f3f4f6;
       --bg-card: #ffffff;
       --accent: #7e22ce;
-      --accent-strong: #6d28d9;
+      --accent-strong: #4c1d95;
       --accent-soft-border: rgba(129, 140, 248, 0.4);
       --text-main: #111827;
       --text-muted: #4b5563;
@@ -293,8 +293,20 @@
     .ai-response p { margin-bottom: 0.75rem; }
     .ai-response ul,
     .ai-response ol { margin: 0.6rem 0 0.6rem 1.2rem; }
-    .ai-response strong { font-weight: 700; }
+
+    /* 🔍 Key terms: bold + subtle accent color */
+    .ai-response strong {
+      font-weight: 700;
+      color: var(--accent-strong);
+    }
+
     .ai-response em { font-style: italic; }
+
+    /* 📐 MathJax display equations inside AI output: slightly larger + spaced */
+    .ai-response .mjx-container[jax="CHTML"] {
+      margin: 0.7rem 0;
+      font-size: 1.05em;
+    }
 
     .copy-row {
       margin-top: 0.35rem;
