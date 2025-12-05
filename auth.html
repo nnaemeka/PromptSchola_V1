@@ -5,7 +5,6 @@
   <title>Sign in – PromptSchola</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg-body: #f3f4f6;
@@ -173,6 +172,8 @@
       margin-top: 0.4rem;
       font-size: 0.8rem;
       color: var(--text-subtle);
+      flex-wrap: wrap;
+      gap: 0.4rem;
     }
     .helper-row a { color: var(--accent-strong); }
 
@@ -217,7 +218,10 @@
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <a href="auth.html" class="btn-pill">Account</a>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
+          <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
+          <a href="auth.html" class="btn-pill">Account</a>
+        </div>
       </div>
     </div>
   </header>
@@ -254,7 +258,7 @@
 
         <div class="helper-row">
           <span id="helper-text">No account? <a href="#" id="helper-link">Create one</a></span>
-          <!-- You can add "Forgot password?" later when you wire up email reset -->
+          <a href="#" id="back-link">Back to previous page</a>
         </div>
 
         <div id="auth-message" class="auth-message"></div>
@@ -267,15 +271,12 @@
   </footer>
 </div>
 
+<!-- Supabase + shared auth helpers -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
 <script>
-  // 1) Configure Supabase (replace with your real values from Supabase dashboard)
-  const SUPABASE_URL = "https://YOUR_PROJECT_REF.supabase.co";
-  const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";
-
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  // 2) Simple UI toggle logic
-  const mode = { current: 'signin' }; // or 'signup'
+  const mode = { current: 'signin' };
 
   const btnSignin = document.getElementById('btn-signin');
   const btnSignup = document.getElementById('btn-signup');
@@ -288,6 +289,17 @@
   const helperLink = document.getElementById('helper-link');
   const authMessage = document.getElementById('auth-message');
   const authForm = document.getElementById('auth-form');
+  const backLink = document.getElementById('back-link');
+
+  function getRedirectTarget() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('redirect') || 'physics.html';
+  }
+
+  function showMessage(msg, type = 'error') {
+    authMessage.textContent = msg;
+    authMessage.className = 'auth-message ' + (type === 'success' ? 'success' : 'error');
+  }
 
   function setMode(newMode) {
     mode.current = newMode;
@@ -310,7 +322,7 @@
       submitBtn.textContent = 'Create account';
       helperText.innerHTML = 'Already have an account? <a href="#" id="helper-link">Sign in</a>';
     }
-    // Re-bind helper link
+
     const newHelperLink = document.querySelector('#helper-text a') || helperLink;
     newHelperLink.addEventListener('click', (e) => {
       e.preventDefault();
@@ -321,23 +333,21 @@
   btnSignin.addEventListener('click', () => setMode('signin'));
   btnSignup.addEventListener('click', () => setMode('signup'));
 
-  // Initial bind for helper link
   helperLink.addEventListener('click', (e) => {
     e.preventDefault();
     setMode('signup');
   });
 
-  function getRedirectTarget() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('redirect') || 'physics.html';
-  }
+  backLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = getRedirectTarget();
+    if (target) {
+      window.location.href = target;
+    } else {
+      history.back();
+    }
+  });
 
-  function showMessage(msg, type = 'error') {
-    authMessage.textContent = msg;
-    authMessage.className = 'auth-message ' + (type === 'success' ? 'success' : 'error');
-  }
-
-  // 3) Handle form submit
   authForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     authMessage.textContent = '';
@@ -352,7 +362,7 @@
 
     try {
       if (mode.current === 'signin') {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
         if (error) {
           showMessage(error.message || 'Unable to sign in.');
           return;
@@ -360,7 +370,7 @@
         showMessage('Signed in successfully.', 'success');
         window.location.href = getRedirectTarget();
       } else {
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabaseClient.auth.signUp({
           email,
           password,
           options: {
@@ -380,11 +390,10 @@
     }
   });
 
-  // 4) If already logged in, you may optionally redirect straight to account page
   (async function checkLoggedIn() {
-    const { data } = await supabase.auth.getUser();
-    if (data && data.user) {
-      // Already logged in; you could redirect to account or keep them here
+    const user = await getCurrentUser();
+    if (user) {
+      // You could auto-redirect to account.html here if you want:
       // window.location.href = 'account.html';
     }
   })();
