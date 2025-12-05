@@ -6,462 +6,272 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Explore Mechanics in PromptSchola’s Physics track: kinematics, Newton’s Laws, projectiles, forces, work & energy, and more, all using a 6-step prompt-based mastery system."
+    content="Mechanics track in PromptSchola: kinematics, Newton’s laws, and more, built as guided nano-lessons."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-body: #f3f4f6;
-      --bg-surface: #f9fafb;
       --bg-card: #ffffff;
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.09);
-      --accent-soft2: rgba(129, 140, 248, 0.12);
+      --accent-soft: rgba(126, 34, 206, 0.08);
+      --accent-soft-border: rgba(129, 140, 248, 0.4);
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
       --text-strong: #020617;
-      --border-subtle: rgba(209, 213, 219, 0.55);
+      --border-subtle: rgba(209, 213, 219, 0.7);
       --radius-card: 18px;
       --radius-pill: 999px;
-      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-main: 'Inter', system-ui, sans-serif;
       --transition-fast: 0.25s ease-out;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--font-main);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
       color: var(--text-main);
-      line-height: 1.7;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { text-decoration: none; color: inherit; }
 
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
 
     .container {
-      width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0 1.4rem;
+      padding: 0 1.3rem;
     }
 
-    /* Header / Nav */
+    /* NAV */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
+      position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
-      background: linear-gradient(
-        to bottom,
-        rgba(249, 250, 251, 0.96),
-        rgba(249, 250, 251, 0.94),
-        rgba(249, 250, 251, 0.9)
-      );
+      background: rgba(249, 250, 251, 0.96);
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
 
     .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; justify-content: space-between; align-items: center;
       padding: 0.75rem 0;
     }
 
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
     .logo-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 40%;
+      width: 34px; height: 34px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1rem;
-      color: #f9fafb;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
     }
 
     .logo-text span:first-child {
-      display: block;
-      font-weight: 700;
-      font-size: 0.98rem;
-      letter-spacing: 0.02em;
-      color: var(--text-strong);
+      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
     }
-
     .logo-text span:last-child {
-      display: block;
-      font-size: 0.72rem;
-      color: var(--text-subtle);
+      font-size: 0.72rem; color: var(--text-subtle);
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.3rem;
-      font-size: 0.88rem;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      opacity: 0.9;
-      transition: opacity var(--transition-fast), color var(--transition-fast);
-    }
-
-    .nav-links a:hover {
-      opacity: 1;
-      color: var(--accent-strong);
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.82rem;
-    }
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
 
     .btn-pill {
       border-radius: var(--radius-pill);
-      padding: 0.45rem 0.95rem;
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #ffffff;
-      color: var(--text-main);
-      cursor: pointer;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      transition: var(--transition-fast);
     }
-
     .btn-pill:hover {
-      background: #f3f4f6;
-      transform: translateY(-1px);
-      border-color: rgba(156, 163, 175, 0.9);
-      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+      background: #f3f4f6; transform: translateY(-1px);
     }
 
-    .btn-primary {
-      border-radius: var(--radius-pill);
-      padding: 0.6rem 1.3rem;
-      font-size: 0.86rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #f9fafb;
-      box-shadow: none;
-      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
-    }
-
-    .btn-subject-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.42rem 0.95rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.82rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #f9fafb;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
-      white-space: nowrap;
-    }
-
-    .btn-subject-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
-    }
-
-    .badge {
-      font-size: 0.72rem;
-      padding: 0.12rem 0.7rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #ffffff;
-      color: #ffffff;
-      color: var(--text-main);
-    }
-
-    .badge-outline {
-      font-size: 0.72rem;
-      padding: 0.12rem 0.7rem;
-      border-radius: var(--radius-pill);
-      border: 1px dashed rgba(148, 163, 184, 0.9);
-      color: var(--text-subtle);
-      background: #f9fafb;
-    }
-
-    /* Hero */
+    /* HERO */
     .hero {
-      padding: 3rem 0 3.2rem;
+      padding: 3rem 0 1.5rem;
     }
 
-    .hero-heading {
-      text-align: center;
-      max-width: 720px;
-      margin: 0 auto 2rem;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 1.5rem;
+      align-items: center;
     }
 
     .hero-kicker {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--text-subtle);
-      margin-bottom: 0.8rem;
     }
-
     .hero-title {
-      font-size: clamp(2rem, 3vw, 2.6rem);
-      line-height: 1.12;
-      font-weight: 800;
-      color: var(--text-strong);
-      margin-bottom: 0.3rem;
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      font-weight: 800; color: var(--text-strong);
+      margin: 0.35rem 0;
     }
-
     .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      max-width: 34rem;
-      margin: 0.4rem auto 0;
+      font-size: 0.96rem; color: var(--text-muted);
+      max-width: 32rem; margin-top: 0.4rem;
     }
 
-    .hero-inner {
-      margin-top: 2rem;
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .hero-main {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .hero-main p {
-      margin-bottom: 0.9rem;
-    }
-
-    .hero-main ul {
-      list-style: none;
-      margin-bottom: 0.9rem;
-    }
-
-    .hero-main li {
-      margin-bottom: 0.3rem;
-    }
-
-    .hero-note {
-      font-size: 0.8rem;
+    .hero-tagline {
+      margin-top: 0.7rem;
+      font-size: 0.86rem;
       color: var(--text-subtle);
-      margin-top: 0.4rem;
     }
 
-    .hero-image {
-      display: flex;
-      justify-content: center;
-    }
-
+    /* Illustration card on right */
     .hero-illustration {
-      max-width: 100%;
-      border-radius: 22px;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.25);
-      border: 1px solid rgba(15, 23, 42, 0.2);
-      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.14), rgba(243, 244, 246, 1));
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+      padding: 1.1rem 1.2rem;
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    /* Sections */
-    section {
-      padding: 2.7rem 0 3rem;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 1.8rem;
-    }
-
-    .section-kicker {
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-subtle);
+    .hero-illustration-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-main);
       margin-bottom: 0.4rem;
     }
-
-    .section-title {
-      font-size: 1.35rem;
-      color: var(--text-strong);
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-    }
-
-    .section-subtitle {
-      font-size: 0.92rem;
+    .hero-illustration-body {
+      font-size: 0.84rem;
       color: var(--text-muted);
-      max-width: 30rem;
-      margin: 0 auto;
     }
 
-    /* Subtopic cards */
+    /* Topic grid */
+    .topics-section {
+      padding-bottom: 2.5rem;
+    }
+
+    .topics-heading {
+      margin-bottom: 0.8rem;
+    }
+    .topics-heading h2 {
+      font-size: 0.98rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+    }
+    .topics-heading p {
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-top: 0.15rem;
+    }
+
     .topics-grid {
+      margin-top: 0.8rem;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
+      gap: 1.2rem;
     }
 
     .topic-card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-card);
-      padding: 1rem 1.05rem;
-      font-size: 0.86rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      padding: 1rem 1rem 1.1rem;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      min-height: 190px;
-    }
-
-    .topic-header {
-      display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 0.4rem;
+      min-height: 170px;
     }
 
+    .topic-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+      margin-bottom: 0.15rem;
+    }
     .topic-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: var(--text-main);
+      font-size: 1rem;
+      font-weight: 650;
+      color: var(--text-strong);
     }
-
     .topic-body {
-      color: var(--text-muted);
-      font-size: 0.86rem;
-    }
-
-    .topic-list {
-      list-style: none;
-      margin-top: 0.4rem;
-      color: var(--text-muted);
       font-size: 0.84rem;
-    }
-
-    .topic-list li {
-      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
     }
 
     .topic-footer {
+      margin-top: 0.9rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: auto;
-      padding-top: 0.4rem;
-      font-size: 0.8rem;
       gap: 0.5rem;
-    }
-
-    .pill-mini {
-      font-size: 0.72rem;
-      padding: 0.05rem 0.6rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      font-size: 0.78rem;
       color: var(--text-subtle);
-      background: #f9fafb;
     }
 
-    /* Footer */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.48rem 1.1rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+    }
+
     footer {
       margin-top: auto;
-      padding: 1.8rem 0 2.1rem;
+      padding: 1.8rem 0;
+      text-align: center;
       font-size: 0.8rem;
       color: var(--text-subtle);
     }
 
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 0.9rem;
-      align-items: center;
-      border-top: 1px solid rgba(209, 213, 219, 0.9);
-      padding-top: 0.95rem;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 0.9rem;
-    }
-
-    .footer-links a {
-      color: var(--text-subtle);
-    }
-
-    .footer-links a:hover {
-      color: var(--text-main);
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .hero-image {
-        margin-top: 1.3rem;
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
       }
       .topics-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 700px) {
       .topics-grid {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr;
       }
-      .nav-links {
-        display: none;
-      }
+      .nav-links { display: false; display: none; }
     }
   </style>
 </head>
+
 <body>
 <div class="page">
+
+  <!-- NAV -->
   <header>
     <div class="container">
       <div class="nav">
-        <div class="nav-left">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
           <div class="logo-mark">P</div>
           <div class="logo-text">
             <span>PromptSchola</span>
@@ -473,214 +283,171 @@
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <div class="nav-right">
-          <a href="auth.html" class="btn-pill">Log in / Create account</a>
-        </div>
+        <a href="auth.html" class="btn-pill">Account</a>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- Hero -->
+    <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <div class="hero-heading">
-          <div class="hero-kicker">Mechanics</div>
-          <h1 class="hero-title">Forces, motion, and energy: the backbone of Physics.</h1>
-          <p class="hero-subtitle">
-            Mechanics is where most Physics journeys truly begin. Here you’ll learn how and why objects move,
-            how forces act, and how energy and momentum shape the world.
-          </p>
-        </div>
-
-        <div class="hero-inner">
-          <div class="hero-main">
-            <p>
-              In the Mechanics track, every lesson follows the same 6-step flow:
+        <div class="hero-grid">
+          <div>
+            <div class="hero-kicker">Mechanics · Track</div>
+            <h1 class="hero-title">Mechanics: motion, forces, and energy.</h1>
+            <p class="hero-subtitle">
+              Start from “What is Physics?” then move into kinematics, Newton’s laws, and energy —
+              each broken into nano-lessons with AI-guided prompts.
             </p>
-            <ul>
-              <li>1. <strong>Orient</strong> – get the overview and key questions.</li>
-              <li>2. <strong>Understand</strong> – build intuition with clear explanations.</li>
-              <li>3. <strong>Apply</strong> – connect ideas to real systems.</li>
-              <li>4. <strong>Work Through It</strong> – step-by-step examples.</li>
-              <li>5. <strong>Review &amp; Practice</strong> – questions that reveal gaps.</li>
-              <li>6. <strong>Simulation Lab</strong> – visualize how changing variables affects motion.</li>
-            </ul>
-            <p>
-              Start wherever you are: first-time learner, revisiting for an exam, or using Mechanics as a
-              foundation for engineering and advanced Physics.
-            </p>
-            <p class="hero-note">
-              Steps 1–3 are free for every Mechanics lesson. Steps 4–6 unlock with Mastery Access.
+            <p class="hero-tagline">
+              You can move in order, or jump to the topic you need. Each nano-lesson follows the
+              same 6-step flow, from orientation to practice and visualization.
             </p>
           </div>
 
-          <div class="hero-image">
-            <!-- Replace src with your actual illustration file -->
-            <img
-              src="assets/img/mechanics-hero.png"
-              alt="Illustration of mechanics concepts: projectiles, forces, and motion graphs"
-              class="hero-illustration"
-            />
+          <div class="hero-illustration">
+            <div>
+              <div class="hero-illustration-title">Mechanics in a single picture</div>
+              <div class="hero-illustration-body">
+                Imagine a ball rolling down a ramp, a box being pushed across the floor, and a planet
+                orbiting a star. Mechanics gives you the language and tools to describe and predict
+                all of these motions.
+              </div>
+            </div>
+            <div style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-subtle);">
+              Later, this panel can host a simple diagram or animation illustrating forces and motion.
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Mechanics subtopics -->
-    <section>
+    <!-- TOPICS -->
+    <section class="topics-section">
       <div class="container">
-        <div class="section-header">
-          <div class="section-kicker">Topics</div>
-          <h2 class="section-title">Mechanics subtopics (with nano-lessons)</h2>
-          <p class="section-subtitle">
-            Each card is a subtopic containing 6-step nano-lessons. Follow the chronological order, but feel free to jump to any topic.
-          </p>
+        <div class="topics-heading">
+          <h2>Mechanics topics</h2>
+          <p>Work through these in order, or jump to what you need most.</p>
         </div>
 
         <div class="topics-grid">
+
+          <!-- What is Physics? as entry topic -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Start here</div>
+              <div class="topic-title">Introduction: What is Physics?</div>
+              <div class="topic-body">
+                If you haven’t gone through the introduction yet, start here to understand what physics
+                studies and why Mechanics is such a central part of it.
+              </div>
+            </div>
+            <div class="topic-footer">
+              <a href="nano-what-is-physics.html" class="btn-primary">
+                Start introduction
+              </a>
+              <span>All 6 steps free.</span>
+            </div>
+          </article>
+
           <!-- Kinematics in 1D -->
           <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Kinematics in 1D</h3>
-              <span class="badge">Core</span>
-            </header>
-            <div class="topic-body">
-              <p>Describing motion along a straight line with position, velocity, and acceleration.</p>
-              <ul class="topic-list">
-                <li>• Displacement, speed, velocity</li>
-                <li>• Acceleration (constant &amp; changing)</li>
-                <li>• Equations of motion</li>
-                <li>• x–t, v–t, a–t graphs</li>
-              </ul>
+            <div>
+              <div class="topic-kicker">Kinematics</div>
+              <div class="topic-title">Kinematics in 1D</div>
+              <div class="topic-body">
+                Describe motion along a straight line using displacement, velocity, and acceleration,
+                before bringing in Newton’s laws.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="lesson-kinematics-1d.html" class="btn-subject-primary">Open lesson</a>
-              <span class="pill-mini">Nano-lessons coming</span>
-            </footer>
+            <div class="topic-footer">
+              <a href="kinematics-1d.html" class="btn-primary">
+                Open topic
+              </a>
+              <span>Includes nano-lessons like “Displacement &amp; Velocity”.</span>
+            </div>
           </article>
 
-          <!-- Projectiles -->
+          <!-- Forces & Newton's Laws -->
           <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Projectiles</h3>
-              <span class="badge">Core</span>
-            </header>
-            <div class="topic-body">
-              <p>Two-dimensional motion under gravity: throwing, launching, and predicting paths.</p>
-              <ul class="topic-list">
-                <li>• Motion under gravity (overview)</li>
-                <li>• Horizontal projectile motion</li>
-                <li>• Vertical &amp; angled launch</li>
-                <li>• Time of flight, range, height</li>
-              </ul>
+            <div>
+              <div class="topic-kicker">Dynamics</div>
+              <div class="topic-title">Forces &amp; Newton’s Laws</div>
+              <div class="topic-body">
+                Learn how forces cause changes in motion and how to represent them with free-body diagrams
+                and Newton’s three laws.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="lesson-projectiles.html" class="btn-subject-primary">Open lesson</a>
-              <span class="pill-mini">Nano-lessons coming</span>
-            </footer>
-          </article>
-
-          <!-- Newton's Laws -->
-          <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Newton’s Laws</h3>
-              <span class="badge">Core</span>
-            </header>
-            <div class="topic-body">
-              <p>How forces relate to motion, equilibrium, and interactions between objects.</p>
-              <ul class="topic-list">
-                <li>• Newton’s First Law (inertia)</li>
-                <li>• Newton’s Second Law (F = ma)</li>
-                <li>• Newton’s Third Law (action–reaction)</li>
-                <li>• Free-body diagrams</li>
-              </ul>
+            <div class="topic-footer">
+              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
+                Coming soon
+              </a>
+              <span>Future Mechanics topic.</span>
             </div>
-            <footer class="topic-footer">
-              <a href="lesson-newton-laws-overview.html" class="btn-subject-primary">Open lesson</a>
-              <span class="pill-mini">Nano-lessons coming</span>
-            </footer>
-          </article>
-
-          <!-- Forces & Equilibrium -->
-          <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Forces &amp; Equilibrium</h3>
-              <span class="badge-outline">Planned</span>
-            </header>
-            <div class="topic-body">
-              <p>Balancing forces, resolving components, and analyzing real-world setups.</p>
-              <ul class="topic-list">
-                <li>• Force components &amp; vectors</li>
-                <li>• Static equilibrium in 1D &amp; 2D</li>
-                <li>• Inclined planes, tension, normal force</li>
-                <li>• Common problem types</li>
-              </ul>
-            </div>
-            <footer class="topic-footer">
-              <a href="lesson-forces-equilibrium.html" class="btn-subject-primary">Open lesson</a>
-              <span class="pill-mini">Planned</span>
-            </footer>
           </article>
 
           <!-- Work & Energy -->
           <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Work &amp; Energy</h3>
-              <span class="badge-outline">Planned</span>
-            </header>
-            <div class="topic-body">
-              <p>Tracking how forces transfer energy and when mechanical energy is conserved.</p>
-              <ul class="topic-list">
-                <li>• Work and kinetic energy</li>
-                <li>• Potential energy (gravity &amp; springs)</li>
-                <li>• Conservation of mechanical energy</li>
-                <li>• Power and real-world systems</li>
-              </ul>
+            <div>
+              <div class="topic-kicker">Energy</div>
+              <div class="topic-title">Work &amp; Energy</div>
+              <div class="topic-body">
+                Understand kinetic and potential energy, work, and conservation principles that simplify
+                complex motion problems.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="lesson-work-energy.html" class="btn-subject-primary">Open lesson</a>
-              <span class="pill-mini">Planned</span>
-            </footer>
+            <div class="topic-footer">
+              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
+                Coming soon
+              </a>
+              <span>Planned track.</span>
+            </div>
           </article>
 
-          <!-- Momentum & Collisions -->
+          <!-- Momentum -->
           <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Momentum &amp; Collisions</h3>
-              <span class="badge-outline">Planned</span>
-            </header>
-            <div class="topic-body">
-              <p>How momentum is conserved and how collisions are modeled in one and two dimensions.</p>
-              <ul class="topic-list">
-                <li>• Linear momentum &amp; impulse</li>
-                <li>• Elastic vs inelastic collisions</li>
-                <li>• 1D and simple 2D collisions</li>
-                <li>• Center-of-mass perspective</li>
-              </ul>
+            <div>
+              <div class="topic-kicker">Momentum</div>
+              <div class="topic-title">Momentum &amp; Collisions</div>
+              <div class="topic-body">
+                Explore linear momentum, impulse, and collision problems, and see how conservation
+                laws make analysis easier.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="lesson-momentum-collisions.html" class="btn-subject-primary">Open lesson</a>
-              <span class="pill-mini">Planned</span>
-            </footer>
+            <div class="topic-footer">
+              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
+                Coming soon
+              </a>
+              <span>On the roadmap.</span>
+            </div>
           </article>
+
+          <!-- Rotation -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Rotation</div>
+              <div class="topic-title">Rotational Motion</div>
+              <div class="topic-body">
+                Extend your understanding of straight-line motion to rotation: angular velocity,
+                torque, rotational energy, and more.
+              </div>
+            </div>
+            <div class="topic-footer">
+              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
+                Coming soon
+              </a>
+              <span>Advanced Mechanics.</span>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <span>&copy; 2025 PromptSchola. All rights reserved.</span>
-        <div class="footer-links">
-          <a href="index.html">Home</a>
-          <a href="physics.html">Physics</a>
-          <a href="pricing.html">Pricing</a>
-          <a href="auth.html">Account</a>
-        </div>
-      </div>
-    </div>
+    © 2025 PromptSchola. All rights reserved.
   </footer>
 </div>
 </body>
