@@ -672,6 +672,13 @@
     const preview = document.getElementById('preview-step' + step);
     if (!preview) return;
     preview.textContent = prompts[step] || 'Prompt coming soon.';
+
+    // Also typeset LaTeX in the preview area (if any)
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise([preview]).catch(err =>
+        console.error('MathJax error in preview:', err)
+      );
+    }
   }
 
   function escapeHTML(str) {
@@ -689,7 +696,7 @@
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-    // Paragraphs & line breaks
+    // Paragraphs & line breaks (outside of LaTeX; MathJax will still see \[...\])
     safe = safe.replace(/\n\n+/g, '</p><p>');
     safe = safe.replace(/\n/g, '<br>');
     safe = '<p>' + safe + '</p>';
@@ -733,7 +740,9 @@
 
       // Trigger MathJax only on this response node
       if (window.MathJax && window.MathJax.typesetPromise) {
-        MathJax.typesetPromise([output]).catch(err => console.error('MathJax error:', err));
+        MathJax.typesetPromise([output]).catch(err =>
+          console.error('MathJax error in response:', err)
+        );
       }
     } catch (err) {
       console.error(err);
@@ -811,6 +820,13 @@
         btn.textContent = '−';
       }
     });
+
+    // Safety: typeset any LaTeX already on the page once MathJax is ready
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(err =>
+        console.error('MathJax initial typeset error:', err)
+      );
+    }
   });
 </script>
 
