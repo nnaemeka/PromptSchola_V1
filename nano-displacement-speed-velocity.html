@@ -514,16 +514,30 @@
   let collapseState = {};
 
   async function logEvent(eventType, step) {
+  try {
+    let userType = 'anon';
     try {
-      await fetch('/api/log-event', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventType, nanoSlug: NANO_SLUG, step })
-      });
-    } catch (e) {
-      console.error('Failed to log event:', e);
+      const user = await getCurrentUser();
+      if (user) userType = 'logged';
+    } catch (_) {
+      // ignore, default anon
     }
+
+    await fetch('/api/log-event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        eventType,
+        nanoSlug: NANO_SLUG,
+        step,
+        userType
+      })
+    });
+  } catch (e) {
+    console.error('Failed to log event:', e);
   }
+}
+
 
   function toggleStep(step) {
     const content = document.getElementById(`step-content-${step}`);
@@ -684,6 +698,20 @@
       );
     }
   });
+  document.addEventListener('DOMContentLoaded', () => {
+  loadCollapseState();
+  const steps = [1,2,3,4,5,6];
+  // ... existing step toggle init ...
+
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    MathJax.typesetPromise().catch(err =>
+      console.error('MathJax initial typeset error:', err)
+    );
+  }
+
+  logEvent('view_nano', null);
+});
+
 </script>
 </body>
 </html>
