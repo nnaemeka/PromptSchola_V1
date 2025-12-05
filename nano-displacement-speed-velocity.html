@@ -157,7 +157,7 @@
 
     .steps-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr; /* single column */
       gap: 1rem;
       margin-top: 1rem;
     }
@@ -177,8 +177,14 @@
     .step-header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      gap: 0.5rem;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .step-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
     }
 
     .step-title {
@@ -191,6 +197,12 @@
       color: var(--text-subtle);
       text-transform: uppercase;
       letter-spacing: 0.12em;
+    }
+
+    .step-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .step-access-pill {
@@ -211,6 +223,27 @@
       border-style: dashed;
     }
 
+    .toggle-btn {
+      border: none;
+      background: transparent;
+      font-size: 1.15rem;
+      cursor: pointer;
+      padding: 0 0.3rem;
+      color: var(--accent-strong);
+      line-height: 1;
+      border-radius: 999px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .toggle-btn:hover {
+      transform: scale(1.15);
+      background: rgba(148, 163, 184, 0.2);
+    }
+
+    .step-content {
+      margin-top: 0.4rem;
+      display: block;
+    }
+
     .step-body {
       font-size: 0.86rem;
       color: var(--text-muted);
@@ -229,7 +262,7 @@
       white-space: pre-wrap;
     }
 
-      .ai-response {
+    .ai-response {
       margin-top: 0.4rem;
       padding: 0.85rem 1rem;
       border-radius: 10px;
@@ -240,33 +273,35 @@
       white-space: pre-wrap;
       line-height: 1.55;
     }
-    
+
     .ai-response p {
       margin-bottom: 0.75rem;
     }
-    
+
     .ai-response ul,
     .ai-response ol {
       margin: 0.6rem 0 0.6rem 1.2rem;
     }
-    
+
     .ai-response strong {
       font-weight: 700;
     }
-    
+
     .ai-response em {
       font-style: italic;
     }
-    .step-footer {
-      margin-top: auto;
-      padding-top: 0.6rem;
+
+    .copy-row {
+      margin-top: 0.35rem;
       display: flex;
-      justify-content: space-between;
-      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .btn-ghost,
+    .btn-primary {
+      display: inline-flex;
       align-items: center;
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-      flex-wrap: wrap;
+      gap: 0.25rem;
     }
 
     .btn-ghost {
@@ -277,9 +312,6 @@
       background: #ffffff;
       cursor: pointer;
       transition: var(--transition-fast);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
     }
     .btn-ghost:hover {
       background: #f3f4f6;
@@ -297,9 +329,6 @@
       color: #fff;
       box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
       transition: var(--transition-fast);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
     }
     .btn-primary:hover { transform: translateY(-1px); }
 
@@ -309,6 +338,24 @@
       cursor: not-allowed;
       box-shadow: none;
       transform: none;
+    }
+
+    .btn-copy {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+    }
+
+    .step-footer {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
     }
 
     .locked-note {
@@ -325,7 +372,6 @@
 
     @media (max-width: 860px) {
       .nav-links { display: none; }
-      .steps-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -388,173 +434,206 @@
       <div class="container">
         <div class="steps-grid">
 
-          <!-- STEP 1: ORIENT -->
+          <!-- STEP 1 -->
           <article class="step-card">
             <div class="step-header">
-              <div>
+              <div class="step-header-left">
                 <div class="step-index">Step 1 · Orient</div>
                 <div class="step-title">What are we trying to understand?</div>
               </div>
-              <span class="step-access-pill free">Free · Good starting point</span>
-            </div>
-            <div class="step-body">
-              Clarify the core ideas of this nano-lesson:
-              <ul style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem;">
-                <li>What is the difference between <em>distance</em> and <em>displacement</em>?</li>
-                <li>How do we define average speed and average velocity?</li>
-                <li>Why does choosing a positive direction matter in 1D motion?</li>
-              </ul>
-            </div>
-            <div class="prompt-preview" id="preview-step1">
-              Prompt preview will appear here when you click “Show prompt”.
-            </div>
-            <div class="ai-response" id="response-step1">
-              <!-- AI response for Step 1 will appear here after "Run with AI" -->
-            </div>
-            <div class="step-footer">
-              <div>
-                <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
-                <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
+              <div class="step-header-right">
+                <span class="step-access-pill free">Free · Good starting point</span>
+                <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
               </div>
-              <span>Goal: orient your brain before any formulas.</span>
+            </div>
+            <div class="step-content" id="step-content-1">
+              <div class="step-body">
+                Clarify the core ideas of this nano-lesson:
+                <ul style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem;">
+                  <li>What is the difference between <em>distance</em> and <em>displacement</em>?</li>
+                  <li>How do we define average speed and average velocity?</li>
+                  <li>Why does choosing a positive direction matter in 1D motion?</li>
+                </ul>
+              </div>
+              <div class="prompt-preview" id="preview-step1">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step1"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(1)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
+                </div>
+                <span>Goal: orient your brain before any formulas.</span>
+              </div>
             </div>
           </article>
 
-          <!-- STEP 2: UNDERSTAND -->
+          <!-- STEP 2 -->
           <article class="step-card">
             <div class="step-header">
-              <div>
+              <div class="step-header-left">
                 <div class="step-index">Step 2 · Understand</div>
                 <div class="step-title">Build intuition with examples</div>
               </div>
-              <span class="step-access-pill free">Free · Concept focus</span>
-            </div>
-            <div class="step-body">
-              Use analogies and simple stories to make the definitions feel natural:
-              walking back and forth along a corridor, a car trip with stops, or a runner
-              on a straight track.
-            </div>
-            <div class="prompt-preview" id="preview-step2">
-              Prompt preview will appear here when you click “Show prompt”.
-            </div>
-            <div class="ai-response" id="response-step2">
-              <!-- AI response for Step 2 will appear here after "Run with AI" -->
-            </div>
-            <div class="step-footer">
-              <div>
-                <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
-                <button class="btn-primary" onclick="runWithAI(2)">Run with AI</button>
+              <div class="step-header-right">
+                <span class="step-access-pill free">Free · Concept focus</span>
+                <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
               </div>
-              <span>Goal: connect definitions to everyday motion.</span>
+            </div>
+            <div class="step-content" id="step-content-2">
+              <div class="step-body">
+                Use analogies and simple stories to make the definitions feel natural:
+                walking back and forth along a corridor, a car trip with stops, or a runner
+                on a straight track.
+              </div>
+              <div class="prompt-preview" id="preview-step2">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step2"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(2)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(2)">Run with AI</button>
+                </div>
+                <span>Goal: connect definitions to everyday motion.</span>
+              </div>
             </div>
           </article>
 
-          <!-- STEP 3: APPLY -->
+          <!-- STEP 3 -->
           <article class="step-card">
             <div class="step-header">
-              <div>
+              <div class="step-header-left">
                 <div class="step-index">Step 3 · Apply</div>
                 <div class="step-title">Connect to simple numerical problems</div>
               </div>
-              <span class="step-access-pill free">Free · Light practice</span>
-            </div>
-            <div class="step-body">
-              Try a small set of numerical questions:
-              <ul style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem;">
-                <li>Compute displacement vs distance for a back-and-forth walk.</li>
-                <li>Find average speed vs average velocity over a trip.</li>
-                <li>Decide when average velocity can be zero even if you moved.</li>
-              </ul>
-            </div>
-            <div class="prompt-preview" id="preview-step3">
-              Prompt preview will appear here when you click “Show prompt”.
-            </div>
-            <div class="ai-response" id="response-step3">
-              <!-- AI response for Step 3 will appear here after "Run with AI" -->
-            </div>
-            <div class="step-footer">
-              <div>
-                <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
-                <button class="btn-primary" onclick="runWithAI(3)">Run with AI</button>
+              <div class="step-header-right">
+                <span class="step-access-pill free">Free · Light practice</span>
+                <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
               </div>
-              <span>Goal: turn the language into calculations.</span>
+            </div>
+            <div class="step-content" id="step-content-3">
+              <div class="step-body">
+                Try a small set of numerical questions:
+                <ul style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem;">
+                  <li>Compute displacement vs distance for a back-and-forth walk.</li>
+                  <li>Find average speed vs average velocity over a trip.</li>
+                  <li>Decide when average velocity can be zero even if you moved.</li>
+                </ul>
+              </div>
+              <div class="prompt-preview" id="preview-step3">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step3"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(3)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(3)">Run with AI</button>
+                </div>
+                <span>Goal: turn the language into calculations.</span>
+              </div>
             </div>
           </article>
 
-          <!-- STEP 4: WORK THROUGH IT (LOCKED) -->
+          <!-- STEP 4 (LOCKED) -->
           <article class="step-card">
             <div class="step-header">
-              <div>
+              <div class="step-header-left">
                 <div class="step-index">Step 4 · Work Through It</div>
                 <div class="step-title">Step-by-step worked examples</div>
               </div>
-              <span class="step-access-pill locked">Locked · Mastery</span>
-            </div>
-            <div class="step-body">
-              Guided, multi-step solutions that show how to set up diagrams, choose a sign convention,
-              write down known/unknown quantities, and avoid common mistakes.
-            </div>
-            <div class="prompt-preview">
-              This step is part of Mastery access. Once unlocked, you’ll see structured prompts such as:
-              “Walk me through this displacement and velocity problem step-by-step.”
-            </div>
-            <div class="step-footer">
-              <div>
-                <button class="btn-ghost locked" disabled>Show prompt</button>
-                <button class="btn-primary locked" disabled>Run with AI</button>
+              <div class="step-header-right">
+                <span class="step-access-pill locked">Locked · Mastery</span>
+                <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
               </div>
-              <span class="locked-note">Unlock with Mastery to access detailed worked examples.</span>
+            </div>
+            <div class="step-content" id="step-content-4">
+              <div class="step-body">
+                Guided, multi-step solutions that show how to set up diagrams, choose a sign convention,
+                write down known/unknown quantities, and avoid common mistakes.
+              </div>
+              <div class="prompt-preview">
+                This step is part of Mastery access. Once unlocked, you’ll see structured prompts such as:
+                “Walk me through this displacement and velocity problem step-by-step.”
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost locked" disabled>Show prompt</button>
+                  <button class="btn-primary locked" disabled>Run with AI</button>
+                </div>
+                <span class="locked-note">Unlock with Mastery to access detailed worked examples.</span>
+              </div>
             </div>
           </article>
 
-          <!-- STEP 5: REVIEW & PRACTICE (LOCKED) -->
+          <!-- STEP 5 (LOCKED) -->
           <article class="step-card">
             <div class="step-header">
-              <div>
+              <div class="step-header-left">
                 <div class="step-index">Step 5 · Review &amp; Practice</div>
                 <div class="step-title">Targeted questions to test yourself</div>
               </div>
-              <span class="step-access-pill locked">Locked · Mastery</span>
-            </div>
-            <div class="step-body">
-              A bank of conceptual and calculation questions designed to reveal specific gaps:
-              zero displacement vs zero distance, interpreting negative velocity, and more.
-            </div>
-            <div class="prompt-preview">
-              This step is part of Mastery access. It will generate question sets and let you check your answers.
-            </div>
-            <div class="step-footer">
-              <div>
-                <button class="btn-ghost locked" disabled>Show prompt</button>
-                <button class="btn-primary locked" disabled>Run with AI</button>
+              <div class="step-header-right">
+                <span class="step-access-pill locked">Locked · Mastery</span>
+                <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
               </div>
-              <span class="locked-note">Use this step when you want exam-level confidence.</span>
+            </div>
+            <div class="step-content" id="step-content-5">
+              <div class="step-body">
+                A bank of conceptual and calculation questions designed to reveal specific gaps:
+                zero displacement vs zero distance, interpreting negative velocity, and more.
+              </div>
+              <div class="prompt-preview">
+                This step is part of Mastery access. It will generate question sets and let you check your answers.
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost locked" disabled>Show prompt</button>
+                  <button class="btn-primary locked" disabled>Run with AI</button>
+                </div>
+                <span class="locked-note">Use this step when you want exam-level confidence.</span>
+              </div>
             </div>
           </article>
 
-          <!-- STEP 6: SIMULATION LAB (LOCKED) -->
+          <!-- STEP 6 (LOCKED) -->
           <article class="step-card">
             <div class="step-header">
-              <div>
+              <div class="step-header-left">
                 <div class="step-index">Step 6 · Simulation Lab</div>
                 <div class="step-title">Visualize motion in 1D</div>
               </div>
-              <span class="step-access-pill locked">Locked · Mastery</span>
-            </div>
-            <div class="step-body">
-              Use AI-guided prompts to set up simple “virtual experiments”: change starting position, direction,
-              and speed, and see how displacement and velocity evolve over time.
-            </div>
-            <div class="prompt-preview">
-              This step is part of Mastery access. In future, it can drive a graphing or simulation tool side-by-side
-              with AI.
-            </div>
-            <div class="step-footer">
-              <div>
-                <button class="btn-ghost locked" disabled>Show prompt</button>
-                <button class="btn-primary locked" disabled>Run with AI</button>
+              <div class="step-header-right">
+                <span class="step-access-pill locked">Locked · Mastery</span>
+                <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
               </div>
-              <span class="locked-note">Great for building a “feel” for 1D motion.</span>
+            </div>
+            <div class="step-content" id="step-content-6">
+              <div class="step-body">
+                Use AI-guided prompts to set up simple “virtual experiments”: change starting position, direction,
+                and speed, and see how displacement and velocity evolve over time.
+              </div>
+              <div class="prompt-preview">
+                This step is part of Mastery access. In future, it can drive a graphing or simulation tool side-by-side
+                with AI.
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost locked" disabled>Show prompt</button>
+                  <button class="btn-primary locked" disabled>Run with AI</button>
+                </div>
+                <span class="locked-note">Great for building a “feel” for 1D motion.</span>
+              </div>
             </div>
           </article>
 
@@ -569,11 +648,17 @@
 </div>
 
 <script>
+  // Prompts with formatting and math instructions
   const prompts = {
-    1: `You are a Physics tutor for a first-year student.\n\nExplain the difference between distance and displacement, and between average speed and average velocity, using:\n• A student walking from 0 m → +5 m → +1 m on a straight line\n• Clear definitions and one short summary at the end.\n\nFormat your response with:\n• short paragraphs (2–4 lines),\n• bullet points where helpful,\n• bold for key terms,\n• and clear spacing between ideas.\nAvoid long, dense blocks of text.`,
-    2: `You are a Physics tutor.\n\nBuild intuition for displacement, speed, and velocity using:\n• Everyday examples (walking, car trips, running on a track)\n• At least one case where displacement is zero but distance is not\n\nAvoid formulas for now; focus on stories and simple numbers.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each example,\n• bold key concepts,\n• and clear spacing between ideas.`,
-    3: `You are a Physics tutor.\n\nCreate 3 short calculation questions about displacement, average speed, and average velocity in 1D motion. For each question:\n• State the problem clearly\n• Then show the solution step-by-step after the student has tried it.\n\nKeep the numbers simple (small integers or simple decimals).\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.`
+    1: `You are a Physics tutor for a first-year student.\n\nExplain the difference between distance and displacement, and between average speed and average velocity, using:\n• A student walking from 0 m → +5 m → +1 m on a straight line\n• Clear definitions and one short summary at the end.\n\nFormat your response with:\n• short paragraphs (2–4 lines),\n• bullet points where helpful,\n• bold for key terms,\n• and clear spacing between ideas.\n\nWhen you write any math, put each equation on its own line in plain text, for example:\n  v_avg = total distance / total time\n  v_avg = total displacement / total time\nAvoid LaTeX; use simple text-only equations.`,
+    2: `You are a Physics tutor.\n\nBuild intuition for displacement, speed, and velocity using:\n• Everyday examples (walking, car trips, running on a track)\n• At least one case where displacement is zero but distance is not\n\nAvoid formulas at first; focus on stories and simple numbers.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each example,\n• bold key concepts,\n• and clear spacing between ideas.\n\nIf you need to include math, put each equation on its own line in plain text, like:\n  distance = speed × time\nand keep notation simple and readable.`,
+    3: `You are a Physics tutor.\n\nCreate 3 short calculation questions about displacement, average speed, and average velocity in 1D motion. For each question:\n• State the problem clearly\n• Then show the solution step-by-step after the student has tried it.\n\nKeep the numbers simple (small integers or simple decimals).\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.\n\nWhen you write equations, put them on their own line in plain text, for example:\n  v_avg = s / t\n  v_avg = (total displacement) / (total time)\nAvoid LaTeX and use plain-text notation like v_avg, s, t.`
   };
+
+  // Store last AI responses for copy
+  const lastAiResponses = {};
+  const STORAGE_KEY = 'ps_nano_displacement_collapse';
+  let collapseState = {};
 
   function showPrompt(step) {
     const preview = document.getElementById('preview-step' + step);
@@ -581,7 +666,6 @@
     preview.textContent = prompts[step] || 'Prompt coming soon.';
   }
 
-  // Escape HTML before we do simple formatting
   function escapeHTML(str) {
     return str
       .replace(/&/g, '&amp;')
@@ -589,22 +673,14 @@
       .replace(/>/g, '&gt;');
   }
 
-  // Light-weight formatter: bold, italics, paragraphs, line breaks
   function formatOutput(text) {
     if (!text) return '';
     let safe = escapeHTML(text);
 
-    // Markdown-style bold and italics
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
-
-    // Paragraphs: double newlines → paragraph breaks
     safe = safe.replace(/\n\n+/g, '</p><p>');
-
-    // Single newlines → <br>
     safe = safe.replace(/\n/g, '<br>');
-
-    // Wrap in <p> if not already wrapped
     safe = '<p>' + safe + '</p>';
 
     return safe;
@@ -640,12 +716,87 @@
       }
 
       const data = await res.json();
-      output.innerHTML = formatOutput(data.content || 'No response received from AI.');
+      const raw = data.content || 'No response received from AI.';
+      lastAiResponses[step] = raw;
+      output.innerHTML = formatOutput(raw);
     } catch (err) {
       console.error(err);
-      output.textContent = 'Unexpected error. Please try again.';
+      const output = document.getElementById('response-step' + step);
+      if (output) output.textContent = 'Unexpected error. Please try again.';
     }
   }
+
+  function copyAnswer(step) {
+    const text = lastAiResponses[step];
+    if (!text) {
+      alert('No AI answer to copy yet. Run with AI first.');
+      return;
+    }
+
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        alert('Answer copied to clipboard.');
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy to clipboard. Please try again.');
+      });
+  }
+
+  function loadCollapseState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      collapseState = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      collapseState = {};
+    }
+  }
+
+  function saveCollapseState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
+    } catch (e) {
+      console.error('Unable to save collapse state', e);
+    }
+  }
+
+  function toggleStep(step) {
+    const content = document.getElementById(`step-content-${step}`);
+    const btn = document.getElementById(`toggle-btn-${step}`);
+    if (!content || !btn) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? '−' : '+';
+
+    collapseState[step] = !isHidden;
+    saveCollapseState();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadCollapseState();
+    const steps = [1, 2, 3, 4, 5, 6];
+    steps.forEach(step => {
+      const content = document.getElementById(`step-content-${step}`);
+      const btn = document.getElementById(`toggle-btn-${step}`);
+      if (!content || !btn) return;
+
+      const expanded = collapseState[step];
+      if (expanded === false) {
+        content.style.display = 'none';
+        btn.textContent = '+';
+      } else {
+        content.style.display = 'block';
+        btn.textContent = '−';
+      }
+    });
+  });
 </script>
+
 </body>
 </html>
