@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>What is Physics? – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Nano-lesson introducing Physics: what it is, how it evolved, why it matters, and where to go next."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- MathJax configuration for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.08);
+      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+      --border-subtle: rgba(209, 213, 219, 0.7);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, sans-serif;
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.3rem;
+    }
+
+    /* NAV */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(249, 250, 251, 0.96);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
+    }
+
+    .logo-text span:first-child {
+      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
+    }
+    .logo-text span:last-child {
+      font-size: 0.72rem; color: var(--text-subtle);
+    }
+
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      transition: var(--transition-fast);
+    }
+    .btn-pill:hover {
+      background: #f3f4f6; transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 3rem 0 2.1rem;
+      text-align: center;
+    }
+    .hero-kicker {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 800; color: var(--text-strong);
+      margin: 0.3rem 0;
+    }
+    .hero-subtitle {
+      font-size: 0.96rem; color: var(--text-muted);
+      max-width: 40rem; margin: 0.4rem auto 0;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+    .hero-breadcrumbs a { color: var(--accent-strong); }
+
+    /* Access banner */
+    .access-banner {
+      margin: 0 auto 1.6rem;
+      max-width: 720px;
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 0.9rem;
+      background: linear-gradient(to right, #dcfce7, #eef2ff);
+      border: 1px solid var(--accent-soft-border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-free {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      background: #dcfce7;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      color: #166534;
+    }
+
+    /* Steps layout */
+    main { padding-bottom: 2.5rem; }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* single column */
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .step-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem 1.15rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+      /* polished spine */
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+      padding-left: 1.2rem;
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .step-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .step-index {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #4c1d95;
+      background: #ede9fe;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      font-weight: 600;
+    }
+
+    .step-title {
+      font-size: 1.06rem;
+      font-weight: 650;
+      color: #111827;
+    }
+
+    .step-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .step-access-pill {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      background: #dcfce7;
+      color: #166534;
+      white-space: nowrap;
+    }
+
+    .toggle-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      color: #4c1d95;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+    }
+    .toggle-btn:hover {
+      transform: translateY(-1px) scale(1.07);
+      box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75);
+      background: #e0e7ff;
+    }
+
+    .step-content {
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    .step-body {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .prompt-preview {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px dashed rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+      font-family: var(--font-main);
+      min-height: 2.2rem;
+      white-space: pre-wrap;
+    }
+
+    .ai-response {
+      margin-top: 0.4rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      background: #eef2ff;
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      font-size: 0.92rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.55;
+    }
+
+    .ai-response p {
+      margin-bottom: 0.75rem;
+    }
+
+    .ai-response ul,
+    .ai-response ol {
+      margin: 0.6rem 0 0.6rem 1.2rem;
+    }
+
+    .ai-response strong {
+      font-weight: 700;
+    }
+
+    .ai-response em {
+      font-style: italic;
+    }
+
+    .copy-row {
+      margin-top: 0.35rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-ghost,
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .btn-ghost {
+      padding: 0.42rem 0.8rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      padding: 0.42rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-copy {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+    }
+
+    .step-footer {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <a href="auth.html" class="btn-pill">Account</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Nano-lesson · Introduction</div>
+        <h1 class="hero-title">What is Physics?</h1>
+        <p class="hero-subtitle">
+          Discover what physics actually studies, how it grew over centuries, and why it quietly powers
+          almost every technology you use today.
+        </p>
+        <div class="hero-breadcrumbs">
+          <a href="physics.html">Physics</a> ·
+          <span>What is Physics?</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESS BANNER -->
+    <section>
+      <div class="container">
+        <div class="access-banner">
+          <span class="badge-free">All 6 steps are free</span>
+          <span>No subscription needed for this introduction.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEPS -->
+    <section>
+      <div class="container">
+        <div class="steps-grid">
+
+          <!-- STEP 1 -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">STEP 1</div>
+                <div class="step-title">What is physics as a subject?</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill">Free · Orientation</span>
+                <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-1">
+              <div class="step-body">
+                Get a clean definition of physics and see how it is different from, but connected to,
+                other sciences like chemistry and biology.
+              </div>
+              <div class="prompt-preview" id="preview-step1">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step1"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(1)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
+                </div>
+                <span>Goal: have a crisp, memorable definition of physics.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 2 -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">STEP 2</div>
+                <div class="step-title">A short history of physics</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill">Free · Story</span>
+                <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-2">
+              <div class="step-body">
+                Take a quick journey from ancient ideas to Newton, Maxwell, Einstein, and quantum mechanics,
+                and see how each era reshaped our view of the universe.
+              </div>
+              <div class="prompt-preview" id="preview-step2">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step2"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(2)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(2)">Run with AI</button>
+                </div>
+                <span>Goal: see physics as a story, not just formulas.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 3 -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">STEP 3</div>
+                <div class="step-title">Physics in everyday life and technology</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill">Free · Real-world</span>
+                <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-3">
+              <div class="step-body">
+                Connect physics to your phone, cars, electricity, medicine, and space exploration so it feels
+                like a living subject, not just a school topic.
+              </div>
+              <div class="prompt-preview" id="preview-step3">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step3"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(3)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(3)">Run with AI</button>
+                </div>
+                <span>Goal: see physics everywhere around you.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 4 -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">STEP 4</div>
+                <div class="step-title">Mini-quiz: test your understanding</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill">Free · Self-check</span>
+                <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-4">
+              <div class="step-body">
+                Answer a short set of multiple-choice questions about what physics studies, key historical figures,
+                and how physics shows up in daily life.
+              </div>
+              <div class="prompt-preview" id="preview-step4">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step4"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(4)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(4)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(4)">Run with AI</button>
+                </div>
+                <span>Goal: check if the core ideas are sticking.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 5 -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">STEP 5</div>
+                <div class="step-title">Summarize the big picture</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill">Free · Summary</span>
+                <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-5">
+              <div class="step-body">
+                Condense everything you’ve seen into a short, powerful explanation you could tell a friend:
+                what physics is, why it matters, and where you’re headed next.
+              </div>
+              <div class="prompt-preview" id="preview-step5">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step5"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(5)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(5)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(5)">Run with AI</button>
+                </div>
+                <span>Goal: have a “ready-to-say” definition in your own words.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 6 -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">STEP 6</div>
+                <div class="step-title">See physics in action</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill">Free · Exploration</span>
+                <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-6">
+              <div class="step-body">
+                Use a simple thought experiment or home demonstration (like dropping objects or pushing a chair)
+                to notice forces, motion, and energy in real life.
+              </div>
+              <div class="prompt-preview" id="preview-step6">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step6"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(6)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(6)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(6)">Run with AI</button>
+                </div>
+                <span>Goal: feel that physics is something you can observe, not just read.</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
+</div>
+
+<script>
+  // Prompts for all-free steps, with LaTeX display math where relevant
+  const prompts = {
+    1: `You are a Physics tutor.\n\nExplain clearly **what physics is** using short paragraphs and bullet points. Include:\n• A concise definition of physics\n• What physics studies (matter, energy, forces, space, and time)\n• Why physics is considered a foundational science\n• How physics relates to chemistry, biology, and engineering\n\nUse engaging examples from everyday life (like throwing a ball or using a phone).\n\nFormat your response with:\n• short paragraphs (2–4 lines each),\n• bullet points for lists,\n• bold for key terms,\n• and clear spacing between ideas.\n\nIf you include any equations, write them in LaTeX display mode, one equation per line, like:\n  \\\\[ F = ma \\\\]\nDo NOT use LaTeX environments like align; keep it to simple display equations.`,
+    2: `You are a Physics tutor.\n\nGive a brief historical journey of physics. Include:\n• Ancient physics ideas from Aristotle and Archimedes\n• The Scientific Revolution and Newton’s laws\n• Maxwell’s unification of electricity and magnetism\n• Einstein’s relativity\n• The rise of quantum mechanics\n\nExplain how each era changed our understanding of nature.\n\nFormat your answer using:\n• a chronological bullet list of key figures,\n• bold for major names and ideas,\n• short paragraphs explaining why each milestone mattered.\n\nIf equations help, use LaTeX display mode, one equation per line, such as:\n  \\\\[ E = mc^2 \\\\]\n  \\\\[ F = G \\frac{m_1 m_2}{r^2} \\\\]`,
+    3: `You are a Physics tutor.\n\nExplain how physics shows up in everyday life and modern technology. Include examples from:\n• smartphones\n• cars and transportation\n• medical imaging\n• electricity and power\n• space exploration\n\nShow how physics careers span engineering, data science, energy, materials, and research.\n\nUse bullet points and bold keywords. Keep sentences short and clear.\n\nIf equations are useful, write them in LaTeX display mode on their own line, like:\n  \\\\[ v = u + at \\\\]`,
+    4: `You are a Physics tutor.\n\nCreate 5 short multiple-choice questions to test understanding of:\n• what physics studies\n• one historical figure and their contribution\n• why physics is foundational\n• physics in daily life\n• a modern technology powered by physics\n\nAfter the student has had a chance to think, provide the correct answers and one-line explanations.\n\nFormat with:\n• numbered questions,\n• lettered options (A, B, C, D),\n• answers beneath in bold with a one-line explanation for each.\n\nNo equations are required here, but if you include any, use LaTeX display mode like:\n  \\\\[ F = ma \\\\]`,
+    5: `You are a Physics tutor.\n\nWrite a short summary (100–150 words) explaining:\n• what physics is,\n• why it matters,\n• how it evolved over time,\n• and where learners will go next (Mechanics).\n\nUse one powerful metaphor or analogy (for example, “physics is the grammar of nature”).\n\nEnd with an inviting sentence pointing them to Mechanics.`,
+    6: `You are a Physics tutor.\n\nGuide the student through a simple mental or household experiment showing physics principles. Examples:\n• dropping objects and noticing acceleration\n• pushing a chair and feeling force\n• seeing light reflect from a mirror\n\nExplain what is happening in terms of matter, forces, or motion.\n\nUse short steps and bullet points. Keep the tone friendly and curious.\n\nIf you use formulas, write them in LaTeX display mode on separate lines like:\n  \\\\[ F = ma \\\\]\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]`
+  };
+
+  const lastAiResponses = {};
+  const STORAGE_KEY = 'ps_nano_what_is_physics_collapse';
+  let collapseState = {};
+
+  function showPrompt(step) {
+    const preview = document.getElementById('preview-step' + step);
+    if (!preview) return;
+    preview.textContent = prompts[step] || 'Prompt coming soon.';
+  }
+
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function formatOutput(text) {
+    if (!text) return '';
+    let safe = escapeHTML(text);
+
+    // Allow simple markdown-like bold/italics from the model
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // Paragraphs & line breaks
+    safe = safe.replace(/\n\n+/g, '</p><p>');
+    safe = safe.replace(/\n/g, '<br>');
+    safe = '<p>' + safe + '</p>';
+
+    return safe;
+  }
+
+  async function runWithAI(step) {
+    const prompt = prompts[step];
+    if (!prompt) {
+      alert('No prompt defined for this step yet.');
+      return;
+    }
+
+    const output = document.getElementById('response-step' + step);
+    if (!output) {
+      alert('No response area found for this step.');
+      return;
+    }
+
+    try {
+      output.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt })
+      });
+
+      if (!res.ok) {
+        output.textContent = 'There was an error contacting the AI. Please try again later.';
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastAiResponses[step] = raw;
+      output.innerHTML = formatOutput(raw);
+
+      // Trigger MathJax only on this response node
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([output]).catch(err => console.error('MathJax error:', err));
+      }
+    } catch (err) {
+      console.error(err);
+      const out = document.getElementById('response-step' + step);
+      if (out) out.textContent = 'Unexpected error. Please try again.';
+    }
+  }
+
+  function copyAnswer(step) {
+    const text = lastAiResponses[step];
+    if (!text) {
+      alert('No AI answer to copy yet. Run with AI first.');
+      return;
+    }
+
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        alert('Answer copied to clipboard.');
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy to clipboard. Please try again.');
+      });
+  }
+
+  function loadCollapseState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      collapseState = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      collapseState = {};
+    }
+  }
+
+  function saveCollapseState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
+    } catch (e) {
+      console.error('Unable to save collapse state', e);
+    }
+  }
+
+  function toggleStep(step) {
+    const content = document.getElementById(`step-content-${step}`);
+    const btn = document.getElementById(`toggle-btn-${step}`);
+    if (!content || !btn) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? '−' : '+';
+
+    collapseState[step] = !isHidden;
+    saveCollapseState();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadCollapseState();
+    const steps = [1, 2, 3, 4, 5, 6];
+    steps.forEach(step => {
+      const content = document.getElementById(`step-content-${step}`);
+      const btn = document.getElementById(`toggle-btn-${step}`);
+      if (!content || !btn) return;
+
+      const expanded = collapseState[step];
+      if (expanded === false) {
+        content.style.display = 'none';
+        btn.textContent = '+';
+      } else {
+        content.style.display = 'block';
+        btn.textContent = '−';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
