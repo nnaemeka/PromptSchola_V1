@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign in – PromptSchola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #4c1d95;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --border-subtle: rgba(209, 213, 219, 0.7);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.3rem; }
+
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(249, 250, 251, 0.96);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
+    }
+    .logo-text span:first-child {
+      font-weight: 700; font-size: 0.98rem; color: #020617;
+    }
+    .logo-text span:last-child {
+      font-size: 0.72rem; color: #9ca3af;
+    }
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.3rem 3rem;
+    }
+
+    .auth-wrapper {
+      max-width: 420px;
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: 1.8rem 1.9rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .auth-heading {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .auth-heading h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+    .auth-heading p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .auth-toggle {
+      display: flex;
+      background: #f3f4f6;
+      border-radius: var(--radius-pill);
+      padding: 0.2rem;
+      margin: 1.1rem 0 1.4rem;
+    }
+    .auth-toggle button {
+      flex: 1;
+      border-radius: var(--radius-pill);
+      border: none;
+      padding: 0.35rem 0.2rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .auth-toggle button.active {
+      background: #ffffff;
+      color: var(--accent-strong);
+      font-weight: 600;
+      box-shadow: 0 1px 4px rgba(148, 163, 184, 0.7);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      margin-top: 0.15rem;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      padding: 0.55rem 0.65rem;
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--accent-strong);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.55);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      border: none;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      cursor: pointer;
+      margin-top: 0.4rem;
+      width: 100%;
+    }
+
+    .helper-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+    .helper-row a { color: var(--accent-strong); }
+
+    .auth-message {
+      margin-top: 0.7rem;
+      font-size: 0.8rem;
+      min-height: 1.2rem;
+    }
+    .auth-message.error { color: #b91c1c; }
+    .auth-message.success { color: #166534; }
+
+    footer {
+      text-align: center;
+      padding: 1.4rem 0;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 640px) {
+      .auth-wrapper {
+        padding: 1.5rem 1.4rem;
+      }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <a href="auth.html" class="btn-pill">Account</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="auth-wrapper">
+      <div class="auth-heading">
+        <h1 id="auth-title">Sign in</h1>
+        <p id="auth-subtitle">Access your PromptSchola Physics journey.</p>
+      </div>
+
+      <div class="auth-toggle">
+        <button id="btn-signin" class="active" type="button">Sign in</button>
+        <button id="btn-signup" type="button">Create account</button>
+      </div>
+
+      <form id="auth-form">
+        <div id="name-field" style="display:none;">
+          <label for="name">Full name (optional)</label>
+          <input type="text" id="name" autocomplete="name" />
+        </div>
+
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" required autocomplete="email" />
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" required autocomplete="current-password" />
+        </div>
+
+        <button type="submit" class="btn-primary" id="submit-btn">Sign in</button>
+
+        <div class="helper-row">
+          <span id="helper-text">No account? <a href="#" id="helper-link">Create one</a></span>
+          <!-- You can add "Forgot password?" later when you wire up email reset -->
+        </div>
+
+        <div id="auth-message" class="auth-message"></div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
+</div>
+
+<script>
+  // 1) Configure Supabase (replace with your real values from Supabase dashboard)
+  const SUPABASE_URL = "https://YOUR_PROJECT_REF.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // 2) Simple UI toggle logic
+  const mode = { current: 'signin' }; // or 'signup'
+
+  const btnSignin = document.getElementById('btn-signin');
+  const btnSignup = document.getElementById('btn-signup');
+  const authTitle = document.getElementById('auth-title');
+  const authSubtitle = document.getElementById('auth-subtitle');
+  const nameField = document.getElementById('name-field');
+  const passwordInput = document.getElementById('password');
+  const submitBtn = document.getElementById('submit-btn');
+  const helperText = document.getElementById('helper-text');
+  const helperLink = document.getElementById('helper-link');
+  const authMessage = document.getElementById('auth-message');
+  const authForm = document.getElementById('auth-form');
+
+  function setMode(newMode) {
+    mode.current = newMode;
+    if (newMode === 'signin') {
+      btnSignin.classList.add('active');
+      btnSignup.classList.remove('active');
+      authTitle.textContent = 'Sign in';
+      authSubtitle.textContent = 'Access your PromptSchola Physics journey.';
+      nameField.style.display = 'none';
+      passwordInput.autocomplete = 'current-password';
+      submitBtn.textContent = 'Sign in';
+      helperText.innerHTML = 'No account? <a href="#" id="helper-link">Create one</a>';
+    } else {
+      btnSignin.classList.remove('active');
+      btnSignup.classList.add('active');
+      authTitle.textContent = 'Create account';
+      authSubtitle.textContent = 'Start learning Physics with AI-guided prompts.';
+      nameField.style.display = 'block';
+      passwordInput.autocomplete = 'new-password';
+      submitBtn.textContent = 'Create account';
+      helperText.innerHTML = 'Already have an account? <a href="#" id="helper-link">Sign in</a>';
+    }
+    // Re-bind helper link
+    const newHelperLink = document.querySelector('#helper-text a') || helperLink;
+    newHelperLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      setMode(mode.current === 'signin' ? 'signup' : 'signin');
+    });
+  }
+
+  btnSignin.addEventListener('click', () => setMode('signin'));
+  btnSignup.addEventListener('click', () => setMode('signup'));
+
+  // Initial bind for helper link
+  helperLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    setMode('signup');
+  });
+
+  function getRedirectTarget() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('redirect') || 'physics.html';
+  }
+
+  function showMessage(msg, type = 'error') {
+    authMessage.textContent = msg;
+    authMessage.className = 'auth-message ' + (type === 'success' ? 'success' : 'error');
+  }
+
+  // 3) Handle form submit
+  authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    authMessage.textContent = '';
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const fullName = document.getElementById('name').value.trim();
+
+    if (!email || !password) {
+      showMessage('Email and password are required.');
+      return;
+    }
+
+    try {
+      if (mode.current === 'signin') {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          showMessage(error.message || 'Unable to sign in.');
+          return;
+        }
+        showMessage('Signed in successfully.', 'success');
+        window.location.href = getRedirectTarget();
+      } else {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: fullName || null }
+          }
+        });
+        if (error) {
+          showMessage(error.message || 'Unable to create account.');
+          return;
+        }
+        showMessage('Account created. Check your email if confirmation is required.', 'success');
+        window.location.href = getRedirectTarget();
+      }
+    } catch (err) {
+      console.error(err);
+      showMessage('Unexpected error. Please try again.');
+    }
+  });
+
+  // 4) If already logged in, you may optionally redirect straight to account page
+  (async function checkLoggedIn() {
+    const { data } = await supabase.auth.getUser();
+    if (data && data.user) {
+      // Already logged in; you could redirect to account or keep them here
+      // window.location.href = 'account.html';
+    }
+  })();
+</script>
+</body>
+</html>
