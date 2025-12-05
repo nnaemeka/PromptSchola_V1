@@ -6,683 +6,233 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Learn Physics with PromptSchola’s 6-step prompt-based mastery system. Start with an introduction to What Physics is, then dive into Mechanics, E&M, Waves, Thermodynamics, and Modern Physics."
+    content="Explore Physics in PromptSchola: introduction, mechanics, electricity & magnetism, and more, one nano-lesson at a time."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-body: #f3f4f6;
-      --bg-surface: #f9fafb;
       --bg-card: #ffffff;
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.09);
-      --accent-soft2: rgba(129, 140, 248, 0.12);
+      --accent-soft: rgba(126, 34, 206, 0.08);
+      --accent-soft-border: rgba(129, 140, 248, 0.4);
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
       --text-strong: #020617;
-      --border-subtle: rgba(209, 213, 219, 0.55);
+      --border-subtle: rgba(209, 213, 219, 0.7);
       --radius-card: 18px;
       --radius-pill: 999px;
-      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-main: 'Inter', system-ui, sans-serif;
       --transition-fast: 0.25s ease-out;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--font-main);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
       color: var(--text-main);
-      line-height: 1.7;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { text-decoration: none; color: inherit; }
 
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
 
     .container {
-      width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0 1.4rem;
+      padding: 0 1.3rem;
     }
 
-    /* Header / Nav (same style as index) */
+    /* NAV */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
+      position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
-      background: linear-gradient(
-        to bottom,
-        rgba(249, 250, 251, 0.96),
-        rgba(249, 250, 251, 0.94),
-        rgba(249, 250, 251, 0.9)
-      );
+      background: rgba(249, 250, 251, 0.96);
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
 
     .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; justify-content: space-between; align-items: center;
       padding: 0.75rem 0;
     }
 
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
     .logo-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 40%;
+      width: 34px; height: 34px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1rem;
-      color: #f9fafb;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
     }
 
     .logo-text span:first-child {
-      display: block;
-      font-weight: 700;
-      font-size: 0.98rem;
-      letter-spacing: 0.02em;
-      color: var(--text-strong);
+      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
     }
-
     .logo-text span:last-child {
-      display: block;
-      font-size: 0.72rem;
-      color: var(--text-subtle);
+      font-size: 0.72rem; color: var(--text-subtle);
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.3rem;
-      font-size: 0.88rem;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      opacity: 0.9;
-      transition: opacity var(--transition-fast), color var(--transition-fast);
-    }
-
-    .nav-links a:hover {
-      opacity: 1;
-      color: var(--accent-strong);
-    }
-
-    .nav-links a.active {
-      color: var(--accent-strong);
-      font-weight: 600;
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.82rem;
-    }
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
 
     .btn-pill {
       border-radius: var(--radius-pill);
-      padding: 0.45rem 0.95rem;
-      font-size: 0.8rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
+      padding: 0.45rem 1rem;
       background: #ffffff;
-      color: var(--text-main);
-      cursor: pointer;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      transition: var(--transition-fast);
     }
-
     .btn-pill:hover {
-      background: #f3f4f6;
-      transform: translateY(-1px);
-      border-color: rgba(156, 163, 175, 0.9);
-      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+      background: #f3f4f6; transform: translateY(-1px);
     }
 
-    .btn-primary {
-      border-radius: var(--radius-pill);
-      padding: 0.6rem 1.3rem;
-      font-size: 0.86rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #f9fafb;
-      box-shadow: none;
-      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
-    }
-
-    .btn-ghost {
-      border-radius: var(--radius-pill);
-      padding: 0.6rem 1.3rem;
-      font-size: 0.86rem;
-      font-weight: 500;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: transparent;
-      color: var(--text-main);
-      cursor: pointer;
-      transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-    }
-
-    .btn-ghost:hover {
-      background: #eef2ff;
-      transform: translateY(-1px);
-      border-color: #7e22ce;
-      color: #4c1d95;
-    }
-
-    .badge {
-      font-size: 0.72rem;
-      padding: 0.12rem 0.7rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #ffffff;
-      color: var(--text-main);
-    }
-
-    .badge-outline {
-      font-size: 0.72rem;
-      padding: 0.12rem 0.7rem;
-      border-radius: var(--radius-pill);
-      border: 1px dashed rgba(148, 163, 184, 0.9);
-      color: var(--text-subtle);
-      background: #f9fafb;
-    }
-
-    /* NEW: subject-style primary button for topic cards */
-    .btn-subject-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.42rem 0.95rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.82rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #f9fafb;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
-      white-space: nowrap;
-    }
-
-    .btn-subject-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
-    }
-
-    /* Hero */
+    /* HERO */
     .hero {
-      padding: 3rem 0 3.6rem;
-    }
-
-    /* NEW: centered hero heading spanning both columns */
-    .hero-heading {
+      padding: 3rem 0 1.5rem;
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 2rem;
+    }
+    .hero-kicker {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .hero-title {
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      font-weight: 800; color: var(--text-strong);
+      margin: 0.35rem 0;
+    }
+    .hero-subtitle {
+      font-size: 0.96rem; color: var(--text-muted);
+      max-width: 40rem; margin: 0.4rem auto 0;
     }
 
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
+    /* Section heading above cards */
+    .section-heading {
+      margin-top: 2.2rem;
+      text-align: center;
+    }
+    .section-heading h2 {
+      font-size: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--text-subtle);
-      margin-bottom: 0.8rem;
-    }
-
-    .hero-kicker span.label {
-      padding: 0.18rem 0.7rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #ffffff;
-      color: var(--text-main);
-    }
-
-    .hero-title {
-      font-size: clamp(1.95rem, 3vw, 2.5rem);
-      line-height: 1.15;
-      font-weight: 800;
-      color: var(--text-strong);
-      margin-bottom: 0.2rem;
-    }
-
-    .hero-inner {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 2.3rem;
-      align-items: center;
-    }
-
-    .hero-main {
-      max-width: 640px;
-    }
-
-    .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      margin-bottom: 1.4rem;
-      max-width: 32rem;
-    }
-
-    .hero-bullets {
-      list-style: none;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .hero-bullets li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      margin-bottom: 0.55rem;
-    }
-
-    .hero-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      margin-top: 0.38rem;
-      background: linear-gradient(135deg, #a855f7, #22c55e);
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      align-items: center;
-      margin-bottom: 0.6rem;
-    }
-
-    .hero-note {
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-    }
-
-    .hero-side {
-      background: var(--bg-card);
-      border-radius: 20px;
-      border: 1px solid var(--border-subtle);
-      padding: 1.2rem 1.25rem;
-      box-shadow: var(--shadow-card);
-      font-size: 0.86rem;
-    }
-
-    .hero-side-title {
-      font-size: 0.94rem;
-      font-weight: 600;
-      color: var(--text-main);
       margin-bottom: 0.4rem;
     }
-
-    .hero-side-note {
-      font-size: 0.8rem;
-      color: var(--text-subtle);
-      margin-bottom: 0.7rem;
-    }
-
-    .steps-mini-list {
-      list-style: none;
-      margin-bottom: 0.8rem;
-    }
-
-    .steps-mini-list li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.28rem 0;
-      border-bottom: 1px dashed rgba(229, 231, 235, 0.9);
-      font-size: 0.82rem;
-    }
-
-    .steps-mini-list li:last-child {
-      border-bottom: none;
-    }
-
-    .steps-mini-main {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .steps-mini-index {
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-      min-width: 1.4rem;
-    }
-
-    .steps-mini-label {
+    .section-heading p {
+      font-size: 1.05rem;
       font-weight: 500;
       color: var(--text-main);
     }
 
-    .steps-mini-tag {
-      font-size: 0.72rem;
-      padding: 0.06rem 0.6rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #eef2ff;
-      color: #4338ca;
-      white-space: nowrap;
-    }
-
-    .steps-mini-tag.free {
-      background: #dcfce7;
-      border-color: rgba(22, 163, 74, 0.9);
-      color: #166534;
-    }
-
-    .steps-mini-tag.mastery {
-      background: #f5f3ff;
-      border-color: rgba(129, 140, 248, 0.9);
-      color: #4c1d95;
-    }
-
-    .hero-side-footer {
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-      margin-top: 0.3rem;
-    }
-
-    /* Sections */
-    section {
-      padding: 2.7rem 0 3rem;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 1.8rem;
-    }
-
-    .section-kicker {
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-subtle);
-      margin-bottom: 0.4rem;
-    }
-
-    .section-title {
-      font-size: 1.35rem;
-      color: var(--text-strong);
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-    }
-
-    .section-subtitle {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      max-width: 30rem;
-      margin: 0 auto;
-    }
-
-    /* Topic cards */
-    .topics-grid {
+    /* Cards */
+    .cards-grid {
+      margin-top: 1.4rem;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
+      gap: 1.2rem;
     }
 
-    .topic-card {
+    .card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-card);
-      padding: 1rem 1.05rem;
-      font-size: 0.86rem;
+      padding: 1.1rem 1.1rem 1.2rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
+      justify-content: space-between;
       min-height: 190px;
     }
 
-    .topic-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.4rem;
+    .card-header {
+      margin-bottom: 0.5rem;
     }
-
-    .topic-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .topic-body {
-      color: var(--text-muted);
-      font-size: 0.86rem;
-    }
-
-    .topic-list {
-      list-style: none;
-      margin-top: 0.4rem;
-      color: var(--text-muted);
-      font-size: 0.84rem;
-    }
-
-    .topic-list li {
-      margin-bottom: 0.25rem;
-    }
-
-    .topic-note {
-      font-size: 0.78rem;
+    .card-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
       color: var(--text-subtle);
-      margin-top: 0.2rem;
+      margin-bottom: 0.15rem;
+    }
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 650;
+      color: var(--text-strong);
+    }
+    .card-body {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
     }
 
-    .topic-footer {
+    .card-footer {
+      margin-top: 0.9rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: auto;
-      padding-top: 0.4rem;
-      font-size: 0.8rem;
       gap: 0.5rem;
-    }
-
-    .link-soft {
+      flex-wrap: wrap;
       font-size: 0.8rem;
-      color: #4f46e5;
-      text-decoration: underline;
-      text-decoration-style: dotted;
-      text-underline-offset: 2px;
-      cursor: pointer;
-    }
-
-    .link-soft:hover {
-      color: #7e22ce;
-    }
-
-    .link-soft.disabled {
-      cursor: default;
-      opacity: 0.6;
-      text-decoration: none;
-    }
-
-    /* Mechanics / Intro feature section */
-    .feature-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-      gap: 1.8rem;
-      align-items: flex-start;
-      margin-top: 1.1rem;
-    }
-
-    .feature-text {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .feature-text p {
-      margin-bottom: 0.9rem;
-    }
-
-    .feature-text ul {
-      list-style: none;
-      margin-bottom: 0.9rem;
-    }
-
-    .feature-text li {
-      margin-bottom: 0.3rem;
-    }
-
-    .feature-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-card);
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-card);
-      padding: 1rem 1.05rem;
-      font-size: 0.86rem;
-    }
-
-    .feature-card h3 {
-      font-size: 0.96rem;
-      color: var(--text-main);
-      margin-bottom: 0.3rem;
-    }
-
-    .feature-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 0.55rem;
-      font-size: 0.78rem;
       color: var(--text-subtle);
     }
 
-    .steps-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 0.7rem;
-      font-size: 0.78rem;
-    }
-
-    .pill {
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1.1rem;
       border-radius: var(--radius-pill);
-      padding: 0.16rem 0.65rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #f9fafb;
-      color: var(--text-subtle);
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
     }
 
-    .pill-free {
-      border-color: rgba(22, 163, 74, 0.9);
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .pill-mastery {
-      border-color: rgba(129, 140, 248, 0.9);
-      background: #f5f3ff;
-      color: #4c1d95;
-    }
-
-    /* Footer */
     footer {
       margin-top: auto;
-      padding: 1.8rem 0 2.1rem;
+      padding: 1.8rem 0;
+      text-align: center;
       font-size: 0.8rem;
       color: var(--text-subtle);
     }
 
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 0.9rem;
-      align-items: center;
-      border-top: 1px solid rgba(209, 213, 219, 0.9);
-      padding-top: 0.95rem;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 0.9rem;
-    }
-
-    .footer-links a {
-      color: var(--text-subtle);
-    }
-
-    .footer-links a:hover {
-      color: var(--text-main);
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .hero-side {
-        margin-top: 1.3rem;
-      }
-      .feature-layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .topics-grid {
+    @media (max-width: 960px) {
+      .cards-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 720px) {
-      .topics-grid {
-        grid-template-columns: minmax(0, 1fr);
+    @media (max-width: 700px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
       }
-      .nav-links {
-        display: none;
-      }
+      .nav-links { display: none; }
     }
   </style>
 </head>
+
 <body>
 <div class="page">
+
+  <!-- NAV -->
   <header>
     <div class="container">
       <div class="nav">
-        <div class="nav-left">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
           <div class="logo-mark">P</div>
           <div class="logo-text">
             <span>PromptSchola</span>
@@ -691,335 +241,164 @@
         </div>
         <nav class="nav-links">
           <a href="index.html">Home</a>
-          <a href="#track" class="active">Physics</a>
+          <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <div class="nav-right">
-          <a href="auth.html" class="btn-pill">Log in / Create account</a>
-        </div>
+        <a href="auth.html" class="btn-pill">Account</a>
       </div>
     </div>
   </header>
 
-  <main id="track">
-    <!-- Hero -->
+  <main>
+    <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <div class="hero-heading">
-          <div class="hero-kicker">
-            <span class="label">Physics track</span>
-            <span>6-step prompt-based mastery</span>
-          </div>
-          <h1 class="hero-title">
-            Learn Physics one topic at a time, with prompts that guide you from orientation to simulation.
-          </h1>
-        </div>
-
-        <div class="hero-inner">
-          <div class="hero-main">
-            <p class="hero-subtitle">
-              Start with an introduction to what Physics is, then expand into Mechanics, E&amp;M, Waves, Thermodynamics,
-              and Modern Physics — all using the same 6-step flow.
-            </p>
-            <ul class="hero-bullets">
-              <li>
-                <span class="hero-dot"></span>
-                Steps <strong>1–3</strong> (Orient, Understand, Apply) are free to run with AI for every Physics lesson.
-              </li>
-              <li>
-                <span class="hero-dot"></span>
-                Steps <strong>4–6</strong> (Work Through It, Review &amp; Practice, Simulation Lab) unlock with Mastery Access.
-              </li>
-            </ul>
-            <div class="hero-actions">
-              <a href="intro-what-is-physics.html" class="btn-primary">
-                Start with “What is Physics?”
-              </a>
-              <a href="index.html" class="btn-ghost">
-                Back to Home
-              </a>
-            </div>
-            <p class="hero-note">
-              You can copy prompts into your favorite AI tool now. Running them directly inside PromptSchola
-              will come as we add native AI integration.
-            </p>
-          </div>
-
-          <aside class="hero-side">
-            <div class="hero-side-title">Physics + 6-Step Mastery</div>
-            <p class="hero-side-note">
-              Every Physics lesson follows the same ladder. You always know what’s next.
-            </p>
-            <ul class="steps-mini-list">
-              <li>
-                <div class="steps-mini-main">
-                  <span class="steps-mini-index">1</span>
-                  <span class="steps-mini-label">Orient</span>
-                </div>
-                <span class="steps-mini-tag free">Free</span>
-              </li>
-              <li>
-                <div class="steps-mini-main">
-                  <span class="steps-mini-index">2</span>
-                  <span class="steps-mini-label">Understand</span>
-                </div>
-                <span class="steps-mini-tag free">Free</span>
-              </li>
-              <li>
-                <div class="steps-mini-main">
-                  <span class="steps-mini-index">3</span>
-                  <span class="steps-mini-label">Apply</span>
-                </div>
-                <span class="steps-mini-tag free">Free</span>
-              </li>
-              <li>
-                <div class="steps-mini-main">
-                  <span class="steps-mini-index">4</span>
-                  <span class="steps-mini-label">Work Through It</span>
-                </div>
-                <span class="steps-mini-tag mastery">Mastery</span>
-              </li>
-              <li>
-                <div class="steps-mini-main">
-                  <span class="steps-mini-index">5</span>
-                  <span class="steps-mini-label">Review &amp; Practice</span>
-                </div>
-                <span class="steps-mini-tag mastery">Mastery</span>
-              </li>
-              <li>
-                <div class="steps-mini-main">
-                  <span class="steps-mini-index">6</span>
-                  <span class="steps-mini-label">Simulation Lab</span>
-                </div>
-                <span class="steps-mini-tag mastery">Mastery</span>
-              </li>
-            </ul>
-            <p class="hero-side-footer">
-              One system, many topics: begin with an overview of Physics, then move into Mechanics, E&amp;M, Waves,
-              Thermodynamics, and Modern Physics.
-            </p>
-          </aside>
-        </div>
+        <div class="hero-kicker">Physics · PromptSchola</div>
+        <h1 class="hero-title">Learn Physics one topic at a time.</h1>
+        <p class="hero-subtitle">
+          Start with a gentle introduction to what Physics is, then move into Mechanics, Electricity &amp; Magnetism,
+          and beyond — each broken into small, AI-guided nano-lessons.
+        </p>
       </div>
     </section>
 
-    <!-- Introduction: What is Physics? -->
+    <!-- AREA CARDS -->
     <section>
       <div class="container">
-        <div class="section-header">
-          <div class="section-kicker">Start here</div>
-          <h2 class="section-title">Introduction: What is Physics?</h2>
-          <p class="section-subtitle">
-            Before diving into equations and problems, get a big-picture view of what Physics is and how it developed
-            over time.
-          </p>
+        <div class="section-heading">
+          <h2>Choose your starting point</h2>
+          <p>Pick a path below. You can always come back to switch tracks.</p>
         </div>
 
-        <div class="feature-layout">
-          <div class="feature-text">
-            <p>
-              The Physics track starts with a gentle but serious introduction:
-              <strong>What is Physics?</strong> You’ll see Physics as the study of matter, motion, energy, and the
-              laws governing the universe — not just a list of formulas.
-            </p>
-            <ul>
-              <li>• Meet historical figures like Archimedes, Galileo, Newton, Faraday, Maxwell, and Einstein.</li>
-              <li>• See how ideas evolved from simple observations to powerful mathematical laws.</li>
-              <li>• Understand how modern fields (quantum, relativity, nuclear, particle physics) grow from the same core ideas.</li>
-            </ul>
-            <p>
-              This “Chapter 0” sets the tone and motivation. After it, you’ll be ready to explore Mechanics and the other
-              major branches with more context and curiosity.
-            </p>
-            <a href="intro-what-is-physics.html" class="btn-primary">
-              Open “What is Physics?” lesson
-            </a>
-          </div>
+        <div class="cards-grid">
 
-          <aside class="feature-card">
-            <h3>Inside the “What is Physics?” lesson</h3>
-            <div class="feature-meta">
-              <span class="badge">Level: Late high school / first-year university</span>
+          <!-- Intro: What is Physics? -->
+          <article class="card">
+            <div>
+              <div class="card-header">
+                <div class="card-kicker">Start here</div>
+                <div class="card-title">Introduction: What is Physics?</div>
+              </div>
+              <div class="card-body">
+                Get the big picture of what physics studies, how it evolved, and why it underpins
+                almost every modern technology — before diving into equations.
+              </div>
             </div>
-            <div class="steps-badges">
-              <span class="pill pill-free">Steps 1–3: Free</span>
-              <span class="pill pill-mastery">Steps 4–6: Mastery</span>
+            <div class="card-footer">
+              <a href="nano-what-is-physics.html" class="btn-primary">
+                Start introduction
+              </a>
+              <span>All 6 steps free for everyone.</span>
             </div>
-            <p>
-              The lesson introduces Physics using the same 6-step structure:
-            </p>
-            <ul class="topic-list">
-              <li>• <strong>Orient:</strong> What Physics asks and why it matters.</li>
-              <li>• <strong>Understand:</strong> Big ideas like forces, fields, energy, and symmetry.</li>
-              <li>• <strong>Apply:</strong> Everyday examples that reveal hidden Physics.</li>
-              <li>• <strong>Work Through It:</strong> Guided prompts to connect history and concepts.</li>
-              <li>• <strong>Review &amp; Practice:</strong> Key ideas and quick questions.</li>
-              <li>• <strong>Simulation Lab:</strong> Simple visualizations to see how physical quantities change.</li>
-            </ul>
-            <p style="margin-top:0.6rem; font-size:0.8rem; color:var(--text-subtle);">
-              From there, you can jump into Mechanics or any other branch, knowing how Physics fits together as a whole.
-            </p>
-          </aside>
-        </div>
-      </div>
-    </section>
+          </article>
 
-    <!-- Physics topic roadmap -->
-    <section>
-      <div class="container">
-        <div class="section-header">
-          <div class="section-kicker">Roadmap</div>
-          <h2 class="section-title">Where Physics is going next</h2>
-          <p class="section-subtitle">
-            After “What is Physics?”, the same 6-step system will power a full Physics library across major areas.
-          </p>
-        </div>
-
-        <div class="topics-grid">
           <!-- Mechanics -->
-          <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Mechanics</h3>
-              <span class="badge">In progress</span>
-            </header>
-            <div class="topic-body">
-              <p>Forces, motion, energy, and momentum.</p>
-              <ul class="topic-list">
-                <li>• Newton’s Laws (starting with First Law)</li>
-                <li>• Kinematics in 1D &amp; 2D</li>
-                <li>• Work, Energy &amp; Power</li>
-                <li>• Momentum &amp; Collisions</li>
-              </ul>
-              <p class="topic-note">
-                You can choose to start Mechanics with a focused lesson on Newton’s First Law.
-              </p>
+          <article class="card">
+            <div>
+              <div class="card-header">
+                <div class="card-kicker">Core area</div>
+                <div class="card-title">Mechanics</div>
+              </div>
+              <div class="card-body">
+                Study motion, forces, and energy: kinematics, Newton’s laws, work &amp; energy,
+                momentum, and more — all as guided nano-lessons.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="mechanics.html" class="btn-subject-primary">Start Mechanics</a>
-              <a href="lesson-newton-first-law.html" class="link-soft">or jump to Newton’s First Law</a>
-            </footer>
+            <div class="card-footer">
+              <a href="mechanics.html" class="btn-primary">
+                Start Mechanics
+              </a>
+              <span>Best place to go after the introduction.</span>
+            </div>
           </article>
 
           <!-- Electricity & Magnetism -->
-          <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Electricity &amp; Magnetism</h3>
-              <span class="badge-outline">Planned</span>
-            </header>
-            <div class="topic-body">
-              <p>Fields, circuits, and electromagnetic interactions.</p>
-              <ul class="topic-list">
-                <li>• Electric charge, field &amp; potential</li>
-                <li>• DC circuits &amp; problem-solving</li>
-                <li>• Magnetic fields &amp; forces</li>
-                <li>• Induction &amp; basic AC ideas</li>
-              </ul>
+          <article class="card">
+            <div>
+              <div class="card-header">
+                <div class="card-kicker">Next step</div>
+                <div class="card-title">Electricity &amp; Magnetism</div>
+              </div>
+              <div class="card-body">
+                Explore charges, fields, circuits, and electromagnetic waves — the physics behind
+                electronics, power grids, and communication.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="electricity-magnetism.html" class="btn-subject-primary">Start Electricity &amp; Magnetism</a>
-              <span class="badge-outline">Will use same 6 steps</span>
-            </footer>
+            <div class="card-footer">
+              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
+                Coming soon
+              </a>
+              <span>Planned future track.</span>
+            </div>
           </article>
 
           <!-- Waves & Optics -->
-          <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Waves &amp; Optics</h3>
-              <span class="badge-outline">Planned</span>
-            </header>
-            <div class="topic-body">
-              <p>Vibrations, sound, and light.</p>
-              <ul class="topic-list">
-                <li>• Simple harmonic motion</li>
-                <li>• Wave properties &amp; superposition</li>
-                <li>• Sound &amp; resonance</li>
-                <li>• Geometric &amp; physical optics</li>
-              </ul>
+          <article class="card">
+            <div>
+              <div class="card-header">
+                <div class="card-kicker">Waves</div>
+                <div class="card-title">Waves &amp; Optics</div>
+              </div>
+              <div class="card-body">
+                Learn how waves behave, how light works, and why interference and diffraction give rise
+                to surprising patterns.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="waves-optics.html" class="btn-subject-primary">Start Waves &amp; Optics</a>
-              <span class="badge-outline">Physics roadmap</span>
-            </footer>
+            <div class="card-footer">
+              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
+                Coming soon
+              </a>
+              <span>Future nano-lessons planned.</span>
+            </div>
           </article>
 
-          <!-- Thermodynamics -->
-          <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Thermodynamics</h3>
-              <span class="badge-outline">Planned</span>
-            </header>
-            <div class="topic-body">
-              <p>Heat, entropy, and energy flows.</p>
-              <ul class="topic-list">
-                <li>• Temperature, heat &amp; work</li>
-                <li>• First and Second Laws</li>
-                <li>• Heat engines &amp; efficiency</li>
-                <li>• Microscopic view of gases</li>
-              </ul>
+          <!-- Thermal Physics -->
+          <article class="card">
+            <div>
+              <div class="card-header">
+                <div class="card-kicker">Energy &amp; heat</div>
+                <div class="card-title">Thermal Physics</div>
+              </div>
+              <div class="card-body">
+                Dive into temperature, heat, and entropy — the physics behind engines, refrigerators,
+                and many natural processes.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="thermodynamics.html" class="btn-subject-primary">Start Thermodynamics</a>
-              <span class="badge-outline">Physics roadmap</span>
-            </footer>
+            <div class="card-footer">
+              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
+                Coming soon
+              </a>
+              <span>Planned for later modules.</span>
+            </div>
           </article>
 
           <!-- Modern Physics -->
-          <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Modern Physics</h3>
-              <span class="badge-outline">Planned</span>
-            </header>
-            <div class="topic-body">
-              <p>Relativity, quanta, and nuclei.</p>
-              <ul class="topic-list">
-                <li>• Special relativity essentials</li>
-                <li>• Photons &amp; wave-particle ideas</li>
-                <li>• Simple quantum models</li>
-                <li>• Nuclear physics basics</li>
-              </ul>
+          <article class="card">
+            <div>
+              <div class="card-header">
+                <div class="card-kicker">Modern</div>
+                <div class="card-title">Modern Physics</div>
+              </div>
+              <div class="card-body">
+                Quantum ideas, relativity, and nuclear physics — the concepts that power modern
+                technology and research frontiers.
+              </div>
             </div>
-            <footer class="topic-footer">
-              <a href="modern-physics.html" class="btn-subject-primary">Start Modern Physics</a>
-              <span class="badge-outline">Physics roadmap</span>
-            </footer>
+            <div class="card-footer">
+              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
+                Coming soon
+              </a>
+              <span>Advanced track for later.</span>
+            </div>
           </article>
 
-          <!-- Problem-solving labs -->
-          <article class="topic-card">
-            <header class="topic-header">
-              <h3 class="topic-title">Problem-solving labs</h3>
-              <span class="badge-outline">Later</span>
-            </header>
-            <div class="topic-body">
-              <p>Applied, multi-step Physics problems that blend topics.</p>
-              <ul class="topic-list">
-                <li>• Mixed Mechanics + E&amp;M challenges</li>
-                <li>• Real-world energy systems</li>
-                <li>• Data-driven, lab-style prompts</li>
-              </ul>
-            </div>
-            <footer class="topic-footer">
-              <span class="link-soft disabled">Planned after core topics</span>
-              <span class="badge-outline">Mastery focus</span>
-            </footer>
-          </article>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <span>&copy; 2025 PromptSchola. All rights reserved.</span>
-        <div class="footer-links">
-          <a href="index.html">Home</a>
-          <a href="#track">Physics</a>
-          <a href="pricing.html">Pricing</a>
-          <a href="auth.html">Account</a>
-        </div>
-      </div>
-    </div>
+    © 2025 PromptSchola. All rights reserved.
   </footer>
 </div>
 </body>
