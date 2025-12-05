@@ -30,7 +30,6 @@
       --bg-card: #ffffff;
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.08);
       --accent-soft-border: rgba(129, 140, 248, 0.4);
       --text-main: #111827;
       --text-muted: #4b5563;
@@ -102,6 +101,7 @@
       border: 1px solid rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
       transition: var(--transition-fast);
+      cursor: pointer;
     }
     .btn-pill:hover {
       background: #f3f4f6; transform: translateY(-1px);
@@ -163,7 +163,7 @@
 
     .steps-grid {
       display: grid;
-      grid-template-columns: 1fr; /* single column */
+      grid-template-columns: 1fr;
       gap: 1rem;
       margin-top: 1rem;
     }
@@ -178,7 +178,6 @@
       flex-direction: column;
       gap: 0.55rem;
       font-size: 0.9rem;
-      /* purple spine */
       border-left: 4px solid rgba(126, 34, 206, 0.55);
       padding-left: 1.2rem;
     }
@@ -291,22 +290,11 @@
       line-height: 1.55;
     }
 
-    .ai-response p {
-      margin-bottom: 0.75rem;
-    }
-
+    .ai-response p { margin-bottom: 0.75rem; }
     .ai-response ul,
-    .ai-response ol {
-      margin: 0.6rem 0 0.6rem 1.2rem;
-    }
-
-    .ai-response strong {
-      font-weight: 700;
-    }
-
-    .ai-response em {
-      font-style: italic;
-    }
+    .ai-response ol { margin: 0.6rem 0 0.6rem 1.2rem; }
+    .ai-response strong { font-weight: 700; }
+    .ai-response em { font-style: italic; }
 
     .copy-row {
       margin-top: 0.35rem;
@@ -652,14 +640,14 @@
 </div>
 
 <script>
-  // Prompts for all-free steps, with LaTeX display math and completeness safety
+  // Prompts for all-free steps, with LaTeX display math and completeness + no-heading safety
   const prompts = {
-    1: `You are a Physics tutor.\n\nExplain clearly **what physics is** using short paragraphs and bullet points. Include:\n• A concise definition of physics\n• What physics studies (matter, energy, forces, space, and time)\n• Why physics is considered a foundational science\n• How physics relates to chemistry, biology, and engineering\n\nUse engaging examples from everyday life (like throwing a ball or using a phone).\n\nFormat your response with:\n• short paragraphs (2–4 lines each),\n• bullet points for lists,\n• bold for key terms,\n• and clear spacing between ideas.\n\nIf you include any equations, write them in LaTeX display mode, one equation per line, like:\n  \\\\[ F = ma \\\\]\nDo NOT use LaTeX environments like align.\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.`,
-    2: `You are a Physics tutor.\n\nGive a brief historical journey of physics. Include:\n• Ancient physics ideas from Aristotle and Archimedes\n• The Scientific Revolution and Newton’s laws\n• Maxwell’s unification of electricity and magnetism\n• Einstein’s relativity\n• The rise of quantum mechanics\n\nExplain how each era changed our understanding of nature.\n\nFormat your answer using:\n• a chronological bullet list of key figures,\n• bold for major names and ideas,\n• short paragraphs explaining why each milestone mattered.\n\nIf equations help, use LaTeX display mode, one equation per line, such as:\n  \\\\[ E = mc^2 \\\\]\n  \\\\[ F = G \\frac{m_1 m_2}{r^2} \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.`,
-    3: `You are a Physics tutor.\n\nExplain how physics shows up in everyday life and modern technology. Include examples from:\n• smartphones\n• cars and transportation\n• medical imaging\n• electricity and power\n• space exploration\n\nShow how physics careers span engineering, data science, energy, materials, and research.\n\nUse bullet points and bold keywords. Keep sentences short and clear.\n\nIf equations are useful, write them in LaTeX display mode on their own line, like:\n  \\\\[ v = u + at \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.`,
-    4: `You are a Physics tutor.\n\nCreate 5 short multiple-choice questions to test understanding of:\n• what physics studies\n• one historical figure and their contribution\n• why physics is foundational\n• physics in daily life\n• a modern technology powered by physics\n\nAfter the student has had a chance to think, provide the correct answers and one-line explanations.\n\nFormat with:\n• numbered questions,\n• lettered options (A, B, C, D),\n• answers beneath in bold with a one-line explanation for each.\n\nIf you include equations, place each in LaTeX display mode like:\n  \\\\[ F = ma \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.`,
-    5: `You are a Physics tutor.\n\nWrite a short summary (100–150 words) explaining:\n• what physics is,\n• why it matters,\n• how it evolved over time,\n• and where learners will go next (Mechanics).\n\nUse one powerful metaphor or analogy (for example, “physics is the grammar of nature”).\n\nEnd with an inviting sentence pointing them to Mechanics.\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.`,
-    6: `You are a Physics tutor.\n\nGuide the student through a simple mental or household experiment showing physics principles. Examples:\n• dropping objects and noticing acceleration\n• pushing a chair and feeling force\n• seeing light reflect from a mirror\n\nExplain what is happening in terms of matter, forces, or motion.\n\nUse short steps and bullet points. Keep the tone friendly and curious.\n\nIf you use formulas, write them in LaTeX display mode, one per line like:\n  \\\\[ F = ma \\\\]\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.`
+    1: `You are a Physics tutor.\n\nExplain clearly **what physics is** using short paragraphs and bullet points. Include:\n• A concise definition of physics\n• What physics studies (matter, energy, forces, space, and time)\n• Why physics is considered a foundational science\n• How physics relates to chemistry, biology, and engineering\n\nUse engaging examples from everyday life (like throwing a ball or using a phone).\n\nFormat your response with:\n• short paragraphs (2–4 lines each),\n• bullet points for lists,\n• bold for key terms,\n• and clear spacing between ideas.\n\nIf you include any equations, write them in LaTeX display mode, one equation per line, like:\n  \\\\[ F = ma \\\\]\nDo NOT use LaTeX environments like align.\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    2: `You are a Physics tutor.\n\nGive a brief historical journey of physics. Include:\n• Ancient physics ideas from Aristotle and Archimedes\n• The Scientific Revolution and Newton’s laws\n• Maxwell’s unification of electricity and magnetism\n• Einstein’s relativity\n• The rise of quantum mechanics\n\nExplain how each era changed our understanding of nature.\n\nFormat your answer using:\n• a chronological bullet list of key figures,\n• bold for major names and ideas,\n• short paragraphs explaining why each milestone mattered.\n\nIf equations help, use LaTeX display mode, one equation per line, such as:\n  \\\\[ E = mc^2 \\\\]\n  \\\\[ F = G \\frac{m_1 m_2}{r^2} \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    3: `You are a Physics tutor.\n\nExplain how physics shows up in everyday life and modern technology. Include examples from:\n• smartphones\n• cars and transportation\n• medical imaging\n• electricity and power\n• space exploration\n\nShow how physics careers span engineering, data science, energy, materials, and research.\n\nUse bullet points and bold keywords. Keep sentences short and clear.\n\nIf equations are useful, write them in LaTeX display mode on their own line, like:\n  \\\\[ v = u + at \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    4: `You are a Physics tutor.\n\nCreate 5 short multiple-choice questions to test understanding of:\n• what physics studies\n• one historical figure and their contribution\n• why physics is foundational\n• physics in daily life\n• a modern technology powered by physics\n\nAfter the student has had a chance to think, provide the correct answers and one-line explanations.\n\nFormat with:\n• numbered questions,\n• lettered options (A, B, C, D),\n• answers beneath in bold with a one-line explanation for each.\n\nIf you include equations, place each in LaTeX display mode like:\n  \\\\[ F = ma \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    5: `You are a Physics tutor.\n\nWrite a short summary (100–150 words) explaining:\n• what physics is,\n• why it matters,\n• how it evolved over time,\n• and where learners will go next (Mechanics).\n\nUse one powerful metaphor or analogy (for example, “physics is the grammar of nature”).\n\nEnd with an inviting sentence pointing them to Mechanics.\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    6: `You are a Physics tutor.\n\nGuide the student through a simple mental or household experiment showing physics principles. Examples:\n• dropping objects and noticing acceleration\n• pushing a chair and feeling force\n• seeing light reflect from a mirror\n\nExplain what is happening in terms of matter, forces, or motion.\n\nUse short steps and bullet points. Keep the tone friendly and curious.\n\nIf you use formulas, write them in LaTeX display mode, one per line like:\n  \\\\[ F = ma \\\\]\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`
   };
 
   const lastAiResponses = {};
@@ -671,7 +659,6 @@
     if (!preview) return;
     preview.textContent = prompts[step] || 'Prompt coming soon.';
 
-    // Typeset LaTeX in the preview area (if any)
     if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise([preview]).catch(err =>
         console.error('MathJax error in preview:', err)
@@ -688,7 +675,13 @@
       .replace(/\\\\\[/g, '\\[')
       .replace(/\\\\\]/g, '\\]');
 
-    // Simple markdown-like bold/italic; do NOT escape < or >
+    // Convert markdown headings "### Title" etc → bold line
+    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+
+    // Convert markdown bullets ("- item" or "* item") → "• item"
+    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
+
+    // Basic markdown-style bold/italic (after bullet cleanup)
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
@@ -718,9 +711,7 @@
 
       const res = await fetch('/api/run-step', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt })
       });
 
@@ -734,7 +725,6 @@
       lastAiResponses[step] = raw;
       output.innerHTML = formatOutput(raw);
 
-      // Trigger MathJax only on this response node
       if (window.MathJax && window.MathJax.typesetPromise) {
         MathJax.typesetPromise([output]).catch(err =>
           console.error('MathJax error in response:', err)
@@ -760,9 +750,7 @@
     }
 
     navigator.clipboard.writeText(text)
-      .then(() => {
-        alert('Answer copied to clipboard.');
-      })
+      .then(() => { alert('Answer copied to clipboard.'); })
       .catch(err => {
         console.error(err);
         alert('Could not copy to clipboard. Please try again.');
@@ -817,7 +805,6 @@
       }
     });
 
-    // Initial typeset for any LaTeX already on the page
     if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise().catch(err =>
         console.error('MathJax initial typeset error:', err)
