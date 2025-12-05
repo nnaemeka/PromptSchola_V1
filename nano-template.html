@@ -392,21 +392,44 @@
   let collapseState = {};
 
   // ========= Analytics helper =========
+  <script>
+  // ========= LESSON-SPECIFIC CONFIG =========
+  const NANO_SLUG = 'REPLACE_WITH_SLUG'; // e.g. 'kinematics-1d-displacement-speed-velocity'
+
+  // prompts = { 1: '...', 2: '...' } etc.
+  const prompts = { /* ... */ };
+
+  const lastAiResponses = {};
+  const STORAGE_KEY = 'ps_nano_' + NANO_SLUG + '_collapse';
+  let collapseState = {};
+
+  // ========= Analytics helper =========
   async function logEvent(eventType, step) {
     try {
+      let userType = 'anon';
+      try {
+        const user = await getCurrentUser();
+        if (user) userType = 'logged';
+      } catch (_) {
+        // ignore, default to anon
+      }
+
       await fetch('/api/log-event', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           eventType,
           nanoSlug: NANO_SLUG,
-          step
+          step,
+          userType
         })
       });
     } catch (e) {
       console.error('Failed to log event:', e);
     }
   }
+</script>
+
 
   // ========= UI logic =========
   function toggleStep(step) {
