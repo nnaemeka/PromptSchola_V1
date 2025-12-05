@@ -13,38 +13,34 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { eventType, nanoSlug, step } = req.body || {};
+    const { eventType, nanoSlug, step, userType, plan } = req.body || {};
 
-    if (!eventType || !nanoSlug) {
-      res.status(400).json({ error: 'Missing eventType or nanoSlug' });
+    if (!eventType) {
+      res.status(400).json({ error: 'Missing eventType' });
       return;
     }
 
-    const ip =
-      (req.headers['x-forwarded-for'] || '')
-        .split(',')
-        .map(s => s.trim())
-        .filter(Boolean)[0] ||
-      req.socket?.remoteAddress ||
-      null;
+    // Optional: nanoSlug & step are allowed to be null for global events.
+    const safeUserType =
+      userType === 'logged' || userType === 'anon' ? userType : 'anon';
 
-    const country = req.headers['x-vercel-ip-country'] || null;
-    const region = req.headers['x-vercel-ip-country-region'] || null;
-    const userAgent = req.headers['user-agent'] || null;
-
-    const user_id = null; // can be wired later using tokens if you want
+    // Vercel injects geo headers you can use for a tiny country code
+    let countryCode = req.headers['x-vercel-ip-country'] || null;
+    if (countryCode && typeof countryCode === 'string') {
+      countryCode = countryCode.slice(0, 2).toUpperCase();
+    } else {
+      countryCode = null;
+    }
 
     const { error } = await supabaseAdmin
-      .from('analytics_events')
+      .from('analytics_events_raw')
       .insert({
-        user_id,
-        nano_slug: nanoSlug,
-        step: step ?? null,
         event_type: eventType,
-        ip_address: ip,
-        country,
-        region,
-        user_agent: userAgent
+        nano_slug: nanoSlug || null,
+        step: step ?? null,
+        user_type: safeUserType,
+        country_code: countryCode,
+        plan: plan || null
       });
 
     if (error) {
