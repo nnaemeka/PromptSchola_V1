@@ -10,6 +10,22 @@
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- MathJax configuration for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
   <style>
     :root {
       --bg-body: #f3f4f6;
@@ -649,9 +665,9 @@
 
 <script>
   const prompts = {
-    1: `You are a Physics tutor for a first-year student.\n\nExplain clearly what “constant acceleration” means in one-dimensional motion. Include:\n• A simple verbal definition\n• How velocity changes with time when acceleration is constant\n• At least two everyday examples (e.g., a car speeding up steadily, an object in free fall)\n\nFormat your response with:\n• short paragraphs,\n• bullet points for examples,\n• bold for key terms,\n• and clear spacing between ideas.\n\nWhen you write equations, put them on their own line in plain text, for example:\n  v = u + at\n  a = (v - u) / t\nAvoid LaTeX; use simple text-only equations.`,
-    2: `You are a Physics tutor.\n\nHelp a student build intuition about constant acceleration by:\n• Describing a car that speeds up at a steady rate\n• Describing a ball dropped from rest (free fall)\n• Describing a ball thrown straight up and then falling back, explaining why acceleration is (approximately) constant and downward the whole time\n\nAsk the student to imagine or sketch v–t and x–t graphs qualitatively.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each scenario,\n• bold key concepts,\n• and clear spacing between ideas.\n\nWhen you include math, write each equation on its own line in plain text, such as:\n  v = u + at\n  s = ut + 1/2 a t^2\nUse simple characters and avoid LaTeX.`,
-    3: `You are a Physics tutor.\n\nCreate 3 short numerical problems involving constant acceleration in 1D. They should include:\n1) Starting from rest and speeding up with a known constant acceleration\n2) An initial non-zero velocity with a constant acceleration\n3) A free-fall example using g ≈ 9.8 m/s^2 (or 10 m/s^2 for simplicity)\n\nFor each problem:\n• State the problem clearly\n• Then show a step-by-step solution after the student has tried it.\n\nKeep the numbers easy.\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.\n\nWrite equations on their own line in plain text, for example:\n  v = u + at\n  s = ut + 1/2 a t^2\n  v^2 = u^2 + 2as\nAvoid LaTeX; use clear, text-only notation.`
+    1: `You are a Physics tutor for a first-year student.\n\nExplain clearly what “constant acceleration” means in one-dimensional motion. Include:\n• A simple verbal definition\n• How velocity changes with time when acceleration is constant\n• At least two everyday examples (e.g., a car speeding up steadily, an object in free fall)\n\nFormat your response with:\n• short paragraphs,\n• bullet points for examples,\n• bold for key terms where useful,\n• and clear spacing between ideas.\n\nWhen you write equations, use LaTeX display math, one equation per line. For example:\n  \\[ v = u + at \\]\n  \\[ a = \\frac{v - u}{t} \\]\nDo not use align or other complex environments; stick to simple \\\\[ ... \\\\] display equations.`,
+    2: `You are a Physics tutor.\n\nHelp a student build intuition about constant acceleration by:\n• Describing a car that speeds up at a steady rate\n• Describing a ball dropped from rest (free fall)\n• Describing a ball thrown straight up and then falling back, explaining why acceleration is (approximately) constant and downward the whole time\n\nAsk the student to imagine or sketch v–t and x–t graphs qualitatively.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each scenario,\n• bold key concepts where helpful,\n• and clear spacing between ideas.\n\nWhen you include math, write each equation as a LaTeX display equation on its own line, such as:\n  \\[ v = u + at \\]\n  \\[ s = ut + \\tfrac12 a t^2 \\]\nUse only simple display equations with \\\\[ ... \\\\].`,
+    3: `You are a Physics tutor.\n\nCreate 3 short numerical problems involving constant acceleration in 1D. They should include:\n1) Starting from rest and speeding up with a known constant acceleration\n2) An initial non-zero velocity with a constant acceleration\n3) A free-fall example using g ≈ 9.8 m/s^2 (or 10 m/s^2 for simplicity)\n\nFor each problem:\n• State the problem clearly\n• Then show a step-by-step solution after the student has tried it.\n\nKeep the numbers easy.\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.\n\nWrite equations as LaTeX display equations, one per line. For example:\n  \\[ v = u + at \\]\n  \\[ s = ut + \\tfrac12 a t^2 \\]\n  \\[ v^2 = u^2 + 2as \\]\nAvoid using align or cases; only simple \\\\[ ... \\\\] equations.`
   };
 
   const lastAiResponses = {};
@@ -717,10 +733,15 @@
       const raw = data.content || 'No response received from AI.';
       lastAiResponses[step] = raw;
       output.innerHTML = formatOutput(raw);
+
+      // Trigger MathJax rendering for this response
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([output]).catch(err => console.error('MathJax error:', err));
+      }
     } catch (err) {
       console.error(err);
-      const output = document.getElementById('response-step' + step);
-      if (output) output.textContent = 'Unexpected error. Please try again.';
+      const out = document.getElementById('response-step' + step);
+      if (out) out.textContent = 'Unexpected error. Please try again.';
     }
   }
 
