@@ -553,15 +553,35 @@
 
 <script>
   const prompts = {
-    1: `You are a Physics tutor for a first-year student.\n\nExplain clearly what “constant acceleration” means in one-dimensional motion. Include:\n• A simple verbal definition\n• How velocity changes with time when acceleration is constant\n• At least two everyday examples (e.g., a car speeding up steadily, an object in free fall)\n\nEnd with a very short summary in 2–3 sentences.`,
-    2: `You are a Physics tutor.\n\nHelp a student build intuition about constant acceleration by:\n• Describing a car that speeds up at a steady rate\n• Describing a ball dropped from rest (free fall)\n• Describing a ball thrown straight up and then falling back, with an explanation of why acceleration is (approximately) constant and downward the whole time\n\nUse simple language and encourage the student to imagine or sketch v–t and x–t graphs qualitatively (no equations yet).`,
-    3: `You are a Physics tutor.\n\nCreate 3 short numerical problems involving constant acceleration in 1D. They should include:\n1) Starting from rest and speeding up with a known constant acceleration\n2) An initial non-zero velocity with a constant acceleration\n3) A free-fall example using g ≈ 9.8 m/s^2 (or 10 m/s^2 for simplicity)\n\nFor each problem:\n• State the problem clearly\n• Then show a step-by-step solution after the student has tried it.\n\nKeep the numbers easy (small integers or simple decimals).`
+    1: `You are a Physics tutor for a first-year student.\n\nExplain clearly what “constant acceleration” means in one-dimensional motion. Include:\n• A simple verbal definition\n• How velocity changes with time when acceleration is constant\n• At least two everyday examples (e.g., a car speeding up steadily, an object in free fall)\n\nFormat your response with:\n• short paragraphs,\n• bullet points for examples,\n• bold for key terms,\n• and clear spacing between ideas.\nAvoid long, dense paragraphs.`,
+    2: `You are a Physics tutor.\n\nHelp a student build intuition about constant acceleration by:\n• Describing a car that speeds up at a steady rate\n• Describing a ball dropped from rest (free fall)\n• Describing a ball thrown straight up and then falling back, explaining why acceleration is (approximately) constant and downward the whole time\n\nAsk the student to imagine or sketch v–t and x–t graphs qualitatively.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each scenario,\n• bold key concepts,\n• and clear spacing between ideas.`,
+    3: `You are a Physics tutor.\n\nCreate 3 short numerical problems involving constant acceleration in 1D. They should include:\n1) Starting from rest and speeding up with a known constant acceleration\n2) An initial non-zero velocity with a constant acceleration\n3) A free-fall example using g ≈ 9.8 m/s^2 (or 10 m/s^2 for simplicity)\n\nFor each problem:\n• State the problem clearly\n• Then show a step-by-step solution after the student has tried it.\n\nKeep the numbers easy.\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.`
   };
 
   function showPrompt(step) {
     const preview = document.getElementById('preview-step' + step);
     if (!preview) return;
     preview.textContent = prompts[step] || 'Prompt coming soon.';
+  }
+
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function formatOutput(text) {
+    if (!text) return '';
+    let safe = escapeHTML(text);
+
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    safe = safe.replace(/\n\n+/g, '</p><p>');
+    safe = safe.replace(/\n/g, '<br>');
+    safe = '<p>' + safe + '</p>';
+
+    return safe;
   }
 
   async function runWithAI(step) {
@@ -594,7 +614,7 @@
       }
 
       const data = await res.json();
-      output.textContent = data.content || 'No response received from AI.';
+      output.innerHTML = formatOutput(data.content || 'No response received from AI.');
     } catch (err) {
       console.error(err);
       output.textContent = 'Unexpected error. Please try again.';
