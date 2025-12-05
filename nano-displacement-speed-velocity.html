@@ -6,34 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Nano-lesson on displacement, speed and velocity in 1D motion using PromptSchola’s 6-step prompt-based mastery flow."
+    content="Nano-lesson on displacement, distance, speed, and velocity in 1D motion."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- MathJax configuration for LaTeX rendering -->
+  <!-- MathJax -->
   <script>
     window.MathJax = {
       tex: {
         inlineMath: [['\\(','\\)'], ['$', '$']],
         displayMath: [['\\[','\\]'], ['$$','$$']]
       },
-      svg: {
-        fontCache: 'global'
-      }
+      svg: { fontCache: 'global' }
     };
   </script>
   <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
   </script>
 
   <style>
+    /* Same styles as template above (you can keep them identical) */
     :root {
       --bg-body: #f3f4f6;
       --bg-card: #ffffff;
       --accent: #7e22ce;
-      --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.08);
-      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --accent-strong: #4c1d95;
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
@@ -43,11 +40,8 @@
       --radius-pill: 999px;
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
       --font-main: 'Inter', system-ui, sans-serif;
-      --transition-fast: 0.25s ease-out;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: var(--font-main);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
@@ -55,44 +49,33 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
-
     a { text-decoration: none; color: inherit; }
 
     .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.3rem; }
 
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 1.3rem;
-    }
-
-    /* NAV */
     header {
       position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
       background: rgba(249, 250, 251, 0.96);
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
-
     .nav {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.75rem 0;
     }
-
     .logo-mark {
       width: 34px; height: 34px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
       display: flex; align-items: center; justify-content: center;
       font-weight: 800; color: #fff;
     }
-
     .logo-text span:first-child {
       font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
     }
     .logo-text span:last-child {
       font-size: 0.72rem; color: var(--text-subtle);
     }
-
     .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
     .nav-links a { opacity: .9; }
     .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
@@ -103,15 +86,11 @@
       background: #ffffff;
       border: 1px solid rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
-      transition: var(--transition-fast);
-    }
-    .btn-pill:hover {
-      background: #f3f4f6; transform: translateY(-1px);
+      cursor: pointer;
     }
 
-    /* HERO */
     .hero {
-      padding: 3rem 0 2.1rem;
+      padding: 2.4rem 0 1.6rem;
       text-align: center;
     }
     .hero-kicker {
@@ -119,15 +98,14 @@
       color: var(--text-subtle);
     }
     .hero-title {
-      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
       font-weight: 800; color: var(--text-strong);
       margin: 0.3rem 0;
     }
     .hero-subtitle {
       font-size: 0.96rem; color: var(--text-muted);
-      max-width: 38rem; margin: 0.4rem auto 0;
+      max-width: 40rem; margin: 0.4rem auto 0;
     }
-
     .hero-breadcrumbs {
       margin-top: 0.9rem;
       font-size: 0.82rem;
@@ -135,49 +113,14 @@
     }
     .hero-breadcrumbs a { color: var(--accent-strong); }
 
-    /* Access banner */
-    .access-banner {
-      margin: 0 auto 1.6rem;
-      max-width: 720px;
-      border-radius: var(--radius-pill);
-      padding: 0.55rem 0.9rem;
-      background: linear-gradient(to right, #eef2ff, #faf5ff);
-      border: 1px solid var(--accent-soft-border);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: center;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-
-    .badge-free {
-      padding: 0.15rem 0.6rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.75rem;
-      background: #dcfce7;
-      border: 1px solid rgba(22, 163, 74, 0.9);
-      color: #166534;
-    }
-    .badge-mastery {
-      padding: 0.15rem 0.6rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.75rem;
-      background: #f5f3ff;
-      border: 1px solid rgba(129, 140, 248, 0.9);
-      color: #4c1d95;
-    }
-
-    /* Steps layout */
     main { padding-bottom: 2.5rem; }
 
     .steps-grid {
       display: grid;
-      grid-template-columns: 1fr; /* single column */
+      grid-template-columns: 1fr;
       gap: 1rem;
       margin-top: 1rem;
     }
-
     .step-card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
@@ -188,82 +131,48 @@
       flex-direction: column;
       gap: 0.55rem;
       font-size: 0.9rem;
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+      padding-left: 1.2rem;
     }
-
     .step-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 0.75rem;
     }
-
-    .step-header-left {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-    }
-
-    .step-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: var(--text-main);
-    }
+    .step-header-left { display:flex;flex-direction:column;gap:0.2rem; }
     .step-index {
       font-size: 0.78rem;
-      color: var(--text-subtle);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .step-header-right {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .step-access-pill {
-      padding: 0.15rem 0.6rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.72rem;
-      border: 1px solid rgba(209, 213, 219, 0.85);
-      background: #f9fafb;
-      color: var(--text-subtle);
-      white-space: nowrap;
-    }
-    .step-access-pill.free {
-      border-color: rgba(22, 163, 74, 0.9);
-      background: #dcfce7;
-      color: #166534;
-    }
-    .step-access-pill.locked {
-      border-style: dashed;
-    }
-
-    .toggle-btn {
-      border: none;
-      background: transparent;
-      font-size: 1.15rem;
-      cursor: pointer;
-      padding: 0 0.3rem;
-      color: var(--accent-strong);
-      line-height: 1;
+      letter-spacing: 0.16em;
+      color: #4c1d95;
+      background: #ede9fe;
       border-radius: 999px;
-      transition: transform 0.15s ease, background 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      font-weight: 600;
     }
-    .toggle-btn:hover {
-      transform: scale(1.15);
-      background: rgba(148, 163, 184, 0.2);
+    .step-title {
+      font-size: 1.06rem;
+      font-weight: 650;
+      color: #111827;
     }
-
-    .step-content {
-      margin-top: 0.4rem;
-      display: block;
+    .step-header-right { display:flex;align-items:center;gap:0.4rem; }
+    .toggle-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      color: #4c1d95;
+      font-size: 1.2rem;
+      display:flex;align-items:center;justify-content:center;
+      cursor: pointer;
+      padding:0;
     }
-
-    .step-body {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-    }
+    .step-content { margin-top:0.4rem;display:block; }
+    .step-body { font-size:0.86rem;color:var(--text-muted); }
 
     .prompt-preview {
       margin-top: 0.45rem;
@@ -273,11 +182,8 @@
       border: 1px dashed rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
       color: var(--text-subtle);
-      font-family: var(--font-main);
-      min-height: 2.2rem;
       white-space: pre-wrap;
     }
-
     .ai-response {
       margin-top: 0.4rem;
       padding: 0.85rem 1rem;
@@ -289,170 +195,71 @@
       white-space: pre-wrap;
       line-height: 1.55;
     }
-
-    .ai-response p {
-      margin-bottom: 0.75rem;
-    }
-
+    .ai-response p { margin-bottom:0.75rem; }
     .ai-response ul,
-    .ai-response ol {
-      margin: 0.6rem 0 0.6rem 1.2rem;
-    }
-
-    .ai-response strong {
-      font-weight: 700;
-    }
-
-    .ai-response em {
-      font-style: italic;
-    }
+    .ai-response ol { margin:0.6rem 0 0.6rem 1.2rem; }
 
     .copy-row {
       margin-top: 0.35rem;
-      display: flex;
-      justify-content: flex-end;
+      display:flex;
+      justify-content:flex-end;
+      gap:0.4rem;
     }
 
     .btn-ghost,
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
+      display:inline-flex;
+      align-items:center;
+      gap:0.25rem;
     }
-
     .btn-ghost {
-      padding: 0.42rem 0.8rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #ffffff;
-      cursor: pointer;
-      transition: var(--transition-fast);
+      padding:0.42rem 0.8rem;
+      border-radius:var(--radius-pill);
+      font-size:0.8rem;
+      border:1px solid rgba(209, 213, 219, 0.9);
+      background:#ffffff;
+      cursor:pointer;
     }
-    .btn-ghost:hover {
-      background: #f3f4f6;
-      transform: translateY(-1px);
-    }
-
     .btn-primary {
-      padding: 0.42rem 1rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: var(--transition-fast);
-    }
-    .btn-primary:hover { transform: translateY(-1px); }
-
-    .btn-primary.locked,
-    .btn-ghost.locked {
-      opacity: 0.55;
-      cursor: not-allowed;
-      box-shadow: none;
-      transform: none;
-    }
-
-    .btn-copy {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.75rem;
+      padding:0.42rem 1rem;
+      border-radius:var(--radius-pill);
+      font-size:0.8rem;
+      font-weight:600;
+      border:none;
+      cursor:pointer;
+      background:radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color:#fff;
     }
 
     .step-footer {
-      margin-top: 0.6rem;
-      padding-top: 0.6rem;
-      border-top: 1px solid rgba(209, 213, 219, 0.7);
-      display: flex;
-      justify-content: space-between;
-      gap: 0.5rem;
-      align-items: center;
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-      flex-wrap: wrap;
-    }
-
-    .locked-note {
-      color: var(--text-subtle);
+      margin-top:0.6rem;
+      padding-top:0.6rem;
+      border-top:1px solid rgba(209, 213, 219, 0.7);
+      display:flex;
+      justify-content:space-between;
+      gap:0.5rem;
+      align-items:center;
+      font-size:0.78rem;
+      color:var(--text-subtle);
+      flex-wrap:wrap;
     }
 
     footer {
-      margin-top: auto;
-      padding: 1.8rem 0;
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-subtle);
+      margin-top:auto;
+      padding:1.8rem 0;
+      text-align:center;
+      font-size:0.8rem;
+      color:var(--text-subtle);
     }
 
     @media (max-width: 860px) {
-      .nav-links { display: none; }
+      .nav-links { display:none; }
     }
-    /* === PromptSchola step header polish overrides === */
-
-/* Add a subtle colored spine and a bit more left padding */
-.step-card {
-  border-left: 4px solid rgba(126, 34, 206, 0.55); /* purple spine */
-  padding-left: 1.2rem;
-}
-
-/* Make STEP 1 pill-like and accent-colored */
-.step-index {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: #4c1d95;              /* deep indigo */
-  background: #ede9fe;         /* soft lilac */
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0.16rem 0.7rem;
-  font-weight: 600;
-}
-
-/* Make the step title more like a section heading */
-.step-title {
-  font-size: 1.06rem;
-  font-weight: 650;
-  color: #111827; /* strong text */
-}
-
-/* Make the expand/collapse toggle a clear circular button */
-.toggle-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  border: 1px solid rgba(129, 140, 248, 0.8);
-  background: #eef2ff;
-  color: #4c1d95;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background 0.15s ease;
-}
-
-/* Stronger hover effect so students see it's interactive */
-.toggle-btn:hover {
-  transform: translateY(-1px) scale(1.07);
-  box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75);
-  background: #e0e7ff;
-}
-
   </style>
 </head>
-
 <body>
 <div class="page">
 
-  <!-- NAV -->
   <header>
     <div class="container">
       <div class="nav">
@@ -466,246 +273,212 @@
         <nav class="nav-links">
           <a href="index.html">Home</a>
           <a href="physics.html">Physics</a>
-          <a href="pricing.html">Pricing</a>
+          <a href="mechanics.html">Mechanics</a>
         </nav>
-        <a href="auth.html" class="btn-pill">Account</a>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
+          <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
+          <a href="auth.html" class="btn-pill">Account</a>
+        </div>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <div class="hero-kicker">Nano-lesson · Kinematics in 1D</div>
-        <h1 class="hero-title">Displacement, Speed &amp; Velocity</h1>
+        <div class="hero-kicker">Kinematics · 1D Motion</div>
+        <h1 class="hero-title">Displacement, Speed & Velocity</h1>
         <p class="hero-subtitle">
-          Build a precise language for motion along a straight line: distinguish distance from displacement,
-          and learn why speed and velocity are not the same thing.
+          Learn the difference between distance and displacement, and how to compute average speed and average velocity in straight-line motion.
         </p>
         <div class="hero-breadcrumbs">
+          <a href="physics.html">Physics</a> ·
           <a href="mechanics.html">Mechanics</a> ·
-          <a href="kinematics-1d.html">Kinematics in 1D</a> ·
-          <span>Displacement, Speed &amp; Velocity</span>
+          <span>Displacement, Speed & Velocity</span>
         </div>
       </div>
     </section>
 
-    <!-- ACCESS BANNER -->
-    <section>
-      <div class="container">
-        <div class="access-banner">
-          <span class="badge-free">Steps 1–3 free</span>
-          <span class="badge-mastery">Steps 4–6 for Mastery access</span>
-          <span>Use “Run with AI” to send each prompt to the PromptSchola tutor.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- STEPS -->
     <section>
       <div class="container">
         <div class="steps-grid">
 
           <!-- STEP 1 -->
-          <article class="step-card">
+          <article class="step-card" id="step-1-card">
             <div class="step-header">
               <div class="step-header-left">
-                <div class="step-index">Step 1 · Orient</div>
-                <div class="step-title">What are we trying to understand?</div>
+                <div class="step-index">STEP 1</div>
+                <div class="step-title">Orient: what are we trying to describe?</div>
               </div>
               <div class="step-header-right">
-                <span class="step-access-pill free">Free · Good starting point</span>
-                <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+                <button class="toggle-btn" onclick="toggleStep(1)">−</button>
               </div>
             </div>
             <div class="step-content" id="step-content-1">
               <div class="step-body">
-                Clarify the core ideas of this nano-lesson:
-                <ul style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem;">
-                  <li>What is the difference between <em>distance</em> and <em>displacement</em>?</li>
-                  <li>How do we define average speed and average velocity?</li>
-                  <li>Why does choosing a positive direction matter in 1D motion?</li>
-                </ul>
+                Clarify the everyday idea of “how far” and “how fast” and connect it to the formal physics quantities of distance, displacement, speed, and velocity.
               </div>
               <div class="prompt-preview" id="preview-step1">
                 Prompt preview will appear here when you click “Show prompt”.
               </div>
               <div class="ai-response" id="response-step1"></div>
               <div class="copy-row">
-                <button class="btn-ghost btn-copy" onclick="copyAnswer(1)">Copy answer</button>
+                <button class="btn-ghost" onclick="copyPrompt(1)">Copy prompt</button>
+                <button class="btn-ghost" onclick="copyAnswer(1)">Copy answer</button>
+                <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
               </div>
               <div class="step-footer">
-                <div>
-                  <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
-                  <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
-                </div>
-                <span>Goal: orient your brain before any formulas.</span>
+                <span>Goal: get an intuitive feel for the four key quantities.</span>
               </div>
             </div>
           </article>
 
           <!-- STEP 2 -->
-          <article class="step-card">
+          <article class="step-card" id="step-2-card">
             <div class="step-header">
               <div class="step-header-left">
-                <div class="step-index">Step 2 · Understand</div>
-                <div class="step-title">Build intuition with examples</div>
+                <div class="step-index">STEP 2</div>
+                <div class="step-title">Explain: distance vs displacement</div>
               </div>
               <div class="step-header-right">
-                <span class="step-access-pill free">Free · Concept focus</span>
-                <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
+                <button class="toggle-btn" onclick="toggleStep(2)">−</button>
               </div>
             </div>
             <div class="step-content" id="step-content-2">
               <div class="step-body">
-                Use analogies and simple stories to make the definitions feel natural:
-                walking back and forth along a corridor, a car trip with stops, or a runner
-                on a straight track.
+                Build a clear explanation (with a simple diagram) of how total path length (distance) differs from straight-line change in position (displacement).
               </div>
               <div class="prompt-preview" id="preview-step2">
                 Prompt preview will appear here when you click “Show prompt”.
               </div>
               <div class="ai-response" id="response-step2"></div>
               <div class="copy-row">
-                <button class="btn-ghost btn-copy" onclick="copyAnswer(2)">Copy answer</button>
+                <button class="btn-ghost" onclick="copyPrompt(2)">Copy prompt</button>
+                <button class="btn-ghost" onclick="copyAnswer(2)">Copy answer</button>
+                <button class="btn-primary" onclick="runWithAI(2)">Run with AI</button>
               </div>
               <div class="step-footer">
-                <div>
-                  <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
-                  <button class="btn-primary" onclick="runWithAI(2)">Run with AI</button>
-                </div>
-                <span>Goal: connect definitions to everyday motion.</span>
+                <span>Goal: be able to tell which problems need distance vs displacement.</span>
               </div>
             </div>
           </article>
 
           <!-- STEP 3 -->
-          <article class="step-card">
+          <article class="step-card" id="step-3-card">
             <div class="step-header">
               <div class="step-header-left">
-                <div class="step-index">Step 3 · Apply</div>
-                <div class="step-title">Connect to simple numerical problems</div>
+                <div class="step-index">STEP 3</div>
+                <div class="step-title">Explain: speed vs velocity</div>
               </div>
               <div class="step-header-right">
-                <span class="step-access-pill free">Free · Light practice</span>
-                <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
+                <button class="toggle-btn" onclick="toggleStep(3)">−</button>
               </div>
             </div>
             <div class="step-content" id="step-content-3">
               <div class="step-body">
-                Try a small set of numerical questions:
-                <ul style="margin:0.4rem 0 0 1.1rem;font-size:0.85rem;">
-                  <li>Compute displacement vs distance for a back-and-forth walk.</li>
-                  <li>Find average speed vs average velocity over a trip.</li>
-                  <li>Decide when average velocity can be zero even if you moved.</li>
-                </ul>
+                Contrast average speed and average velocity, including units, sign, and how they relate to distance and displacement.
               </div>
               <div class="prompt-preview" id="preview-step3">
                 Prompt preview will appear here when you click “Show prompt”.
               </div>
               <div class="ai-response" id="response-step3"></div>
               <div class="copy-row">
-                <button class="btn-ghost btn-copy" onclick="copyAnswer(3)">Copy answer</button>
+                <button class="btn-ghost" onclick="copyPrompt(3)">Copy prompt</button>
+                <button class="btn-ghost" onclick="copyAnswer(3)">Copy answer</button>
+                <button class="btn-primary" onclick="runWithAI(3)">Run with AI</button>
               </div>
               <div class="step-footer">
-                <div>
-                  <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
-                  <button class="btn-primary" onclick="runWithAI(3)">Run with AI</button>
-                </div>
-                <span>Goal: turn the language into calculations.</span>
+                <span>Goal: understand why velocity can be negative but speed cannot.</span>
               </div>
             </div>
           </article>
 
-          <!-- STEP 4 (LOCKED) -->
-          <article class="step-card">
+          <!-- STEP 4 -->
+          <article class="step-card" id="step-4-card">
             <div class="step-header">
               <div class="step-header-left">
-                <div class="step-index">Step 4 · Work Through It</div>
-                <div class="step-title">Step-by-step worked examples</div>
+                <div class="step-index">STEP 4</div>
+                <div class="step-title">Practice: numeric examples</div>
               </div>
               <div class="step-header-right">
-                <span class="step-access-pill locked">Locked · Mastery</span>
-                <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
+                <button class="toggle-btn" onclick="toggleStep(4)">−</button>
               </div>
             </div>
             <div class="step-content" id="step-content-4">
               <div class="step-body">
-                Guided, multi-step solutions that show how to set up diagrams, choose a sign convention,
-                write down known/unknown quantities, and avoid common mistakes.
+                Work through a few problems where you compute distance, displacement, average speed, and average velocity for motion along a straight line.
               </div>
-              <div class="prompt-preview">
-                This step is part of Mastery access. Once unlocked, you’ll see structured prompts such as:
-                “Walk me through this displacement and velocity problem step-by-step.”
+              <div class="prompt-preview" id="preview-step4">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step4"></div>
+              <div class="copy-row">
+                <button class="btn-ghost" onclick="copyPrompt(4)">Copy prompt</button>
+                <button class="btn-ghost" onclick="copyAnswer(4)">Copy answer</button>
+                <button class="btn-primary" onclick="runWithAI(4)">Run with AI</button>
               </div>
               <div class="step-footer">
-                <div>
-                  <button class="btn-ghost locked" disabled>Show prompt</button>
-                  <button class="btn-primary locked" disabled>Run with AI</button>
-                </div>
-                <span class="locked-note">Unlock with Mastery to access detailed worked examples.</span>
+                <span>Goal: be fluent converting word problems to numbers and formulas.</span>
               </div>
             </div>
           </article>
 
-          <!-- STEP 5 (LOCKED) -->
-          <article class="step-card">
+          <!-- STEP 5 -->
+          <article class="step-card" id="step-5-card">
             <div class="step-header">
               <div class="step-header-left">
-                <div class="step-index">Step 5 · Review &amp; Practice</div>
-                <div class="step-title">Targeted questions to test yourself</div>
+                <div class="step-index">STEP 5</div>
+                <div class="step-title">Check: quick concept quiz</div>
               </div>
               <div class="step-header-right">
-                <span class="step-access-pill locked">Locked · Mastery</span>
-                <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
+                <button class="toggle-btn" onclick="toggleStep(5)">−</button>
               </div>
             </div>
             <div class="step-content" id="step-content-5">
               <div class="step-body">
-                A bank of conceptual and calculation questions designed to reveal specific gaps:
-                zero displacement vs zero distance, interpreting negative velocity, and more.
+                Answer a short quiz mixing conceptual questions and small numerical tasks to test your understanding.
               </div>
-              <div class="prompt-preview">
-                This step is part of Mastery access. It will generate question sets and let you check your answers.
+              <div class="prompt-preview" id="preview-step5">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step5"></div>
+              <div class="copy-row">
+                <button class="btn-ghost" onclick="copyPrompt(5)">Copy prompt</button>
+                <button class="btn-ghost" onclick="copyAnswer(5)">Copy answer</button>
+                <button class="btn-primary" onclick="runWithAI(5)">Run with AI</button>
               </div>
               <div class="step-footer">
-                <div>
-                  <button class="btn-ghost locked" disabled>Show prompt</button>
-                  <button class="btn-primary locked" disabled>Run with AI</button>
-                </div>
-                <span class="locked-note">Use this step when you want exam-level confidence.</span>
+                <span>Goal: see if you can distinguish all four quantities in new contexts.</span>
               </div>
             </div>
           </article>
 
-          <!-- STEP 6 (LOCKED) -->
-          <article class="step-card">
+          <!-- STEP 6 -->
+          <article class="step-card" id="step-6-card">
             <div class="step-header">
               <div class="step-header-left">
-                <div class="step-index">Step 6 · Simulation Lab</div>
-                <div class="step-title">Visualize motion in 1D</div>
+                <div class="step-index">STEP 6</div>
+                <div class="step-title">Apply: a simple motion story</div>
               </div>
               <div class="step-header-right">
-                <span class="step-access-pill locked">Locked · Mastery</span>
-                <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
+                <button class="toggle-btn" onclick="toggleStep(6)">−</button>
               </div>
             </div>
             <div class="step-content" id="step-content-6">
               <div class="step-body">
-                Use AI-guided prompts to set up simple “virtual experiments”: change starting position, direction,
-                and speed, and see how displacement and velocity evolve over time.
+                Use a short story (e.g., walking to school and back) to compute distance, displacement, speed, and velocity, and to explain them to a friend.
               </div>
-              <div class="prompt-preview">
-                This step is part of Mastery access. In future, it can drive a graphing or simulation tool side-by-side
-                with AI.
+              <div class="prompt-preview" id="preview-step6">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step6"></div>
+              <div class="copy-row">
+                <button class="btn-ghost" onclick="copyPrompt(6)">Copy prompt</button>
+                <button class="btn-ghost" onclick="copyAnswer(6)">Copy answer</button>
+                <button class="btn-primary" onclick="runWithAI(6)">Run with AI</button>
               </div>
               <div class="step-footer">
-                <div>
-                  <button class="btn-ghost locked" disabled>Show prompt</button>
-                  <button class="btn-primary locked" disabled>Run with AI</button>
-                </div>
-                <span class="locked-note">Great for building a “feel” for 1D motion.</span>
+                <span>Goal: be able to narrate motion using correct physics language.</span>
               </div>
             </div>
           </article>
@@ -720,41 +493,78 @@
   </footer>
 </div>
 
+<!-- Shared Supabase + helpers -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
 <script>
-  // Prompts with LaTeX display math instructions
+  const NANO_SLUG = 'kinematics-1d-displacement-speed-velocity';
+
   const prompts = {
-    1: `You are a Physics tutor for a first-year student.\n\nExplain the difference between distance and displacement, and between average speed and average velocity, using:\n• A student walking from 0 m → +5 m → +1 m on a straight line\n• Clear definitions and one short summary at the end.\n\nFormat your response with:\n• short paragraphs (2–4 lines),\n• bullet points where helpful,\n• bold for key terms if useful,\n• and clear spacing between ideas.\n\nWhen you write any math, use LaTeX in display mode, one equation per line. For example:\n  \\[ v_\\text{avg} = \\frac{\\text{total distance}}{\\text{total time}} \\]\n  \\[ v_\\text{avg} = \\frac{\\text{total displacement}}{\\text{total time}} \\]\nDo not use LaTeX environments like align; just simple display equations with \\\\[ ... \\\\].`,
-    2: `You are a Physics tutor.\n\nBuild intuition for displacement, speed, and velocity using:\n• Everyday examples (walking, car trips, running on a track)\n• At least one case where displacement is zero but distance is not\n\nStart without formulas; focus on stories and simple numbers.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each example,\n• bold key concepts where helpful,\n• and clear spacing between ideas.\n\nIf you need to include math, write each equation as a LaTeX display equation on its own line, for example:\n  \\[ s = vt \\]\nKeep equations simple and readable.`,
-    3: `You are a Physics tutor.\n\nCreate 3 short calculation questions about displacement, average speed, and average velocity in 1D motion. For each question:\n• State the problem clearly\n• Then show the solution step-by-step after the student has tried it.\n\nKeep the numbers simple (small integers or simple decimals).\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.\n\nWhen you write equations, use LaTeX display equations on their own lines. For example:\n  \\[ v_\\text{avg} = \\frac{s}{t} \\]\n  \\[ v_\\text{avg} = \\frac{\\text{total displacement}}{\\text{total time}} \\]\nAvoid LaTeX environments beyond simple display equations.`
+    1: `You are a physics tutor.\n\nExplain in simple language what we are trying to describe when we talk about motion in one dimension.\n\n• Start from everyday phrases like "how far did you go?" and "how fast were you going?".\n• Introduce the four key quantities: distance, displacement, speed, and velocity.\n• Give one sentence each for what they represent.\n\nUse short paragraphs and bullet points. Don’t use headings like # or ###. If you include formulas, use LaTeX display math like:\n  \\\\[ v = \\frac{\\Delta x}{\\Delta t} \\\\]\nMake sure every LaTeX expression is complete and properly enclosed in \\\\[ and \\\\].`,
+    2: `You are a physics tutor.\n\nExplain the difference between **distance** and **displacement** for motion along a straight line.\n\nInclude:\n• A clear definition of distance as total path length.\n• A clear definition of displacement as change in position from start to end.\n• One simple example where distance ≠ displacement.\n\nUse bullet points and, if helpful, a small coordinate diagram in words (e.g., "start at x = 0 m, walk to x = +5 m, then back to x = +2 m").\nIf you use any symbols, write them in LaTeX display math like:\n  \\\\[ \\Delta x = x_{\\text{final}} - x_{\\text{initial}} \\\\]`,
+    3: `You are a physics tutor.\n\nExplain the difference between **average speed** and **average velocity**.\n\nInclude:\n• Definitions of each.\n• Formulas in LaTeX display math, for example:\n  \\\\[ v_{\\text{avg}} = \\frac{\\Delta x}{\\Delta t} \\\\]\n  \\\\[ \\text{speed}_{\\text{avg}} = \\frac{\\text{total distance}}{\\Delta t} \\\\]\n• A short example where the magnitude of average velocity is less than the average speed.\n\nUse bullet points and short paragraphs. Do not use markdown headings.`,
+    4: `You are a physics tutor.\n\nCreate 3 worked examples of motion in one dimension where the student must compute:\n• distance and displacement\n• average speed and average velocity\n\nFor each example:\n1) State the problem clearly.\n2) Show the given values.\n3) Show the formulas you use, in LaTeX display math.\n4) Compute the answer step by step.\n\nUse simple numbers and units like meters (m) and seconds (s).`,
+    5: `You are a physics tutor.\n\nWrite a short concept check quiz with 5 questions mixing:\n• multiple choice\n• short answer\n\nQuestions should test if the student can:\n• distinguish distance vs displacement\n• distinguish speed vs velocity\n• choose which quantity applies in a situation.\n\nAfter listing all questions, give the answers and one-line explanations. Use bullet points, and avoid markdown headings.`,
+    6: `You are a physics tutor.\n\nDescribe a short everyday motion story, for example:\n• walking from home to a store and back\n• riding a bus along a straight road\n\nAsk the student to identify:\n• the total distance traveled\n• the displacement\n• the average speed\n• the average velocity\n\nThen provide a sample solution with calculations in LaTeX display math for any formulas used.\nUse clear steps and short paragraphs.`
   };
 
-  // Store last AI responses for copy
   const lastAiResponses = {};
-  const STORAGE_KEY = 'ps_nano_displacement_collapse';
+  const STORAGE_KEY = 'ps_nano_' + NANO_SLUG + '_collapse';
   let collapseState = {};
 
-  function showPrompt(step) {
-    const preview = document.getElementById('preview-step' + step);
-    if (!preview) return;
-    preview.textContent = prompts[step] || 'Prompt coming soon.';
+  async function logEvent(eventType, step) {
+    try {
+      await fetch('/api/log-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ eventType, nanoSlug: NANO_SLUG, step })
+      });
+    } catch (e) {
+      console.error('Failed to log event:', e);
+    }
   }
 
-  function escapeHTML(str) {
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+  function toggleStep(step) {
+    const content = document.getElementById(`step-content-${step}`);
+    const card = document.getElementById(`step-${step}-card`);
+    const btn = card?.querySelector('.toggle-btn');
+    if (!content || !btn) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? '−' : '+';
+
+    collapseState[step] = !isHidden;
+    saveCollapseState();
+  }
+
+  function loadCollapseState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      collapseState = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      collapseState = {};
+    }
+  }
+  function saveCollapseState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
+    } catch (e) {
+      console.error('Unable to save collapse state', e);
+    }
   }
 
   function formatOutput(text) {
     if (!text) return '';
-    let safe = escapeHTML(text);
+    let safe = text
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]');
 
-    // Light markdown-style formatting (if model uses ** or *)
+    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
-
-    // Paragraphs and line breaks
     safe = safe.replace(/\n\n+/g, '</p><p>');
     safe = safe.replace(/\n/g, '<br>');
     safe = '<p>' + safe + '</p>';
@@ -763,6 +573,9 @@
   }
 
   async function runWithAI(step) {
+    const user = await ensureLoggedInOrRedirect();
+    if (!user) return;
+
     const prompt = prompts[step];
     if (!prompt) {
       alert('No prompt defined for this step yet.');
@@ -778,11 +591,11 @@
     try {
       output.textContent = 'Running with AI…';
 
+      logEvent('run_ai', step);
+
       const res = await fetch('/api/run-step', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt })
       });
 
@@ -796,15 +609,36 @@
       lastAiResponses[step] = raw;
       output.innerHTML = formatOutput(raw);
 
-      // Trigger MathJax rendering for this response
       if (window.MathJax && window.MathJax.typesetPromise) {
-        MathJax.typesetPromise([output]).catch(err => console.error('MathJax error:', err));
+        MathJax.typesetPromise([output]).catch(err =>
+          console.error('MathJax error in response:', err)
+        );
       }
     } catch (err) {
       console.error(err);
-      const out = document.getElementById('response-step' + step);
-      if (out) out.textContent = 'Unexpected error. Please try again.';
+      output.textContent = 'Unexpected error. Please try again.';
     }
+  }
+
+  function copyPrompt(step) {
+    const text = prompts[step];
+    if (!text) {
+      alert('No prompt defined for this step yet.');
+      return;
+    }
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        alert('Prompt copied to clipboard.');
+        logEvent('copy_prompt', step);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy to clipboard. Please try again.');
+      });
   }
 
   function copyAnswer(step) {
@@ -813,58 +647,25 @@
       alert('No AI answer to copy yet. Run with AI first.');
       return;
     }
-
     if (!navigator.clipboard || !navigator.clipboard.writeText) {
       alert('Clipboard not supported in this browser.');
       return;
     }
-
     navigator.clipboard.writeText(text)
-      .then(() => {
-        alert('Answer copied to clipboard.');
-      })
+      .then(() => alert('Answer copied to clipboard.'))
       .catch(err => {
         console.error(err);
         alert('Could not copy to clipboard. Please try again.');
       });
   }
 
-  function loadCollapseState() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      collapseState = raw ? JSON.parse(raw) : {};
-    } catch (e) {
-      collapseState = {};
-    }
-  }
-
-  function saveCollapseState() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
-    } catch (e) {
-      console.error('Unable to save collapse state', e);
-    }
-  }
-
-  function toggleStep(step) {
-    const content = document.getElementById(`step-content-${step}`);
-    const btn = document.getElementById(`toggle-btn-${step}`);
-    if (!content || !btn) return;
-
-    const isHidden = content.style.display === 'none';
-    content.style.display = isHidden ? 'block' : 'none';
-    btn.textContent = isHidden ? '−' : '+';
-
-    collapseState[step] = !isHidden;
-    saveCollapseState();
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
     loadCollapseState();
-    const steps = [1, 2, 3, 4, 5, 6];
+    const steps = [1,2,3,4,5,6];
     steps.forEach(step => {
       const content = document.getElementById(`step-content-${step}`);
-      const btn = document.getElementById(`toggle-btn-${step}`);
+      const card = document.getElementById(`step-${step}-card`);
+      const btn = card?.querySelector('.toggle-btn');
       if (!content || !btn) return;
 
       const expanded = collapseState[step];
@@ -876,8 +677,13 @@
         btn.textContent = '−';
       }
     });
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(err =>
+        console.error('MathJax initial typeset error:', err)
+      );
+    }
   });
 </script>
-
 </body>
 </html>
