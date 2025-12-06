@@ -697,6 +697,9 @@
           <a href="#pricing">Pricing</a>
         </nav>
         <div class="nav-right">
+          <!-- 🔹 NEW: this span will be filled by auth.js if the user is logged in -->
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
           <a href="auth.html" class="btn-pill">Log in / Create account</a>
           <a href="#start" class="btn-primary">Start free</a>
         </div>
@@ -982,5 +985,21 @@
     </div>
   </footer>
 </div>
+
+<!-- 🔹 Supabase client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 🔹 Shared auth helpers (supabaseClient, getCurrentUser, updateNavUserDisplay, etc.) -->
+<script src="auth.js"></script>
+
+<!-- 🔹 Initialize nav user display once DOM & auth are ready -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+  });
+</script>
+
 </body>
 </html>
