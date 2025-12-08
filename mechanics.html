@@ -80,16 +80,49 @@
     .nav-links a { opacity: .9; }
     .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
+
     .btn-pill {
       border-radius: var(--radius-pill);
       padding: 0.45rem 1rem;
       background: #ffffff;
       border: 1px solid rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
+      cursor: pointer;
       transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
     }
     .btn-pill:hover {
       background: #f3f4f6; transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.48rem 1.1rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
     }
 
     /* HERO */
@@ -217,27 +250,6 @@
       color: var(--text-subtle);
     }
 
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.48rem 1.1rem;
-      border-radius: var(--radius-pill);
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: 600;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: var(--transition-fast);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-    }
-
     footer {
       margin-top: auto;
       padding: 1.8rem 0;
@@ -259,7 +271,7 @@
       .topics-grid {
         grid-template-columns: 1fr;
       }
-      .nav-links { display: false; display: none; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
@@ -278,12 +290,31 @@
             <span>Prompt-based Physics mastery</span>
           </div>
         </div>
+
         <nav class="nav-links">
           <a href="index.html">Home</a>
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <a href="auth.html" class="btn-pill">Account</a>
+
+        <div class="nav-right">
+          <!-- Filled by auth.js -->
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <!-- Shown when logged OUT -->
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <!-- Shown when logged IN -->
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+          >
+            Sign out
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -450,5 +481,48 @@
     © 2025 PromptSchola. All rights reserved.
   </footer>
 </div>
+
+<!-- 🔹 Supabase client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 🔹 Shared auth helpers (supabaseClient, getCurrentUser, updateNavUserDisplay, signOutUser, etc.) -->
+<script src="auth.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Update "Signed in as ..." text if available
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+
+        // If you prefer hiding login/register when signed in, use this instead:
+        // if (loginBtn) loginBtn.style.display = 'none';
+        // if (registerBtn) registerBtn.style.display = 'none';
+        // if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
+  });
+</script>
+
 </body>
 </html>
