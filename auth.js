@@ -38,6 +38,28 @@ async function getCurrentUser() {
   }
 }
 
+// In auth.js
+
+async function signOutUser() {
+  try {
+    await supabaseClient.auth.signOut();
+
+    // Optional: if you log events
+    if (typeof logEvent === 'function') {
+      try {
+        await logEvent('sign_out', {});
+      } catch (e) {
+        console.warn('Failed to log sign_out event', e);
+      }
+    }
+  } catch (err) {
+    console.error('Error signing out:', err);
+  }
+
+  // After logout, send them to homepage (or auth.html with login view)
+  window.location.href = 'index.html';
+}
+
 // 5) Nav bar helper: show "Signed in as <email>" if logged in
 async function updateNavUserDisplay() {
   const el = document.getElementById("nav-user");
