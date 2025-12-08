@@ -503,15 +503,12 @@
       const user = await getCurrentUser();
 
       if (user) {
-        if (loginBtn) loginBtn.style.display = 'inline-flex';
-        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        // ✅ Logged IN: hide Sign In / Register, show Sign out
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
         if (signOutBtn) signOutBtn.style.display = 'inline-flex';
-
-        // If you prefer hiding login/register when signed in, use this instead:
-        // if (loginBtn) loginBtn.style.display = 'none';
-        // if (registerBtn) registerBtn.style.display = 'none';
-        // if (signOutBtn) signOutBtn.style.display = 'inline-flex';
       } else {
+        // ✅ Logged OUT: show Sign In / Register, hide Sign out
         if (loginBtn) loginBtn.style.display = 'inline-flex';
         if (registerBtn) registerBtn.style.display = 'inline-flex';
         if (signOutBtn) signOutBtn.style.display = 'none';
@@ -523,6 +520,5 @@
     }
   });
 </script>
-
 </body>
 </html>
