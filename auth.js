@@ -60,44 +60,28 @@ async function signOutUser() {
   window.location.href = "index.html";
 }
 
-// 6) Nav bar helper: show "Hi, Name" / "Signed in as <email>" and toggle buttons
 async function updateNavUserDisplay() {
-  const navUser     = document.getElementById("nav-user");
-  const loginBtn    = document.getElementById("nav-login-btn");
+  const userLabel = document.getElementById("nav-user");
+  const loginBtn = document.getElementById("nav-login-btn");
   const registerBtn = document.getElementById("nav-register-btn");
-  const signoutBtn  = document.getElementById("nav-signout-btn");
-
-  if (!navUser) {
-    // Page has no nav area; nothing to do
-    return;
-  }
+  const signoutBtn = document.getElementById("nav-signout-btn");
 
   const user = await getCurrentUser();
 
   if (!user) {
     // Not logged in
-    navUser.textContent = "";
-
-    if (loginBtn)    loginBtn.style.display = "inline-block";
-    if (registerBtn) registerBtn.style.display = "inline-block";
-    if (signoutBtn)  signoutBtn.style.display = "none";
-
+    if (userLabel) userLabel.textContent = "";
+    if (loginBtn) loginBtn.style.display = "inline-flex";
+    if (registerBtn) registerBtn.style.display = "inline-flex";
+    if (signoutBtn) signoutBtn.style.display = "none";
     return;
   }
 
-  // Logged in: show identity text
-  const email    = user.email || "";
-  const fullName = user.user_metadata?.full_name || "";
-  const displayText = fullName
-    ? `Hi, ${fullName}`
-    : `Signed in as ${email}`;
-
-  navUser.textContent = displayText;
-
-  // When logged in, hide login/register, show sign out
-  if (loginBtn)    loginBtn.style.display = "none";
-  if (registerBtn) registerBtn.style.display = "none"; // you can keep this visible if you prefer
-  if (signoutBtn)  signoutBtn.style.display = "inline-block";
+  // Logged in
+  if (userLabel) userLabel.textContent = `Signed in as ${user.email}`;
+  if (loginBtn) loginBtn.style.display = "none";
+  if (registerBtn) registerBtn.style.display = "none";
+  if (signoutBtn) signoutBtn.style.display = "inline-flex";
 }
 
 // Run automatically on each page that includes auth.js
