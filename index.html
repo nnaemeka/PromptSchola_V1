@@ -697,11 +697,35 @@
           <a href="#pricing">Pricing</a>
         </nav>
         <div class="nav-right">
-          <!-- 🔹 NEW: this span will be filled by auth.js if the user is logged in -->
+          <!-- Filled by auth.js / script when logged in -->
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
 
-          <a href="auth.html" class="btn-pill">Sign In</a>
-          <a href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <!-- 🔹 Shown when logged OUT -->
+          <a
+            id="nav-login-btn"
+            href="auth.html"
+            class="btn-pill"
+          >
+            Sign In
+          </a>
+          <a
+            id="nav-register-btn"
+            href="auth.html?mode=signup"
+            class="btn-primary"
+          >
+            Register for Free
+          </a>
+
+          <!-- 🔹 Shown only when logged IN -->
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+            onclick="signOutUser()"
+          >
+            Sign out
+          </button>
         </div>
       </div>
     </div>
@@ -989,14 +1013,35 @@
 <!-- 🔹 Supabase client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- 🔹 Shared auth helpers (supabaseClient, getCurrentUser, updateNavUserDisplay, etc.) -->
+<!-- 🔹 Shared auth helpers (supabaseClient, getCurrentUser, updateNavUserDisplay, signOutUser, etc.) -->
 <script src="auth.js"></script>
 
-<!-- 🔹 Initialize nav user display once DOM & auth are ready -->
+<!-- 🔹 Initialize nav user display & toggle buttons -->
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Keep your existing label behavior
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
+    }
+
+    const signoutBtn = document.getElementById('nav-signout-btn');
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+
+      if (user) {
+        // Logged in: show Sign out, hide Sign in / Register
+        if (signoutBtn) signoutBtn.style.display = 'inline-flex';
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+      } else {
+        // Logged out: show Sign in / Register, hide Sign out
+        if (signoutBtn) signoutBtn.style.display = 'none';
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+      }
     }
   });
 </script>
