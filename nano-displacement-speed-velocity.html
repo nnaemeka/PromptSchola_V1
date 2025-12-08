@@ -25,7 +25,6 @@
   </script>
 
   <style>
-    /* Same styles as template above (you can keep them identical) */
     :root {
       --bg-body: #f3f4f6;
       --bg-card: #ffffff;
@@ -40,8 +39,11 @@
       --radius-pill: 999px;
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
       --font-main: 'Inter', system-ui, sans-serif;
+      --transition-fast: 0.25s ease-out;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: var(--font-main);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
@@ -49,11 +51,18 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
+
     a { text-decoration: none; color: inherit; }
 
     .page { min-height: 100vh; display: flex; flex-direction: column; }
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.3rem; }
 
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.3rem;
+    }
+
+    /* NAV */
     header {
       position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
@@ -80,6 +89,13 @@
     .nav-links a { opacity: .9; }
     .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
+
     .btn-pill {
       border-radius: var(--radius-pill);
       padding: 0.45rem 1rem;
@@ -87,6 +103,15 @@
       border: 1px solid rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
       cursor: pointer;
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
     }
 
     .hero {
@@ -229,6 +254,11 @@
       cursor:pointer;
       background:radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color:#fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
     }
 
     .step-footer {
@@ -260,6 +290,7 @@
 <body>
 <div class="page">
 
+  <!-- NAV -->
   <header>
     <div class="container">
       <div class="nav">
@@ -270,14 +301,30 @@
             <span>Prompt-based Physics mastery</span>
           </div>
         </div>
+
         <nav class="nav-links">
           <a href="index.html">Home</a>
           <a href="physics.html">Physics</a>
           <a href="mechanics.html">Mechanics</a>
         </nav>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
-          <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
-          <a href="auth.html" class="btn-pill">Account</a>
+
+        <div class="nav-right">
+          <!-- Filled by auth.js -->
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <!-- Shown when logged OUT -->
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <!-- Shown when logged IN -->
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+          >
+            Sign out
+          </button>
         </div>
       </div>
     </div>
@@ -514,30 +561,29 @@
   let collapseState = {};
 
   async function logEvent(eventType, step) {
-  try {
-    let userType = 'anon';
     try {
-      const user = await getCurrentUser();
-      if (user) userType = 'logged';
-    } catch (_) {
-      // ignore, default anon
+      let userType = 'anon';
+      try {
+        const user = await getCurrentUser();
+        if (user) userType = 'logged';
+      } catch (_) {
+        // ignore, default anon
+      }
+
+      await fetch('/api/log-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventType,
+          nanoSlug: NANO_SLUG,
+          step,
+          userType
+        })
+      });
+    } catch (e) {
+      console.error('Failed to log event:', e);
     }
-
-    await fetch('/api/log-event', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        eventType,
-        nanoSlug: NANO_SLUG,
-        step,
-        userType
-      })
-    });
-  } catch (e) {
-    console.error('Failed to log event:', e);
   }
-}
-
 
   function toggleStep(step) {
     const content = document.getElementById(`step-content-${step}`);
@@ -561,6 +607,7 @@
       collapseState = {};
     }
   }
+
   function saveCollapseState() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
@@ -575,6 +622,7 @@
       .replace(/\\\\\[/g, '\\[')
       .replace(/\\\\\]/g, '\\]');
 
+    // Simple markdown-ish cleanup
     safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
     safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -673,7 +721,8 @@
       });
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Restore collapse state
     loadCollapseState();
     const steps = [1,2,3,4,5,6];
     steps.forEach(step => {
@@ -692,26 +741,45 @@
       }
     });
 
+    // Initial MathJax typeset
     if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise().catch(err =>
         console.error('MathJax initial typeset error:', err)
       );
     }
+
+    // Log page view
+    logEvent('view_nano', null);
+
+    // Nav user display + auth buttons
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+
+      if (user) {
+        // Logged IN: hide Sign In / Register, show Sign out
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        // Logged OUT: show Sign In / Register, hide Sign out
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
   });
-  document.addEventListener('DOMContentLoaded', () => {
-  loadCollapseState();
-  const steps = [1,2,3,4,5,6];
-  // ... existing step toggle init ...
-
-  if (window.MathJax && window.MathJax.typesetPromise) {
-    MathJax.typesetPromise().catch(err =>
-      console.error('MathJax initial typeset error:', err)
-    );
-  }
-
-  logEvent('view_nano', null);
-});
-
 </script>
 </body>
 </html>
