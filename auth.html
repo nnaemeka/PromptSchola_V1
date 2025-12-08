@@ -185,6 +185,19 @@
     .auth-message.error { color: #b91c1c; }
     .auth-message.success { color: #166534; }
 
+    /* 🔹 Optional sign-out section styling */
+    .signed-in-box {
+      margin-top: 1.1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+    .signed-in-box button {
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+    }
+
     footer {
       text-align: center;
       padding: 1.4rem 0;
@@ -218,9 +231,34 @@
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
+        <!-- 🔹 UPDATED NAV: add ids for login/register/signout so auth.js can control them -->
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
           <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
-          <a href="auth.html" class="btn-pill">Account</a>
+          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:flex-end;">
+            <a
+              id="nav-login-btn"
+              href="auth.html"
+              class="btn-pill"
+            >
+              Log in / Create account
+            </a>
+            <a
+              id="nav-register-btn"
+              href="auth.html?mode=signup"
+              class="btn-pill"
+            >
+              Register
+            </a>
+            <button
+              id="nav-signout-btn"
+              type="button"
+              class="btn-pill"
+              style="display:none;"
+              onclick="signOutUser()"
+            >
+              Sign out
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -263,6 +301,12 @@
 
         <div id="auth-message" class="auth-message"></div>
       </form>
+
+      <!-- 🔹 Sign-out section, shown only if user is already logged in -->
+      <div id="signed-in-box" class="signed-in-box" style="display:none;">
+        <div>You are currently signed in. If this is not you, you can sign out.</div>
+        <button type="button" class="btn-pill" onclick="signOutUser()">Sign out</button>
+      </div>
     </div>
   </main>
 
@@ -290,7 +334,9 @@
   const authMessage = document.getElementById('auth-message');
   const authForm = document.getElementById('auth-form');
   const backLink = document.getElementById('back-link');
+  const signedInBox = document.getElementById('signed-in-box');
 
+  // 🔹 CHANGED: default redirect is now homepage, not physics.html
   function getRedirectTarget() {
     const params = new URLSearchParams(window.location.search);
     return params.get('redirect') || 'index.html';
@@ -323,6 +369,7 @@
       helperText.innerHTML = 'Already have an account? <a href="#" id="helper-link">Sign in</a>';
     }
 
+    // Re-wire helper link after innerHTML change
     const newHelperLink = document.querySelector('#helper-text a') || helperLink;
     newHelperLink.addEventListener('click', (e) => {
       e.preventDefault();
@@ -390,11 +437,23 @@
     }
   });
 
+  // 🔹 Respect ?mode=signup and show signup tab by default when requested
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const urlMode = params.get('mode');
+
+    if (urlMode === 'signup') {
+      setMode('signup');
+    } else {
+      setMode('signin');
+    }
+  });
+
+  // 🔹 If already logged in, show sign-out box
   (async function checkLoggedIn() {
     const user = await getCurrentUser();
-    if (user) {
-      // You could auto-redirect to account.html here if you want:
-      // window.location.href = 'account.html';
+    if (user && signedInBox) {
+      signedInBox.style.display = 'block';
     }
   })();
 </script>
