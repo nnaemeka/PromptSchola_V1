@@ -94,6 +94,13 @@
     .nav-links a { opacity: .9; }
     .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
+
     .btn-pill {
       border-radius: var(--radius-pill);
       padding: 0.45rem 1rem;
@@ -102,6 +109,10 @@
       font-size: 0.8rem;
       transition: var(--transition-fast);
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
     }
     .btn-pill:hover {
       background: #f3f4f6; transform: translateY(-1px);
@@ -395,12 +406,31 @@
             <span>Prompt-based Physics mastery</span>
           </div>
         </div>
+
         <nav class="nav-links">
           <a href="index.html">Home</a>
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <a href="auth.html" class="btn-pill">Account</a>
+
+        <div class="nav-right">
+          <!-- Filled by auth.js -->
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <!-- Shown when logged OUT -->
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-pill">Register</a>
+
+          <!-- Shown when logged IN -->
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+          >
+            Sign out
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -651,6 +681,10 @@
   </footer>
 </div>
 
+<!-- 🔹 Supabase + shared auth helpers for nav -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
 <script>
   // Prompts for all-free steps, with LaTeX display math and completeness + no-heading safety
   const prompts = {
@@ -705,6 +739,7 @@
     return safe;
   }
 
+  // NOTE: Run with AI is NOT gated on auth for this intro nano.
   async function runWithAI(step) {
     const prompt = prompts[step];
     if (!prompt) {
@@ -821,6 +856,16 @@
       MathJax.typesetPromise().catch(err =>
         console.error('MathJax initial typeset error:', err)
       );
+    }
+
+    // 🔹 Update nav based on auth state
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+
+    const signOutBtn = document.getElementById('nav-signout-btn');
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
     }
   });
 </script>
