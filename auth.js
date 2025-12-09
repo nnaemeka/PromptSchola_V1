@@ -60,6 +60,7 @@ async function signOutUser() {
   window.location.href = "index.html";
 }
 
+// 6) Update nav (sign in / register / sign out)
 async function updateNavUserDisplay() {
   const userLabel = document.getElementById("nav-user");
   const loginBtn = document.getElementById("nav-login-btn");
@@ -92,11 +93,13 @@ document.addEventListener("DOMContentLoaded", updateNavUserDisplay);
 async function ensureLoggedInOrRedirect() {
   const user = await getCurrentUser();
   if (!user) {
-    const redirectTarget = encodeURIComponent(
-      window.location.href
-    );
-    // 🔹 Send them to "Create account" by default, and come back here after auth
-    window.location.href = `auth.html?mode=signup&redirect=${redirectTarget}`;
+    const redirectTarget = encodeURIComponent(window.location.href);
+
+    // 🔹 Send them to SIGN IN first, with context that they came from "Run with AI"
+    // auth.html will:
+    //   - show the "Run with AI" banner when reason=run-ai
+    //   - send them back to ?redirect=... after successful auth
+    window.location.href = `auth.html?mode=signin&reason=run-ai&redirect=${redirectTarget}`;
     return null;
   }
   return user;
