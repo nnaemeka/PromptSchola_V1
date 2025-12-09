@@ -85,6 +85,27 @@
       border: 1px solid var(--border-subtle);
     }
 
+    /* 🔹 Reason banner for "Run with AI" flow */
+    .reason-banner {
+      display: none; /* shown via JS only when reason=run-ai */
+      margin-bottom: 1rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      background: #eef2ff;
+      font-size: 0.85rem;
+      color: #111827;
+    }
+    .reason-banner strong {
+      font-weight: 600;
+    }
+    .reason-banner small {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
     .auth-heading {
       text-align: center;
       margin-bottom: 0.5rem;
@@ -231,7 +252,7 @@
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <!-- 🔹 UPDATED NAV: add ids for login/register/signout so auth.js can control them -->
+        <!-- 🔹 NAV: ids for login/register/signout so auth.js can control them -->
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
           <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
           <div style="display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:flex-end;">
@@ -266,6 +287,12 @@
 
   <main>
     <div class="auth-wrapper">
+      <!-- 🔹 Run-with-AI context banner -->
+      <div id="reason-banner" class="reason-banner">
+        <strong>To use “Run with AI” on this Physics lesson, please sign in or create a free account.</strong>
+        <small>After you’re done, we’ll send you back to the lesson where you clicked “Run with AI”.</small>
+      </div>
+
       <div class="auth-heading">
         <h1 id="auth-title">Sign in</h1>
         <p id="auth-subtitle">Access your PromptSchola Physics journey.</p>
@@ -335,8 +362,9 @@
   const authForm = document.getElementById('auth-form');
   const backLink = document.getElementById('back-link');
   const signedInBox = document.getElementById('signed-in-box');
+  const reasonBanner = document.getElementById('reason-banner');
 
-  // 🔹 CHANGED: default redirect is now homepage, not physics.html
+  // 🔹 Redirect target: use ?redirect=... if present, otherwise home
   function getRedirectTarget() {
     const params = new URLSearchParams(window.location.search);
     return params.get('redirect') || 'index.html';
@@ -353,7 +381,10 @@
       btnSignin.classList.add('active');
       btnSignup.classList.remove('active');
       authTitle.textContent = 'Sign in';
-      authSubtitle.textContent = 'Access your PromptSchola Physics journey.';
+      // subtitle may be overridden later if reason=run-ai
+      if (!authSubtitle.dataset.originalRunAi) {
+        authSubtitle.textContent = 'Access your PromptSchola Physics journey.';
+      }
       nameField.style.display = 'none';
       passwordInput.autocomplete = 'current-password';
       submitBtn.textContent = 'Sign in';
@@ -362,7 +393,10 @@
       btnSignin.classList.remove('active');
       btnSignup.classList.add('active');
       authTitle.textContent = 'Create account';
-      authSubtitle.textContent = 'Start learning Physics with AI-guided prompts.';
+      // subtitle may be overridden later if reason=run-ai
+      if (!authSubtitle.dataset.originalRunAi) {
+        authSubtitle.textContent = 'Start learning Physics with AI-guided prompts.';
+      }
       nameField.style.display = 'block';
       passwordInput.autocomplete = 'new-password';
       submitBtn.textContent = 'Create account';
@@ -441,6 +475,15 @@
   document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const urlMode = params.get('mode');
+    const reason = params.get('reason');
+
+    // If this auth page was opened from "Run with AI", show banner + tweak subtitle
+    if (reason === 'run-ai' && reasonBanner) {
+      reasonBanner.style.display = 'block';
+      // mark that the subtitle is in "run-ai" mode so setMode won't overwrite it
+      authSubtitle.textContent = 'Sign in or create an account to continue “Run with AI” on your Physics lesson.';
+      authSubtitle.dataset.originalRunAi = 'true';
+    }
 
     if (urlMode === 'signup') {
       setMode('signup');
