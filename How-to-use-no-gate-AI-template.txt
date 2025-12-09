@@ -1,0 +1,15 @@
+How to use this free template
+
+Save as nano-template-free.html.
+
+Duplicate for a new lesson, e.g. nano-what-is-physics.html.
+
+Update:
+
+  * <title>, description, hero title/subtitle, breadcrumbs.
+
+  * NANO_SLUG (e.g. what_is_physics).
+
+  * Step titles/body text.
+
+  * p,rompts[1..6] to match that topic.
