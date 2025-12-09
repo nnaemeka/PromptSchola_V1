@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title><!-- Nano lesson title here --> – PromptSchola Physics</title>
+  <title><!-- TOPIC TITLE --> – PromptSchola Physics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Prompt-based nano-lesson in Physics."
+    content="Nano-lesson on <!-- short description --> using PromptSchola’s 6-step prompt-based mastery flow."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- MathJax for LaTeX -->
+  <!-- MathJax -->
   <script>
     window.MathJax = {
       tex: {
@@ -30,6 +30,7 @@
       --bg-card: #ffffff;
       --accent: #7e22ce;
       --accent-strong: #4c1d95;
+      --accent-soft-border: rgba(129, 140, 248, 0.4);
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
@@ -39,6 +40,7 @@
       --radius-pill: 999px;
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
       --font-main: 'Inter', system-ui, sans-serif;
+      --transition-fast: 0.25s ease-out;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,7 +56,12 @@
     a { text-decoration: none; color: inherit; }
 
     .page { min-height: 100vh; display: flex; flex-direction: column; }
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.3rem; }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.3rem;
+    }
 
     /* NAV */
     header {
@@ -63,25 +70,36 @@
       background: rgba(249, 250, 251, 0.96);
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
+
     .nav {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.75rem 0;
     }
+
     .logo-mark {
       width: 34px; height: 34px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
       display: flex; align-items: center; justify-content: center;
       font-weight: 800; color: #fff;
     }
+
     .logo-text span:first-child {
       font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
     }
     .logo-text span:last-child {
       font-size: 0.72rem; color: var(--text-subtle);
     }
+
     .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
     .nav-links a { opacity: .9; }
     .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
 
     .btn-pill {
       border-radius: var(--radius-pill);
@@ -90,11 +108,38 @@
       border: 1px solid rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
       cursor: pointer;
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
     }
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      padding: 0.42rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
 
     /* HERO */
     .hero {
-      padding: 2.4rem 0 1.6rem;
+      padding: 3rem 0 2.1rem;
       text-align: center;
     }
     .hero-kicker {
@@ -102,7 +147,7 @@
       color: var(--text-subtle);
     }
     .hero-title {
-      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
       font-weight: 800; color: var(--text-strong);
       margin: 0.3rem 0;
     }
@@ -110,6 +155,7 @@
       font-size: 0.96rem; color: var(--text-muted);
       max-width: 40rem; margin: 0.4rem auto 0;
     }
+
     .hero-breadcrumbs {
       margin-top: 0.9rem;
       font-size: 0.82rem;
@@ -117,7 +163,39 @@
     }
     .hero-breadcrumbs a { color: var(--accent-strong); }
 
-    /* Steps */
+    /* ACCESS BANNER */
+    .access-banner {
+      margin: 0 auto 1.6rem;
+      max-width: 720px;
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 0.9rem;
+      background: linear-gradient(to right, #eef2ff, #faf5ff);
+      border: 1px solid var(--accent-soft-border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-free {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      background: #dcfce7;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      color: #166534;
+    }
+    .badge-mastery {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      background: #f5f3ff;
+      border: 1px solid rgba(129, 140, 248, 0.9);
+      color: #4c1d95;
+    }
+
     main { padding-bottom: 2.5rem; }
 
     .steps-grid {
@@ -147,6 +225,7 @@
       align-items: center;
       gap: 0.75rem;
     }
+
     .step-header-left {
       display: flex;
       flex-direction: column;
@@ -165,6 +244,7 @@
       padding: 0.16rem 0.7rem;
       font-weight: 600;
     }
+
     .step-title {
       font-size: 1.06rem;
       font-weight: 650;
@@ -175,6 +255,24 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
+    }
+
+    .step-access-pill {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      border: 1px solid rgba(209, 213, 219, 0.85);
+      background: #f9fafb;
+      color: var(--text-subtle);
+      white-space: nowrap;
+    }
+    .step-access-pill.free {
+      border-color: rgba(22, 163, 74, 0.9);
+      background: #dcfce7;
+      color: #166534;
+    }
+    .step-access-pill.locked {
+      border-style: dashed;
     }
 
     .toggle-btn {
@@ -190,10 +288,27 @@
       justify-content: center;
       cursor: pointer;
       padding: 0;
+      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+    }
+    .toggle-btn:hover {
+      transform: translateY(-1px) scale(1.07);
+      box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75);
+      background: #e0e7ff;
     }
 
-    .step-content { margin-top: 0.4rem; display: block; }
-    .step-body { font-size: 0.86rem; color: var(--text-muted); }
+    .step-content {
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    .step-body {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
 
     .prompt-preview {
       margin-top: 0.45rem;
@@ -203,6 +318,8 @@
       border: 1px dashed rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
       color: var(--text-subtle);
+      font-family: var(--font-main);
+      min-height: 2.2rem;
       white-space: pre-wrap;
     }
 
@@ -217,23 +334,24 @@
       white-space: pre-wrap;
       line-height: 1.55;
     }
+
     .ai-response p { margin-bottom: 0.75rem; }
     .ai-response ul,
     .ai-response ol { margin: 0.6rem 0 0.6rem 1.2rem; }
+
+    .ai-response strong {
+      font-weight: 700;
+      color: var(--accent-strong);
+    }
+
+    .ai-response em { font-style: italic; }
 
     .copy-row {
       margin-top: 0.35rem;
       display: flex;
       justify-content: flex-end;
-      gap: 0.4rem;
     }
 
-    .btn-ghost,
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
     .btn-ghost {
       padding: 0.42rem 0.8rem;
       border-radius: var(--radius-pill);
@@ -241,16 +359,27 @@
       border: 1px solid rgba(209, 213, 219, 0.9);
       background: #ffffff;
       cursor: pointer;
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
     }
-    .btn-primary {
-      padding: 0.42rem 1rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary.locked,
+    .btn-ghost.locked {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-copy {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
     }
 
     .step-footer {
@@ -293,71 +422,257 @@
             <span>Prompt-based Physics mastery</span>
           </div>
         </div>
+
         <nav class="nav-links">
           <a href="index.html">Home</a>
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
-          <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
-          <a href="auth.html" class="btn-pill">Account</a>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <!-- Logged OUT -->
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <!-- Logged IN -->
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+          >
+            Sign out
+          </button>
         </div>
       </div>
     </div>
   </header>
 
   <main>
+    <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <div class="hero-kicker">Nano-lesson · <!-- Category --></div>
-        <h1 class="hero-title"><!-- Lesson title --></h1>
+        <div class="hero-kicker"><!-- Nano-lesson · Track -->Nano-lesson · Track name</div>
+        <h1 class="hero-title"><!-- TOPIC TITLE -->Topic title here</h1>
         <p class="hero-subtitle">
-          <!-- Short description of this nano lesson. -->
+          <!-- Short descriptive sentence for this nano-lesson -->
+          Brief description of what the student will understand after this nano-lesson.
         </p>
         <div class="hero-breadcrumbs">
+          <!-- Adjust links as needed -->
           <a href="physics.html">Physics</a> ·
-          <!-- Add more breadcrumbs if needed -->
-          <span><!-- Lesson name --></span>
+          <span>Topic title here</span>
         </div>
       </div>
     </section>
 
+    <!-- ACCESS BANNER -->
+    <section>
+      <div class="container">
+        <div class="access-banner">
+          <span class="badge-free">Steps 1–3 free</span>
+          <span class="badge-mastery">Steps 4–6 for Mastery access</span>
+          <span>Sign in or create a free account to “Run with AI”.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEPS -->
     <section>
       <div class="container">
         <div class="steps-grid">
 
-          <!-- Repeat this step-card block (1–6) and adjust text per lesson -->
-
-          <article class="step-card" id="step-1-card">
+          <!-- STEP 1 -->
+          <article class="step-card">
             <div class="step-header">
               <div class="step-header-left">
-                <div class="step-index">STEP 1</div>
-                <div class="step-title"><!-- Step 1 title --></div>
+                <div class="step-index">Step 1 · Orient</div>
+                <div class="step-title">What are we trying to understand?</div>
               </div>
               <div class="step-header-right">
-                <button class="toggle-btn" onclick="toggleStep(1)">−</button>
+                <span class="step-access-pill free">Free · Orientation</span>
+                <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
               </div>
             </div>
             <div class="step-content" id="step-content-1">
               <div class="step-body">
-                <!-- Short explanation of what this step does -->
+                <!-- Brief description of step 1 goal -->
+                Introduce the core question and make sure the student knows what this nano-lesson is about.
               </div>
               <div class="prompt-preview" id="preview-step1">
                 Prompt preview will appear here when you click “Show prompt”.
               </div>
               <div class="ai-response" id="response-step1"></div>
               <div class="copy-row">
-                <button class="btn-ghost" onclick="copyPrompt(1)">Copy prompt</button>
-                <button class="btn-ghost" onclick="copyAnswer(1)">Copy answer</button>
-                <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(1)">Copy answer</button>
               </div>
               <div class="step-footer">
-                <span><!-- Goal sentence for this step --></span>
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
+                </div>
+                <span>Goal: short description of the goal of step 1.</span>
               </div>
             </div>
           </article>
 
-          <!-- Steps 2–6 follow similarly... -->
+          <!-- STEP 2 -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">Step 2 · Explain</div>
+                <div class="step-title">Conceptual explanation</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill free">Free · Concept</span>
+                <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-2">
+              <div class="step-body">
+                <!-- Describe what this conceptual step does -->
+                Build a clear explanation using everyday language, diagrams-in-words, or analogies.
+              </div>
+              <div class="prompt-preview" id="preview-step2">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step2"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(2)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(2)">Run with AI</button>
+                </div>
+                <span>Goal: short description for step 2.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 3 -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">Step 3 · Apply</div>
+                <div class="step-title">Light practice</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill free">Free · Practice</span>
+                <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-3">
+              <div class="step-body">
+                <!-- Describe simple practice tasks -->
+                Work through a few small numerical or conceptual examples to see the idea in action.
+              </div>
+              <div class="prompt-preview" id="preview-step3">
+                Prompt preview will appear here when you click “Show prompt”.
+              </div>
+              <div class="ai-response" id="response-step3"></div>
+              <div class="copy-row">
+                <button class="btn-ghost btn-copy" onclick="copyAnswer(3)">Copy answer</button>
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                  <button class="btn-primary" onclick="runWithAI(3)">Run with AI</button>
+                </div>
+                <span>Goal: short description for step 3.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 4 (LOCKED) -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">Step 4 · Work Through It</div>
+                <div class="step-title">Detailed worked examples</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill locked">Locked · Mastery</span>
+                <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-4">
+              <div class="step-body">
+                Full worked problems with step-by-step reasoning and explicit formula use.
+              </div>
+              <div class="prompt-preview">
+                This step is part of Mastery access. Once unlocked, it will generate detailed worked examples.
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost locked" disabled>Show prompt</button>
+                  <button class="btn-primary locked" disabled>Run with AI</button>
+                </div>
+                <span>Goal: exam-ready problem solving.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 5 (LOCKED) -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">Step 5 · Quiz</div>
+                <div class="step-title">Concept + calculation quiz</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill locked">Locked · Mastery</span>
+                <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-5">
+              <div class="step-body">
+                A short quiz mixing conceptual and numerical questions to check mastery.
+              </div>
+              <div class="prompt-preview">
+                This step is part of Mastery access and will generate targeted quiz questions and answers.
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost locked" disabled>Show prompt</button>
+                  <button class="btn-primary locked" disabled>Run with AI</button>
+                </div>
+                <span>Goal: see if the ideas really stuck.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STEP 6 (LOCKED) -->
+          <article class="step-card">
+            <div class="step-header">
+              <div class="step-header-left">
+                <div class="step-index">Step 6 · Exploration / Lab</div>
+                <div class="step-title">Simulation / visualization lab</div>
+              </div>
+              <div class="step-header-right">
+                <span class="step-access-pill locked">Locked · Mastery</span>
+                <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
+              </div>
+            </div>
+            <div class="step-content" id="step-content-6">
+              <div class="step-body">
+                Use AI-guided prompts to explore variations, simulations, or thought experiments
+                that deepen intuition and connect to graphs or real-world scenarios.
+              </div>
+              <div class="prompt-preview">
+                This step is part of Mastery access. In future, it can connect to interactive visuals.
+              </div>
+              <div class="step-footer">
+                <div>
+                  <button class="btn-ghost locked" disabled>Show prompt</button>
+                  <button class="btn-primary locked" disabled>Run with AI</button>
+                </div>
+                <span>Goal: deep intuition, not just formulas.</span>
+              </div>
+            </div>
+          </article>
 
         </div>
       </div>
@@ -369,115 +684,35 @@
   </footer>
 </div>
 
-<!-- Shared Supabase + helpers -->
+<!-- Supabase + shared auth helpers -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
 
 <script>
-  // ========= LESSON-SPECIFIC CONFIG =========
-  const NANO_SLUG = 'REPLACE_WITH_SLUG'; // e.g. 'kinematics-1d-displacement-speed-velocity'
+  // ✅ Change this slug per nano-lesson
+  const NANO_SLUG = 'REPLACE_WITH_NANO_SLUG';
 
-  // Prompts per step for this nano lesson
+  // ✅ Fill in prompts[1..3] (and 4–6 when unlocked)
   const prompts = {
-    1: 'Prompt text for step 1...',
-    2: 'Prompt text for step 2...',
-    3: 'Prompt text for step 3...',
-    4: 'Prompt text for step 4...',
-    5: 'Prompt text for step 5...',
-    6: 'Prompt text for step 6...',
+    1: `You are a Physics tutor.\n\nWrite the orientation step for THIS TOPIC.\n...`,
+    2: `You are a Physics tutor.\n\nExplain the core concepts of THIS TOPIC.\n...`,
+    3: `You are a Physics tutor.\n\nCreate light practice problems for THIS TOPIC.\n...`
+    // 4,5,6 when Mastery unlocked
   };
 
   const lastAiResponses = {};
   const STORAGE_KEY = 'ps_nano_' + NANO_SLUG + '_collapse';
   let collapseState = {};
 
-  // ========= Analytics helper =========
-  <script>
-  // ========= LESSON-SPECIFIC CONFIG =========
-  const NANO_SLUG = 'REPLACE_WITH_SLUG'; // e.g. 'kinematics-1d-displacement-speed-velocity'
-
-  // prompts = { 1: '...', 2: '...' } etc.
-  const prompts = { /* ... */ };
-
-  const lastAiResponses = {};
-  const STORAGE_KEY = 'ps_nano_' + NANO_SLUG + '_collapse';
-  let collapseState = {};
-
-  // ========= Analytics helper =========
-  async function logEvent(eventType, step) {
-    try {
-      let userType = 'anon';
-      try {
-        const user = await getCurrentUser();
-        if (user) userType = 'logged';
-      } catch (_) {
-        // ignore, default to anon
-      }
-
-      await fetch('/api/log-event', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          eventType,
-          nanoSlug: NANO_SLUG,
-          step,
-          userType
-        })
-      });
-    } catch (e) {
-      console.error('Failed to log event:', e);
-    }
-  }
-</script>
-
-
-  // ========= UI logic =========
-  function toggleStep(step) {
-    const content = document.getElementById(`step-content-${step}`);
-    const card = document.getElementById(`step-${step}-card`);
-    const btn = card?.querySelector('.toggle-btn');
-    if (!content || !btn) return;
-
-    const isHidden = content.style.display === 'none';
-    content.style.display = isHidden ? 'block' : 'none';
-    btn.textContent = isHidden ? '−' : '+';
-
-    collapseState[step] = !isHidden;
-    saveCollapseState();
-  }
-
-  function loadCollapseState() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      collapseState = raw ? JSON.parse(raw) : {};
-    } catch (e) {
-      collapseState = {};
-    }
-  }
-  function saveCollapseState() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
-    } catch (e) {
-      console.error('Unable to save collapse state', e);
-    }
-  }
-
-  // ========= Prompt / AI output handling =========
   function showPrompt(step) {
     const preview = document.getElementById('preview-step' + step);
     if (!preview) return;
-    const text = prompts[step];
-    preview.textContent = text || 'Prompt coming soon.';
-
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      MathJax.typesetPromise([preview]).catch(err =>
-        console.error('MathJax error in preview:', err)
-      );
-    }
+    preview.textContent = prompts[step] || 'Prompt coming soon.';
   }
 
   function formatOutput(text) {
     if (!text) return '';
+
     let safe = text
       .replace(/\\\\\[/g, '\\[')
       .replace(/\\\\\]/g, '\\]');
@@ -486,6 +721,7 @@
     safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
     safe = safe.replace(/\n\n+/g, '</p><p>');
     safe = safe.replace(/\n/g, '<br>');
     safe = '<p>' + safe + '</p>';
@@ -493,8 +729,8 @@
     return safe;
   }
 
+  // 🔒 GATED: requires sign-in / register
   async function runWithAI(step) {
-    // Require login for all Run with AI actions
     const user = await ensureLoggedInOrRedirect();
     if (!user) return;
 
@@ -512,9 +748,6 @@
 
     try {
       output.textContent = 'Running with AI…';
-
-      // Log analytics event
-      logEvent('run_ai', step);
 
       const res = await fetch('/api/run-step', {
         method: 'POST',
@@ -534,7 +767,7 @@
 
       if (window.MathJax && window.MathJax.typesetPromise) {
         MathJax.typesetPromise([output]).catch(err =>
-          console.error('MathJax error in response:', err)
+          console.error('MathJax error:', err)
         );
       }
     } catch (err) {
@@ -543,37 +776,18 @@
     }
   }
 
-  function copyPrompt(step) {
-    const text = prompts[step];
-    if (!text) {
-      alert('No prompt defined for this step yet.');
-      return;
-    }
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      alert('Clipboard not supported in this browser.');
-      return;
-    }
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        alert('Prompt copied to clipboard.');
-        logEvent('copy_prompt', step);
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Could not copy to clipboard. Please try again.');
-      });
-  }
-
   function copyAnswer(step) {
     const text = lastAiResponses[step];
     if (!text) {
       alert('No AI answer to copy yet. Run with AI first.');
       return;
     }
+
     if (!navigator.clipboard || !navigator.clipboard.writeText) {
       alert('Clipboard not supported in this browser.');
       return;
     }
+
     navigator.clipboard.writeText(text)
       .then(() => alert('Answer copied to clipboard.'))
       .catch(err => {
@@ -582,13 +796,42 @@
       });
   }
 
+  function loadCollapseState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      collapseState = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      collapseState = {};
+    }
+  }
+
+  function saveCollapseState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
+    } catch (e) {
+      console.error('Unable to save collapse state', e);
+    }
+  }
+
+  function toggleStep(step) {
+    const content = document.getElementById(`step-content-${step}`);
+    const btn = document.getElementById(`toggle-btn-${step}`);
+    if (!content || !btn) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? '−' : '+';
+
+    collapseState[step] = !isHidden;
+    saveCollapseState();
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     loadCollapseState();
     const steps = [1,2,3,4,5,6];
     steps.forEach(step => {
       const content = document.getElementById(`step-content-${step}`);
-      const card = document.getElementById(`step-${step}-card`);
-      const btn = card?.querySelector('.toggle-btn');
+      const btn = document.getElementById(`toggle-btn-${step}`);
       if (!content || !btn) return;
 
       const expanded = collapseState[step];
@@ -606,22 +849,17 @@
         console.error('MathJax initial typeset error:', err)
       );
     }
+
+    // Auth nav
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+    const signOutBtn = document.getElementById('nav-signout-btn');
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
   });
-  document.addEventListener('DOMContentLoaded', () => {
-  loadCollapseState();
-  const steps = [1,2,3,4,5,6];
-  // ... your existing toggle-init stuff ...
-
-  if (window.MathJax && window.MathJax.typesetPromise) {
-    MathJax.typesetPromise().catch(err =>
-      console.error('MathJax initial typeset error:', err)
-    );
-  }
-
-  // Log a nano-view event (step can be null)
-  logEvent('view_nano', null);
-});
-
 </script>
+
 </body>
 </html>
