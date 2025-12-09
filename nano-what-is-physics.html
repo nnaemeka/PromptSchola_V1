@@ -59,7 +59,7 @@
 
     .container {
       max-width: 1120px;
-      margin: 0 auto;
+      margin: 0  auto;
       padding: 0 1.3rem;
     }
 
@@ -335,6 +335,8 @@
       margin-top: 0.35rem;
       display: flex;
       justify-content: flex-end;
+      gap: 0.4rem;
+      flex-wrap: wrap;
     }
 
     .btn-ghost,
@@ -484,6 +486,7 @@
     }
 
     .help-prompt-btn {
+      display: block;
       width: 100%;
       text-align: left;
       border-radius: 0.8rem;
@@ -501,23 +504,6 @@
       border-color: var(--accent-strong);
       box-shadow: 0 10px 22px rgba(148, 163, 184, 0.5);
       transform: translateY(-1px);
-    }
-
-    .help-output {
-      margin-top: 1.5rem;
-      padding: 0.75rem 0.9rem;
-      border-radius: 1rem;
-      border: 1px solid rgba(129, 140, 248, 0.7);
-      background: radial-gradient(circle at 0 0, rgba(199, 210, 254, 0.5), #eef2ff);
-      font-size: 0.83rem;
-      color: var(--text-main);
-      display: none;
-      box-shadow: 0 16px 40px rgba(148, 163, 184, 0.35);
-      white-space: pre-wrap;
-    }
-
-    .help-output p {
-      margin-bottom: 0.6rem;
     }
 
     footer {
@@ -648,6 +634,7 @@
                   </div>
                   <div class="ai-response" id="response-step1"></div>
                   <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(1)">Copy prompt</button>
                     <button class="btn-ghost btn-copy" onclick="copyAnswer(1)">Copy answer</button>
                   </div>
                   <div class="step-footer">
@@ -682,6 +669,7 @@
                   </div>
                   <div class="ai-response" id="response-step2"></div>
                   <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(2)">Copy prompt</button>
                     <button class="btn-ghost btn-copy" onclick="copyAnswer(2)">Copy answer</button>
                   </div>
                   <div class="step-footer">
@@ -716,6 +704,7 @@
                   </div>
                   <div class="ai-response" id="response-step3"></div>
                   <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(3)">Copy prompt</button>
                     <button class="btn-ghost btn-copy" onclick="copyAnswer(3)">Copy answer</button>
                   </div>
                   <div class="step-footer">
@@ -750,6 +739,7 @@
                   </div>
                   <div class="ai-response" id="response-step4"></div>
                   <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(4)">Copy prompt</button>
                     <button class="btn-ghost btn-copy" onclick="copyAnswer(4)">Copy answer</button>
                   </div>
                   <div class="step-footer">
@@ -784,6 +774,7 @@
                   </div>
                   <div class="ai-response" id="response-step5"></div>
                   <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(5)">Copy prompt</button>
                     <button class="btn-ghost btn-copy" onclick="copyAnswer(5)">Copy answer</button>
                   </div>
                   <div class="step-footer">
@@ -818,6 +809,7 @@
                   </div>
                   <div class="ai-response" id="response-step6"></div>
                   <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(6)">Copy prompt</button>
                     <button class="btn-ghost btn-copy" onclick="copyAnswer(6)">Copy answer</button>
                   </div>
                   <div class="step-footer">
@@ -833,7 +825,7 @@
             </div>
           </div>
 
-          <!-- RIGHT: Targeted Help Panel -->
+          <!-- RIGHT: Targeted Help Panel (links to dedicated help page) -->
           <aside class="help-panel" aria-label="Targeted help for 'What is Physics?'">
             <div class="help-panel-inner">
               <button class="help-panel-toggle" id="help-panel-toggle">
@@ -856,15 +848,15 @@
                     </p>
                   </div>
                   <div class="help-prompts-list">
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B1')">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B1">
                       Clear beginner-friendly definition of physics
-                    </button>
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B2')">
+                    </a>
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B2">
                       Physics vs memorizing formulas
-                    </button>
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B3')">
+                    </a>
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B3">
                       What physicists actually do
-                    </button>
+                    </a>
                   </div>
                 </section>
 
@@ -877,15 +869,15 @@
                     </p>
                   </div>
                   <div class="help-prompts-list">
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B4')">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B4">
                       “Physics is just hard math”
-                    </button>
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B5')">
+                    </a>
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B5">
                       “Physics only explains things after the fact”
-                    </button>
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B6')">
+                    </a>
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B6">
                       Why idealizations aren’t lies
-                    </button>
+                    </a>
                   </div>
                 </section>
 
@@ -898,15 +890,15 @@
                     </p>
                   </div>
                   <div class="help-prompts-list">
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B7')">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B7">
                       Linking words, diagrams, and equations
-                    </button>
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B8')">
+                    </a>
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B8">
                       Describe a physical system in layers
-                    </button>
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B9')">
+                    </a>
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B9">
                       Variables, units, and dimensions
-                    </button>
+                    </a>
                   </div>
                 </section>
 
@@ -919,24 +911,21 @@
                     </p>
                   </div>
                   <div class="help-prompts-list">
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B10')">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B10">
                       What makes physics a science?
-                    </button>
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B11')">
+                    </a>
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B11">
                       How to build a simple model
-                    </button>
-                    <button class="help-prompt-btn" onclick="runHelpPrompt('B12')">
+                    </a>
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B12">
                       Why simplification reveals truth
-                    </button>
+                    </a>
                   </div>
                 </section>
               </div>
             </div>
           </aside>
         </div>
-
-        <!-- AI output for help prompts -->
-        <section id="help-output" class="help-output"></section>
       </div>
     </section>
   </main>
@@ -961,24 +950,6 @@
     6: `You are a Physics tutor.\n\nGuide the student through a simple mental or household experiment showing physics principles. Examples:\n• dropping objects and noticing acceleration\n• pushing a chair and feeling force\n• seeing light reflect from a mirror\n\nExplain what is happening in terms of matter, forces, or motion.\n\nUse short steps and bullet points. Keep the tone friendly and curious.\n\nIf you use formulas, write them in LaTeX display mode, one per line like:\n  \\\\[ F = ma \\\\]\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`
   };
 
-  // Help panel prompts for "What is Physics?"
-  const helpPrompts = {
-    B1: `You are a Physics tutor.\n\nGive a clear, beginner-friendly explanation of **what physics is** in about 10–12 sentences. Include:\n• what physics studies (matter, energy, forces, space, time),\n• the idea of physical quantities and laws,\n• how physicists use experiments and models to understand nature.\n\nUse simple language suitable for a final-year high school student. Include at least 2 everyday examples.\n\nIf you use any equations, put each one in LaTeX display mode like:\n  \\\\[ F = ma \\\\]\nand keep them very simple.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    B2: `You are a Physics tutor.\n\nMany students think physics is just memorizing formulas. Correct this misconception.\nExplain:\n• what a physical model is,\n• why equations represent relationships, not just things to memorize,\n• how understanding concepts helps you rebuild formulas when you forget them.\n\nGive 2 everyday examples (e.g., motion, heating water) and show how understanding beats memorizing.\nIf you use any equations, put each one in LaTeX display mode like:\n  \\\\[ v = u + at \\\\]\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    B3: `You are a Physics tutor.\n\nExplain to a student what physicists actually do in real life.\nDescribe the general cycle:\n• observe a phenomenon,\n• build a model,\n• make predictions,\n• test with experiments,\n• refine the model.\n\nIllustrate this with one simple example, such as studying how objects fall or how electric circuits behave.\nUse short paragraphs and keep the explanation friendly and concrete.`,
-    B4: `You are a Physics tutor.\n\nA student says: “Physics is just hard math.” Gently correct this.\nExplain:\n• that physics is about understanding the world,\n• that math is a tool to express and work with ideas,\n• and that many physics questions can be understood qualitatively first.\n\nGive 3 short conceptual examples that require little or no algebra (for example, comparing forces, energy ideas, or motion scenarios).\nDo not use markdown headings like # or ###; use bold for emphasis when needed.`,
-    B5: `You are a Physics tutor.\n\nA student says: “Physics only explains things after the fact; it’s not useful for predicting.” Correct this.\nExplain how physics can:\n• predict the path of a projectile,\n• predict when a circuit will break,\n• predict how a satellite will move.\n\nGive 3 concrete prediction examples and describe briefly how physics models are tested against reality.\nKeep the language simple and exam-oriented.`,
-    B6: `You are a Physics tutor.\n\nStudents often wonder why we talk about frictionless surfaces or point masses.\nExplain why physicists use **idealizations**:\n• to simplify complex situations,\n• to understand the main effect first,\n• and then to add corrections later.\n\nGive 3 examples of idealizations (for example, frictionless plane, massless string, point charge) and show how they still teach us something true about the real world.`,
-    B7: `You are a Physics tutor.\n\nExplain how physics uses three main representations:\n• words (verbal descriptions),\n• diagrams (sketches, free-body diagrams),\n• equations (symbolic relationships).\n\nShow how to move between them using one simple example (for instance, a ball thrown straight up).\nDescribe in words first, then describe what a diagram would show, then write one simple equation in LaTeX display mode like:\n  \\\\[ v = u + at \\\\]\nKeep the explanation compact and clear.`,
-    B8: `You are a Physics tutor.\n\nShow a student how to describe a physical system in “layers”.\nUse an example such as a car speeding up on a straight road.\nGuide them through:\n1. describing the situation in plain language,\n2. drawing a simple diagram and labeling key quantities,\n3. listing the important variables and their units,\n4. writing one or two basic equations in LaTeX display mode.\n\nMake each layer feel like a natural next step, not something separate.`,
-    B9: `You are a Physics tutor.\n\nExplain what a **physical quantity** is, and why units matter in physics.\nIntroduce:\n• common base quantities (length, mass, time),\n• the role of units (m, kg, s),\n• the idea of dimensional analysis.\n\nGive 3 quick examples where checking units or dimensions can reveal a mistake.\nIf you use any equations, put each one in LaTeX display mode like:\n  \\\\[ v = \\frac{d}{t} \\\\]\nKeep the tone practical and exam-focused.`,
-    B10: `You are a Physics tutor.\n\nExplain what makes physics a **science**.\nInclude the ideas of:\n• testable predictions,\n• experiments and measurement,\n• falsifiability (possibility of being wrong),\n• repeatability.\n\nUse a simple example like dropping objects from a height and predicting what will happen.\nKeep the explanation in short paragraphs suitable for a high school exam review.`,
-    B11: `You are a Physics tutor.\n\nWalk a student through building a simple physics model from scratch for a familiar scenario, such as estimating how long it takes to fall from a chair height.\nInclude:\n• choosing what to ignore (air resistance, small details),\n• picking variables and units,\n• writing one simple equation in LaTeX display mode like:\n  \\\\[ s = \\tfrac{1}{2} g t^2 \\\\]\n• making a rough numerical estimate.\n\nExplain each step in plain language so the student sees modeling as a systematic process, not magic.`,
-    B12: `You are a Physics tutor.\n\nExplain why **simplifying** a problem can actually reveal deep truths in physics.\nGive 3 cases, such as:\n• small-angle approximation for a pendulum,\n• ignoring air resistance for short falls,\n• modeling Earth as a sphere.\n\nFor each case, briefly state:\n• what is simplified,\n• what we learn from the simple model,\n• and how we later correct or refine it.\n\nKeep the explanation compact and intuitive, using bold for key ideas.`
-  };
-
-  const HELP_NANO_SLUG = 'nano-what-is-physics-help';
-
   const lastAiResponses = {};
   const STORAGE_KEY = 'ps_nano_what_is_physics_collapse';
   let collapseState = {};
@@ -993,6 +964,24 @@
         console.error('MathJax error in preview:', err)
       );
     }
+  }
+
+  function copyPrompt(step) {
+    const prompt = prompts[step];
+    if (!prompt) {
+      alert('No prompt defined for this step yet.');
+      return;
+    }
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+    navigator.clipboard.writeText(prompt)
+      .then(() => { alert('Prompt copied to clipboard.'); })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy prompt. Please try again.');
+      });
   }
 
   // Format AI output while keeping LaTeX \[ ... \] intact
@@ -1115,73 +1104,6 @@
 
     collapseState[step] = !isHidden;
     saveCollapseState();
-  }
-
-  async function runHelpPrompt(id) {
-    const prompt = helpPrompts[id];
-    if (!prompt) {
-      console.error('Unknown help prompt id:', id);
-      return;
-    }
-
-    const output = document.getElementById('help-output');
-    if (!output) return;
-
-    output.style.display = 'block';
-    output.innerHTML = 'Thinking with AI…';
-
-    // Optional event logging
-    try {
-      const userType =
-        typeof isLoggedIn === 'function'
-          ? (isLoggedIn() ? 'logged' : 'anon')
-          : 'unknown';
-
-      fetch('/api/log-event', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          eventType: 'run_help_ai',
-          nanoSlug: HELP_NANO_SLUG,
-          step: null,
-          promptId: id,
-          userType
-        })
-      }).catch(() => {});
-    } catch (err) {
-      console.error('log-event error', err);
-    }
-
-    try {
-      const res = await fetch('/api/run-step', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
-      });
-
-      if (!res.ok) {
-        throw new Error('run-step failed with status ' + res.status);
-      }
-
-      const data = await res.json();
-      const content = data && data.content ? data.content : '(No content returned.)';
-
-      let html = content;
-      if (typeof formatOutput === 'function') {
-        html = formatOutput(content);
-      } else {
-        html = content.replace(/\n/g, '<br />');
-      }
-
-      output.innerHTML = html;
-
-      if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise([output]).catch(err => console.error('MathJax error', err));
-      }
-    } catch (err) {
-      console.error(err);
-      output.innerHTML = '<em>Sorry—there was an error calling the AI. Please try again.</em>';
-    }
   }
 
   // Init: collapse states, MathJax, nav, and help panel toggle
