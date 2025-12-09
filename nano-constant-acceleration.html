@@ -23,7 +23,7 @@
     };
   </script>
   <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
   </script>
 
   <style>
@@ -97,6 +97,13 @@
     .nav-links a { opacity: .9; }
     .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
+
     .btn-pill {
       border-radius: var(--radius-pill);
       padding: 0.45rem 1rem;
@@ -104,10 +111,33 @@
       border: 1px solid rgba(209, 213, 219, 0.9);
       font-size: 0.8rem;
       transition: var(--transition-fast);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
     }
     .btn-pill:hover {
       background: #f3f4f6; transform: translateY(-1px);
     }
+
+    .btn-primary {
+      padding: 0.42rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
 
     /* HERO */
     .hero {
@@ -188,6 +218,10 @@
       flex-direction: column;
       gap: 0.55rem;
       font-size: 0.9rem;
+
+      /* PromptSchola spine */
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+      padding-left: 1.2rem;
     }
 
     .step-header {
@@ -204,15 +238,22 @@
     }
 
     .step-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: var(--text-main);
+      font-size: 1.06rem;
+      font-weight: 650;
+      color: #111827;
     }
     .step-index {
       font-size: 0.78rem;
       color: var(--text-subtle);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.16em;
+      color: #4c1d95;
+      background: #ede9fe;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      font-weight: 600;
     }
 
     .step-header-right {
@@ -240,19 +281,28 @@
     }
 
     .toggle-btn {
-      border: none;
-      background: transparent;
-      font-size: 1.15rem;
-      cursor: pointer;
-      padding: 0 0.3rem;
-      color: var(--accent-strong);
-      line-height: 1;
+      width: 30px;
+      height: 30px;
       border-radius: 999px;
-      transition: transform 0.15s ease, background 0.15s ease;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      color: #4c1d95;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
     }
     .toggle-btn:hover {
-      transform: scale(1.15);
-      background: rgba(148, 163, 184, 0.2);
+      transform: translateY(-1px) scale(1.07);
+      box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75);
+      background: #e0e7ff;
     }
 
     .step-content {
@@ -301,6 +351,7 @@
 
     .ai-response strong {
       font-weight: 700;
+      color: var(--accent-strong);
     }
 
     .ai-response em {
@@ -313,13 +364,6 @@
       justify-content: flex-end;
     }
 
-    .btn-ghost,
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
     .btn-ghost {
       padding: 0.42rem 0.8rem;
       border-radius: var(--radius-pill);
@@ -328,25 +372,14 @@
       background: #ffffff;
       cursor: pointer;
       transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
     }
     .btn-ghost:hover {
       background: #f3f4f6;
       transform: translateY(-1px);
     }
-
-    .btn-primary {
-      padding: 0.42rem 1rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: var(--transition-fast);
-    }
-    .btn-primary:hover { transform: translateY(-1px); }
 
     .btn-primary.locked,
     .btn-ghost.locked {
@@ -389,63 +422,6 @@
     @media (max-width: 860px) {
       .nav-links { display: none; }
     }
-    /* === PromptSchola step header polish overrides === */
-
-/* Add a subtle colored spine and a bit more left padding */
-.step-card {
-  border-left: 4px solid rgba(126, 34, 206, 0.55); /* purple spine */
-  padding-left: 1.2rem;
-}
-
-/* Make STEP 1 pill-like and accent-colored */
-.step-index {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: #4c1d95;              /* deep indigo */
-  background: #ede9fe;         /* soft lilac */
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0.16rem 0.7rem;
-  font-weight: 600;
-}
-
-/* Make the step title more like a section heading */
-.step-title {
-  font-size: 1.06rem;
-  font-weight: 650;
-  color: #111827; /* strong text */
-}
-
-/* Make the expand/collapse toggle a clear circular button */
-.toggle-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  border: 1px solid rgba(129, 140, 248, 0.8);
-  background: #eef2ff;
-  color: #4c1d95;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background 0.15s ease;
-}
-
-/* Stronger hover effect so students see it's interactive */
-.toggle-btn:hover {
-  transform: translateY(-1px) scale(1.07);
-  box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75);
-  background: #e0e7ff;
-}
-
   </style>
 </head>
 
@@ -463,12 +439,31 @@
             <span>Prompt-based Physics mastery</span>
           </div>
         </div>
+
         <nav class="nav-links">
           <a href="index.html">Home</a>
           <a href="physics.html">Physics</a>
           <a href="pricing.html">Pricing</a>
         </nav>
-        <a href="auth.html" class="btn-pill">Account</a>
+
+        <div class="nav-right">
+          <!-- Filled by auth.js -->
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <!-- Logged OUT -->
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <!-- Logged IN -->
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+          >
+            Sign out
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -497,7 +492,7 @@
         <div class="access-banner">
           <span class="badge-free">Steps 1–3 free</span>
           <span class="badge-mastery">Steps 4–6 for Mastery access</span>
-          <span>Use “Run with AI” to explore constant acceleration with the PromptSchola tutor.</span>
+          <span>Sign in or create a free account to “Run with AI”.</span>
         </div>
       </div>
     </section>
@@ -720,11 +715,15 @@
   </footer>
 </div>
 
+<!-- Supabase + shared auth helpers -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
 <script>
   const prompts = {
-    1: `You are a Physics tutor for a first-year student.\n\nExplain clearly what “constant acceleration” means in one-dimensional motion. Include:\n• A simple verbal definition\n• How velocity changes with time when acceleration is constant\n• At least two everyday examples (e.g., a car speeding up steadily, an object in free fall)\n\nFormat your response with:\n• short paragraphs,\n• bullet points for examples,\n• bold for key terms where useful,\n• and clear spacing between ideas.\n\nWhen you write equations, use LaTeX display math, one equation per line. For example:\n  \\[ v = u + at \\]\n  \\[ a = \\frac{v - u}{t} \\]\nDo not use align or other complex environments; stick to simple \\\\[ ... \\\\] display equations.`,
-    2: `You are a Physics tutor.\n\nHelp a student build intuition about constant acceleration by:\n• Describing a car that speeds up at a steady rate\n• Describing a ball dropped from rest (free fall)\n• Describing a ball thrown straight up and then falling back, explaining why acceleration is (approximately) constant and downward the whole time\n\nAsk the student to imagine or sketch v–t and x–t graphs qualitatively.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each scenario,\n• bold key concepts where helpful,\n• and clear spacing between ideas.\n\nWhen you include math, write each equation as a LaTeX display equation on its own line, such as:\n  \\[ v = u + at \\]\n  \\[ s = ut + \\tfrac12 a t^2 \\]\nUse only simple display equations with \\\\[ ... \\\\].`,
-    3: `You are a Physics tutor.\n\nCreate 3 short numerical problems involving constant acceleration in 1D. They should include:\n1) Starting from rest and speeding up with a known constant acceleration\n2) An initial non-zero velocity with a constant acceleration\n3) A free-fall example using g ≈ 9.8 m/s^2 (or 10 m/s^2 for simplicity)\n\nFor each problem:\n• State the problem clearly\n• Then show a step-by-step solution after the student has tried it.\n\nKeep the numbers easy.\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.\n\nWrite equations as LaTeX display equations, one per line. For example:\n  \\[ v = u + at \\]\n  \\[ s = ut + \\tfrac12 a t^2 \\]\n  \\[ v^2 = u^2 + 2as \\]\nAvoid using align or cases; only simple \\\\[ ... \\\\] equations.`
+    1: `You are a Physics tutor for a first-year student.\n\nExplain clearly what “constant acceleration” means in one-dimensional motion. Include:\n• A simple verbal definition\n• How velocity changes with time when acceleration is constant\n• At least two everyday examples (e.g., a car speeding up steadily, an object in free fall)\n\nFormat your response with:\n• short paragraphs,\n• bullet points for examples,\n• bold for key terms where useful,\n• and clear spacing between ideas.\n\nWhen you write equations, use LaTeX display math, one equation per line. For example:\n  \\\\[ v = u + at \\\\]\n  \\\\[ a = \\frac{v - u}{t} \\\\]\nDo not use align or other complex environments; stick to simple \\\\[ ... \\\\] display equations.`,
+    2: `You are a Physics tutor.\n\nHelp a student build intuition about constant acceleration by:\n• Describing a car that speeds up at a steady rate\n• Describing a ball dropped from rest (free fall)\n• Describing a ball thrown straight up and then falling back, explaining why acceleration is (approximately) constant and downward the whole time\n\nAsk the student to imagine or sketch v–t and x–t graphs qualitatively.\n\nFormat your response with:\n• short paragraphs,\n• bullet points for each scenario,\n• bold key concepts where helpful,\n• and clear spacing between ideas.\n\nWhen you include math, write each equation as a LaTeX display equation on its own line, such as:\n  \\\\[ v = u + at \\\\]\n  \\\\[ s = ut + \\tfrac12 a t^2 \\\\]\nUse only simple display equations with \\\\[ ... \\\\].`,
+    3: `You are a Physics tutor.\n\nCreate 3 short numerical problems involving constant acceleration in 1D. They should include:\n1) Starting from rest and speeding up with a known constant acceleration\n2) An initial non-zero velocity with a constant acceleration\n3) A free-fall example using g ≈ 9.8 m/s^2 (or 10 m/s^2 for simplicity)\n\nFor each problem:\n• State the problem clearly\n• Then show a step-by-step solution after the student has tried it.\n\nKeep the numbers easy.\n\nFormat the output as:\n• a numbered list of problems,\n• each followed by a bold heading "Solution" with step-by-step bullets,\n• clear spacing between each problem.\n\nWrite equations as LaTeX display equations, one per line. For example:\n  \\\\[ v = u + at \\\\]\n  \\\\[ s = ut + \\tfrac12 a t^2 \\\\]\n  \\\\[ v^2 = u^2 + 2as \\\\]\nAvoid using align or cases; only simple \\\\[ ... \\\\] equations.`
   };
 
   const lastAiResponses = {};
@@ -737,19 +736,19 @@
     preview.textContent = prompts[step] || 'Prompt coming soon.';
   }
 
-  function escapeHTML(str) {
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
-
   function formatOutput(text) {
     if (!text) return '';
-    let safe = escapeHTML(text);
 
+    // Allow math \[ ... \] to survive
+    let safe = text
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]');
+
+    // Bold / italic
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // Simple paragraphs
     safe = safe.replace(/\n\n+/g, '</p><p>');
     safe = safe.replace(/\n/g, '<br>');
     safe = '<p>' + safe + '</p>';
@@ -757,7 +756,11 @@
     return safe;
   }
 
+  // 🔒 GATED: requires sign-in / register
   async function runWithAI(step) {
+    const user = await ensureLoggedInOrRedirect();
+    if (!user) return;
+
     const prompt = prompts[step];
     if (!prompt) {
       alert('No prompt defined for this step yet.');
@@ -871,6 +874,22 @@
         btn.textContent = '−';
       }
     });
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(err =>
+        console.error('MathJax initial typeset error:', err)
+      );
+    }
+
+    // 🔹 Update nav from auth.js
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+
+    const signOutBtn = document.getElementById('nav-signout-btn');
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
   });
 </script>
 
