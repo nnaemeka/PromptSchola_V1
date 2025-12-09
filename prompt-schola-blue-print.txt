@@ -1,0 +1,419 @@
+📘 PROMPTSCHOLA — EXHAUSTIVE TECHNICAL BLUEPRINT (2025)
+
+A complete reconstruction of architecture, conventions, UI rules, auth flows, nano-lessons, gating logic, API flows, and reusable templates.
+
+1. High-Level Architecture
+
+PromptSchola is a static HTML/CSS/JS site, deployed on Vercel, using:
+
+Frontend:
+
+Pure static HTML pages (no frameworks).
+
+Inline JavaScript per page for nano-lesson logic.
+
+Shared global JS: auth.js
+
+MathJax for LaTeX rendering.
+
+LocalStorage for UI persistence (collapse states).
+
+Backend:
+
+Two Vercel API routes:
+
+/api/run-step → calls DeepSeek API (using DEEPSEEK_API_KEY)
+
+/api/log-event → stores user actions for analytics (anonymous/logged)
+
+Authentication:
+
+Supabase Auth (Email + Password)
+
+A shared client is used on all pages.
+
+Login / signup is performed on a single page: auth.html.
+
+Auth gating is implemented client-side through:
+
+ensureLoggedInOrRedirect()
+
+Navbar display update logic.
+
+2. Global Authentication Logic (auth.js)
+
+auth.js is included on all pages that require:
+
+nav bar user display
+
+sign in / register buttons
+
+sign out button
+
+gating behavior
+
+2.1 Required Script Order
+
+Every page using auth must include in this exact order:
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
+2.2 Exposed Global Functions
+Function	Purpose
+getCurrentUser()	Returns current logged-in user (or null).
+isLoggedIn()	Boolean check for convenience.
+updateNavUserDisplay()	Updates navbar: hides login/register, shows sign out, displays “Signed in as …”.
+signOutUser()	Supabase sign out → redirect to index.html.
+ensureLoggedInOrRedirect()	Used for gated features, sends users to auth.html?mode=signup&redirect=RETURN_URL.
+2.3 Navbar Conventions
+
+Every page must contain the following IDs so auth.js can control them:
+
+<span id="nav-user"></span>
+<a id="nav-login-btn" ...>Sign In</a>
+<a id="nav-register-btn" ...>Register for Free</a>
+<button id="nav-signout-btn" ... style="display:none;">Sign out</button>
+
+2.4 Gating Rule
+
+If user is not logged in, calling “Run with AI” must trigger:
+
+auth.html?mode=signup&redirect={current_page}
+
+
+Free nano-lessons may allow Run with AI without gating (only in “What is Physics?”).
+
+All advanced or mastery nano-lessons must require login.
+
+3. Auth Page (auth.html) Behavior
+
+The page supports two modes:
+
+Sign in
+
+Create account
+
+Switching is controlled by:
+
+Top tab buttons
+
+The helper link under the form
+
+URL parameter: auth.html?mode=signup
+
+3.1 On Success
+
+Redirects to:
+
+?redirect=URL
+
+
+Default: index.html.
+
+3.2 Already Logged In
+
+If user opens auth.html while logged in:
+
+The main form remains visible.
+
+A message box appears:
+
+You are currently signed in. If this is not you, sign out.
+
+
+A sign-out button is shown.
+
+4. “Run with AI” Implementation Details
+4.1 The Call
+
+Each nano-lesson contains:
+
+fetch('/api/run-step', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ prompt })
+})
+
+4.2 Returned Format
+
+Vercel route returns JSON:
+
+{
+  "content": "AI generated response text"
+}
+
+4.3 Client-Side Rendering Rules
+
+Must call formatOutput():
+
+cleans markdown
+
+preserves LaTeX \[ ... \]
+
+converts bullet points and bold/italics
+
+Must run:
+
+MathJax.typesetPromise([output])
+
+5. Nano-Lesson Standard Model
+
+Every nano-lesson follows a 6-step flow:
+
+Orient
+
+Explain #1
+
+Explain #2 / Apply
+
+Practice
+
+Concept Check
+
+Apply / Exploration / Simulation Lab
+
+5.1 Step Card Components
+
+Each step card contains:
+
+<article class="step-card">
+
+  <div class="step-header"> … </div>
+
+  <div class="step-content" id="step-content-X">
+     <div class="step-body"> … </div>
+     <div class="prompt-preview" id="preview-stepX"></div>
+     <div class="ai-response" id="response-stepX"></div>
+
+     <div class="copy-row">
+        <button onclick="copyAnswer(X)">Copy answer</button>
+     </div>
+
+     <div class="step-footer">
+        <button onclick="showPrompt(X)">Show prompt</button>
+        <button onclick="runWithAI(X)">Run with AI</button>
+        <span>Goal: description…</span>
+     </div>
+  </div>
+
+</article>
+
+5.2 Step Expansion Logic
+
+Each step has a toggle button (+ / −).
+
+Collapse state stored in LocalStorage:
+
+ps_nano_{slug}_collapse
+
+6. Free vs Gated Access Logic
+6.1 Free Lesson Example
+
+“What is Physics?” — all 6 steps are free:
+
+No gating on Run with AI.
+
+Nav bar still updates properly.
+
+6.2 Mixed Access Example
+
+“Constant Acceleration” — Steps 1–3 free, 4–6 locked:
+
+Locked steps must:
+
+Disable "Run with AI"
+
+Disable "Show prompt"
+
+Show a lock badge
+
+Show messaging like:
+
+Unlock with Mastery to see detailed worked examples.
+
+6.3 Fully Gated Example
+
+Future premium nano-lessons may:
+
+Hide step-content entirely until logged in.
+
+Or show a “teaser preview”.
+
+7. Reusable Template for New Nano-Lessons
+
+A new nano-lesson file must include:
+
+7.1 Required Files
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
+7.2 Required IDs in Nav Bar
+<span id="nav-user"></span>
+<a id="nav-login-btn" href="auth.html">Sign In</a>
+<a id="nav-register-btn" href="auth.html?mode=signup">Register for Free</a>
+<button id="nav-signout-btn" style="display:none;">Sign out</button>
+
+7.3 Required JavaScript
+
+Every nano-lesson needs:
+
+// prompts object
+const prompts = {
+  1: "...",
+  2: "...",
+  3: "...",
+  4: "...",
+  5: "...",
+  6: "..."
+};
+
+// collapse logic
+const STORAGE_KEY = 'ps_nano_{slug}_collapse';
+
+// core functions
+showPrompt(step)
+runWithAI(step)
+copyAnswer(step)
+toggleStep(step)
+formatOutput(text)
+loadCollapseState()
+saveCollapseState()
+
+7.4 Required Behavior on Page Load
+document.addEventListener("DOMContentLoaded", async () => {
+  // collapse restore
+  loadCollapseState();
+
+  // mathjax init
+  if (window.MathJax) MathJax.typesetPromise();
+
+  // nav auth state
+  updateNavUserDisplay();
+});
+
+7.5 Gating Logic Inside runWithAI()
+
+If lesson is gated:
+
+const user = await ensureLoggedInOrRedirect();
+if (!user) return;
+
+
+If lesson is free:
+
+// no gating
+
+8. Directory Structure (Recommended)
+/index.html
+/auth.html
+/auth.js
+/physics.html
+/mechanics.html
+
+nano-lessons/
+    nano-what-is-physics.html
+    kinematics-1d.html
+    constant-acceleration.html
+    ...
+
+/api/run-step.js
+/api/log-event.js
+
+9. Event Logging (/api/log-event)
+
+Each Run with AI or copy or view event logs:
+
+{
+  eventType: "run_ai",
+  nanoSlug: "...",
+  step: 3,
+  userType: "logged" | "anon"
+}
+
+10. Future Extensibility (Built Into Blueprint)
+
+This document also encodes principles for expansion:
+
+10.1 Add more subjects later:
+
+math
+
+chemistry
+
+biology
+
+earth science
+
+10.2 Add “Mastery subscription” with:
+
+gated steps
+
+full lesson unlock
+
+downloadable notes
+
+interactive visual simulations
+
+10.3 Replace “Run with AI” with different models or multiple-choice generation.
+11. Rules ChatGPT Must Follow When Continuing the Project
+
+When you paste this into a new session, the assistant should follow these rules:
+
+Rule 1
+
+Never modify auth.js conventions unless asked.
+
+Rule 2
+
+Every page that contains Run with AI must include:
+
+Supabase script
+
+auth.js
+
+navbar IDs
+
+Rule 3
+
+Gated sections must honor the logic:
+
+free steps: allow run
+
+gated steps: require login
+
+Rule 4
+
+All text output must be MathJax-friendly:
+
+\[ ... \] only
+
+No align or environments
+
+Rule 5
+
+When generating new nano-lessons:
+
+Always generate 6 steps
+
+Provide prompts in prompts = { … }
+
+Include nav, hero, access banner, collapsible steps.
+
+Rule 6
+
+Maintain the PromptSchola visual identity:
+
+purple accent
+
+soft shadows
+
+rounded step cards with left spine
+
+12. Closing Summary (Copy This Too)
+
+If you're reading this in a new chat:
+
+➡️ You now have the entire PromptSchola architecture, coding patterns, conventions, gating logic, and template structure.
+➡️ You can generate new nano-lessons, modify existing ones, refine auth flows, or expand the platform.
+➡️ Always follow the conventions above unless explicitly instructed otherwise.
