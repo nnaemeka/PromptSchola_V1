@@ -206,7 +206,7 @@
       padding: 0.7rem 0.75rem;
       border-radius: 10px;
       background: #f9fafb;
-      border: 1px dashed rgba(209, 213, 219, 0.9);
+      border: 1px solid rgba(229, 231, 235, 0.9);
       font-size: 0.8rem;
       color: var(--text-muted);
       white-space: pre-wrap;
@@ -256,28 +256,31 @@
       transform: translateY(-1px);
     }
 
+    /* Larger, comfortable AI output */
     .ai-response {
       margin-top: 1.2rem;
-      padding: 0.9rem 1rem;
-      border-radius: 10px;
-      background: #eef2ff;
-      border: 1px solid rgba(129, 140, 248, 0.5);
-      font-size: 0.9rem;
+      padding: 1.1rem 1.2rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid rgba(129, 140, 248, 0.45);
+      font-size: 0.96rem;
       color: #111827;
       white-space: pre-wrap;
-      line-height: 1.55;
+      line-height: 1.7;
     }
 
-    .ai-response p { margin-bottom: 0.75rem; }
+    .ai-response p { margin-bottom: 0.9rem; }
+
     .ai-response strong {
       font-weight: 700;
-      color: inherit;
+      color: inherit; /* bold only, no color */
     }
+
     .ai-response em { font-style: italic; }
 
     .ai-response .mjx-container[jax="CHTML"] {
-      margin: 0.7rem 0;
-      font-size: 1.05em;
+      margin: 0.9rem 0;
+      font-size: 1.08em;
     }
 
     footer {
@@ -384,7 +387,6 @@
 <script src="auth.js"></script>
 
 <script>
-  // Metadata for help prompts
   const helpMeta = {
     B1: { label: 'Clear beginner-friendly definition of physics' },
     B2: { label: 'Physics vs memorizing formulas' },
@@ -400,7 +402,6 @@
     B12:{ label: 'Why simplification reveals truth' }
   };
 
-  // Help prompt texts (no markdown headings; LaTeX-safe)
   const helpPrompts = {
     B1: `You are a Physics tutor.\n\nGive a clear, beginner-friendly explanation of **what physics is** in about 10–12 sentences. Include:\n• what physics studies (matter, energy, forces, space, time),\n• the idea of physical quantities and laws,\n• how physicists use experiments and models to understand nature.\n\nUse simple language suitable for a final-year high school student. Include at least 2 everyday examples.\n\nIf you use any equations, put each one in LaTeX display mode like:\n  \\\\[ F = ma \\\\]\nand keep them very simple.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
     B2: `You are a Physics tutor.\n\nMany students think physics is just memorizing formulas. Correct this misconception.\nExplain:\n• what a physical model is,\n• why equations represent relationships, not just things to memorize,\n• how understanding concepts helps you rebuild formulas when you forget them.\n\nGive 2 everyday examples (for example, motion or heating water) and show how understanding beats memorizing.\nIf you use any equations, put each one in LaTeX display mode like:\n  \\\\[ v = u + at \\\\]\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
@@ -554,14 +555,12 @@
   document.addEventListener('DOMContentLoaded', () => {
     populatePrompt();
 
-    // Initial MathJax
     if (window.MathJax && MathJax.typesetPromise) {
       MathJax.typesetPromise().catch(err =>
         console.error('MathJax initial typeset error:', err)
       );
     }
 
-    // Nav auth
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
     }
