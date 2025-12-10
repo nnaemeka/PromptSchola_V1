@@ -182,7 +182,6 @@
       min-width: 0;
     }
 
-    /* Steps layout */
     main { padding-bottom: 2.5rem; }
 
     .steps-grid {
@@ -195,14 +194,14 @@
       background: var(--bg-card);
       border-radius: var(--radius-card);
       border: 1px solid var(--border-subtle);
-      padding: 1rem 1.15rem;
+      padding: 1rem 1.25rem 1.1rem;
       box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
+      gap: 0.7rem;
       font-size: 0.9rem;
       border-left: 4px solid rgba(126, 34, 206, 0.55);
-      padding-left: 1.2rem;
+      padding-left: 1.35rem;
     }
 
     .step-header {
@@ -284,16 +283,17 @@
     }
 
     .step-body {
-      font-size: 0.86rem;
+      font-size: 0.87rem;
       color: var(--text-muted);
     }
 
+    /* Soften preview box to reduce visual competition with AI output */
     .prompt-preview {
       margin-top: 0.45rem;
-      padding: 0.55rem 0.65rem;
+      padding: 0.5rem 0.6rem;
       border-radius: 10px;
       background: #f9fafb;
-      border: 1px dashed rgba(209, 213, 219, 0.9);
+      border: 1px solid rgba(229, 231, 235, 0.8);
       font-size: 0.8rem;
       color: var(--text-subtle);
       font-family: var(--font-main);
@@ -301,22 +301,24 @@
       white-space: pre-wrap;
     }
 
+    /* 🔎 Bigger, more dominant AI output */
     .ai-response {
-      margin-top: 0.4rem;
-      padding: 0.85rem 1rem;
-      border-radius: 10px;
-      background: #eef2ff;
-      border: 1px solid rgba(129, 140, 248, 0.5);
-      font-size: 0.92rem;
+      margin-top: 0.6rem;
+      padding: 1.1rem 1.2rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      font-size: 0.96rem;
       color: #111827;
       white-space: pre-wrap;
-      line-height: 1.55;
+      line-height: 1.7;
     }
 
-    .ai-response p { margin-bottom: 0.75rem; }
+    .ai-response p { margin-bottom: 0.9rem; }
     .ai-response ul,
-    .ai-response ol { margin: 0.6rem 0 0.6rem 1.2rem; }
+    .ai-response ol { margin: 0.7rem 0 0.7rem 1.3rem; }
 
+    /* Bold = only bold, no color */
     .ai-response strong {
       font-weight: 700;
       color: inherit;
@@ -325,12 +327,12 @@
     .ai-response em { font-style: italic; }
 
     .ai-response .mjx-container[jax="CHTML"] {
-      margin: 0.7rem 0;
-      font-size: 1.05em;
+      margin: 0.9rem 0;
+      font-size: 1.08em;
     }
 
     .copy-row {
-      margin-top: 0.35rem;
+      margin-top: 0.5rem;
       display: flex;
       justify-content: flex-end;
       gap: 0.4rem;
@@ -378,8 +380,8 @@
     }
 
     .step-footer {
-      margin-top: 0.6rem;
-      padding-top: 0.6rem;
+      margin-top: 0.7rem;
+      padding-top: 0.7rem;
       border-top: 1px solid rgba(209, 213, 219, 0.7);
       display: flex;
       justify-content: space-between;
@@ -823,7 +825,7 @@
             </div>
           </div>
 
-          <!-- RIGHT: Targeted Help Panel (links to dedicated help page) -->
+          <!-- RIGHT: Targeted Help Panel -->
           <aside class="help-panel" aria-label="Targeted help for 'What is Physics?'">
             <div class="help-panel-inner">
               <button class="help-panel-toggle" id="help-panel-toggle">
@@ -1108,7 +1110,6 @@
     saveCollapseState();
   }
 
-  // Init: collapse states, MathJax, nav, and help panel toggle
   document.addEventListener('DOMContentLoaded', () => {
     loadCollapseState();
     const steps = [1, 2, 3, 4, 5, 6];
