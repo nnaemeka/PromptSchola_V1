@@ -958,6 +958,7 @@
     const preview = document.getElementById('preview-step' + step);
     if (!preview) return;
     preview.textContent = prompts[step] || 'Prompt coming soon.';
+    preview.style.display = 'block';
 
     if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise([preview]).catch(err =>
