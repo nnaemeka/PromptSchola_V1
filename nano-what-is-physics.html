@@ -1024,6 +1024,9 @@
     }
 
     const output = document.getElementById('response-step' + step);
+    const preview = document.getElementById('preview-step' + step);
+    if (preview) preview.style.display = 'none';
+
     if (!output) {
       alert('No response area found for this step.');
       return;
