@@ -1007,37 +1007,43 @@
       });
   }
 
-  // Canonical PromptSchola formatOutput
-  function formatOutput(text) {
-    if (!text) return '';
+// Canonical PromptSchola formatOutput (with HTML escaping to avoid truncation)
+function formatOutput(text) {
+  if (!text) return '';
 
-    // Normalize escaped LaTeX like \\[ ... \\]
-    let safe = text
-      .replace(/\\\\\[/g, '\\[')
-      .replace(/\\\\\]/g, '\\]');
+  // 1) HTML-escape first so any '<', '>', '&' from the AI
+  //    cannot accidentally break the DOM or hide content.
+  let safe = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 
-    // Convert markdown headings (### etc.) into bold lines
-    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+  // 2) Normalize escaped LaTeX like \\[ ... \\] → \[ ... \]
+  safe = safe
+    .replace(/\\\\\[/g, '\\[')
+    .replace(/\\\\\]/g, '\\]');
 
-    // Convert markdown bullets (- or *) into •
-    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
+  // 3) Convert markdown headings (### etc.) into bold lines
+  safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
 
-    // Bold and italic markdown
-    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // 4) Convert markdown bullets (- or *) into •
+  safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
 
-    // Paragraph spacing: double newlines → paragraph break
-    safe = safe.replace(/\n\n+/g, '</p><p>');
+  // 5) Bold and italic markdown
+  safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-    // Remaining single newlines → <br>
-    safe = safe.replace(/\n/g, '<br>');
+  // 6) Paragraph spacing: double newlines → paragraph break
+  safe = safe.replace(/\n\n+/g, '</p><p>');
 
-    // Wrap in <p> tag
-    safe = '<p>' + safe + '</p>';
+  // 7) Remaining single newlines → <br>
+  safe = safe.replace(/\n/g, '<br>');
 
-    return safe;
-  }
+  // 8) Wrap in <p> tag
+  safe = '<p>' + safe + '</p>';
 
+  return safe;
+}
   // NOTE: Run with AI is NOT gated on auth for this intro nano.
   async function runWithAI(step) {
     const prompt = prompts[step];
