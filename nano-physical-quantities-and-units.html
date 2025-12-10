@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Physical Quantities and Units – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Nano-lesson on physical quantities and units: base and derived quantities, SI units, prefixes, and dimensional analysis."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- MathJax configuration for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #4c1d95;
+      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+      --border-subtle: rgba(209, 213, 219, 0.7);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, sans-serif;
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.3rem;
+    }
+
+    /* NAV */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(249, 250, 251, 0.96);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
+    }
+
+    .logo-text span:first-child {
+      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
+    }
+    .logo-text span:last-child {
+      font-size: 0.72rem; color: var(--text-subtle);
+    }
+
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      transition: var(--transition-fast);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-pill:hover {
+      background: #f3f4f6; transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 3rem 0 2.1rem;
+      text-align: center;
+    }
+    .hero-kicker {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 800; color: var(--text-strong);
+      margin: 0.3rem 0;
+    }
+    .hero-subtitle {
+      font-size: 0.96rem; color: var(--text-muted);
+      max-width: 40rem; margin: 0.4rem auto 0;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+    .hero-breadcrumbs a { color: var(--accent-strong); }
+
+    /* Access banner */
+    .access-banner {
+      margin: 0 auto 1.6rem;
+      max-width: 720px;
+      border-radius: var(--radius-pill);
+      padding: 0.55rem 0.9rem;
+      background: linear-gradient(to right, #dcfce7, #eef2ff);
+      border: 1px solid var(--accent-soft-border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-free {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      background: #dcfce7;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      color: #166534;
+    }
+
+    main { padding-bottom: 2.5rem; }
+
+    /* Layout for steps + help panel */
+    .lesson-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(260px, 1.1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 1rem;
+    }
+
+    .lesson-main {
+      min-width: 0;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .step-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem 1.25rem 1.1rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      font-size: 0.9rem;
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+      padding-left: 1.35rem;
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .step-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .step-index {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #4c1d95;
+      background: #ede9fe;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      font-weight: 600;
+    }
+
+    .step-title {
+      font-size: 1.06rem;
+      font-weight: 650;
+      color: #111827;
+    }
+
+    .step-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .step-access-pill {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      background: #dcfce7;
+      color: #166534;
+      white-space: nowrap;
+    }
+
+    .toggle-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      color: #4c1d95;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+    }
+    .toggle-btn:hover {
+      transform: translateY(-1px) scale(1.07);
+      box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75);
+      background: #e0e7ff;
+    }
+
+    .step-content {
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    .step-body {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+    }
+
+    /* Prompt preview */
+    .prompt-preview {
+      margin-top: 0.45rem;
+      padding: 0.5rem 0.6rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid rgba(229, 231, 235, 0.8);
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+      font-family: var(--font-main);
+      min-height: 2.2rem;
+      white-space: pre-wrap;
+    }
+
+    /* Bigger, more dominant AI output */
+    .ai-response {
+      margin-top: 0.6rem;
+      padding: 1.1rem 1.2rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      font-size: 0.96rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .ai-response p { margin-bottom: 0.9rem; }
+    .ai-response ul,
+    .ai-response ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+
+    /* Bold = only bold, no color */
+    .ai-response strong {
+      font-weight: 700;
+      color: inherit;
+    }
+
+    .ai-response em { font-style: italic; }
+
+    .ai-response .mjx-container[jax="CHTML"] {
+      margin: 0.9rem 0;
+      font-size: 1.08em;
+    }
+
+    .copy-row {
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-ghost,
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .btn-ghost {
+      padding: 0.42rem 0.8rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      padding: 0.42rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-copy {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+    }
+
+    .step-footer {
+      margin-top: 0.7rem;
+      padding-top: 0.7rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+    }
+
+    /* Targeted help panel */
+    .help-panel {
+      position: relative;
+    }
+
+    .help-panel-inner {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .help-panel-toggle {
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: radial-gradient(circle at 0 0, #f9fafb, #eef2ff);
+      color: var(--text-main);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 0.6rem;
+      box-shadow: 0 6px 16px rgba(148, 163, 184, 0.3);
+    }
+
+    .help-panel-toggle-icon {
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    .help-panel-body {
+      border-radius: 1.1rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: radial-gradient(circle at 0 0, #ffffff, #eef2ff);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.16);
+      padding: 0.85rem 0.9rem;
+      font-size: 0.8rem;
+    }
+
+    .help-panel-header h2 {
+      font-size: 0.9rem;
+      margin: 0 0 0.25rem;
+      color: var(--text-strong);
+    }
+
+    .help-panel-header p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin: 0 0 0.6rem;
+    }
+
+    .help-category {
+      padding-top: 0.55rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      margin-top: 0.55rem;
+    }
+
+    .help-category:first-of-type {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .help-category-header {
+      margin-bottom: 0.3rem;
+    }
+
+    .help-category-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      font-size: 0.72rem;
+      color: var(--accent-strong);
+    }
+
+    .help-category-desc {
+      margin: 0.24rem 0 0;
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+    }
+
+    .help-prompts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-top: 0.35rem;
+    }
+
+    .help-prompt-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.45rem 0.5rem;
+      font-size: 0.80rem;
+      border-radius: 999px;
+      background: transparent;
+      color: #6b21a8;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        text-decoration-color 0.2s ease;
+    }
+
+    .help-prompt-btn:hover {
+      background: rgba(76, 29, 149, 0.07);
+      color: #4c1d95;
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 960px) {
+      .lesson-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .help-panel-inner {
+        position: static;
+      }
+
+      .help-panel-toggle {
+        margin-top: 1.25rem;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <!-- Filled by auth.js -->
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <!-- Shown when logged OUT -->
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-pill">Register</a>
+
+          <!-- Shown when logged IN -->
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Nano-lesson · Foundations</div>
+        <h1 class="hero-title">Physical Quantities and Units</h1>
+        <p class="hero-subtitle">
+          Learn what physical quantities are, how SI units and prefixes work, and how dimensional analysis
+          keeps equations and answers from going off the rails.
+        </p>
+        <div class="hero-breadcrumbs">
+          <a href="physics.html">Physics</a> ·
+          <span>Physical Quantities and Units</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESS BANNER -->
+    <section>
+      <div class="container">
+        <div class="access-banner">
+          <span class="badge-free">All 6 steps are free</span>
+          <span>Use this nano-lesson to lock in the language of physics before moving on to kinematics.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEPS + HELP PANEL -->
+    <section>
+      <div class="container">
+        <div class="lesson-layout">
+          <!-- LEFT: main 6-step flow -->
+          <div class="lesson-main">
+            <div class="steps-grid">
+
+              <!-- STEP 1 -->
+              <article class="step-card">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 1</div>
+                    <div class="step-title">What is a physical quantity?</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free · Orientation</span>
+                    <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+                  </div>
+                </div>
+                <div class="step-content" id="step-content-1">
+                  <div class="step-body">
+                    Get a clear idea of what counts as a physical quantity, how it differs from just “a number,”
+                    and meet base vs derived quantities in simple language.
+                  </div>
+                  <div class="prompt-preview" id="preview-step1">
+                    Prompt preview will appear here when you click “Show prompt”.
+                  </div>
+                  <div class="ai-response" id="response-step1"></div>
+                  <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(1)">Copy prompt</button>
+                    <button class="btn-ghost btn-copy" onclick="copyAnswer(1)">Copy answer</button>
+                  </div>
+                  <div class="step-footer">
+                    <div>
+                      <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                      <button class="btn-primary" onclick="runWithAI(1)">Run with AI</button>
+                    </div>
+                    <span>Goal: know what we actually mean by “physical quantity”.</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 2 -->
+              <article class="step-card">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 2</div>
+                    <div class="step-title">SI units and prefixes</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free · Explain</span>
+                    <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
+                  </div>
+                </div>
+                <div class="step-content" id="step-content-2">
+                  <div class="step-body">
+                    Walk through the SI base units, common derived units, and metric prefixes like kilo, milli,
+                    and micro, so you can read and convert units confidently.
+                  </div>
+                  <div class="prompt-preview" id="preview-step2">
+                    Prompt preview will appear here when you click “Show prompt”.
+                  </div>
+                  <div class="ai-response" id="response-step2"></div>
+                  <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(2)">Copy prompt</button>
+                    <button class="btn-ghost btn-copy" onclick="copyAnswer(2)">Copy answer</button>
+                  </div>
+                  <div class="step-footer">
+                    <div>
+                      <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                      <button class="btn-primary" onclick="runWithAI(2)">Run with AI</button>
+                    </div>
+                    <span>Goal: be fluent with SI units and prefixes.</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 3 -->
+              <article class="step-card">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 3</div>
+                    <div class="step-title">Dimensions and dimensional analysis</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free · Apply</span>
+                    <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
+                  </div>
+                </div>
+                <div class="step-content" id="step-content-3">
+                  <div class="step-body">
+                    Learn how to express quantities in terms of basic dimensions like length, mass, and time,
+                    and use dimensional analysis to check whether equations and answers make sense.
+                  </div>
+                  <div class="prompt-preview" id="preview-step3">
+                    Prompt preview will appear here when you click “Show prompt”.
+                  </div>
+                  <div class="ai-response" id="response-step3"></div>
+                  <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(3)">Copy prompt</button>
+                    <button class="btn-ghost btn-copy" onclick="copyAnswer(3)">Copy answer</button>
+                  </div>
+                  <div class="step-footer">
+                    <div>
+                      <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                      <button class="btn-primary" onclick="runWithAI(3)">Run with AI</button>
+                    </div>
+                    <span>Goal: use dimensions as a quick “sanity check” tool.</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 4 -->
+              <article class="step-card">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 4</div>
+                    <div class="step-title">Practice: unit conversions</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free · Practice</span>
+                    <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
+                  </div>
+                </div>
+                <div class="step-content" id="step-content-4">
+                  <div class="step-body">
+                    Try short questions converting between units (for example, km/h to m/s, g/cm³ to kg/m³),
+                    then compare your reasoning with the worked solutions.
+                  </div>
+                  <div class="prompt-preview" id="preview-step4">
+                    Prompt preview will appear here when you click “Show prompt”.
+                  </div>
+                  <div class="ai-response" id="response-step4"></div>
+                  <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(4)">Copy prompt</button>
+                    <button class="btn-ghost btn-copy" onclick="copyAnswer(4)">Copy answer</button>
+                  </div>
+                  <div class="step-footer">
+                    <div>
+                      <button class="btn-ghost" onclick="showPrompt(4)">Show prompt</button>
+                      <button class="btn-primary" onclick="runWithAI(4)">Run with AI</button>
+                    </div>
+                    <span>Goal: feel comfortable converting and tracking units step by step.</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 5 -->
+              <article class="step-card">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 5</div>
+                    <div class="step-title">Concept check: dimensions and validity</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free · Concept check</span>
+                    <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
+                  </div>
+                </div>
+                <div class="step-content" id="step-content-5">
+                  <div class="step-body">
+                    Work through short questions that ask whether proposed formulas are dimensionally correct,
+                    and explain why some expressions cannot possibly be right.
+                  </div>
+                  <div class="prompt-preview" id="preview-step5">
+                    Prompt preview will appear here when you click “Show prompt”.
+                  </div>
+                  <div class="ai-response" id="response-step5"></div>
+                  <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(5)">Copy prompt</button>
+                    <button class="btn-ghost btn-copy" onclick="copyAnswer(5)">Copy answer</button>
+                  </div>
+                  <div class="step-footer">
+                    <div>
+                      <button class="btn-ghost" onclick="showPrompt(5)">Show prompt</button>
+                      <button class="btn-primary" onclick="runWithAI(5)">Run with AI</button>
+                    </div>
+                    <span>Goal: use dimensions to quickly reject wrong formulas or answers.</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 6 -->
+              <article class="step-card">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 6</div>
+                    <div class="step-title">See quantities and units in real life</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free · Exploration</span>
+                    <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
+                  </div>
+                </div>
+                <div class="step-content" id="step-content-6">
+                  <div class="step-body">
+                    Use a simple experiment or observation (like reading a food label, a car speedometer, or a
+                    phone battery percentage) to identify the physical quantities, their units, and what they really
+                    tell you about the situation.
+                  </div>
+                  <div class="prompt-preview" id="preview-step6">
+                    Prompt preview will appear here when you click “Show prompt”.
+                  </div>
+                  <div class="ai-response" id="response-step6"></div>
+                  <div class="copy-row">
+                    <button class="btn-ghost btn-copy" onclick="copyPrompt(6)">Copy prompt</button>
+                    <button class="btn-ghost btn-copy" onclick="copyAnswer(6)">Copy answer</button>
+                  </div>
+                  <div class="step-footer">
+                    <div>
+                      <button class="btn-ghost" onclick="showPrompt(6)">Show prompt</button>
+                      <button class="btn-primary" onclick="runWithAI(6)">Run with AI</button>
+                    </div>
+                    <span>Goal: notice that quantities and units show up in almost every real decision.</span>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- RIGHT: Targeted Help Panel -->
+          <aside class="help-panel">
+            <div class="help-panel-inner">
+              <!-- Header pill -->
+              <button class="help-panel-toggle" id="help-panel-toggle">
+                <span>Need study help for this topic?</span>
+                <span class="help-panel-toggle-icon">▾</span>
+              </button>
+
+              <div class="help-panel-body" id="help-panel-body">
+                <div class="help-panel-header">
+                  <h2>Targeted prompts: quantities & units</h2>
+                  <p>
+                    Jump straight to focused prompts when you are confused, making the same mistakes,
+                    or want exam-style challenges.
+                  </p>
+                </div>
+
+                <!-- Group 1: Confusions & look-alikes -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Confusions & look-alikes</span>
+                    <p class="help-category-desc">
+                      Untangle similar words: quantity, unit, dimension, scalar, vector.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=C1">
+                      Physical quantity vs just “a number”
+                    </a>
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=C2">
+                      Base vs derived quantities with clear examples
+                    </a>
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=C3">
+                      Quantity, unit, and dimension: what is the difference?
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Group 2: Tricky areas & exam traps -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Tricky areas & exam traps</span>
+                    <p class="help-category-desc">
+                      Focus on patterns that exam questions love to exploit.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=T1">
+                      Powers of ten and prefixes that trick students
+                    </a>
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=T2">
+                      Squared and cubed units in area and volume conversions
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Group 3: Common mistakes -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Common mistakes</span>
+                    <p class="help-category-desc">
+                      Diagnose and fix the errors that keep repeating in homework and tests.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=M1">
+                      Mixing up units when converting speeds (km/h ↔ m/s)
+                    </a>
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=M2">
+                      Forgetting to convert all units before using a formula
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Group 4: When you feel stuck -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">When you feel stuck</span>
+                    <p class="help-category-desc">
+                      Use units and dimensions as a map when you do not know how to start.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=S1">
+                      Using units to decode what a word problem is asking for
+                    </a>
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=S2">
+                      Step-by-step strategy: set up a “unit chain” before solving
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Group 5: Concept bridges -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Concept bridges</span>
+                    <p class="help-category-desc">
+                      Connect quantities and units to upcoming topics like kinematics and forces.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=B1">
+                      How dimensions help check physics formulas in later chapters
+                    </a>
+                    <a class="help-prompt-btn" href="physical-quantities-and-units-help.html?id=B2">
+                      Linking units of displacement, velocity, and acceleration
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
+</div>
+
+<!-- 🔹 Supabase + shared auth helpers for nav -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
+<script>
+  // Prompts for all-free steps, tuned for completeness and PromptSchola LaTeX rules
+  const prompts = {
+    1: `You are a Physics tutor.\n\nExplain clearly **what a physical quantity is**. Cover ALL of the following points:\n• what makes something a physical quantity (a measurable property with a numerical value and a unit),\n• a few examples: length, mass, time, temperature, electric current,\n• the idea of **base quantities** vs **derived quantities** in simple language,\n• why we care about physical quantities at all (how they let us describe the world precisely).\n\nUse short paragraphs and bullet points. Include at least one example where you show a quantity as “number + unit”, for example “3.0 m” or “25 °C”.\n\nIf you use equations, write them in LaTeX display mode on their own line, for example:\n  \\\\[ x = 3.0\\,\\text{m} \\\\]\nDo NOT use LaTeX environments like align.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    2: `You are a Physics tutor.\n\nExplain the **SI system of units** and common **metric prefixes**. Cover ALL of these points:\n• the idea of a standard system of units,\n• a list of the seven SI base quantities with their symbols and units (like length, mass, time, electric current, temperature, amount of substance, luminous intensity),\n• examples of common derived units (for example, speed, force, energy),\n• how prefixes like kilo (k), centi (c), milli (m), micro (\\(\\mu\\)), and mega (M) change the size of a unit.\n\nUse bullet points and short explanations. Include at least one or two numerical examples showing how to convert with prefixes (for example, km to m, ms to s).\n\nIf you write any equations, put each one on its own line in LaTeX display mode, for example:\n  \\\\[ v = \\frac{\\Delta x}{\\Delta t} \\\\]\n  \\\\[ F = ma \\\\]\nDo not use LaTeX environments like align. Do not use markdown headings like # or ###; use bold text instead for important words.`,
+    3: `You are a Physics tutor.\n\nIntroduce **dimensions** and **dimensional analysis**. Cover ALL of the following:\n• what we mean by the dimension of a quantity (for example, length \\([L]\\), mass \\([M]\\), time \\([T]\\)),\n• how to write the dimensions of common quantities like speed, acceleration, force, and energy,\n• how dimensional analysis can be used to check whether an equation is reasonable,\n• one or two simple examples where you check a formula by comparing dimensions on both sides.\n\nUse bullet points and clear steps. Explain each example in words, not just symbols.\n\nWrite dimensions and equations in LaTeX display mode, for example:\n  \\\\[ [v] = [L T^{-1}] \\\\]\n  \\\\[ [F] = [M L T^{-2}] \\\\]\n  \\\\[ v = \\frac{\\Delta x}{\\Delta t} \\\\]\nMake sure every LaTeX equation is complete and enclosed in \\\\[ and \\\\]. Do not use markdown headings.`,
+    4: `You are a Physics tutor.\n\nCreate a short **practice set** on unit conversions. Include:\n• 4–5 questions of mixed difficulty, where the student must convert between units (for example, km/h to m/s, cm² to m², g/cm³ to kg/m³),\n• space for the student to think first (do NOT show solutions immediately),\n• then clear, step-by-step worked solutions for each question, showing how the units change at each step.\n\nUse bullet points or numbered lists for questions, and then clearly separate the solutions section. Keep the arithmetic simple so that the focus is on the units.\n\nIf you write equations, put each one in LaTeX display mode, like:\n  \\\\[ 72\\,\\text{km/h} = 20\\,\\text{m/s} \\\\]\nMake sure every LaTeX equation is complete and enclosed in \\\\[ and \\\\]. Do not use markdown headings like # or ###.`,
+    5: `You are a Physics tutor.\n\nCreate a **concept check** that focuses on **dimensional correctness**. Include 4–5 short items where you:\n• present a proposed formula (for example, \\(v = at^2\\), \\(F = mv\\), or something similar),\n• ask the student whether it is dimensionally correct or not,\n• then explain the answer by comparing the dimensions of both sides.\n\nYou may invent your own example formulas, but clearly say which are correct and which are not. Use short, clear explanations.\n\nWrite formulas and dimensions in LaTeX display mode on separate lines, for example:\n  \\\\[ v = at \\\\]\n  \\\\[ [v] = [L T^{-1}], \\quad [a t] = [L T^{-1}] \\\\]\nMake sure every LaTeX expression is complete and enclosed in \\\\[ and \\\\]. Do not use markdown headings.`,
+    6: `You are a Physics tutor.\n\nGuide the student through a simple **real-life observation or mini-experiment** that uses physical quantities and units. Choose ONE situation and develop it fully, for example:\n• reading the label on a bottle of water or sports drink (volume, energy, mass),\n• looking at a car speedometer or a map app (speed, distance, time),\n• checking the power rating on a phone charger (power, voltage, current).\n\nFor your chosen situation, walk through ALL of these:\n• list the physical quantities involved and their units,\n• explain what each quantity tells you in everyday language,\n• show at least one simple calculation using the units (for example, estimating travel time or total energy),\n• connect this back to why units and dimensions matter in physics.\n\nUse bullet points and short paragraphs. If you use formulas, put them in LaTeX display mode, like:\n  \\\\[ t = \\frac{d}{v} \\\\]\nMake sure every LaTeX equation is complete and enclosed in \\\\[ and \\\\]. Do not use markdown headings; just use bold text for key ideas.`
+  };
+
+  const lastAiResponses = {};
+  const STORAGE_KEY = 'ps_nano_physical_quantities_and_units_collapse';
+  let collapseState = {};
+
+  function showPrompt(step) {
+    const preview = document.getElementById('preview-step' + step);
+    if (!preview) return;
+    preview.textContent = prompts[step] || 'Prompt coming soon.';
+    preview.style.display = '';
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise([preview]).catch(err =>
+        console.error('MathJax error in preview:', err)
+      );
+    }
+  }
+
+  function copyPrompt(step) {
+    const prompt = prompts[step];
+    if (!prompt) {
+      alert('No prompt defined for this step yet.');
+      return;
+    }
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+    navigator.clipboard.writeText(prompt)
+      .then(() => { alert('Prompt copied to clipboard.'); })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy prompt. Please try again.');
+      });
+  }
+
+  // Canonical PromptSchola formatOutput (with HTML escaping + LaTeX normalization)
+  function formatOutput(text) {
+    if (!text) return '';
+
+    // 1) HTML-escape first
+    let safe = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // 2) Normalize escaped LaTeX:
+    //    \\[ ... \\] → \[ ... \]
+    //    \\( ... \\) → \( ... \)
+    safe = safe
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]')
+      .replace(/\\\\\(/g, '\\(')
+      .replace(/\\\\\)/g, '\\)');
+
+    // 3) Convert markdown headings (### etc.) into bold lines
+    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+
+    // 4) Convert markdown bullets (- or *) into •
+    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
+
+    // 5) Bold and italic markdown
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // 6) Paragraph spacing: double newlines → paragraph break
+    safe = safe.replace(/\n\n+/g, '</p><p>');
+
+    // 7) Remaining single newlines → <br>
+    safe = safe.replace(/\n/g, '<br>');
+
+    // 8) Wrap in <p> tag
+    safe = '<p>' + safe + '</p>';
+
+    return safe;
+  }
+
+  // Run with AI (not gated for this nano)
+  async function runWithAI(step) {
+    const prompt = prompts[step];
+    if (!prompt) {
+      alert('No prompt defined for this step yet.');
+      return;
+    }
+
+    const output = document.getElementById('response-step' + step);
+    if (!output) {
+      alert('No response area found for this step.');
+      return;
+    }
+
+    // Hide preview placeholder once AI runs
+    const preview = document.getElementById('preview-step' + step);
+    if (preview) {
+      preview.style.display = 'none';
+    }
+
+    try {
+      output.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+
+      if (!res.ok) {
+        output.textContent = 'There was an error contacting the AI. Please try again later.';
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastAiResponses[step] = raw;
+      output.innerHTML = formatOutput(raw);
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([output]).catch(err =>
+          console.error('MathJax error in response:', err)
+        );
+      }
+    } catch (err) {
+      console.error(err);
+      output.textContent = 'Unexpected error. Please try again.';
+    }
+  }
+
+  function copyAnswer(step) {
+    const text = lastAiResponses[step];
+    if (!text) {
+      alert('No AI answer to copy yet. Run with AI first.');
+      return;
+    }
+
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+
+    navigator.clipboard.writeText(text)
+      .then(() => { alert('Answer copied to clipboard.'); })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy to clipboard. Please try again.');
+      });
+  }
+
+  function loadCollapseState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      collapseState = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      collapseState = {};
+    }
+  }
+
+  function saveCollapseState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState));
+    } catch (e) {
+      console.error('Unable to save collapse state', e);
+    }
+  }
+
+  function toggleStep(step) {
+    const content = document.getElementById(`step-content-${step}`);
+    const btn = document.getElementById(`toggle-btn-${step}`);
+    if (!content || !btn) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? '−' : '+';
+
+    collapseState[step] = !isHidden;
+    saveCollapseState();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadCollapseState();
+    const steps = [1, 2, 3, 4, 5, 6];
+    steps.forEach(step => {
+      const content = document.getElementById(`step-content-${step}`);
+      const btn = document.getElementById(`toggle-btn-${step}`);
+      if (!content || !btn) return;
+
+      const expanded = collapseState[step];
+      if (expanded === false) {
+        content.style.display = 'none';
+        btn.textContent = '+';
+      } else {
+        content.style.display = 'block';
+        btn.textContent = '−';
+      }
+    });
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(err =>
+        console.error('MathJax initial typeset error:', err)
+      );
+    }
+
+    // 🔹 Update nav based on auth state
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+
+    const signOutBtn = document.getElementById('nav-signout-btn');
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
+
+    // Help panel toggle
+    const toggleBtn = document.getElementById('help-panel-toggle');
+    const body = document.getElementById('help-panel-body');
+    const icon = document.querySelector('.help-panel-toggle-icon');
+
+    if (toggleBtn && body && icon) {
+      let open = true;
+      function updatePanel() {
+        body.style.display = open ? 'block' : 'none';
+        icon.textContent = open ? '▾' : '▸';
+      }
+      updatePanel();
+
+      toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        open = !open;
+        updatePanel();
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
