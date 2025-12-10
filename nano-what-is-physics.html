@@ -1007,7 +1007,7 @@
       });
   }
 
-// Canonical PromptSchola formatOutput (with HTML escaping to avoid truncation)
+// Canonical PromptSchola formatOutput (with HTML escaping + LaTeX normalization)
 function formatOutput(text) {
   if (!text) return '';
 
@@ -1018,10 +1018,14 @@ function formatOutput(text) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  // 2) Normalize escaped LaTeX like \\[ ... \\] → \[ ... \]
+  // 2) Normalize escaped LaTeX:
+  //    \\[ ... \\] → \[ ... \]
+  //    \\( ... \\) → \( ... \)
   safe = safe
     .replace(/\\\\\[/g, '\\[')
-    .replace(/\\\\\]/g, '\\]');
+    .replace(/\\\\\]/g, '\\]')
+    .replace(/\\\\\(/g, '\\(')
+    .replace(/\\\\\)/g, '\\)');
 
   // 3) Convert markdown headings (### etc.) into bold lines
   safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
