@@ -485,28 +485,33 @@
   margin-top: 0.35rem;
 }
 
-/* Side panel links: clean, link-like, on-brand */
+/* Side panel links: purple-friendly default, underline on hover */
 .help-prompt-btn {
   display: block;
   width: 100%;
   text-align: left;
-  padding: 0.45rem 0.3rem;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  color: #374151;            /* neutral gray text */
-  background: transparent;
-  border: none;              /* no button border; feels like a link */
+  padding: 0.45rem 0.5rem;
+  font-size: 0.80rem;
+  border-radius: 8px;
+
+  /* Default appearance */
+  color: #6b21a8; /* soft purple text */
+  background: #f3e8ff; /* very light lavender */
+
   text-decoration: none;
+  border: none;
   cursor: pointer;
+
   transition:
+    background 0.2s ease,
     color 0.2s ease,
-    background 0.2s ease;
+    text-decoration-color 0.2s ease;
 }
 
 .help-prompt-btn:hover {
-  color: var(--accent-strong);                     /* your purple accent */
-  background: rgba(76, 29, 149, 0.07);            /* soft purple hover bg */
-  text-decoration: underline;                     /* classic link cue */
+  text-decoration: underline;
+  background: #ede9fe; /* even lighter hover background */
+  color: #4c1d95;      /* stronger purple hover */
 }
     footer {
       margin-top: auto;
