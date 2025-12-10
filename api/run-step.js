@@ -25,11 +25,15 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',   // or another model name DeepSeek provides
+        model: 'deepseek-chat',
         messages: [
           {
             role: 'system',
-            content: 'You are a friendly, rigorous physics tutor for final high school and first-year university students.'
+            content:
+              'You are a friendly, rigorous physics tutor for final high school and first-year university students. ' +
+              'Always give a complete, correct explanation, but keep answers reasonably concise (about 400–700 words). ' +
+              'Never end your response in the middle of a sentence or in the middle of a bold marker (like starting with ** without closing it). ' +
+              'If you are running out of space, finish the current sentence and stop cleanly.'
           },
           {
             role: 'user',
@@ -37,7 +41,8 @@ export default async function handler(req, res) {
           }
         ],
         temperature: 0.4,
-        max_tokens: 1200
+        // Give the model more room to finish; DeepSeek will cap internally if needed.
+        max_tokens: 1600
       })
     });
 
