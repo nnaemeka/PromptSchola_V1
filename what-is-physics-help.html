@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Targeted Help – What is Physics? – PromptSchola Physics</title>
+  <title>What is Physics – Study Help · PromptSchola Physics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Targeted help prompt for the 'What is Physics?' nano-lesson in PromptSchola Physics."
+    content="Targeted AI-powered study help for the nano-lesson 'What is Physics?' – clarify definitions, fix misconceptions, and connect to later topics."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -58,7 +58,7 @@
     .page { min-height: 100vh; display: flex; flex-direction: column; }
 
     .container {
-      max-width: 900px;
+      max-width: 880px;
       margin: 0 auto;
       padding: 0 1.3rem;
     }
@@ -122,123 +122,218 @@
       .nav-links { display: none; }
     }
 
-    /* Main content */
-    main {
-      padding: 2.5rem 0 2.5rem;
+    main { padding-bottom: 2.5rem; }
+
+    /* HERO */
+    .hero {
+      padding: 2.4rem 0 1.6rem;
+      text-align: left;
     }
 
-    .breadcrumb {
-      font-size: 0.8rem;
-      color: var(--text-subtle);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .breadcrumb a {
-      color: var(--accent-strong);
-      font-weight: 500;
-    }
-
-    .breadcrumb-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.8rem;
-      color: var(--accent-strong);
-    }
-
-    .help-header {
-      margin-bottom: 1.2rem;
-    }
-
-    .help-kicker {
-      font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+    .hero-kicker {
+      font-size: 0.76rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       color: var(--text-subtle);
     }
 
-    .help-title {
-      font-size: 1.4rem;
-      font-weight: 700;
+    .hero-title {
+      font-size: clamp(1.6rem, 2.5vw, 2rem);
+      font-weight: 800;
       color: var(--text-strong);
-      margin-top: 0.2rem;
+      margin: 0.4rem 0 0.1rem;
     }
 
-    .help-subtitle {
-      font-size: 0.9rem;
+    .hero-subtitle {
+      font-size: 0.94rem;
       color: var(--text-muted);
-      margin-top: 0.3rem;
+      max-width: 36rem;
     }
 
-    .prompt-card {
-      margin-top: 1.4rem;
+    .hero-breadcrumbs {
+      margin-top: 0.7rem;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+    .hero-breadcrumbs a { color: var(--accent-strong); }
+
+    /* Banner */
+    .help-banner {
+      margin: 0.8rem auto 1.7rem;
+      max-width: 720px;
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 0.9rem;
+      background: linear-gradient(to right, #eef2ff, #e0f2fe);
+      border: 1px solid var(--accent-soft-border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-topic {
+      padding: 0.16rem 0.7rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.74rem;
+      background: #ede9fe;
+      border: 1px solid rgba(129, 140, 248, 0.9);
+      color: #4c1d95;
+      font-weight: 600;
+    }
+
+    /* Help card */
+    .help-card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
       border: 1px solid var(--border-subtle);
-      padding: 1.1rem 1.2rem;
       box-shadow: var(--shadow-card);
+      padding: 1.2rem 1.3rem 1.2rem;
       font-size: 0.9rem;
-      border-left: 4px solid rgba(126, 34, 206, 0.55);
     }
 
-    .prompt-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--accent-strong);
-      margin-bottom: 0.35rem;
+    .help-card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-bottom: 0.65rem;
     }
 
-    .prompt-id-pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.18rem 0.8rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(129, 140, 248, 0.8);
-      background: #eef2ff;
-      font-size: 0.72rem;
-      color: var(--accent-strong);
-      margin-bottom: 0.5rem;
-    }
-
-    .prompt-text-block {
-      margin-top: 0.4rem;
-      padding: 0.7rem 0.75rem;
-      border-radius: 10px;
-      background: #f9fafb;
-      border: 1px solid rgba(229, 231, 235, 0.9);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      white-space: pre-wrap;
-      max-height: 260px;
-      overflow-y: auto;
-    }
-
-    .prompt-actions {
-      margin-top: 0.7rem;
+    .help-chip-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.4rem;
       align-items: center;
-      justify-content: flex-start;
     }
 
-    .btn-ghost, .btn-primary {
+    .help-chip {
+      padding: 0.16rem 0.7rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+      background: #f9fafb;
+    }
+
+    .help-topic-pill {
+      padding: 0.16rem 0.65rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(126, 34, 206, 0.4);
+      font-size: 0.74rem;
+      color: #4c1d95;
+      background: #f5f3ff;
+      font-weight: 600;
+    }
+
+    .help-title {
+      font-size: 1.02rem;
+      font-weight: 650;
+      color: var(--text-strong);
+    }
+
+    .help-lead {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .help-body-layout {
+      margin-top: 0.9rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.4fr);
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 860px) {
+      .help-body-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .prompt-box {
+      border-radius: 14px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #f9fafb;
+      padding: 0.9rem 1rem 0.9rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      min-height: 135px;
+      white-space: pre-wrap;
+    }
+
+    .prompt-box-header {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-subtle);
+      margin-bottom: 0.45rem;
+    }
+
+    .prompt-box-body {
+      font-family: var(--font-main);
+    }
+
+    .ai-box {
+      border-radius: 14px;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      background: #ffffff;
+      padding: 1rem 1.1rem;
+      min-height: 135px;
+      font-size: 0.94rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .ai-box p { margin-bottom: 0.9rem; }
+    .ai-box ul,
+    .ai-box ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+
+    .ai-box strong {
+      font-weight: 700;
+      color: inherit;
+    }
+
+    .ai-box em { font-style: italic; }
+
+    .ai-box .mjx-container[jax="CHTML"] {
+      margin: 0.9rem 0;
+      font-size: 1.05em;
+    }
+
+    .help-actions-row {
+      margin-top: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    .help-actions-buttons {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-ghost,
+    .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 0.25rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: var(--transition-fast);
-      border: none;
     }
 
     .btn-ghost {
-      padding: 0.42rem 0.85rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
       border: 1px solid rgba(209, 213, 219, 0.9);
       background: #ffffff;
-      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition-fast);
     }
     .btn-ghost:hover {
       background: #f3f4f6;
@@ -247,40 +342,21 @@
 
     .btn-primary {
       padding: 0.42rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
       font-weight: 600;
+      border: none;
+      cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color: #fff;
       box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
     }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-    }
+    .btn-primary:hover { transform: translateY(-1px); }
 
-    /* Larger, comfortable AI output */
-    .ai-response {
-      margin-top: 1.2rem;
-      padding: 1.1rem 1.2rem;
-      border-radius: 14px;
-      background: #ffffff;
-      border: 1px solid rgba(129, 140, 248, 0.45);
-      font-size: 0.96rem;
-      color: #111827;
-      white-space: pre-wrap;
-      line-height: 1.7;
-    }
-
-    .ai-response p { margin-bottom: 0.9rem; }
-
-    .ai-response strong {
-      font-weight: 700;
-      color: inherit; /* bold only, no color */
-    }
-
-    .ai-response em { font-style: italic; }
-
-    .ai-response .mjx-container[jax="CHTML"] {
-      margin: 0.9rem 0;
-      font-size: 1.08em;
+    .btn-copy {
+      font-size: 0.76rem;
+      padding: 0.3rem 0.8rem;
     }
 
     footer {
@@ -337,44 +413,93 @@
   </header>
 
   <main>
-    <div class="container">
-      <div class="breadcrumb">
-        <a class="breadcrumb-back" href="nano-what-is-physics.html">
-          ← Back to “What is Physics?” nano-lesson
-        </a>
-      </div>
-
-      <div class="help-header">
-        <div class="help-kicker">Targeted Help Prompt · What is Physics?</div>
-        <h1 class="help-title" id="help-title">Loading prompt…</h1>
-        <p class="help-subtitle" id="help-subtitle">
-          Deep-dive explanation for a common confusion or big idea in this topic.
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Study help · What is Physics?</div>
+        <h1 class="hero-title">Targeted prompts for “What is Physics?”</h1>
+        <p class="hero-subtitle">
+          You arrived here from a side-panel link in the nano-lesson. This page shows one focused study prompt
+          you can run with AI or copy into another chat when you need extra help.
         </p>
+        <div class="hero-breadcrumbs">
+          <a href="physics.html">Physics</a> ·
+          <a href="nano-what-is-physics.html">Nano-lesson: What is Physics?</a> ·
+          <span>Study help</span>
+        </div>
       </div>
+    </section>
 
-      <section class="prompt-card">
-        <div class="prompt-id-pill" id="prompt-id-pill">Prompt ID: —</div>
-        <div class="prompt-label" id="prompt-label">Prompt focus</div>
-
-        <div class="prompt-text-block" id="prompt-text-block">
-          Loading prompt text…
+    <!-- BANNER -->
+    <section>
+      <div class="container">
+        <div class="help-banner">
+          <span class="badge-topic">What is Physics?</span>
+          <span>
+            This page loads a specific help prompt based on the link you clicked. You can always change it using the
+            “Current prompt” selector below.
+          </span>
         </div>
+      </div>
+    </section>
 
-        <div class="prompt-actions">
-          <button class="btn-ghost" type="button" onclick="copyHelpPrompt()">
-            Copy prompt
-          </button>
-          <button class="btn-primary" type="button" onclick="runHelpPrompt()">
-            Run with AI
-          </button>
-          <button class="btn-ghost" type="button" onclick="copyHelpAnswer()">
-            Copy answer
-          </button>
-        </div>
+    <!-- HELP CARD -->
+    <section>
+      <div class="container">
+        <article class="help-card">
+          <div class="help-card-header">
+            <div class="help-chip-row">
+              <span id="help-category-pill" class="help-chip">Category: …</span>
+              <span class="help-topic-pill">Study help · What is Physics?</span>
+            </div>
+            <h2 id="help-title" class="help-title">
+              Loading prompt…
+            </h2>
+            <p id="help-lead" class="help-lead">
+              Please wait while the prompt loads.
+            </p>
+          </div>
 
-        <div class="ai-response" id="ai-response" style="margin-top:1rem; display:none;"></div>
-      </section>
-    </div>
+          <div class="help-body-layout">
+            <!-- LEFT: Prompt preview -->
+            <div>
+              <div class="prompt-box">
+                <div class="prompt-box-header">Prompt (you can edit before running)</div>
+                <div id="prompt-text" class="prompt-box-body">
+                  Loading prompt text…
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: AI output -->
+            <div>
+              <div id="ai-output" class="ai-box">
+                Run with AI to see a guided explanation here.
+              </div>
+            </div>
+          </div>
+
+          <div class="help-actions-row">
+            <div class="help-actions-buttons">
+              <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentPrompt()">
+                Copy prompt
+              </button>
+              <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentAnswer()">
+                Copy answer
+              </button>
+              <button class="btn-primary" type="button" onclick="runCurrentPromptWithAI()">
+                Run with AI
+              </button>
+            </div>
+            <div>
+              <span id="help-footnote">
+                Tip: You can paste this prompt into any AI chat if you prefer to keep this page for notes.
+              </span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -382,149 +507,345 @@
   </footer>
 </div>
 
-<!-- Supabase + auth helpers -->
+<!-- 🔹 Supabase + shared auth helpers for nav -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
 
 <script>
-  const helpMeta = {
-    B1: { label: 'Clear beginner-friendly definition of physics' },
-    B2: { label: 'Physics vs memorizing formulas' },
-    B3: { label: 'What physicists actually do' },
-    B4: { label: '“Physics is just hard math”' },
-    B5: { label: '“Physics only explains things after the fact”' },
-    B6: { label: 'Why idealizations aren’t lies' },
-    B7: { label: 'Linking words, diagrams, and equations' },
-    B8: { label: 'Describe a physical system in layers' },
-    B9: { label: 'Variables, units, and dimensions' },
-    B10:{ label: 'What makes physics a science?' },
-    B11:{ label: 'How to build a simple model' },
-    B12:{ label: 'Why simplification reveals truth' }
+  // Library of help prompts for "What is Physics?"
+  // Keys (W1..W10) match the IDs used in nano-what-is-physics side panel links.
+  const helpPromptLibrary = {
+    W1: {
+      id: 'W1',
+      category: 'Confusions & look-alikes',
+      title: 'What exactly counts as “physics” compared to other sciences?',
+      lead: 'Use this when you are not sure which questions belong to physics vs chemistry, biology, or everyday “science news.”',
+      prompt: `You are a Physics tutor.
+
+Explain clearly what kinds of questions and problems belong to **physics** compared to other sciences.
+
+Cover ALL of the following:
+
+• What physics mainly studies (for example, matter, energy, forces, motion, space, time)
+• Examples of questions that are clearly physics (for example, why objects fall, how light travels, how electricity works)
+• Examples that are more chemistry, biology, or earth science
+• How different sciences can overlap on the same real-world situation (for example, climate, medicine, energy, technology)
+
+Use short paragraphs and bullet points. Keep the language friendly and concrete, as if you are talking to a final-year high school student.
+
+If you include any equations, write them in LaTeX display mode on their own line, like:
+  \\[ F = ma \\]
+
+Do NOT use LaTeX environments like align. Do not use markdown headings like # or ###; use bold text for key ideas instead.`
+    },
+
+    W2: {
+      id: 'W2',
+      category: 'Confusions & look-alikes',
+      title: 'Physics vs chemistry vs math vs engineering: who studies what?',
+      lead: 'Use this when the roles of physics, math, chemistry, and engineering feel mixed up in your head.',
+      prompt: `You are a Physics tutor.
+
+Compare, in a clear and friendly way, the roles of **physics**, **mathematics**, **chemistry**, and **engineering**.
+
+Cover ALL of these points:
+
+• What physics focuses on (ideas, laws, and models of nature)
+• What mathematics focuses on (patterns, structures, and logic)
+• What chemistry focuses on (substances, reactions, and molecular-level changes)
+• What engineering focuses on (designing and building devices, systems, and technology)
+• At least one example problem or career that shows how these four areas work together
+
+Use bullet points and short examples. Make the differences feel natural, not like rigid boxes.
+
+If you write equations, put each one in LaTeX display mode, for example:
+  \\[ v = \\frac{\\Delta x}{\\Delta t} \\]
+
+Avoid markdown headings like # or ###. Use bold text instead when you want to emphasise key terms.`
+    },
+
+    W3: {
+      id: 'W3',
+      category: 'Tricky areas & exam traps',
+      title: 'Why exam definitions of physics feel different from everyday explanations',
+      lead: 'Use this when textbook or exam-style definitions feel stiff compared to how people talk about physics in real life.',
+      prompt: `You are a Physics tutor.
+
+Explain why the **formal definition** of physics in exams and textbooks can feel different from everyday explanations.
+
+Do ALL of the following:
+
+• Give a typical exam-style definition of physics
+• Give a more everyday, story-style explanation of physics
+• Show how both are actually describing the same subject from different angles
+• Explain how to remember the key parts of a formal definition without just memorising words
+
+Use short paragraphs and a few bullet points. Include at least one simple “memory hook” or analogy (for example, “physics is the grammar of nature”).
+
+If you include equations, place them in LaTeX display mode like:
+  \\[ F = ma \\]
+
+Do not use markdown headings like # or ###. Use bold text for important words instead.`
+    },
+
+    W4: {
+      id: 'W4',
+      category: 'Tricky areas & exam traps',
+      title: 'How exam questions hide “what physics studies” inside short word problems',
+      lead: 'Use this when you can read a question but do not see how it is actually testing your understanding of what physics studies.',
+      prompt: `You are a Physics tutor.
+
+Show how exam questions about “What is Physics?” can be hidden inside short word problems or everyday situations.
+
+Do ALL of the following:
+
+• Give 3–4 short example questions that are really asking what physics studies (for example, about falling objects, light, sound, or electricity)
+• For each example, explain what part of physics it belongs to and what big idea it is really testing
+• Give simple tips for spotting when a question is really about “what physics studies” rather than just plugging numbers into formulas
+
+Use bullet points and clear steps. Focus on thinking, not heavy calculations.
+
+If you include equations, write them in LaTeX display mode on their own lines, like:
+  \\[ v = u + at \\]
+
+Do not use markdown headings like # or ###. Use bold text for key terms instead.`
+    },
+
+    W5: {
+      id: 'W5',
+      category: 'Common mistakes',
+      title: 'Thinking physics is only about solving equations',
+      lead: 'Use this when physics feels like a long list of formulas and you cannot see the ideas behind them.',
+      prompt: `You are a Physics tutor.
+
+Help a student who believes that physics is “just solving equations” to see the **conceptual** side of the subject.
+
+Cover ALL of the following:
+
+• Why equations in physics are really short ways of writing big ideas about nature
+• One or two examples where you start from an idea and then show the equation (for example, “more force → more acceleration” leading to \\( F = ma \\))
+• How diagrams, words, and everyday examples matter just as much as algebra
+• Practical advice on how to study physics so you always look for the idea first and the equation second
+
+Use short paragraphs and a few bullet points. Keep the tone encouraging.
+
+Write any equations in LaTeX display mode, for example:
+  \\[ F = ma \\]
+
+Do not use markdown headings like # or ###. Use bold text for key ideas instead.`
+    },
+
+    W6: {
+      id: 'W6',
+      category: 'Common mistakes',
+      title: 'Believing physics is just memorizing formulas and constants',
+      lead: 'Use this when you feel pressure to memorize every formula but are not sure what actually matters.',
+      prompt: `You are a Physics tutor.
+
+Explain why physics is **not** mainly about memorising formulas and constants, and show a better way to remember what matters.
+
+Do ALL of the following:
+
+• Explain why understanding relationships (how one quantity affects another) is more important than memorising many separate formulas
+• Give practical tips for organising formulas into a few “families” (for example, motion, forces, energy)
+• Describe how units and dimensions can help you reconstruct or check formulas when you forget them
+• Offer a simple, concrete study routine that focuses on ideas, units, and a small core set of formulas
+
+Use bullet points and friendly language.
+
+Place any equations in LaTeX display mode, for example:
+  \\[ v = u + at \\]
+  \\[ E = \\tfrac{1}{2}mv^2 \\]
+
+Do not use markdown headings like # or ###. Use bold text when you want to emphasise something.`
+    },
+
+    W7: {
+      id: 'W7',
+      category: 'When you feel stuck',
+      title: 'How to read a physics paragraph and turn it into a simple picture',
+      lead: 'Use this when reading about physics feels like reading a block of text with no clear mental image.',
+      prompt: `You are a Physics tutor.
+
+Teach a student a simple method for turning a **paragraph about physics** into a **mental picture or sketch**.
+
+Cover ALL of these:
+
+• A step-by-step process: first read, then underline key objects and actions, then sketch
+• At least one worked example where you start from a short physics description and end with a very simple diagram or picture
+• How this habit helps with later topics like mechanics, fields, and waves
+• A short checklist they can use every time they read a new physics passage
+
+Use numbered or bulleted steps. Keep the drawings “described in words” (the student will draw them themselves).
+
+If you use equations, put them in LaTeX display mode on their own line, like:
+  \\[ a = \\frac{\\Delta v}{\\Delta t} \\]
+
+Avoid markdown headings. Use bold text for key steps instead.`
+    },
+
+    W8: {
+      id: 'W8',
+      category: 'When you feel stuck',
+      title: 'What to do when “what physics is” still does not feel clear',
+      lead: 'Use this when you have seen several explanations of physics but it still feels fuzzy.',
+      prompt: `You are a Physics tutor.
+
+Guide a student who has already read a definition of physics but still feels that “what physics is” is fuzzy.
+
+Do ALL of the following:
+
+• Offer a very short, plain-language definition of physics
+• Give 3–4 concrete examples from daily life that quietly use physics ideas (for example, using a phone, riding a bicycle, cooking)
+• Explain how the same few core questions (about motion, forces, energy, and interactions) appear again and again in different topics
+• Suggest a simple reflection exercise they can do after each lesson to connect new ideas back to “what physics is”
+
+Use short paragraphs and bullet points. Keep the tone reassuring.
+
+If you include equations, write them in LaTeX display mode, for example:
+  \\[ F = ma \\]
+
+Do not use markdown headings like # or ###. Use bold text for emphasis instead.`
+    },
+
+    W9: {
+      id: 'W9',
+      category: 'Concept bridges',
+      title: 'How this intro topic prepares you for Mechanics and later physics',
+      lead: 'Use this when you want to see how this nano-lesson connects to the rest of the course.',
+      prompt: `You are a Physics tutor.
+
+Show how the nano-lesson “What is Physics?” prepares a student for **Mechanics** and later physics topics.
+
+Cover ALL of these points:
+
+• How understanding “what physics studies” makes it easier to see what Mechanics is really about (motion, forces, energy)
+• How ideas like “physical quantity,” “model,” and “law of nature” keep reappearing in every chapter
+• Examples of questions from Mechanics that are really just detailed versions of the big questions introduced here
+• One short “roadmap” sentence that connects this nano-lesson to the next few topics a student will likely meet
+
+Use short paragraphs and bullet points.
+
+If you use equations, write each in LaTeX display mode, for example:
+  \\[ F = ma \\]
+  \\[ v = \\frac{\\Delta x}{\\Delta t} \\]
+
+Do not use markdown headings. Use bold text instead when you highlight key ideas.`
+    },
+
+    W10: {
+      id: 'W10',
+      category: 'Concept bridges',
+      title: 'How understanding “what physics is” connects to real careers and technology',
+      lead: 'Use this when you want to know why this topic matters beyond passing an exam.',
+      prompt: `You are a Physics tutor.
+
+Explain how understanding “what physics is” connects to **real careers** and **modern technology**.
+
+Do ALL of the following:
+
+• Give examples of technologies that rely heavily on physics ideas (for example, smartphones, medical imaging, renewable energy, space missions)
+• Connect each example to the kind of questions physics tries to answer
+• Mention a few broad career paths where physics thinking is valuable (for example, engineering, data science, finance, research, climate science)
+• Encourage the student by showing that learning what physics is changes how they see and reason about the world, even outside of science
+
+Use bullet points and short, vivid examples.
+
+If you include equations, put them in LaTeX display mode on their own line, like:
+  \\[ E = mc^2 \\]
+
+Do not use markdown headings like # or ###. Use bold text when you want to emphasise key ideas.`
+    }
   };
 
-  const helpPrompts = {
-    B1: `You are a Physics tutor.\n\nGive a clear, beginner-friendly explanation of **what physics is** in about 10–12 sentences. Include:\n• what physics studies (matter, energy, forces, space, time),\n• the idea of physical quantities and laws,\n• how physicists use experiments and models to understand nature.\n\nUse simple language suitable for a final-year high school student. Include at least 2 everyday examples.\n\nIf you use any equations, put each one in LaTeX display mode like:\n  \\\\[ F = ma \\\\]\nand keep them very simple.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    B2: `You are a Physics tutor.\n\nMany students think physics is just memorizing formulas. Correct this misconception.\nExplain:\n• what a physical model is,\n• why equations represent relationships, not just things to memorize,\n• how understanding concepts helps you rebuild formulas when you forget them.\n\nGive 2 everyday examples (for example, motion or heating water) and show how understanding beats memorizing.\nIf you use any equations, put each one in LaTeX display mode like:\n  \\\\[ v = u + at \\\\]\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    B3: `You are a Physics tutor.\n\nExplain to a student what physicists actually do in real life.\nDescribe the general cycle:\n• observe a phenomenon,\n• build a model,\n• make predictions,\n• test with experiments,\n• refine the model.\n\nIllustrate this with one simple example, such as studying how objects fall or how electric circuits behave.\nUse short paragraphs and keep the explanation friendly and concrete.\nDo not use markdown headings.`,
-    B4: `You are a Physics tutor.\n\nA student says: “Physics is just hard math.” Gently correct this.\nExplain:\n• that physics is about understanding the world,\n• that math is a tool to express and work with ideas,\n• that many physics questions can be understood qualitatively first.\n\nGive 3 short conceptual examples that require little or no algebra (for example, comparing forces, energy ideas, or motion scenarios).\nDo not use markdown headings like # or ###; use bold for emphasis when needed.`,
-    B5: `You are a Physics tutor.\n\nA student says: “Physics only explains things after the fact; it is not useful for predicting.” Correct this.\nExplain how physics can:\n• predict the path of a projectile,\n• predict when a circuit will break,\n• predict how a satellite will move.\n\nGive 3 concrete prediction examples and describe briefly how physics models are tested against reality.\nKeep the language simple and exam-oriented.`,
-    B6: `You are a Physics tutor.\n\nStudents often wonder why we talk about frictionless surfaces or point masses.\nExplain why physicists use **idealizations**:\n• to simplify complex situations,\n• to understand the main effect first,\n• and then to add corrections later.\n\nGive 3 examples of idealizations (for example, frictionless plane, massless string, point charge) and show how they still teach us something true about the real world.`,
-    B7: `You are a Physics tutor.\n\nExplain how physics uses three main representations:\n• words (verbal descriptions),\n• diagrams (sketches, free-body diagrams),\n• equations (symbolic relationships).\n\nShow how to move between them using one simple example (for instance, a ball thrown straight up).\nDescribe in words first, then describe what a diagram would show, then write one simple equation in LaTeX display mode like:\n  \\\\[ v = u + at \\\\]\nKeep the explanation compact and clear.`,
-    B8: `You are a Physics tutor.\n\nShow a student how to describe a physical system in “layers”.\nUse an example such as a car speeding up on a straight road.\nGuide them through:\n1. describing the situation in plain language,\n2. drawing a simple diagram and labeling key quantities,\n3. listing the important variables and their units,\n4. writing one or two basic equations in LaTeX display mode.\n\nMake each layer feel like a natural next step, not something separate.\nDo not use markdown headings.`,
-    B9: `You are a Physics tutor.\n\nExplain what a **physical quantity** is, and why units matter in physics.\nIntroduce:\n• common base quantities (length, mass, time),\n• the role of units (m, kg, s),\n• the idea of dimensional analysis.\n\nGive 3 quick examples where checking units or dimensions can reveal a mistake.\nIf you use any equations, put each one in LaTeX display mode like:\n  \\\\[ v = \\frac{d}{t} \\\\]\nKeep the tone practical and exam-focused.`,
-    B10:`You are a Physics tutor.\n\nExplain what makes physics a **science**.\nInclude the ideas of:\n• testable predictions,\n• experiments and measurement,\n• falsifiability (possibility of being wrong),\n• repeatability.\n\nUse a simple example like dropping objects from a height and predicting what will happen.\nKeep the explanation in short paragraphs suitable for a high school exam review.\nDo not use markdown headings.`,
-    B11:`You are a Physics tutor.\n\nWalk a student through building a simple physics model from scratch for a familiar scenario, such as estimating how long it takes to fall from a chair height.\nInclude:\n• choosing what to ignore (air resistance, small details),\n• picking variables and units,\n• writing one simple equation in LaTeX display mode like:\n  \\\\[ s = \\tfrac{1}{2} g t^2 \\\\]\n• making a rough numerical estimate.\n\nExplain each step in plain language so the student sees modeling as a systematic process, not magic.\nDo not use markdown headings.`,
-    B12:`You are a Physics tutor.\n\nExplain why **simplifying** a problem can actually reveal deep truths in physics.\nGive 3 cases, such as:\n• small-angle approximation for a pendulum,\n• ignoring air resistance for short falls,\n• modeling Earth as a sphere.\n\nFor each case, briefly state:\n• what is simplified,\n• what we learn from the simple model,\n• how we later correct or refine it.\n\nKeep the explanation compact and intuitive, using bold for key ideas.\nDo not use markdown headings.`
-  };
+  let currentHelpId = null;
+  let lastAiAnswer = '';
 
-  let currentId = null;
-  let lastHelpResponse = '';
-
-  function getCurrentId() {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id') || 'B1';
-    return helpPrompts[id] ? id : 'B1';
-  }
-
-  function populatePrompt() {
-    currentId = getCurrentId();
-
-    const meta = helpMeta[currentId] || { label: 'Targeted help prompt' };
-    const promptText = helpPrompts[currentId];
-
-    const titleEl = document.getElementById('help-title');
-    const labelEl = document.getElementById('prompt-label');
-    const pillEl = document.getElementById('prompt-id-pill');
-    const textBlock = document.getElementById('prompt-text-block');
-    const aiResponse = document.getElementById('ai-response');
-
-    if (titleEl) titleEl.textContent = meta.label + ' · What is Physics?';
-    if (labelEl) labelEl.textContent = meta.label;
-    if (pillEl) pillEl.textContent = 'Prompt ID: ' + currentId;
-    if (textBlock) textBlock.textContent = promptText || 'Prompt not found.';
-    if (aiResponse) {
-      aiResponse.style.display = 'none';
-      aiResponse.textContent = '';
-      lastHelpResponse = '';
-    }
-  }
-
-  function copyHelpPrompt() {
-    const text = helpPrompts[currentId];
-    if (!text) {
-      alert('No prompt found to copy.');
-      return;
-    }
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      alert('Clipboard not supported in this browser.');
-      return;
-    }
-    navigator.clipboard.writeText(text)
-      .then(() => alert('Prompt copied to clipboard.'))
-      .catch(err => {
-        console.error(err);
-        alert('Could not copy prompt. Please try again.');
-      });
-  }
-
-  function copyHelpAnswer() {
-    if (!lastHelpResponse) {
-      alert('No AI answer to copy yet. Run with AI first.');
-      return;
-    }
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      alert('Clipboard not supported in this browser.');
-      return;
-    }
-    navigator.clipboard.writeText(lastHelpResponse)
-      .then(() => alert('Answer copied to clipboard.'))
-      .catch(err => {
-        console.error(err);
-        alert('Could not copy answer. Please try again.');
-      });
-  }
-
-  // Canonical PromptSchola formatOutput
+  // Canonical PromptSchola formatOutput (with HTML escaping + LaTeX normalization)
   function formatOutput(text) {
     if (!text) return '';
 
-    // Normalize escaped LaTeX like \\[ ... \\]
+    // 1) HTML-escape first
     let safe = text
-      .replace(/\\\\\[/g, '\\[')
-      .replace(/\\\\\]/g, '\\]');
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
 
-    // Convert markdown headings (### etc.) into bold lines
+    // 2) Normalize escaped LaTeX:
+    //    \\[ ... \\] → \[ ... \]
+    //    \\( ... \\) → \( ... \)
+    safe = safe
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]')
+      .replace(/\\\\\(/g, '\\(')
+      .replace(/\\\\\)/g, '\\)');
+
+    // 3) Convert markdown headings (### etc.) into bold lines
     safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
 
-    // Convert markdown bullets (- or *) into •
+    // 4) Convert markdown bullets (- or *) into •
     safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
 
-    // Bold and italic markdown
+    // 5) Bold and italic markdown
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-    // Paragraph spacing: double newlines → paragraph break
+    // 6) Paragraph spacing: double newlines → paragraph break
     safe = safe.replace(/\n\n+/g, '</p><p>');
 
-    // Remaining single newlines → <br>
+    // 7) Remaining single newlines → <br>
     safe = safe.replace(/\n/g, '<br>');
 
-    // Wrap in <p> tag
+    // 8) Wrap in <p> tag
     safe = '<p>' + safe + '</p>';
 
     return safe;
   }
 
-  async function runHelpPrompt() {
-    const prompt = helpPrompts[currentId];
-    const output = document.getElementById('ai-response');
-    if (!prompt || !output) return;
+  function loadHelpPromptFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id') || 'W1';
+    const entry = helpPromptLibrary[id] || helpPromptLibrary['W1'];
+    currentHelpId = entry.id;
 
-    output.style.display = 'block';
-    output.textContent = 'Running with AI…';
-    lastHelpResponse = '';
+    const categoryPill = document.getElementById('help-category-pill');
+    const titleEl = document.getElementById('help-title');
+    const leadEl = document.getElementById('help-lead');
+    const promptTextEl = document.getElementById('prompt-text');
+    const aiOutputEl = document.getElementById('ai-output');
+
+    if (categoryPill) {
+      categoryPill.textContent = 'Category: ' + (entry.category || 'Study help');
+    }
+    if (titleEl) {
+      titleEl.textContent = entry.title || 'Study help prompt';
+    }
+    if (leadEl) {
+      leadEl.textContent = entry.lead || '';
+    }
+    if (promptTextEl) {
+      promptTextEl.textContent = entry.prompt || '';
+    }
+    if (aiOutputEl) {
+      aiOutputEl.textContent = 'Run with AI to see a guided explanation here.';
+    }
+
+    lastAiAnswer = '';
+  }
+
+  async function runCurrentPromptWithAI() {
+    if (!currentHelpId || !helpPromptLibrary[currentHelpId]) {
+      alert('No prompt selected yet.');
+      return;
+    }
+
+    const prompt = helpPromptLibrary[currentHelpId].prompt;
+    const aiOutputEl = document.getElementById('ai-output');
+    if (!aiOutputEl) return;
 
     try {
+      aiOutputEl.textContent = 'Running with AI…';
+
       const res = await fetch('/api/run-step', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -532,38 +853,77 @@
       });
 
       if (!res.ok) {
-        output.textContent = 'There was an error contacting the AI. Please try again later.';
+        aiOutputEl.textContent = 'There was an error contacting the AI. Please try again later.';
         return;
       }
 
       const data = await res.json();
-      const content = data && data.content ? data.content : '(No content returned.)';
-      lastHelpResponse = content;
-      output.innerHTML = formatOutput(content);
+      const raw = data.content || 'No response received from AI.';
+      lastAiAnswer = raw;
+      aiOutputEl.innerHTML = formatOutput(raw);
 
-      if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise([output]).catch(err =>
-          console.error('MathJax error in help AI response:', err)
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([aiOutputEl]).catch(err =>
+          console.error('MathJax error in response:', err)
         );
       }
     } catch (err) {
       console.error(err);
-      output.textContent = 'Unexpected error. Please try again.';
+      aiOutputEl.textContent = 'Unexpected error. Please try again.';
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    populatePrompt();
+  function copyCurrentPrompt() {
+    if (!currentHelpId || !helpPromptLibrary[currentHelpId]) {
+      alert('No prompt selected yet.');
+      return;
+    }
+    const prompt = helpPromptLibrary[currentHelpId].prompt;
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+    navigator.clipboard.writeText(prompt)
+      .then(() => { alert('Prompt copied to clipboard.'); })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy prompt. Please try again.');
+      });
+  }
 
-    if (window.MathJax && MathJax.typesetPromise) {
+  function copyCurrentAnswer() {
+    if (!lastAiAnswer) {
+      alert('No AI answer to copy yet. Run with AI first.');
+      return;
+    }
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+    navigator.clipboard.writeText(lastAiAnswer)
+      .then(() => { alert('Answer copied to clipboard.'); })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy answer. Please try again.');
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load prompt from URL
+    loadHelpPromptFromUrl();
+
+    // Initial MathJax typeset (for any LaTeX in prompt text)
+    if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise().catch(err =>
         console.error('MathJax initial typeset error:', err)
       );
     }
 
+    // Update nav based on auth state
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
     }
+
     const signOutBtn = document.getElementById('nav-signout-btn');
     if (signOutBtn && typeof signOutUser === 'function') {
       signOutBtn.addEventListener('click', signOutUser);
