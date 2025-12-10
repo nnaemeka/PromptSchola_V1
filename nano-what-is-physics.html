@@ -287,7 +287,7 @@
       color: var(--text-muted);
     }
 
-    /* Soften preview box to reduce visual competition with AI output */
+    /* Soften preview box */
     .prompt-preview {
       margin-top: 0.45rem;
       padding: 0.5rem 0.6rem;
@@ -301,7 +301,7 @@
       white-space: pre-wrap;
     }
 
-    /* 🔎 Bigger, more dominant AI output */
+    /* Bigger AI output */
     .ai-response {
       margin-top: 0.6rem;
       padding: 1.1rem 1.2rem;
@@ -433,16 +433,23 @@
       font-size: 0.8rem;
     }
 
-    .help-panel-header h2 {
-      font-size: 0.9rem;
-      margin: 0 0 0.25rem;
-      color: var(--text-strong);
-    }
-
     .help-panel-header p {
       font-size: 0.78rem;
       color: var(--text-muted);
       margin: 0 0 0.6rem;
+    }
+
+    /* Header pill for the panel */
+    .nano-help-title {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(126, 34, 206, 0.4);
+      color: #4c1d95;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: transparent;
+      cursor: default;
     }
 
     .help-category {
@@ -478,51 +485,48 @@
       color: var(--text-subtle);
     }
 
-   .help-prompts-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 0.35rem;
-}
-/* Grouped sections inside the help panel */
-.help-section {
-  margin-top: 0.6rem;
-}
+    .help-prompts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-top: 0.35rem;
+    }
 
-.help-section-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-subtle);
-  margin-bottom: 0.2rem;
-}
+    .help-section {
+      margin-top: 0.6rem;
+    }
 
-.help-prompt-btn {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 0.45rem 0.5rem;
-  font-size: 0.80rem;
-  border-radius: 8px;
+    .help-section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-subtle);
+      margin-bottom: 0.2rem;
+    }
 
-  background: transparent;         /* clean background */
-  color: #6b21a8;                  /* soft purple */
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
+    .help-prompt-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.45rem 0.5rem;
+      font-size: 0.80rem;
+      border-radius: 8px;
+      background: transparent;
+      color: #6b21a8;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        text-decoration-color 0.2s ease;
+    }
 
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    text-decoration-color 0.2s ease;
-}
-
-.help-prompt-btn:hover {
-  background: rgba(76, 29, 149, 0.07);   /* gentle purple tint */
-  color: #4c1d95;                        /* stronger purple */
-  text-decoration: underline;
-}
-
+    .help-prompt-btn:hover {
+      background: rgba(76, 29, 149, 0.07);
+      color: #4c1d95;
+      text-decoration: underline;
+    }
 
     footer {
       margin-top: auto;
@@ -843,30 +847,100 @@
             </div>
           </div>
 
-          <!-- RIGHT: Targeted Help Panel -->
-            <div class="help-prompts-list">
+          <!-- RIGHT: Targeted Help Panel with 5 groups -->
+          <aside class="help-panel">
+            <div class="help-panel-inner">
+              <button class="help-panel-toggle" id="help-panel-toggle">
+                <span class="nano-help-title">Deepen Your Understanding</span>
+                <span class="help-panel-toggle-icon">▾</span>
+              </button>
 
-  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B1">
-    Clear beginner-friendly definition of physics
-  </a>
+              <div class="help-panel-body" id="help-panel-body">
+                <div class="help-panel-header">
+                  <p>
+                    Use these focused prompts in a separate AI chat when something feels unclear,
+                    tricky, or you want to see the idea from another angle.
+                  </p>
+                </div>
 
-  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B2">
-    Physics vs chemistry vs math: what is the difference?
-  </a>
+                <!-- 1. Concept Boundaries -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Concept Boundaries</span>
+                    <p class="help-category-desc">
+                      Untangle ideas that feel similar or overlapping.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B2">
+                      Physics vs chemistry vs math: what is the difference?
+                    </a>
+                  </div>
+                </div>
 
-  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B3">
-    Common misconceptions about what counts as “physics”
-  </a>
+                <!-- 2. Intuition Fixers (Misconceptions) -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Intuition Fixers</span>
+                    <p class="help-category-desc">
+                      Gently correct everyday ideas that don’t quite match how physics works.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B3">
+                      Common misconceptions about what counts as “physics”
+                    </a>
+                  </div>
+                </div>
 
-  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B4">
-    How physics connects to engineering and real careers
-  </a>
+                <!-- 3. Tricky Areas -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Tricky Areas</span>
+                    <p class="help-category-desc">
+                      Subtle parts of the idea that often feel vague or hard to pin down.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B1">
+                      Clear beginner-friendly definition of physics
+                    </a>
+                  </div>
+                </div>
 
-  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B5">
-    Why physics feels hard and how to study it effectively
-  </a>
+                <!-- 4. Error Clinic -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Error Clinic</span>
+                    <p class="help-category-desc">
+                      Explore why this topic feels hard and what patterns of struggle are normal.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B5">
+                      Why physics feels hard and how to study it effectively
+                    </a>
+                  </div>
+                </div>
 
-</div>
+                <!-- 5. Big Picture & Study Support -->
+                <div class="help-category">
+                  <div class="help-category-header">
+                    <span class="help-category-label">Big Picture & Study Support</span>
+                    <p class="help-category-desc">
+                      Connect this nano-lesson to real careers, technology, and your long-term goals.
+                    </p>
+                  </div>
+                  <div class="help-prompts-list">
+                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B4">
+                      How physics connects to engineering and real careers
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </aside>
 
         </div>
       </div>
@@ -883,8 +957,7 @@
 <script src="auth.js"></script>
 
 <script>
-  // Prompts for all-free steps, with LaTeX display math and no headings
-   // Prompts for all-free steps, tuned for completeness (no strict word caps)
+  // Prompts for all-free steps, tuned for completeness (no strict word caps)
   const prompts = {
     1: `You are a Physics tutor.\n\nExplain clearly **what physics is** using short paragraphs and bullet points. Cover ALL of the following points:\n• A concise definition of physics\n• What physics studies (matter, energy, forces, space, and time)\n• Why physics is considered a foundational science\n• How physics relates to chemistry, biology, and engineering\n• At least 2 everyday examples (for example, throwing a ball, using a phone, or turning on a light)\n\nClarity and completeness are more important than being short. Do not skip any of the listed points, even if your answer becomes a bit longer.\n\nFormat your response with:\n• short paragraphs (2–4 lines each),\n• bullet points for lists,\n• bold for key terms,\n• and clear spacing between ideas.\n\nIf you include any equations, write them in LaTeX display mode, one equation per line, like:\n  \\\\[ F = ma \\\\]\nDo NOT use LaTeX environments like align.\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
     
@@ -967,53 +1040,53 @@
 
   // NOTE: Run with AI is NOT gated on auth for this intro nano.
   async function runWithAI(step) {
-  const prompt = prompts[step];
-  if (!prompt) {
-    alert('No prompt defined for this step yet.');
-    return;
-  }
-
-  const output = document.getElementById('response-step' + step);
-  if (!output) {
-    alert('No response area found for this step.');
-    return;
-  }
-
-  // Hide preview placeholder once AI runs
-  const preview = document.getElementById('preview-step' + step);
-  if (preview) {
-    preview.style.display = 'none';
-  }
-
-  try {
-    output.textContent = 'Running with AI…';
-
-    const res = await fetch('/api/run-step', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
-    });
-
-    if (!res.ok) {
-      output.textContent = 'There was an error contacting the AI. Please try again later.';
+    const prompt = prompts[step];
+    if (!prompt) {
+      alert('No prompt defined for this step yet.');
       return;
     }
 
-    const data = await res.json();
-    const raw = data.content || 'No response received from AI.';
-    lastAiResponses[step] = raw;
-    output.innerHTML = formatOutput(raw);
-
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      MathJax.typesetPromise([output]).catch(err =>
-        console.error('MathJax error in response:', err)
-      );
+    const output = document.getElementById('response-step' + step);
+    if (!output) {
+      alert('No response area found for this step.');
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    output.textContent = 'Unexpected error. Please try again.';
+
+    // Hide preview placeholder once AI runs
+    const preview = document.getElementById('preview-step' + step);
+    if (preview) {
+      preview.style.display = 'none';
+    }
+
+    try {
+      output.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+
+      if (!res.ok) {
+        output.textContent = 'There was an error contacting the AI. Please try again later.';
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastAiResponses[step] = raw;
+      output.innerHTML = formatOutput(raw);
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([output]).catch(err =>
+          console.error('MathJax error in response:', err)
+        );
+      }
+    } catch (err) {
+      console.error(err);
+      output.textContent = 'Unexpected error. Please try again.';
+    }
   }
-}
 
   function copyAnswer(step) {
     const text = lastAiResponses[step];
