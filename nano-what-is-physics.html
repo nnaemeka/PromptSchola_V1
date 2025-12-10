@@ -317,7 +317,6 @@
     .ai-response ul,
     .ai-response ol { margin: 0.6rem 0 0.6rem 1.2rem; }
 
-    /* 🔍 Key terms: bold + subtle accent color */
     .ai-response strong {
       font-weight: 700;
       color: var(--accent-strong);
@@ -325,7 +324,6 @@
 
     .ai-response em { font-style: italic; }
 
-    /* 📐 MathJax display equations inside AI output: slightly larger + spaced */
     .ai-response .mjx-container[jax="CHTML"] {
       margin: 0.7rem 0;
       font-size: 1.05em;
@@ -731,7 +729,7 @@
                 </div>
                 <div class="step-content" id="step-content-4">
                   <div class="step-body">
-                    Answer a short set of multiple-choice questions about what physics studies, key historical figures,
+                    Answer a short set of questions about what physics studies, key historical figures,
                     and how physics shows up in daily life.
                   </div>
                   <div class="prompt-preview" id="preview-step4">
@@ -945,7 +943,7 @@
     1: `You are a Physics tutor.\n\nExplain clearly **what physics is** using short paragraphs and bullet points. Include:\n• A concise definition of physics\n• What physics studies (matter, energy, forces, space, and time)\n• Why physics is considered a foundational science\n• How physics relates to chemistry, biology, and engineering\n\nUse engaging examples from everyday life (like throwing a ball or using a phone).\n\nFormat your response with:\n• short paragraphs (2–4 lines each),\n• bullet points for lists,\n• bold for key terms,\n• and clear spacing between ideas.\n\nIf you include any equations, write them in LaTeX display mode, one equation per line, like:\n  \\\\[ F = ma \\\\]\nDo NOT use LaTeX environments like align.\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
     2: `You are a Physics tutor.\n\nGive a brief historical journey of physics. Include:\n• Ancient physics ideas from Aristotle and Archimedes\n• The Scientific Revolution and Newton’s laws\n• Maxwell’s unification of electricity and magnetism\n• Einstein’s relativity\n• The rise of quantum mechanics\n\nExplain how each era changed our understanding of nature.\n\nFormat your answer using:\n• a chronological bullet list of key figures,\n• bold for major names and ideas,\n• short paragraphs explaining why each milestone mattered.\n\nIf equations help, use LaTeX display mode, one equation per line, such as:\n  \\\\[ E = mc^2 \\\\]\n  \\\\[ F = G \\frac{m_1 m_2}{r^2} \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
     3: `You are a Physics tutor.\n\nExplain how physics shows up in everyday life and modern technology. Include examples from:\n• smartphones\n• cars and transportation\n• medical imaging\n• electricity and power\n• space exploration\n\nShow how physics careers span engineering, data science, energy, materials, and research.\n\nUse bullet points and bold keywords. Keep sentences short and clear.\n\nIf equations are useful, write them in LaTeX display mode on their own line, like:\n  \\\\[ v = u + at \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
-    4: `You are a Physics tutor.\n\nCreate 5 short multiple-choice questions to test understanding of:\n• what physics studies\n• one historical figure and their contribution\n• why physics is foundational\n• physics in daily life\n• a modern technology powered by physics\n\nAfter the student has had a chance to think, provide the correct answers and one-line explanations.\n\nFormat with:\n• numbered questions,\n• lettered options (A, B, C, D),\n• answers beneath in bold with a one-line explanation for each.\n\nIf you include equations, place each in LaTeX display mode like:\n  \\\\[ F = ma \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
+    4: `You are a Physics tutor.\n\nCreate 5 short multiple-choice questions to test understanding of:\n• what physics studies\n• one historical figure and their contribution\n• why physics is foundational\n• physics in daily life\n• a modern technology powered by physics\n\nAfter the student has had a chance to think, provide the correct answers and one-line explanations.\n\nPresent each question in its own clearly separated block with answer options labeled A, B, C, and D in plain text (no markdown headings or tables).\n\nIf you include equations, place each in LaTeX display mode like:\n  \\\\[ F = ma \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
     5: `You are a Physics tutor.\n\nWrite a short summary (100–150 words) explaining:\n• what physics is,\n• why it matters,\n• how it evolved over time,\n• and where learners will go next (Mechanics).\n\nUse one powerful metaphor or analogy (for example, “physics is the grammar of nature”).\n\nEnd with an inviting sentence pointing them to Mechanics.\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`,
     6: `You are a Physics tutor.\n\nGuide the student through a simple mental or household experiment showing physics principles. Examples:\n• dropping objects and noticing acceleration\n• pushing a chair and feeling force\n• seeing light reflect from a mirror\n\nExplain what is happening in terms of matter, forces, or motion.\n\nUse short steps and bullet points. Keep the tone friendly and curious.\n\nIf you use formulas, write them in LaTeX display mode, one per line like:\n  \\\\[ F = ma \\\\]\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]\nEnsure that every LaTeX equation you write is complete, properly enclosed in \\\\[ and \\\\], and has no missing brackets or braces.\nDo not use markdown headings like # or ###; if you want to highlight key terms, just use bold text.`
   };
@@ -984,28 +982,32 @@
       });
   }
 
-  // Format AI output while keeping LaTeX \[ ... \] intact
+  // Canonical PromptSchola formatOutput
   function formatOutput(text) {
     if (!text) return '';
 
-    // Normalize backslashes if model returns \\[ ... \\]
+    // Normalize escaped LaTeX like \\[ ... \\]
     let safe = text
       .replace(/\\\\\[/g, '\\[')
       .replace(/\\\\\]/g, '\\]');
 
-    // Convert markdown headings "### Title" etc → bold line
+    // Convert markdown headings (### etc.) into bold lines
     safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
 
-    // Convert markdown bullets ("- item" or "* item") → "• item"
+    // Convert markdown bullets (- or *) into •
     safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
 
-    // Basic markdown-style bold/italic (after bullet cleanup)
+    // Bold and italic markdown
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-    // Paragraphs & line breaks
+    // Paragraph spacing: double newlines → paragraph break
     safe = safe.replace(/\n\n+/g, '</p><p>');
+
+    // Remaining single newlines → <br>
     safe = safe.replace(/\n/g, '<br>');
+
+    // Wrap in <p> tag
     safe = '<p>' + safe + '</p>';
 
     return safe;
