@@ -478,30 +478,30 @@
       color: var(--text-subtle);
     }
 
-    .help-prompts-list {
+   .help-prompts-list {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   margin-top: 0.35rem;
 }
 
-/* Side panel links: purple-friendly default, underline on hover */
+/* Side panel links: icon + label, theme-based background, purple hover */
 .help-prompt-btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   width: 100%;
   text-align: left;
   padding: 0.45rem 0.5rem;
-  font-size: 0.80rem;
   border-radius: 8px;
 
-  /* Default appearance */
-  color: #6b21a8; /* soft purple text */
-  background: transparent; 
-
-  text-decoration: none;
+  background: transparent;
+  color: #6b21a8;              /* soft purple text */
   border: none;
+  text-decoration: none;
   cursor: pointer;
 
+  font-size: 0.80rem;
   transition:
     background 0.2s ease,
     color 0.2s ease,
@@ -509,10 +509,28 @@
 }
 
 .help-prompt-btn:hover {
+  background: rgba(76, 29, 149, 0.07);  /* subtle purple-tinted hover */
+  color: #4c1d95;                       /* stronger purple */
   text-decoration: underline;
-  background: #ede9fe; /* even lighter hover background */
-  color: #4c1d95;      /* stronger purple hover */
 }
+
+/* Icon wrapper */
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* SVG inside icon uses current text color */
+.help-icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  stroke: currentColor;
+}
+
     footer {
       margin-top: auto;
       padding: 1.8rem 0;
@@ -833,105 +851,74 @@
           </div>
 
           <!-- RIGHT: Targeted Help Panel -->
-          <aside class="help-panel" aria-label="Targeted help for 'What is Physics?'">
-            <div class="help-panel-inner">
-              <button class="help-panel-toggle" id="help-panel-toggle">
-                <span id="help-panel-toggle-label">Targeted help</span>
-                <span class="help-panel-toggle-icon">▾</span>
-              </button>
+            <div class="help-prompts-list">
+    <!-- B1: definition / basics -->
+    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B1">
+      <span class="help-icon">
+        <!-- book icon -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="4" y="4" width="14" height="16" rx="2" ry="2" stroke-width="1.7"/>
+          <path d="M8 8h6" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M8 11h4" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>Clear beginner-friendly definition of physics</span>
+    </a>
 
-              <div class="help-panel-body" id="help-panel-body">
-                <div class="help-panel-header">
-                  <h2>Stuck on “What is Physics?”</h2>
-                  <p>These extra prompts clarify what physics is, how it works, and why it matters.</p>
-                </div>
+    <!-- B2: comparison between subjects -->
+    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B2">
+      <span class="help-icon">
+        <!-- scales icon -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 4v3" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M6 7l-2 5h6l-2-5" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M18 7l-2 5h6l-2-5" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M12 7h0" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M12 13v7" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M8 20h8" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>Physics vs chemistry vs math: what is the difference?</span>
+    </a>
 
-                <!-- CATEGORY 1: Understanding Physics -->
-                <section class="help-category">
-                  <div class="help-category-header">
-                    <span class="help-category-label">Understanding Physics</span>
-                    <p class="help-category-desc">
-                      Big picture: what physics is and why we study it.
-                    </p>
-                  </div>
-                  <div class="help-prompts-list">
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B1">
-                      Clear beginner-friendly definition of physics
-                    </a>
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B2">
-                      Physics vs memorizing formulas
-                    </a>
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B3">
-                      What physicists actually do
-                    </a>
-                  </div>
-                </section>
+    <!-- B3: misconceptions -->
+    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B3">
+      <span class="help-icon">
+        <!-- question mark icon -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9.5 8a3 3 0 0 1 5 2.2c0 1.3-.7 2-1.6 2.6-.8.5-1.4 1-1.4 2v1" stroke-width="1.7" stroke-linecap="round"/>
+          <circle cx="12" cy="18.5" r="0.9" fill="currentColor"/>
+        </svg>
+      </span>
+      <span>Common misconceptions about what counts as “physics”</span>
+    </a>
 
-                <!-- CATEGORY 2: Misconceptions -->
-                <section class="help-category">
-                  <div class="help-category-header">
-                    <span class="help-category-label">Misconceptions</span>
-                    <p class="help-category-desc">
-                      Fix common wrong ideas about physics.
-                    </p>
-                  </div>
-                  <div class="help-prompts-list">
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B4">
-                      “Physics is just hard math”
-                    </a>
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B5">
-                      “Physics only explains things after the fact”
-                    </a>
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B6">
-                      Why idealizations aren’t lies
-                    </a>
-                  </div>
-                </section>
+    <!-- B4: connections to careers / other fields -->
+    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B4">
+      <span class="help-icon">
+        <!-- link icon -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 15L7.8 16.2a3 3 0 0 1-4.2-4.2L5.5 10" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15 9l1.2-1.2a3 3 0 0 1 4.2 4.2L18.5 14" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9.5 14.5l5-5" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>How physics connects to engineering and real careers</span>
+    </a>
 
-                <!-- CATEGORY 3: Representations & Quantities -->
-                <section class="help-category">
-                  <div class="help-category-header">
-                    <span class="help-category-label">Representations & Quantities</span>
-                    <p class="help-category-desc">
-                      Words, diagrams, equations, variables, and units.
-                    </p>
-                  </div>
-                  <div class="help-prompts-list">
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B7">
-                      Linking words, diagrams, and equations
-                    </a>
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B8">
-                      Describe a physical system in layers
-                    </a>
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B9">
-                      Variables, units, and dimensions
-                    </a>
-                  </div>
-                </section>
-
-                <!-- CATEGORY 4: Scientific Thinking & Modeling -->
-                <section class="help-category">
-                  <div class="help-category-header">
-                    <span class="help-category-label">Scientific Thinking</span>
-                    <p class="help-category-desc">
-                      How physics uses models, predictions, and experiments.
-                    </p>
-                  </div>
-                  <div class="help-prompts-list">
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B10">
-                      What makes physics a science?
-                    </a>
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B11">
-                      How to build a simple model
-                    </a>
-                    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B12">
-                      Why simplification reveals truth
-                    </a>
-                  </div>
-                </section>
-              </div>
-            </div>
-          </aside>
+    <!-- B5: study strategy / mindset -->
+    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B5">
+      <span class="help-icon">
+        <!-- brain / idea icon -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 7a2.5 2.5 0 0 0-4 2v1a2.5 2.5 0 0 0 1.5 2.3A2.5 2.5 0 0 0 7.5 16v1a2.5 2.5 0 0 0 4 2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15 7a2.5 2.5 0 0 1 4 2v1a2.5 2.5 0 0 1-1.5 2.3A2.5 2.5 0 0 1 16.5 16v1a2.5 2.5 0 0 1-4 2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 5v14" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>Why physics feels hard and how to study it effectively</span>
+    </a>
+  </div>
         </div>
       </div>
     </section>
