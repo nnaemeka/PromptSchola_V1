@@ -485,23 +485,20 @@
   margin-top: 0.35rem;
 }
 
-/* Side panel links: icon + label, theme-based background, purple hover */
 .help-prompt-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
+  display: block;
   width: 100%;
   text-align: left;
   padding: 0.45rem 0.5rem;
+  font-size: 0.80rem;
   border-radius: 8px;
 
-  background: transparent;
-  color: #6b21a8;              /* soft purple text */
+  background: transparent;         /* clean background */
+  color: #6b21a8;                  /* soft purple */
   border: none;
-  text-decoration: none;
   cursor: pointer;
+  text-decoration: none;
 
-  font-size: 0.80rem;
   transition:
     background 0.2s ease,
     color 0.2s ease,
@@ -509,27 +506,11 @@
 }
 
 .help-prompt-btn:hover {
-  background: rgba(76, 29, 149, 0.07);  /* subtle purple-tinted hover */
-  color: #4c1d95;                       /* stronger purple */
+  background: rgba(76, 29, 149, 0.07);   /* gentle purple tint */
+  color: #4c1d95;                        /* stronger purple */
   text-decoration: underline;
 }
 
-/* Icon wrapper */
-.help-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.1rem;
-  flex-shrink: 0;
-}
-
-/* SVG inside icon uses current text color */
-.help-icon svg {
-  width: 16px;
-  height: 16px;
-  display: block;
-  stroke: currentColor;
-}
 
     footer {
       margin-top: auto;
@@ -852,73 +833,29 @@
 
           <!-- RIGHT: Targeted Help Panel -->
             <div class="help-prompts-list">
-    <!-- B1: definition / basics -->
-    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B1">
-      <span class="help-icon">
-        <!-- book icon -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <rect x="4" y="4" width="14" height="16" rx="2" ry="2" stroke-width="1.7"/>
-          <path d="M8 8h6" stroke-width="1.7" stroke-linecap="round"/>
-          <path d="M8 11h4" stroke-width="1.7" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <span>Clear beginner-friendly definition of physics</span>
-    </a>
 
-    <!-- B2: comparison between subjects -->
-    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B2">
-      <span class="help-icon">
-        <!-- scales icon -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M12 4v3" stroke-width="1.7" stroke-linecap="round"/>
-          <path d="M6 7l-2 5h6l-2-5" stroke-width="1.7" stroke-linejoin="round"/>
-          <path d="M18 7l-2 5h6l-2-5" stroke-width="1.7" stroke-linejoin="round"/>
-          <path d="M12 7h0" stroke-width="1.7" stroke-linecap="round"/>
-          <path d="M12 13v7" stroke-width="1.7" stroke-linecap="round"/>
-          <path d="M8 20h8" stroke-width="1.7" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <span>Physics vs chemistry vs math: what is the difference?</span>
-    </a>
+  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B1">
+    Clear beginner-friendly definition of physics
+  </a>
 
-    <!-- B3: misconceptions -->
-    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B3">
-      <span class="help-icon">
-        <!-- question mark icon -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9.5 8a3 3 0 0 1 5 2.2c0 1.3-.7 2-1.6 2.6-.8.5-1.4 1-1.4 2v1" stroke-width="1.7" stroke-linecap="round"/>
-          <circle cx="12" cy="18.5" r="0.9" fill="currentColor"/>
-        </svg>
-      </span>
-      <span>Common misconceptions about what counts as “physics”</span>
-    </a>
+  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B2">
+    Physics vs chemistry vs math: what is the difference?
+  </a>
 
-    <!-- B4: connections to careers / other fields -->
-    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B4">
-      <span class="help-icon">
-        <!-- link icon -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9 15L7.8 16.2a3 3 0 0 1-4.2-4.2L5.5 10" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M15 9l1.2-1.2a3 3 0 0 1 4.2 4.2L18.5 14" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M9.5 14.5l5-5" stroke-width="1.7" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <span>How physics connects to engineering and real careers</span>
-    </a>
+  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B3">
+    Common misconceptions about what counts as “physics”
+  </a>
 
-    <!-- B5: study strategy / mindset -->
-    <a class="help-prompt-btn" href="what-is-physics-help.html?id=B5">
-      <span class="help-icon">
-        <!-- brain / idea icon -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9 7a2.5 2.5 0 0 0-4 2v1a2.5 2.5 0 0 0 1.5 2.3A2.5 2.5 0 0 0 7.5 16v1a2.5 2.5 0 0 0 4 2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M15 7a2.5 2.5 0 0 1 4 2v1a2.5 2.5 0 0 1-1.5 2.3A2.5 2.5 0 0 1 16.5 16v1a2.5 2.5 0 0 1-4 2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M12 5v14" stroke-width="1.7" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <span>Why physics feels hard and how to study it effectively</span>
-    </a>
-  </div>
+  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B4">
+    How physics connects to engineering and real careers
+  </a>
+
+  <a class="help-prompt-btn" href="what-is-physics-help.html?id=B5">
+    Why physics feels hard and how to study it effectively
+  </a>
+
+</div>
+
         </div>
       </div>
     </section>
