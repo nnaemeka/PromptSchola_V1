@@ -958,7 +958,7 @@
     const preview = document.getElementById('preview-step' + step);
     if (!preview) return;
     preview.textContent = prompts[step] || 'Prompt coming soon.';
-    preview.style.display = 'block';
+    preview.style.display = '';
 
     if (window.MathJax && window.MathJax.typesetPromise) {
       MathJax.typesetPromise([preview]).catch(err =>
@@ -1018,51 +1018,53 @@
 
   // NOTE: Run with AI is NOT gated on auth for this intro nano.
   async function runWithAI(step) {
-    const prompt = prompts[step];
-    if (!prompt) {
-      alert('No prompt defined for this step yet.');
-      return;
-    }
-
-    const output = document.getElementById('response-step' + step);
-    const preview = document.getElementById('preview-step' + step);
-    if (preview) preview.style.display = 'none';
-
-    if (!output) {
-      alert('No response area found for this step.');
-      return;
-    }
-
-    try {
-      output.textContent = 'Running with AI…';
-
-      const res = await fetch('/api/run-step', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
-      });
-
-      if (!res.ok) {
-        output.textContent = 'There was an error contacting the AI. Please try again later.';
-        return;
-      }
-
-      const data = await res.json();
-      const raw = data.content || 'No response received from AI.';
-      lastAiResponses[step] = raw;
-      output.innerHTML = formatOutput(raw);
-
-      if (window.MathJax && window.MathJax.typesetPromise) {
-        MathJax.typesetPromise([output]).catch(err =>
-          console.error('MathJax error in response:', err)
-        );
-      }
-    } catch (err) {
-      console.error(err);
-      const out = document.getElementById('response-step' + step);
-      if (out) out.textContent = 'Unexpected error. Please try again.';
-    }
+  const prompt = prompts[step];
+  if (!prompt) {
+    alert('No prompt defined for this step yet.');
+    return;
   }
+
+  const output = document.getElementById('response-step' + step);
+  if (!output) {
+    alert('No response area found for this step.');
+    return;
+  }
+
+  // Hide preview placeholder once AI runs
+  const preview = document.getElementById('preview-step' + step);
+  if (preview) {
+    preview.style.display = 'none';
+  }
+
+  try {
+    output.textContent = 'Running with AI…';
+
+    const res = await fetch('/api/run-step', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+
+    if (!res.ok) {
+      output.textContent = 'There was an error contacting the AI. Please try again later.';
+      return;
+    }
+
+    const data = await res.json();
+    const raw = data.content || 'No response received from AI.';
+    lastAiResponses[step] = raw;
+    output.innerHTML = formatOutput(raw);
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise([output]).catch(err =>
+        console.error('MathJax error in response:', err)
+      );
+    }
+  } catch (err) {
+    console.error(err);
+    output.textContent = 'Unexpected error. Please try again.';
+  }
+}
 
   function copyAnswer(step) {
     const text = lastAiResponses[step];
