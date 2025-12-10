@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Help: Physical Quantities and Units – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Targeted help prompts for physical quantities and units: clarifying concepts, avoiding mistakes, and handling tricky exam areas."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- MathJax configuration for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #4c1d95;
+      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+      --border-subtle: rgba(209, 213, 219, 0.7);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, sans-serif;
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.3rem;
+    }
+
+    /* NAV */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(249, 250, 251, 0.96);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
+    }
+
+    .logo-text span:first-child {
+      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
+    }
+    .logo-text span:last-child {
+      font-size: 0.72rem; color: var(--text-subtle);
+    }
+
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      transition: var(--transition-fast);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-pill:hover {
+      background: #f3f4f6; transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 2.5rem 0 1.8rem;
+      text-align: left;
+    }
+    .hero-kicker {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .hero-title {
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      font-weight: 800; color: var(--text-strong);
+      margin: 0.3rem 0;
+    }
+    .hero-subtitle {
+      font-size: 0.95rem; color: var(--text-muted);
+      max-width: 40rem; margin-top: 0.4rem;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+    .hero-breadcrumbs a { color: var(--accent-strong); }
+
+    main { padding-bottom: 2.5rem; }
+
+    .help-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1.2rem 1.4rem 1.3rem;
+      box-shadow: var(--shadow-card);
+      font-size: 0.92rem;
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+    }
+
+    .help-card-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.7rem;
+    }
+
+    .help-title {
+      font-size: 1.05rem;
+      font-weight: 650;
+      color: #111827;
+    }
+
+    .help-meta-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.15rem 0.7rem;
+      border: 1px solid rgba(129, 140, 248, 0.9);
+      background: #eef2ff;
+      font-size: 0.75rem;
+      color: var(--accent-strong);
+      white-space: nowrap;
+    }
+
+    .help-prompt-box {
+      margin-top: 0.4rem;
+      padding: 0.6rem 0.7rem;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid rgba(229, 231, 235, 0.9);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      white-space: pre-wrap;
+      font-family: var(--font-main);
+    }
+
+    .help-actions {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: flex-end;
+    }
+
+    .btn-ghost,
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .btn-ghost {
+      padding: 0.42rem 0.9rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      padding: 0.42rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: var(--transition-fast);
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .ai-response {
+      margin-top: 0.9rem;
+      padding: 1.1rem 1.2rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      font-size: 0.96rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .ai-response p { margin-bottom: 0.9rem; }
+    .ai-response ul,
+    .ai-response ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+
+    .ai-response strong {
+      font-weight: 700;
+      color: inherit;
+    }
+
+    .ai-response em {
+      font-style: italic;
+    }
+
+    .ai-response .mjx-container[jax="CHTML"] {
+      margin: 0.9rem 0;
+      font-size: 1.08em;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <!-- Filled by auth.js -->
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <!-- Shown when logged OUT -->
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-pill">Register</a>
+
+          <!-- Shown when logged IN -->
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Targeted help · Physical quantities and units</div>
+        <h1 class="hero-title" id="hero-title">
+          Focused help for this tricky point
+        </h1>
+        <p class="hero-subtitle">
+          This page shows one carefully designed prompt for a specific confusion or pain point in
+          physical quantities and units. You can run it with AI or copy it into your own notes.
+        </p>
+        <div class="hero-breadcrumbs">
+          <a href="physics.html">Physics</a> ·
+          <a href="nano-physical-quantities-and-units.html">Physical Quantities and Units</a> ·
+          <span>Help prompt</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HELP CARD -->
+    <section>
+      <div class="container">
+        <article class="help-card">
+          <div class="help-card-header">
+            <div>
+              <div class="help-title" id="help-title">Loading help prompt…</div>
+            </div>
+            <div class="help-meta-pill" id="help-category-pill">
+              Study help
+            </div>
+          </div>
+
+          <div class="help-prompt-box" id="help-prompt-text">
+            The full prompt will appear here based on the link you clicked in the nano-lesson side panel.
+          </div>
+
+          <div class="help-actions">
+            <button class="btn-ghost" type="button" onclick="copyHelpPrompt()">Copy prompt</button>
+            <button class="btn-primary" type="button" onclick="runHelpWithAI()">Run with AI</button>
+          </div>
+
+          <div class="ai-response" id="help-response"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
+</div>
+
+<!-- 🔹 Supabase + shared auth helpers for nav -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
+<script>
+  // Map of help prompts keyed by id from the query string
+  const helpPrompts = {
+    // Confusions & look-alikes
+    C1: {
+      title: 'Physical quantity vs just “a number”',
+      category: 'Confusions & look-alikes',
+      prompt: `You are a Physics tutor.\n\nExplain the difference between **a pure number** and **a physical quantity**. Your explanation should:\n• make it clear that a physical quantity has both a numerical value and a unit,\n• give at least three examples of physical quantities (for example, 3.0 m, 25 °C, 60 km/h),\n• show why writing just “3.0” without a unit is incomplete in physics,\n• give one or two short practice items where the student decides whether something is a pure number or a physical quantity.\n\nUse short paragraphs and bullet points. If you use equations or symbols, write them in LaTeX, with any display equations on their own line like:\n  \\\\[ x = 3.0\\,\\text{m} \\\\]\nDo not use markdown headings.`
+    },
+    C2: {
+      title: 'Base vs derived quantities with clear examples',
+      category: 'Confusions & look-alikes',
+      prompt: `You are a Physics tutor.\n\nExplain **base quantities** and **derived quantities** in the SI system in simple language. Your answer should:\n• list the common base quantities (for example, length, mass, time, electric current, temperature),\n• give at least two clear examples of derived quantities (for example, speed, force, energy),\n• show how a derived quantity can be built from base quantities and their units,\n• include one or two short practice questions where the student decides whether a quantity is base or derived.\n\nUse bullet points and short explanations. If you write dimensions or formulas, use LaTeX display mode, for example:\n  \\\\[ v = \\frac{\\Delta x}{\\Delta t} \\\\]\n  \\\\[ [v] = [L T^{-1}] \\\\]\nDo not use markdown headings.`
+    },
+    C3: {
+      title: 'Quantity, unit, and dimension: what is the difference?',
+      category: 'Confusions & look-alikes',
+      prompt: `You are a Physics tutor.\n\nMany students mix up **quantity**, **unit**, and **dimension**. Give a clear explanation that:\n• defines each term in plain language,\n• shows one example (for example, velocity) and identifies the quantity, the unit, and the dimension separately,\n• uses a small table-like description in text (do NOT use an actual markdown table) to compare them,\n• gives two or three quick “spot the difference” items where the student identifies which word (quantity, unit, or dimension) fits a description.\n\nUse bullet points and short paragraphs. When you write dimensions, use LaTeX display mode, for example:\n  \\\\[ [v] = [L T^{-1}] \\\\]\nDo not use markdown headings.`
+    },
+
+    // Tricky areas & exam traps
+    T1: {
+      title: 'Powers of ten and prefixes that trick students',
+      category: 'Tricky areas & exam traps',
+      prompt: `You are a Physics tutor.\n\nHelp a student avoid mistakes with **metric prefixes and powers of ten**. Your answer should:\n• list common prefixes (k, c, m, \\(\\mu\\), M) and their powers of ten,\n• show at least three short examples of converting between prefixes (for example, km to m, ms to s, mg to kg),\n• highlight the most common traps (for example, shifting the decimal the wrong way),\n• give 3–4 quick practice items with answers and short explanations.\n\nUse bullet points and clear spacing. Write any example conversions as simple equations in LaTeX display mode when helpful, for example:\n  \\\\[ 1\\,\\text{km} = 10^3\\,\\text{m} \\\\]\nDo not use markdown headings.`
+    },
+    T2: {
+      title: 'Squared and cubed units in area and volume conversions',
+      category: 'Tricky areas & exam traps',
+      prompt: `You are a Physics tutor.\n\nExplain why **area** and **volume** conversions require squaring or cubing the conversion factor. Your answer should:\n• remind the student of the difference between length, area, and volume,\n• show with a simple example why converting cm² to m² is different from cm to m,\n• give at least one worked example for area and one for volume,\n• point out the common mistake of only converting the number but not squaring or cubing the factor.\n\nUse bullet points and short paragraphs. Write key conversions in LaTeX display mode, for example:\n  \\\\[ 1\\,\\text{m} = 100\\,\\text{cm} \\\\]\n  \\\\[ 1\\,\\text{m}^2 = 10^4\\,\\text{cm}^2 \\\\]\nDo not use markdown headings.`
+    },
+
+    // Common mistakes
+    M1: {
+      title: 'Mixing up units when converting speeds (km/h ↔ m/s)',
+      category: 'Common mistakes',
+      prompt: `You are a Physics tutor.\n\nStudents often mix up unit conversions for **speed**, especially between km/h and m/s. Write a short lesson that:\n• explains the relationship between km/h and m/s,\n• shows a step-by-step method for converting in both directions,\n• warns about the common mistake of only converting one of distance or time,\n• includes 3–4 short practice questions with worked solutions.\n\nUse bullet points and clear steps. Write the key conversion in LaTeX display mode, for example:\n  \\\\[ 1\\,\\text{m/s} = 3.6\\,\\text{km/h} \\\\]\nDo not use markdown headings.`
+    },
+    M2: {
+      title: 'Forgetting to convert all units before using a formula',
+      category: 'Common mistakes',
+      prompt: `You are a Physics tutor.\n\nExplain the mistake of plugging numbers with **inconsistent units** into a physics formula. Your explanation should:\n• describe the problem in words (for example, mixing km with m, or hours with seconds),\n• give at least two short example problems where wrong units give a wrong answer,\n• then show the correct solution with units carefully converted first,\n• end with a small checklist the student can use before calculating.\n\nUse bullet points and short paragraphs. When you write formulas, use LaTeX display mode, for example:\n  \\\\[ v = \\frac{d}{t} \\\\]\nDo not use markdown headings.`
+    },
+
+    // When you feel stuck
+    S1: {
+      title: 'Using units to decode what a word problem is asking for',
+      category: 'When you feel stuck',
+      prompt: `You are a Physics tutor.\n\nTeach a student how to use **units** to understand what a word problem is asking them to find. Your answer should:\n• explain how to look at the units of the given quantities,\n• show how to guess the target quantity by combining units (for example, distance/time suggests speed),\n• give 2–3 short word problems where you demonstrate this technique,\n• end with a simple step-by-step strategy they can follow in exams.\n\nUse bullet points and short paragraphs. Write any key relations in LaTeX display mode, for example:\n  \\\\[ \\text{speed} = \\frac{\\text{distance}}{\\text{time}} \\\\]\nDo not use markdown headings.`
+    },
+    S2: {
+      title: 'Step-by-step strategy: set up a “unit chain” before solving',
+      category: 'When you feel stuck',
+      prompt: `You are a Physics tutor.\n\nExplain how to use a **unit chain** (factor-label method) to organize unit conversions before solving a problem. Your answer should:\n• describe the idea of writing a chain of fractions where units cancel,\n• show at least one example of converting a quantity using this method,\n• give one or two short practice problems with worked solutions,\n• highlight how this method reduces errors.\n\nUse bullet points and clear steps. Show the chain in LaTeX display mode, for example:\n  \\\\[ 72\\,\\text{km/h} \\times \\frac{1000\\,\\text{m}}{1\\,\\text{km}} \\times \\frac{1\\,\\text{h}}{3600\\,\\text{s}} = 20\\,\\text{m/s} \\\\]\nDo not use markdown headings.`
+    },
+
+    // Concept bridges
+    B1: {
+      title: 'How dimensions help check formulas in later chapters',
+      category: 'Concept bridges',
+      prompt: `You are a Physics tutor.\n\nShow how **dimensions** can be used to check formulas in later topics such as kinematics and forces. Your answer should:\n• briefly review what we mean by dimensions like \\([L]\\), \\([M]\\), \\([T]\\),\n• give at least two examples of formulas (for example, a kinematics equation and a force or energy formula),\n• show how to check that the dimensions on both sides match,\n• explain why this does not prove a formula is correct, but can catch obvious mistakes.\n\nUse bullet points and short paragraphs. Write dimensions and equations in LaTeX display mode, for example:\n  \\\\[ s = ut + \\tfrac{1}{2} a t^2 \\\\]\n  \\\\[ [s] = [L],\\ [u t] = [L],\\ [a t^2] = [L] \\\\]\nDo not use markdown headings.`
+    },
+    B2: {
+      title: 'Linking units of displacement, velocity, and acceleration',
+      category: 'Concept bridges',
+      prompt: `You are a Physics tutor.\n\nHelp a student see how **displacement**, **velocity**, and **acceleration** are connected through their units. Your answer should:\n• state typical units for each quantity,\n• show how the units of velocity relate to displacement and time, and how acceleration relates to velocity and time,\n• give at least one example of checking the units of a kinematics equation,\n• explain how this prepares them for studying motion in one and two dimensions.\n\nUse bullet points and short paragraphs. Write key relations and units in LaTeX display mode, for example:\n  \\\\[ v = \\frac{\\Delta x}{\\Delta t}, \\quad a = \\frac{\\Delta v}{\\Delta t} \\\\]\n  \\\\[ [v] = [L T^{-1}], \\quad [a] = [L T^{-2}] \\\\]\nDo not use markdown headings.`
+    }
+  };
+
+  let currentHelpId = null;
+  let lastHelpResponse = '';
+
+  // Canonical PromptSchola formatOutput (with HTML escaping + LaTeX normalization)
+  function formatOutput(text) {
+    if (!text) return '';
+
+    // 1) HTML-escape first
+    let safe = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // 2) Normalize escaped LaTeX:
+    //    \\[ ... \\] → \[ ... \]
+    //    \\( ... \\) → \( ... \)
+    safe = safe
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]')
+      .replace(/\\\\\(/g, '\\(')
+      .replace(/\\\\\)/g, '\\)');
+
+    // 3) Convert markdown headings (### etc.) into bold lines
+    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+
+    // 4) Convert markdown bullets (- or *) into •
+    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
+
+    // 5) Bold and italic markdown
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // 6) Paragraph spacing: double newlines → paragraph break
+    safe = safe.replace(/\n\n+/g, '</p><p>');
+
+    // 7) Remaining single newlines → <br>
+    safe = safe.replace(/\n/g, '<br>');
+
+    // 8) Wrap in <p> tag
+    safe = '<p>' + safe + '</p>';
+
+    return safe;
+  }
+
+  function loadHelpPromptFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id') || 'C1';
+    currentHelpId = helpPrompts[id] ? id : 'C1';
+
+    const data = helpPrompts[currentHelpId];
+    const titleEl = document.getElementById('help-title');
+    const catEl = document.getElementById('help-category-pill');
+    const promptEl = document.getElementById('help-prompt-text');
+    const heroTitleEl = document.getElementById('hero-title');
+
+    if (titleEl) titleEl.textContent = data.title;
+    if (heroTitleEl) heroTitleEl.textContent = data.title;
+    if (catEl) catEl.textContent = data.category;
+    if (promptEl) promptEl.textContent = data.prompt;
+  }
+
+  async function runHelpWithAI() {
+    if (!currentHelpId || !helpPrompts[currentHelpId]) {
+      alert('No help prompt loaded yet.');
+      return;
+    }
+    const { prompt } = helpPrompts[currentHelpId];
+    const output = document.getElementById('help-response');
+    if (!output) return;
+
+    try {
+      output.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+
+      if (!res.ok) {
+        output.textContent = 'There was an error contacting the AI. Please try again later.';
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastHelpResponse = raw;
+      output.innerHTML = formatOutput(raw);
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([output]).catch(err =>
+          console.error('MathJax error in response:', err)
+        );
+      }
+    } catch (err) {
+      console.error(err);
+      output.textContent = 'Unexpected error. Please try again.';
+    }
+  }
+
+  function copyHelpPrompt() {
+    if (!currentHelpId || !helpPrompts[currentHelpId]) {
+      alert('No help prompt loaded yet.');
+      return;
+    }
+    const { prompt } = helpPrompts[currentHelpId];
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      alert('Clipboard not supported in this browser.');
+      return;
+    }
+    navigator.clipboard.writeText(prompt)
+      .then(() => { alert('Prompt copied to clipboard.'); })
+      .catch(err => {
+        console.error(err);
+        alert('Could not copy prompt. Please try again.');
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadHelpPromptFromQuery();
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise().catch(err =>
+        console.error('MathJax initial typeset error:', err)
+      );
+    }
+
+    // 🔹 Update nav based on auth state
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+
+    const signOutBtn = document.getElementById('nav-signout-btn');
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
+  });
+</script>
+
+</body>
+</html>
