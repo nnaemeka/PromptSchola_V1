@@ -18,7 +18,7 @@
   <!-- Shared PromptSchola theme -->
   <link rel="stylesheet" href="css/promptschola-base.css" />
 
-  <!-- Landing-page-specific styles -->
+  <!-- Landing page–specific styles (hero, hero background, etc.) -->
   <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
@@ -88,7 +88,7 @@
           </h1>
         </div>
 
-        <div class="hero-grid">
+        <div class="hero-grid hero-no-image">
           <div class="hero-text">
             <p class="hero-subtitle">
               PromptSchola turns Physics into a guided 6-step conversation. You always know where to begin,
@@ -111,14 +111,6 @@
             <p class="hero-note">
               No credit card needed to explore. Designed for advanced high school and university learners.
             </p>
-          </div>
-
-          <div class="hero-image">
-            <img
-              src="assets/img/physics-hero.png"
-              alt="Students learning Physics with an AI tutor on a laptop"
-              class="hero-illustration"
-            />
           </div>
         </div>
       </div>
@@ -362,6 +354,7 @@
 <!-- 🔹 Initialize nav user display & toggle buttons -->
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
+    // Keep your existing label behavior
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
     }
@@ -374,10 +367,12 @@
       const user = await getCurrentUser();
 
       if (user) {
+        // Logged in: show Sign out, hide Sign in / Register
         if (signoutBtn) signoutBtn.style.display = 'inline-flex';
         if (loginBtn) loginBtn.style.display = 'none';
         if (registerBtn) registerBtn.style.display = 'none';
       } else {
+        // Logged out: show Sign in / Register, hide Sign out
         if (signoutBtn) signoutBtn.style.display = 'none';
         if (loginBtn) loginBtn.style.display = 'inline-flex';
         if (registerBtn) registerBtn.style.display = 'inline-flex';
