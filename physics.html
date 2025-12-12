@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Explore Physics in PromptSchola: introduction, mechanics, electricity & magnetism, and more, one nano-lesson at a time."
+    content="Explore Physics in PromptSchola: Foundations & Tools, Mechanics, Electricity & Magnetism, Waves & Optics, Thermal Physics, and Modern Physics — each broken into guided nano-lessons."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -64,7 +64,7 @@
       padding: 0 1.4rem;
     }
 
-    /* Header / Nav (consistent with index.html) */
+    /* Header / Nav – canonical */
     header {
       position: sticky;
       top: 0;
@@ -200,7 +200,6 @@
       text-align: center;
     }
 
-    /* Radial glow background like index.html */
     .hero::before {
       content: "";
       position: absolute;
@@ -246,14 +245,14 @@
     }
 
     .section-heading h2 {
-      font-size: 1.85rem;      /* match section-title from index */
+      font-size: 1.85rem;
       font-weight: 800;
       color: var(--text-strong);
       margin-bottom: 0.45rem;
     }
 
     .section-heading p {
-      font-size: 1.05rem;      /* match section-subtitle from index */
+      font-size: 1.05rem;
       color: var(--text-muted);
       max-width: 30rem;
       margin: 0 auto;
@@ -292,7 +291,7 @@
     }
 
     .card-title {
-      font-size: 1.2rem;    /* match subject-title from index */
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--text-main);
     }
@@ -306,10 +305,10 @@
     .card-footer {
       margin-top: 0.9rem;
       display: flex;
-      flex-direction: column;      /* button on top, text under */
+      flex-direction: column;
       align-items: flex-start;
       gap: 0.35rem;
-      font-size: 0.92rem;          /* like subject-cta */
+      font-size: 0.92rem;
       color: var(--text-subtle);
     }
 
@@ -317,7 +316,7 @@
       color: var(--text-subtle);
     }
 
-    /* Footer (match index style) */
+    /* Footer – canonical */
     footer {
       margin-top: auto;
       padding: 1.8rem 0 2.1rem;
@@ -365,6 +364,30 @@
         min-height: 0;
       }
     }
+
+    /* ==== Typography patch (same as index) ==== */
+
+    /* NAV tweaks */
+    .nav-links {
+      font-size: 0.95rem;
+    }
+
+    .nav-right {
+      font-size: 0.9rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+
+    .section-heading h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+    }
+
+    .section-heading p {
+      font-size: 1.05rem;
+    }
   </style>
 </head>
 
@@ -379,13 +402,15 @@
           <div class="logo-mark">P</div>
           <div class="logo-text">
             <span>PromptSchola</span>
-            <span>Prompt-based Physics mastery</span>
+            <span>Prompt-based STEM subjects mastery</span>
           </div>
         </div>
 
         <nav class="nav-links">
-          <a href="index.html">Home</a>
           <a href="physics.html">Physics</a>
+          <a href="math.html">Math</a>
+          <a href="chemistry.html">Chemistry</a>
+          <a href="biology.html">Biology</a>
           <a href="pricing.html">Pricing</a>
         </nav>
 
@@ -565,7 +590,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
-    // Update "Signed in as ..." text if available
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
     }
