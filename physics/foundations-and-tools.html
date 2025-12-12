@@ -20,6 +20,7 @@
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
       --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
@@ -29,7 +30,7 @@
       --radius-pill: 999px;
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
       --transition-fast: 0.25s ease-out;
-      --font-main: 'Inter', system-ui, sans-serif;
+      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,10 +52,10 @@
       width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0 1.3rem;
+      padding: 0 1.4rem;
     }
 
-    /* NAV — PromptSchola canonical */
+    /* NAV — PromptSchola canonical (WITH Home button) */
     header {
       position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
@@ -66,14 +67,13 @@
       );
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
+
     .nav {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.75rem 0;
     }
 
-    .nav-left {
-      display:flex;align-items:center;gap:0.75rem;
-    }
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
 
     .logo-mark {
       width: 34px; height: 34px;
@@ -81,12 +81,16 @@
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
       display: flex; align-items: center; justify-content: center;
       font-weight: 800; font-size: 1rem; color: #fff;
+      box-shadow: none;
     }
+
     .logo-text span:first-child {
+      display:block;
       font-weight: 700; font-size: 1.02rem; color: var(--text-strong);
       letter-spacing: 0.02em;
     }
     .logo-text span:last-child {
+      display:block;
       font-size: 0.76rem; color: var(--text-subtle);
     }
 
@@ -106,7 +110,7 @@
       background: #fff;
       cursor: pointer;
       font-size: 0.86rem;
-      transition: var(--transition-fast);
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -120,6 +124,9 @@
     }
 
     .btn-primary {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
       border-radius: var(--radius-pill);
       padding: 0.6rem 1.3rem;
       font-size: 0.9rem;
@@ -129,16 +136,15 @@
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color: #fff;
       box-shadow: 0 10px 22px rgba(79,70,229,0.35);
-      transition: var(--transition-fast);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
       white-space: nowrap;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+      text-decoration:none;
     }
     .btn-primary:hover {
       transform: translateY(-1px);
       filter: brightness(1.03);
       box-shadow: 0 14px 30px rgba(79,70,229,0.45);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
     }
 
     /* HERO — centered + glow */
@@ -218,12 +224,13 @@
       margin-top: 1.4rem;
     }
 
+    /* CARD — matched to index.html feel */
     .topic-card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(209, 213, 219, 0.55); /* align with index border subtle */
       padding: 1.1rem 1.15rem 1.2rem;
-      box-shadow: var(--shadow-card);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12); /* match index shadow-card feel */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -245,30 +252,34 @@
       color: var(--text-strong);
     }
 
-    /* BODY + BULLETS */
+    /* ✅ UPDATED: description vs bullets hierarchy to match index.html subject cards */
     .topic-body {
-      font-size: 1.03rem;
-      color: var(--text-muted);
-      margin-top: 0.4rem;
-      line-height: 1.55;
+      font-size: 0.96rem;          /* like index "subject-topline" */
+      color: var(--text-muted);     /* softer */
+      margin-top: 0.45rem;
+      line-height: 1.65;
     }
 
     .topic-list {
-      list-style: disc;
+      list-style: none;             /* match index style (uses “•” in HTML, but we’ll keep clean list) */
       margin-top: 0.55rem;
-      padding-left: 1.35rem;
-      font-size: 1.08rem;
-      color: var(--text-main);
-      font-weight: 500;
+      padding-left: 0;              /* clean */
+      font-size: 1rem;              /* slightly stronger than description */
+      color: var(--text-main);      /* slightly darker than description */
+      font-weight: 400;             /* IMPORTANT: not bold */
       line-height: 1.6;
     }
 
     .topic-list li {
-      margin-bottom: 0.28rem;
+      margin-bottom: 0.25rem;
     }
 
-    .topic-list li::marker {
-      color: #1f2937;
+    /* Optional: use a subtle bullet marker via text (keeps readability like index) */
+    .topic-list li::before {
+      content: "•";
+      display: inline-block;
+      width: 1.1rem;
+      color: var(--text-subtle);
     }
 
     /* Toggle */
@@ -282,9 +293,7 @@
       padding: 0;
       margin-top: 0.2rem;
     }
-    .topic-toggle:hover {
-      text-decoration: underline;
-    }
+    .topic-toggle:hover { text-decoration: underline; }
 
     .topic-footer {
       margin-top: 1rem;
@@ -296,6 +305,7 @@
       color: var(--text-subtle);
     }
 
+    /* Footer */
     footer {
       margin-top: auto;
       padding: 1.9rem 0;
@@ -319,7 +329,7 @@
 <body>
 <div class="page">
 
-  <!-- NAV -->
+  <!-- NAV (WITH Home link) -->
   <header>
     <div class="container">
       <div class="nav">
@@ -332,20 +342,29 @@
         </div>
 
         <nav class="nav-links">
-          <a href="../physics.html">Physics</a>
-          <a href="../math.html">Math</a>
-          <a href="../chemistry.html">Chemistry</a>
-          <a href="../biology.html">Biology</a>
-          <a href="../pricing.html">Pricing</a>
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
         </nav>
 
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
 
-          <a id="nav-login-btn" href="../auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="../auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
 
-          <button id="nav-signout-btn" class="btn-pill" style="display:none;">Sign out</button>
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+            onclick="signOutUser && signOutUser()"
+          >
+            Sign out
+          </button>
         </div>
       </div>
     </div>
@@ -368,7 +387,6 @@
     <section>
       <div class="container">
 
-        <!-- Centered heading -->
         <div class="topics-heading">
           <div class="topics-heading-kicker">Foundations &amp; Tools topics</div>
           <h2 class="topics-heading-title">Core foundations in this track</h2>
@@ -377,10 +395,8 @@
           </p>
         </div>
 
-        <!-- GRID -->
         <div class="topics-grid">
 
-          <!-- Units, Dimensions, Measurement -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Start here</div>
@@ -404,7 +420,6 @@
             </div>
           </article>
 
-          <!-- Scalars & Vectors -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Core tool</div>
@@ -428,7 +443,6 @@
             </div>
           </article>
 
-          <!-- Motion Graphs & Representations -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Core representation</div>
@@ -451,7 +465,6 @@
             </div>
           </article>
 
-          <!-- Calculus Tools for Physics -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Mathematical tool</div>
@@ -473,7 +486,6 @@
             </div>
           </article>
 
-          <!-- Problem-Solving Strategies -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Skillset</div>
@@ -495,7 +507,6 @@
             </div>
           </article>
 
-          <!-- Practice & Exercises -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Practice</div>
@@ -531,7 +542,7 @@
 
 <!-- Supabase + auth helpers -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../auth.js"></script>
+<script src="/auth.js"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
@@ -569,28 +580,23 @@
 
       const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
 
-      // Base clamp styles
       body.style.display = '-webkit-box';
       body.style.webkitBoxOrient = 'vertical';
       body.style.overflow = 'hidden';
 
-      // Measure clamped vs full height to decide if toggle is needed
       body.style.webkitLineClamp = maxLines;
       const clampedHeight = body.getBoundingClientRect().height;
 
       body.style.webkitLineClamp = 'unset';
       const fullHeight = body.getBoundingClientRect().height;
 
-      // Restore clamped
       body.style.webkitLineClamp = maxLines;
 
       if (fullHeight <= clampedHeight + 1) {
-        // No extra content: hide toggle
         toggle.style.display = 'none';
         return;
       }
 
-      // There is more content: show toggle
       toggle.style.display = 'inline';
       toggle.textContent = 'More';
 
