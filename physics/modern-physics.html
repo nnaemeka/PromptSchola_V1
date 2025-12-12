@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modern Physics – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Modern Physics track in PromptSchola: relativity, quantum physics, atoms, nuclei, particles, and solid-state physics — broken into guided nano-lessons."
+  />
+
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --bg-surface: #f9fafb;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+      --border-subtle: rgba(209, 213, 219, 0.6);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --transition-fast: 0.25s ease-out;
+      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      font-size: 16.5px;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.4rem;
+    }
+
+    /* NAV — canonical (WITH Home link) */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .nav-left { display:flex;align-items:center;gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: #fff;
+      box-shadow: none;
+    }
+
+    .logo-text span:first-child {
+      display:block;
+      font-weight: 700; font-size: 1.02rem; color: var(--text-strong);
+      letter-spacing: 0.02em;
+    }
+    .logo-text span:last-child { display:block; font-size: 0.76rem; color: var(--text-subtle); }
+
+    .nav-links { display: flex; gap: 1.3rem; font-size: 0.95rem; align-items:center; }
+    .nav-links a { opacity: 0.9; color: var(--text-muted); transition: opacity var(--transition-fast), color var(--transition-fast); }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 0.95rem;
+      border: 1px solid rgba(209,213,219,0.9);
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.86rem;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+    }
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+    }
+
+    .btn-primary {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79,70,229,0.35);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      white-space: nowrap;
+      text-decoration:none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 14px 30px rgba(79,70,229,0.45);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 3.2rem 0 3rem;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
+        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .hero-kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin-bottom: 0.9rem;
+    }
+    .hero-title {
+      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 0.6rem;
+      max-width: 40rem;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.12;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      max-width: 40rem;
+      margin: 0 auto;
+      color: var(--text-muted);
+    }
+
+    /* TOPICS HEADING */
+    .topics-heading {
+      margin: 2.8rem auto 1.7rem;
+      text-align: center;
+      max-width: 40rem;
+    }
+    .topics-heading-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+      margin-bottom: 0.35rem;
+    }
+    .topics-heading-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 0.4rem;
+    }
+    .topics-heading-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin: 0 auto;
+    }
+
+    /* GRID */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.4rem;
+    }
+
+    .topic-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(209, 213, 219, 0.55);
+      padding: 1.1rem 1.15rem 1.2rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 210px;
+      position: relative;
+    }
+
+    .topic-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+      margin-bottom: 0.2rem;
+    }
+
+    .topic-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-strong);
+    }
+
+    /* Description + list hierarchy (index.html-style) */
+    .topic-body {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      margin-top: 0.45rem;
+      line-height: 1.65;
+    }
+
+    .topic-list {
+      list-style: none;
+      margin-top: 0.55rem;
+      padding-left: 0;
+      font-size: 1rem;
+      color: var(--text-main);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .topic-list li { margin-bottom: 0.25rem; }
+
+    .topic-list li::before {
+      content: "•";
+      display: inline-block;
+      width: 1.1rem;
+      color: var(--text-subtle);
+    }
+
+    /* Toggle */
+    .topic-toggle {
+      background: transparent;
+      border: none;
+      color: var(--accent-strong);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 0.2rem;
+    }
+    .topic-toggle:hover { text-decoration: underline; }
+
+    .topic-footer {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.55rem;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1.9rem 0;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 800px) {
+      .topics-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-title { font-size: 2.1rem; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+            onclick="signOutUser && signOutUser()"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Modern Physics · Physics</div>
+        <h1 class="hero-title">Go beyond classical physics.</h1>
+        <p class="hero-subtitle">
+          Explore relativity, quantum ideas, atoms, nuclei, particles, and solids — the foundation of modern technology
+          and today’s scientific frontiers.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICS -->
+    <section>
+      <div class="container">
+
+        <div class="topics-heading">
+          <div class="topics-heading-kicker">Modern Physics topics</div>
+          <h2 class="topics-heading-title">Explore the chapters in this track</h2>
+          <p class="topics-heading-subtitle">
+            Each chapter contains guided nano-lessons using the same PromptSchola 6-step flow.
+          </p>
+        </div>
+
+        <div class="topics-grid">
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter A</div>
+              <div class="topic-title">Limits of Classical Physics</div>
+              <div class="topic-body" data-lines="9">
+                See where Newtonian ideas break down and why new frameworks were needed.
+                <ul class="topic-list">
+                  <li>Blackbody radiation (problem)</li>
+                  <li>Photoelectric effect (problem)</li>
+                  <li>Atomic stability (problem)</li>
+                  <li>High-speed motion and relativity</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="limits-of-classical-physics.html" class="btn-primary">Start chapter</a>
+              <span>Why “modern” physics exists.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter B</div>
+              <div class="topic-title">Special Relativity</div>
+              <div class="topic-body" data-lines="9">
+                Understand spacetime, simultaneity, and the postulates of relativity.
+                <ul class="topic-list">
+                  <li>Postulates of special relativity</li>
+                  <li>Time dilation</li>
+                  <li>Length contraction</li>
+                  <li>Relativity of simultaneity</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="special-relativity.html" class="btn-primary">Start chapter</a>
+              <span>Space and time behave differently.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter C</div>
+              <div class="topic-title">Relativistic Energy and Momentum</div>
+              <div class="topic-body" data-lines="9">
+                Extend momentum and energy to high-speed regimes and connect to mass–energy equivalence.
+                <ul class="topic-list">
+                  <li>Relativistic momentum</li>
+                  <li>Total energy and kinetic energy</li>
+                  <li>E = mc² and rest energy</li>
+                  <li>Energy–momentum relation</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="relativistic-energy-momentum.html" class="btn-primary">Start chapter</a>
+              <span>How particles behave near c.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter D</div>
+              <div class="topic-title">Quantum Nature of Light</div>
+              <div class="topic-body" data-lines="9">
+                Treat light as photons and learn how quantization explains key experiments.
+                <ul class="topic-list">
+                  <li>Photon energy (E = hf)</li>
+                  <li>Photoelectric effect</li>
+                  <li>Compton scattering (conceptual)</li>
+                  <li>Intensity vs photon count</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="quantum-nature-of-light.html" class="btn-primary">Start chapter</a>
+              <span>Light comes in quanta.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter E</div>
+              <div class="topic-title">Wave–Particle Duality</div>
+              <div class="topic-body" data-lines="9">
+                Understand why matter can behave like a wave and how interference shows up for particles.
+                <ul class="topic-list">
+                  <li>de Broglie wavelength</li>
+                  <li>Electron diffraction</li>
+                  <li>Double-slit idea (matter waves)</li>
+                  <li>What “duality” means</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="wave-particle-duality.html" class="btn-primary">Start chapter</a>
+              <span>Waves and particles—both.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter F</div>
+              <div class="topic-title">Quantum Mechanics Foundations</div>
+              <div class="topic-body" data-lines="9">
+                Build the basic language of quantum states, probabilities, and measurement.
+                <ul class="topic-list">
+                  <li>Wavefunctions and probability</li>
+                  <li>Uncertainty principle (conceptual)</li>
+                  <li>Measurement and collapse (intro)</li>
+                  <li>Simple potentials (setup)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="quantum-mechanics-foundations.html" class="btn-primary">Start chapter</a>
+              <span>Core concepts before applications.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter G</div>
+              <div class="topic-title">Atomic Structure</div>
+              <div class="topic-body" data-lines="9">
+                Explain spectra and atomic stability using quantum ideas.
+                <ul class="topic-list">
+                  <li>Bohr model (as a stepping stone)</li>
+                  <li>Energy levels and spectra</li>
+                  <li>Quantum numbers (intro)</li>
+                  <li>Hydrogen atom ideas (qualitative)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="atomic-structure.html" class="btn-primary">Start chapter</a>
+              <span>From spectra to structure.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter H</div>
+              <div class="topic-title">Quantum Tunneling</div>
+              <div class="topic-body" data-lines="9">
+                Learn how particles can cross barriers they “shouldn’t” classically cross.
+                <ul class="topic-list">
+                  <li>Tunneling concept</li>
+                  <li>Barrier penetration intuition</li>
+                  <li>Applications (alpha decay, STM)</li>
+                  <li>Probability and exponential decay</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="quantum-tunneling.html" class="btn-primary">Start chapter</a>
+              <span>Strange but real.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter I</div>
+              <div class="topic-title">Nuclear Physics Basics</div>
+              <div class="topic-body" data-lines="9">
+                Understand nuclei, radioactivity, and the forces and energies inside the nucleus.
+                <ul class="topic-list">
+                  <li>Nuclear size and density</li>
+                  <li>Binding energy and mass defect</li>
+                  <li>Radioactive decay types</li>
+                  <li>Fission vs fusion (conceptual)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="nuclear-physics-basics.html" class="btn-primary">Start chapter</a>
+              <span>Modern physics in the nucleus.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter J</div>
+              <div class="topic-title">Elementary Particles</div>
+              <div class="topic-body" data-lines="9">
+                Meet the particles and interactions that form the Standard Model (at an intro level).
+                <ul class="topic-list">
+                  <li>Leptons and quarks</li>
+                  <li>Forces and exchange particles</li>
+                  <li>Antimatter (intro)</li>
+                  <li>Particle detection (conceptual)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="elementary-particles.html" class="btn-primary">Start chapter</a>
+              <span>What matter is made of.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter K</div>
+              <div class="topic-title">Solid-State Physics</div>
+              <div class="topic-body" data-lines="9">
+                Learn why solids conduct, insulate, and behave differently at the quantum level.
+                <ul class="topic-list">
+                  <li>Band theory idea (intro)</li>
+                  <li>Conductors, insulators, semiconductors</li>
+                  <li>Doping and p–n junction intuition</li>
+                  <li>Basic devices (diodes, transistors)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="solid-state-physics.html" class="btn-primary">Start chapter</a>
+              <span>Physics behind electronics.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Chapter L</div>
+              <div class="topic-title">Applications of Modern Physics</div>
+              <div class="topic-body" data-lines="9">
+                Connect modern physics concepts to technologies you see every day.
+                <ul class="topic-list">
+                  <li>Lasers and photonics</li>
+                  <li>Medical imaging (MRI, PET)</li>
+                  <li>Nuclear energy and radiation uses</li>
+                  <li>Quantum tech (intro)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="applications-modern-physics.html" class="btn-primary">Start chapter</a>
+              <span>Where it shows up in real life.</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
+</div>
+
+<!-- Supabase + auth helpers -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
+
+    /* === MORE/LESS TOGGLE, PER CARD === */
+    document.querySelectorAll('.topic-card').forEach(card => {
+      const body = card.querySelector('.topic-body');
+      const toggle = card.querySelector('.topic-toggle');
+      if (!body || !toggle) return;
+
+      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+
+      body.style.display = '-webkit-box';
+      body.style.webkitBoxOrient = 'vertical';
+      body.style.overflow = 'hidden';
+
+      body.style.webkitLineClamp = maxLines;
+      const clampedHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = 'unset';
+      const fullHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = maxLines;
+
+      if (fullHeight <= clampedHeight + 1) {
+        toggle.style.display = 'none';
+        return;
+      }
+
+      toggle.style.display = 'inline';
+      toggle.textContent = 'More';
+
+      let expanded = false;
+      toggle.addEventListener('click', () => {
+        expanded = !expanded;
+        if (expanded) {
+          body.style.webkitLineClamp = 'unset';
+          toggle.textContent = 'Less';
+        } else {
+          body.style.webkitLineClamp = maxLines;
+          toggle.textContent = 'More';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
