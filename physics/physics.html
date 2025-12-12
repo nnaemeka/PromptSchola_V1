@@ -9,6 +9,7 @@
     content="Explore Physics in PromptSchola: Foundations & Tools, Mechanics, Electricity & Magnetism, Waves & Optics, Thermal Physics, and Modern Physics — each broken into guided nano-lessons."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-body: #f3f4f6;
@@ -29,13 +30,13 @@
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
       --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --transition-fast: 0.25s ease-out;
+
+      /* Bullet emphasis (kept consistent with your “darker bullets + emphasized list” rule) */
+      --bullet-color: #111827;
+      --bullet-text: #111827;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--font-main);
@@ -46,10 +47,7 @@
       font-size: 16.5px;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     .page {
       min-height: 100vh;
@@ -278,9 +276,7 @@
       font-size: 1rem;
     }
 
-    .card-header {
-      margin-bottom: 0.5rem;
-    }
+    .card-header { margin-bottom: 0.5rem; }
 
     .card-kicker {
       font-size: 0.8rem;
@@ -312,9 +308,7 @@
       color: var(--text-subtle);
     }
 
-    .card-footer span {
-      color: var(--text-subtle);
-    }
+    .card-footer span { color: var(--text-subtle); }
 
     /* Footer – canonical */
     footer {
@@ -336,55 +330,21 @@
 
     /* Responsive */
     @media (max-width: 900px) {
-      .hero {
-        padding: 2.6rem 0 2.6rem;
-      }
+      .hero { padding: 2.6rem 0 2.6rem; }
     }
 
     @media (max-width: 960px) {
-      .cards-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 800px) {
-      .cards-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .nav-links {
-        display: none;
-      }
-      .hero-title {
-        font-size: 2.1rem;
-      }
+      .cards-grid { grid-template-columns: minmax(0, 1fr); }
+      .nav-links { display: none; }
+      .hero-title { font-size: 2.1rem; }
     }
 
     @media (max-width: 520px) {
-      .card {
-        min-height: 0;
-      }
-    }
-
-    /* Typography patch (as in index) */
-    .nav-links {
-      font-size: 0.95rem;
-    }
-
-    .nav-right {
-      font-size: 0.9rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
-    }
-
-    .section-heading h2 {
-      font-size: 1.85rem;
-      font-weight: 800;
-    }
-
-    .section-heading p {
-      font-size: 1.05rem;
+      .card { min-height: 0; }
     }
   </style>
 </head>
@@ -392,7 +352,7 @@
 <body>
 <div class="page">
 
-  <!-- NAV -->
+  <!-- NAV (with Home link) -->
   <header>
     <div class="container">
       <div class="nav">
@@ -405,27 +365,26 @@
         </div>
 
         <nav class="nav-links">
-          <a href="physics.html">Physics</a>
-          <a href="math.html">Math</a>
-          <a href="chemistry.html">Chemistry</a>
-          <a href="biology.html">Biology</a>
-          <a href="pricing.html">Pricing</a>
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
         </nav>
 
         <div class="nav-right">
-          <!-- Filled by auth.js -->
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
 
-          <!-- Shown when logged OUT -->
-          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
 
-          <!-- Shown when logged IN -->
           <button
             id="nav-signout-btn"
             type="button"
             class="btn-pill"
             style="display:none;"
+            onclick="signOutUser && signOutUser()"
           >
             Sign out
           </button>
@@ -468,7 +427,7 @@
               the role of units, vectors, and the basic tools needed for problem-solving.
             </div>
             <div class="card-footer">
-              <a href="physics/foundations-and-tools.html" class="btn-primary">
+              <a href="/physics/foundations-and-tools.html" class="btn-primary">
                 Start Foundations &amp; Tools
               </a>
               <span>Includes “What is Physics?” and core math tools.</span>
@@ -486,7 +445,7 @@
               in focused, guided nano-lessons.
             </div>
             <div class="card-footer">
-              <a href="physics/mechanics.html" class="btn-primary">
+              <a href="/physics/mechanics.html" class="btn-primary">
                 Start Mechanics
               </a>
               <span>Natural first step after Foundations &amp; Tools.</span>
@@ -504,7 +463,7 @@
               power grids, and communication systems.
             </div>
             <div class="card-footer">
-              <a href="physics/electricity-magnetism.html" class="btn-primary">
+              <a href="/physics/electricity-magnetism.html" class="btn-primary">
                 Start Electricity &amp; Magnetism
               </a>
               <span>Build on your Mechanics and Foundations.</span>
@@ -522,7 +481,7 @@
               surprising patterns in experiments and technology.
             </div>
             <div class="card-footer">
-              <a href="physics/waves-optics.html" class="btn-primary">
+              <a href="/physics/waves-optics.html" class="btn-primary">
                 Start Waves &amp; Optics
               </a>
               <span>Great follow-up to Mechanics and E&amp;M.</span>
@@ -540,7 +499,7 @@
               and many natural and industrial processes.
             </div>
             <div class="card-footer">
-              <a href="physics/thermal-physics.html" class="btn-primary">
+              <a href="/physics/thermal-physics.html" class="btn-primary">
                 Start Thermal Physics
               </a>
               <span>Connect microscopic motion to macroscopic behavior.</span>
@@ -558,7 +517,7 @@
               and research frontiers in science and engineering.
             </div>
             <div class="card-footer">
-              <a href="physics/modern-physics.html" class="btn-primary">
+              <a href="/physics/modern-physics.html" class="btn-primary">
                 Start Modern Physics
               </a>
               <span>Advanced track once the core is solid.</span>
@@ -583,8 +542,8 @@
 <!-- 🔹 Supabase client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- 🔹 Shared auth helpers (supabaseClient, getCurrentUser, updateNavUserDisplay, signOutUser, etc.) -->
-<script src="auth.js"></script>
+<!-- 🔹 Shared auth helpers -->
+<script src="/auth.js"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
@@ -608,10 +567,6 @@
         if (registerBtn) registerBtn.style.display = 'inline-flex';
         if (signOutBtn) signOutBtn.style.display = 'none';
       }
-    }
-
-    if (signOutBtn && typeof signOutUser === 'function') {
-      signOutBtn.addEventListener('click', signOutUser);
     }
   });
 </script>
