@@ -6,71 +6,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Mechanics track in PromptSchola Physics: kinematics, Newtonian dynamics, work & energy, momentum & collisions, rotation & angular dynamics, and structured practice — all built as guided nano-lessons."
+    content="Mechanics track in PromptSchola: kinematics, Newtonian dynamics, energy, momentum, and rotational motion — each broken into guided nano-lessons."
   />
 
+  <!-- Inter font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg-body: #f3f4f6;
-      --bg-surface: #f9fafb;
       --bg-card: #ffffff;
+      --bg-surface: #f9fafb;
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
       --accent-soft: rgba(126, 34, 206, 0.09);
-      --accent-soft2: rgba(129, 140, 248, 0.12);
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
       --text-strong: #020617;
-      --border-subtle: rgba(209, 213, 219, 0.55);
+      --border-subtle: rgba(209, 213, 219, 0.6);
       --radius-card: 18px;
       --radius-pill: 999px;
-      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --transition-fast: 0.25s ease-out;
+      --font-main: 'Inter', system-ui, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--font-main);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
-      color: var(--text-main);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
       font-size: 16.5px;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { text-decoration: none; color: inherit; }
 
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
 
     .container {
       width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0 1.4rem;
+      padding: 0 1.3rem;
     }
 
-    /* Header / Nav – canonical (adjusted for /physics/ folder) */
+    /* NAV — PromptSchola canonical */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
+      position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
       background: linear-gradient(
         to bottom,
@@ -80,88 +66,52 @@
       );
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
-
     .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; justify-content: space-between; align-items: center;
       padding: 0.75rem 0;
     }
 
     .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      display:flex;align-items:center;gap:0.75rem;
     }
 
     .logo-mark {
-      width: 34px;
-      height: 34px;
+      width: 34px; height: 34px;
       border-radius: 40%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1rem;
-      color: #f9fafb;
-      box-shadow: none;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: #fff;
     }
-
     .logo-text span:first-child {
-      display: block;
-      font-weight: 700;
-      font-size: 1.02rem;
+      font-weight: 700; font-size: 1.02rem; color: var(--text-strong);
       letter-spacing: 0.02em;
-      color: var(--text-strong);
     }
-
     .logo-text span:last-child {
-      display: block;
-      font-size: 0.76rem;
-      color: var(--text-subtle);
+      font-size: 0.76rem; color: var(--text-subtle);
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.3rem;
-      font-size: 0.95rem;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      opacity: 0.9;
-      transition: opacity var(--transition-fast), color var(--transition-fast);
-    }
-
-    .nav-links a:hover {
-      opacity: 1;
-      color: var(--accent-strong);
-    }
+    .nav-links { display: flex; gap: 1.3rem; font-size: 0.95rem; align-items:center; }
+    .nav-links a { opacity: 0.9; color: var(--text-muted); transition: opacity var(--transition-fast), color var(--transition-fast); }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); }
 
     .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      display: flex; align-items: center; gap: 0.6rem;
       font-size: 0.9rem;
     }
 
     .btn-pill {
       border-radius: var(--radius-pill);
       padding: 0.45rem 0.95rem;
-      font-size: 0.86rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #ffffff;
-      color: var(--text-main);
+      border: 1px solid rgba(209,213,219,0.9);
+      background: #fff;
       cursor: pointer;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
+      font-size: 0.86rem;
+      transition: var(--transition-fast);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
     }
-
     .btn-pill:hover {
       background: #f3f4f6;
       transform: translateY(-1px);
@@ -170,35 +120,32 @@
     }
 
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.6rem 1.3rem;
       border-radius: var(--radius-pill);
+      padding: 0.6rem 1.3rem;
       font-size: 0.9rem;
       font-weight: 600;
       border: none;
       cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #f9fafb;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79,70,229,0.35);
+      transition: var(--transition-fast);
       white-space: nowrap;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
-
     .btn-primary:hover {
       transform: translateY(-1px);
       filter: brightness(1.03);
-      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
-      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+      box-shadow: 0 14px 30px rgba(79,70,229,0.45);
     }
 
-    /* HERO */
+    /* HERO — centered + glow */
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 3.2rem 0 3.0rem;
+      padding: 3.2rem 0 3rem;
       text-align: center;
     }
 
@@ -216,37 +163,34 @@
 
     .hero-kicker {
       font-size: 0.8rem;
-      text-transform: uppercase;
       letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--text-subtle);
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.9rem;
     }
-
     .hero-title {
-      font-size: clamp(2.3rem, 3.6vw, 3rem);
-      line-height: 1.12;
+      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
       font-weight: 800;
       color: var(--text-strong);
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
       max-width: 40rem;
       margin-left: auto;
       margin-right: auto;
+      line-height: 1.12;
     }
-
     .hero-subtitle {
       font-size: 1.1rem;
       max-width: 40rem;
-      color: var(--text-muted);
       margin: 0 auto;
+      color: var(--text-muted);
     }
 
-    /* TOPICS HEADING */
+    /* TOPICS HEADING — centered */
     .topics-heading {
       margin: 2.8rem auto 1.7rem;
       text-align: center;
       max-width: 40rem;
     }
-
     .topics-heading-kicker {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -254,21 +198,19 @@
       color: var(--text-subtle);
       margin-bottom: 0.35rem;
     }
-
     .topics-heading-title {
       font-size: 1.85rem;
       font-weight: 800;
       color: var(--text-strong);
       margin-bottom: 0.4rem;
     }
-
     .topics-heading-subtitle {
       font-size: 1.05rem;
       color: var(--text-muted);
       margin: 0 auto;
     }
 
-    /* TOPIC CARDS GRID */
+    /* GRID */
     .topics-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -286,7 +228,7 @@
       flex-direction: column;
       justify-content: space-between;
       min-height: 210px;
-      font-size: 1rem;
+      position: relative;
     }
 
     .topic-kicker {
@@ -303,8 +245,9 @@
       color: var(--text-strong);
     }
 
+    /* ==== BULLET EMPHASIS ==== */
     .topic-body {
-      font-size: 1.05rem;
+      font-size: 1.03rem;
       color: var(--text-muted);
       margin-top: 0.4rem;
       line-height: 1.55;
@@ -312,29 +255,47 @@
 
     .topic-list {
       list-style: disc;
-      margin-top: 0.45rem;
+      margin-top: 0.55rem;
       padding-left: 1.35rem;
-      font-size: 1.02rem;
-      color: var(--text-muted);
-      line-height: 1.55;
+      font-size: 1.08rem;
+      color: var(--text-main);
+      font-weight: 500;
+      line-height: 1.6;
     }
 
     .topic-list li {
-      margin-bottom: 0.22rem;
+      margin-bottom: 0.28rem;
+    }
+
+    .topic-list li::marker {
+      color: #1f2937; /* dark emphasis */
+    }
+
+    /* Toggle */
+    .topic-toggle {
+      background: transparent;
+      border: none;
+      color: var(--accent-strong);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 0.2rem;
+    }
+    .topic-toggle:hover {
+      text-decoration: underline;
     }
 
     .topic-footer {
       margin-top: 1rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.86rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.55rem;
+      font-size: 0.82rem;
       color: var(--text-subtle);
-      flex-wrap: wrap;
-      gap: 0.5rem;
     }
 
-    /* Footer – simple */
     footer {
       margin-top: auto;
       padding: 1.9rem 0;
@@ -345,27 +306,12 @@
 
     /* Responsive */
     @media (max-width: 960px) {
-      .topics-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-
     @media (max-width: 800px) {
-      .topics-grid {
-        grid-template-columns: 1fr;
-      }
-      .nav-links {
-        display: none;
-      }
-      .hero-title {
-        font-size: 2.1rem;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .topic-card {
-        min-height: 0;
-      }
+      .topics-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-title { font-size: 2.1rem; }
     }
   </style>
 </head>
@@ -396,33 +342,24 @@
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
 
-          <!-- Logged OUT -->
           <a id="nav-login-btn" href="../auth.html" class="btn-pill">Sign In</a>
           <a id="nav-register-btn" href="../auth.html?mode=signup" class="btn-primary">Register for Free</a>
 
-          <!-- Logged IN -->
-          <button
-            id="nav-signout-btn"
-            type="button"
-            class="btn-pill"
-            style="display:none;"
-          >
-            Sign out
-          </button>
+          <button id="nav-signout-btn" class="btn-pill" style="display:none;">Sign out</button>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- HERO -->
   <main>
-    <!-- HERO -->
     <section class="hero">
       <div class="container">
         <div class="hero-kicker">Mechanics · Physics</div>
-        <h1 class="hero-title">Mechanics: motion, forces, energy, and rotation.</h1>
+        <h1 class="hero-title">Master motion, forces, energy, and rotation.</h1>
         <p class="hero-subtitle">
-          Move from basic kinematics through Newton’s laws, work &amp; energy, momentum, and rotational dynamics —
-          with a dedicated practice section to build real problem-solving power.
+          Mechanics is the backbone of Physics. Build intuition through guided nano-lessons in
+          kinematics, dynamics, energy, momentum, and rotational motion.
         </p>
       </div>
     </section>
@@ -430,26 +367,29 @@
     <!-- TOPICS -->
     <section>
       <div class="container">
+
+        <!-- Heading -->
         <div class="topics-heading">
-          <div class="topics-heading-kicker">Mechanics chapters</div>
-          <h2 class="topics-heading-title">Work through Mechanics in structured blocks</h2>
+          <div class="topics-heading-kicker">Mechanics topics</div>
+          <h2 class="topics-heading-title">Explore the chapters in this track</h2>
           <p class="topics-heading-subtitle">
-            Start with Kinematics, then progress into forces, energy, momentum, and rotation — or jump straight
-            to Practice &amp; Exercises when you want more problems.
+            Move sequentially or jump into any area that you want to strengthen.
           </p>
         </div>
 
+        <!-- GRID START -->
         <div class="topics-grid">
-          <!-- A. KINEMATICS -->
+
+          <!-- KINEMATICS -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Chapter A</div>
               <div class="topic-title">Kinematics</div>
-              <div class="topic-body">
-                Describe how objects move in 1D, 2D, and circular paths before worrying about forces.
+              <div class="topic-body" data-lines="9">
+                Understand motion in 1D, 2D, and circular paths.
                 <ul class="topic-list">
                   <li>Describing motion in one dimension</li>
-                  <li>Constant acceleration in 1D</li>
+                  <li>Constant acceleration equations</li>
                   <li>Two-dimensional motion</li>
                   <li>Projectile motion</li>
                   <li>Relative motion</li>
@@ -458,45 +398,49 @@
               </div>
             </div>
             <div class="topic-footer">
-              <a href="kinematics.html" class="btn-primary">Open Kinematics</a>
-              <span>Build your motion intuition.</span>
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+
+              <a href="kinematics.html" class="btn-primary">Start Kinematics</a>
+              <span>Build intuition for how things move.</span>
             </div>
           </article>
 
-          <!-- B. NEWTONIAN DYNAMICS -->
+          <!-- NEWTONIAN DYNAMICS -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Chapter B</div>
               <div class="topic-title">Newtonian Dynamics</div>
-              <div class="topic-body">
-                Connect forces to changes in motion using Newton’s laws and free-body diagrams.
+              <div class="topic-body" data-lines="9">
+                Explore the laws governing how forces affect motion.
                 <ul class="topic-list">
-                  <li>Newton’s First Law &amp; inertia</li>
+                  <li>Newton’s First Law</li>
                   <li>Newton’s Second Law (F = ma)</li>
                   <li>Newton’s Third Law</li>
                   <li>Free-body diagrams</li>
-                  <li>Friction &amp; drag forces</li>
+                  <li>Friction & drag forces</li>
                   <li>Dynamics of circular motion</li>
-                  <li>Systems of particles (Atwood, pulleys, multi-body)</li>
+                  <li>Systems of particles (Atwood, pulleys)</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
-              <a href="newtonian-dynamics.html" class="btn-primary">Open Dynamics</a>
-              <span>Turn forces into equations.</span>
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+
+              <a href="newtonian-dynamics.html" class="btn-primary">Start Dynamics</a>
+              <span>Make forces intuitive.</span>
             </div>
           </article>
 
-          <!-- C. WORK, ENERGY & POWER -->
+          <!-- WORK, ENERGY & POWER -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Chapter C</div>
               <div class="topic-title">Work, Energy &amp; Power</div>
-              <div class="topic-body">
-                Use energy methods to simplify problems that are messy with forces alone.
+              <div class="topic-body" data-lines="9">
+                See how energy connects motion, forces, and systems.
                 <ul class="topic-list">
-                  <li>Work &amp; the work–energy theorem</li>
-                  <li>Kinetic &amp; potential energy</li>
+                  <li>Work & the Work–Energy Theorem</li>
+                  <li>Kinetic & potential energy</li>
                   <li>Conservative vs non-conservative forces</li>
                   <li>Conservation of mechanical energy</li>
                   <li>Power in mechanical systems</li>
@@ -504,76 +448,84 @@
               </div>
             </div>
             <div class="topic-footer">
-              <a href="work-energy-power.html" class="btn-primary">Open Work &amp; Energy</a>
-              <span>Energy as a problem-solving shortcut.</span>
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+
+              <a href="work-energy-power.html" class="btn-primary">Start Energy</a>
+              <span>Understand why energy rules physics.</span>
             </div>
           </article>
 
-          <!-- D. MOMENTUM & COLLISIONS -->
+          <!-- MOMENTUM & COLLISIONS -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Chapter D</div>
               <div class="topic-title">Momentum &amp; Collisions</div>
-              <div class="topic-body">
-                Analyze interactions where forces act briefly but change motion dramatically.
+              <div class="topic-body" data-lines="9">
+                Momentum reveals how motion transfers between objects.
                 <ul class="topic-list">
-                  <li>Linear momentum &amp; impulse</li>
-                  <li>Conservation of momentum</li>
-                  <li>Elastic &amp; inelastic collisions</li>
+                  <li>Linear momentum & impulse</li>
+                  <li>Momentum conservation</li>
+                  <li>Elastic & inelastic collisions</li>
                   <li>Center of mass</li>
-                  <li>Rocket motion (variable mass systems)</li>
+                  <li>Rocket motion</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
-              <a href="momentum-collisions.html" class="btn-primary">Open Momentum &amp; Collisions</a>
-              <span>Great for multi-object systems.</span>
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+
+              <a href="momentum-collisions.html" class="btn-primary">Start Momentum</a>
+              <span>Essential for impacts and systems.</span>
             </div>
           </article>
 
-          <!-- E. ROTATION & ANGULAR DYNAMICS -->
+          <!-- ROTATION & ANGULAR DYNAMICS -->
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Chapter E</div>
               <div class="topic-title">Rotation &amp; Angular Dynamics</div>
-              <div class="topic-body">
-                Extend straight-line motion ideas to rotating systems and spinning objects.
+              <div class="topic-body" data-lines="9">
+                Rotation explains wheels, planets, and spinning systems.
                 <ul class="topic-list">
                   <li>Rotational kinematics</li>
-                  <li>Torque &amp; rotational dynamics</li>
-                  <li>Rotational inertia &amp; mass distribution</li>
+                  <li>Torque & rotational dynamics</li>
+                  <li>Rotational inertia</li>
                   <li>Rotational kinetic energy</li>
-                  <li>Rolling motion (rotation + translation)</li>
-                  <li>Angular momentum &amp; its conservation</li>
-                  <li>Gyroscopic motion (intro/advanced)</li>
+                  <li>Rolling motion</li>
+                  <li>Angular momentum</li>
+                  <li>Gyroscopic motion</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
-              <a href="rotation-angular-dynamics.html" class="btn-primary">Open Rotation</a>
-              <span>For wheels, tops, and orbits.</span>
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+
+              <a href="rotation-angular-dynamics.html" class="btn-primary">Start Rotation</a>
+              <span>Powerful tools for engineering systems.</span>
             </div>
           </article>
 
-          <!-- F. PRACTICE & EXERCISES -->
+          <!-- PRACTICE & EXERCISES -->
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter F</div>
+              <div class="topic-kicker">Practice</div>
               <div class="topic-title">Practice &amp; Exercises</div>
-              <div class="topic-body">
-                Strengthen your skills with structured Mechanics practice sets and mixed challenges.
+              <div class="topic-body" data-lines="9">
+                Build skills with progressively challenging problems.
                 <ul class="topic-list">
-                  <li>Step-by-step worked examples</li>
-                  <li>Topic-based practice (A–E)</li>
-                  <li>Mixed Mechanics challenge sets</li>
-                  <li>Conceptual reasoning questions</li>
-                  <li>Mastery quizzes &amp; custom AI problems</li>
+                  <li>Warm-up conceptual checks</li>
+                  <li>Skill-building numeric problems</li>
+                  <li>Multi-step challenge problems</li>
+                  <li>Exam-style mixed sets</li>
+                  <li>Real-world applied mechanics problems</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
-              <a href="practice-exercises.html" class="btn-primary">Open Practice &amp; Exercises</a>
-              <span>Drill Mechanics with increasing difficulty.</span>
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+
+              <a href="mechanics-practice.html" class="btn-primary">Open practice sets</a>
+              <span>From simple to advanced applications.</span>
             </div>
           </article>
 
@@ -618,6 +570,47 @@
     if (signOutBtn && typeof signOutUser === 'function') {
       signOutBtn.addEventListener('click', signOutUser);
     }
+
+    /* === MORE/LESS TOGGLE === */
+    document.querySelectorAll('.topic-body').forEach(body => {
+      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+      const toggle = body.parentElement.parentElement.querySelector('.topic-toggle');
+
+      // Use line clamping
+      body.style.display = '-webkit-box';
+      body.style.webkitBoxOrient = 'vertical';
+      body.style.overflow = 'hidden';
+      body.style.webkitLineClamp = maxLines;
+
+      // Measure if content overflows
+      const fullHeight = body.scrollHeight;
+
+      // Temporarily show unclamped to compare heights
+      body.style.webkitLineClamp = 'unset';
+      const expandedHeight = body.getBoundingClientRect().height;
+
+      // Restore clamp
+      body.style.webkitLineClamp = maxLines;
+
+      if (expandedHeight <= fullHeight * 1.01) {
+        // If there's essentially no extra content, hide toggle
+        toggle.style.display = 'none';
+      } else {
+        toggle.style.display = 'inline';
+      }
+
+      toggle.addEventListener('click', () => {
+        const expanded = body.style.webkitLineClamp === 'unset';
+
+        if (expanded) {
+          body.style.webkitLineClamp = maxLines;
+          toggle.textContent = 'More';
+        } else {
+          body.style.webkitLineClamp = 'unset';
+          toggle.textContent = 'Less';
+        }
+      });
+    });
   });
 </script>
 
