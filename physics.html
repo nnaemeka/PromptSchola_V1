@@ -12,214 +12,334 @@
   <style>
     :root {
       --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
       --bg-card: #ffffff;
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.08);
-      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
       --text-strong: #020617;
-      --border-subtle: rgba(209, 213, 219, 0.7);
+      --border-subtle: rgba(209, 213, 219, 0.55);
       --radius-card: 18px;
       --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --font-main: 'Inter', system-ui, sans-serif;
+      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --transition-fast: 0.25s ease-out;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: var(--font-main);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
       color: var(--text-main);
-      line-height: 1.6;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
     }
 
-    a { text-decoration: none; color: inherit; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
     .container {
+      width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0 1.3rem;
+      padding: 0 1.4rem;
     }
 
-    /* NAV */
+    /* Header / Nav (consistent with index.html) */
     header {
-      position: sticky; top: 0; z-index: 40;
+      position: sticky;
+      top: 0;
+      z-index: 40;
       backdrop-filter: blur(14px);
-      background: rgba(249, 250, 251, 0.96);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
 
     .nav {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 0.75rem 0;
     }
 
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
     .logo-mark {
-      width: 34px; height: 34px; border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      border-radius: 40%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #f9fafb;
+      box-shadow: none;
     }
 
     .logo-text span:first-child {
-      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
-    }
-    .logo-text span:last-child {
-      font-size: 0.72rem; color: var(--text-subtle);
+      display: block;
+      font-weight: 700;
+      font-size: 1.02rem;
+      letter-spacing: 0.02em;
+      color: var(--text-strong);
     }
 
-    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
-    .nav-links a { opacity: .9; }
-    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+    .logo-text span:last-child {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.3rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      opacity: 0.9;
+      transition: opacity var(--transition-fast), color var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      color: var(--accent-strong);
+    }
 
     .nav-right {
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
     }
 
     .btn-pill {
       border-radius: var(--radius-pill);
-      padding: 0.45rem 1rem;
-      background: #ffffff;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.86rem;
       border: 1px solid rgba(209, 213, 219, 0.9);
-      font-size: 0.8rem;
+      background: #ffffff;
+      color: var(--text-main);
       cursor: pointer;
-      transition: var(--transition-fast);
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       white-space: nowrap;
     }
+
     .btn-pill:hover {
-      background: #f3f4f6; transform: translateY(-1px);
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
     }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.5rem 1.1rem;
+      padding: 0.6rem 1.3rem;
       border-radius: var(--radius-pill);
+      font-size: 0.9rem;
+      font-weight: 600;
       border: none;
       cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
-      font-size: 0.82rem;
-      font-weight: 600;
+      color: #f9fafb;
       box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: var(--transition-fast);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
       text-decoration: none;
       white-space: nowrap;
     }
+
     .btn-primary:hover {
       transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
     }
 
     /* HERO */
     .hero {
-      padding: 3rem 0 1.5rem;
+      position: relative;
+      overflow: hidden;
+      padding: 3.2rem 0 3.0rem;
       text-align: center;
     }
+
+    /* Radial glow background like index.html */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
+        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
     .hero-kicker {
-      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
       color: var(--text-subtle);
+      margin-bottom: 0.8rem;
     }
+
     .hero-title {
-      font-size: clamp(2rem, 3vw, 2.5rem);
-      font-weight: 800; color: var(--text-strong);
-      margin: 0.35rem 0;
+      font-size: clamp(2.3rem, 3.6vw, 3rem);
+      line-height: 1.12;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 0.8rem;
+      max-width: 40rem;
+      margin-left: auto;
+      margin-right: auto;
     }
+
     .hero-subtitle {
-      font-size: 0.96rem; color: var(--text-muted);
-      max-width: 40rem; margin: 0.4rem auto 0;
+      font-size: 1.1rem;
+      max-width: 40rem;
+      color: var(--text-muted);
+      margin: 0 auto;
     }
 
     /* Section heading above cards */
     .section-heading {
-      margin-top: 2.2rem;
+      margin-top: 2.6rem;
       text-align: center;
     }
+
     .section-heading h2 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-subtle);
-      margin-bottom: 0.4rem;
-    }
-    .section-heading p {
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: var(--text-main);
+      font-size: 1.85rem;      /* match section-title from index */
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 0.45rem;
     }
 
-    /* Cards */
+    .section-heading p {
+      font-size: 1.05rem;      /* match section-subtitle from index */
+      color: var(--text-muted);
+      max-width: 30rem;
+      margin: 0 auto;
+    }
+
+    /* Cards grid (Physics areas) */
     .cards-grid {
-      margin-top: 1.4rem;
+      margin-top: 1.6rem;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.2rem;
+      gap: 1.1rem;
     }
 
     .card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
-      padding: 1.1rem 1.1rem 1.2rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+      padding: 1.1rem 1.15rem 1.25rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      min-height: 190px;
+      min-height: 230px;
+      font-size: 1rem;
     }
 
     .card-header {
       margin-bottom: 0.5rem;
     }
+
     .card-kicker {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--text-subtle);
       margin-bottom: 0.15rem;
     }
+
     .card-title {
-      font-size: 1.02rem;
-      font-weight: 650;
-      color: var(--text-strong);
+      font-size: 1.2rem;    /* match subject-title from index */
+      font-weight: 700;
+      color: var(--text-main);
     }
+
     .card-body {
-      font-size: 0.86rem;
+      font-size: 1rem;
       color: var(--text-muted);
-      margin-top: 0.35rem;
+      margin-top: 0.4rem;
     }
 
     .card-footer {
       margin-top: 0.9rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      font-size: 0.8rem;
+      flex-direction: column;      /* button on top, text under */
+      align-items: flex-start;
+      gap: 0.35rem;
+      font-size: 0.92rem;          /* like subject-cta */
       color: var(--text-subtle);
     }
 
+    .card-footer span {
+      color: var(--text-subtle);
+    }
+
+    /* Footer (match index style) */
     footer {
       margin-top: auto;
-      padding: 1.8rem 0;
-      text-align: center;
-      font-size: 0.8rem;
+      padding: 1.8rem 0 2.1rem;
+      font-size: 0.86rem;
       color: var(--text-subtle);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.9rem;
+      align-items: center;
+      border-top: 1px solid rgba(209, 213, 219, 0.9);
+      padding-top: 0.95rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        padding: 2.6rem 0 2.6rem;
+      }
     }
 
     @media (max-width: 960px) {
@@ -228,11 +348,22 @@
       }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
       .cards-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
-      .nav-links { display: none; }
+      .nav-links {
+        display: none;
+      }
+      .hero-title {
+        font-size: 2.1rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .card {
+        min-height: 0;
+      }
     }
   </style>
 </head>
@@ -244,7 +375,7 @@
   <header>
     <div class="container">
       <div class="nav">
-        <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div class="nav-left">
           <div class="logo-mark">P</div>
           <div class="logo-text">
             <span>PromptSchola</span>
@@ -303,37 +434,33 @@
 
         <div class="cards-grid">
 
-          <!-- Intro: What is Physics? -->
+          <!-- FOUNDATIONS & TOOLS -->
           <article class="card">
-            <div>
-              <div class="card-header">
-                <div class="card-kicker">Start here</div>
-                <div class="card-title">Introduction: What is Physics?</div>
-              </div>
-              <div class="card-body">
-                Get the big picture of what physics studies, how it evolved, and why it underpins
-                almost every modern technology — before diving into equations.
-              </div>
+            <div class="card-header">
+              <div class="card-kicker">Start here</div>
+              <div class="card-title">Foundations &amp; Tools</div>
+            </div>
+            <div class="card-body">
+              Learn the essential ideas used across Physics: what physics studies,
+              the role of units, vectors, and the basic tools needed for problem-solving.
             </div>
             <div class="card-footer">
-              <a href="nano-what-is-physics.html" class="btn-primary">
-                Start introduction
+              <a href="foundations-and-tools.html" class="btn-primary">
+                Start Foundations &amp; Tools
               </a>
-              <span>All 6 steps free for everyone.</span>
+              <span>Includes “What is Physics?” and core math tools.</span>
             </div>
           </article>
 
           <!-- Mechanics -->
           <article class="card">
-            <div>
-              <div class="card-header">
-                <div class="card-kicker">Core area</div>
-                <div class="card-title">Mechanics</div>
-              </div>
-              <div class="card-body">
-                Study motion, forces, and energy: kinematics, Newton’s laws, work &amp; energy,
-                momentum, and more — all as guided nano-lessons.
-              </div>
+            <div class="card-header">
+              <div class="card-kicker">Core area</div>
+              <div class="card-title">Mechanics</div>
+            </div>
+            <div class="card-body">
+              Study motion, forces, and energy — kinematics, Newton’s laws, work, energy, and momentum —
+              in focused, guided nano-lessons.
             </div>
             <div class="card-footer">
               <a href="mechanics.html" class="btn-primary">
@@ -345,81 +472,73 @@
 
           <!-- Electricity & Magnetism -->
           <article class="card">
-            <div>
-              <div class="card-header">
-                <div class="card-kicker">Next step</div>
-                <div class="card-title">Electricity &amp; Magnetism</div>
-              </div>
-              <div class="card-body">
-                Explore charges, fields, circuits, and electromagnetic waves — the physics behind
-                electronics, power grids, and communication.
-              </div>
+            <div class="card-header">
+              <div class="card-kicker">Next step</div>
+              <div class="card-title">Electricity &amp; Magnetism</div>
+            </div>
+            <div class="card-body">
+              Explore charges, fields, circuits, and electromagnetic waves — the physics behind electronics,
+              power grids, and communication systems.
             </div>
             <div class="card-footer">
-              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
-                Coming soon
+              <a href="electricity-magnetism.html" class="btn-primary">
+                Start Electricity &amp; Magnetism
               </a>
-              <span>Planned future track.</span>
+              <span>Build on your Mechanics and Foundations.</span>
             </div>
           </article>
 
           <!-- Waves & Optics -->
           <article class="card">
-            <div>
-              <div class="card-header">
-                <div class="card-kicker">Waves</div>
-                <div class="card-title">Waves &amp; Optics</div>
-              </div>
-              <div class="card-body">
-                Learn how waves behave, how light works, and why interference and diffraction give rise
-                to surprising patterns.
-              </div>
+            <div class="card-header">
+              <div class="card-kicker">Waves</div>
+              <div class="card-title">Waves &amp; Optics</div>
+            </div>
+            <div class="card-body">
+              Learn how waves behave, how light works, and why interference and diffraction create
+              surprising patterns in experiments and technology.
             </div>
             <div class="card-footer">
-              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
-                Coming soon
+              <a href="waves-optics.html" class="btn-primary">
+                Start Waves &amp; Optics
               </a>
-              <span>Future nano-lessons planned.</span>
+              <span>Great follow-up to Mechanics and E&amp;M.</span>
             </div>
           </article>
 
           <!-- Thermal Physics -->
           <article class="card">
-            <div>
-              <div class="card-header">
-                <div class="card-kicker">Energy &amp; heat</div>
-                <div class="card-title">Thermal Physics</div>
-              </div>
-              <div class="card-body">
-                Dive into temperature, heat, and entropy — the physics behind engines, refrigerators,
-                and many natural processes.
-              </div>
+            <div class="card-header">
+              <div class="card-kicker">Energy &amp; heat</div>
+              <div class="card-title">Thermal Physics</div>
+            </div>
+            <div class="card-body">
+              Dive into temperature, heat, and entropy — the physics behind engines, refrigerators,
+              and many natural and industrial processes.
             </div>
             <div class="card-footer">
-              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
-                Coming soon
+              <a href="thermal-physics.html" class="btn-primary">
+                Start Thermal Physics
               </a>
-              <span>Planned for later modules.</span>
+              <span>Connect microscopic motion to macroscopic behavior.</span>
             </div>
           </article>
 
           <!-- Modern Physics -->
           <article class="card">
-            <div>
-              <div class="card-header">
-                <div class="card-kicker">Modern</div>
-                <div class="card-title">Modern Physics</div>
-              </div>
-              <div class="card-body">
-                Quantum ideas, relativity, and nuclear physics — the concepts that power modern
-                technology and research frontiers.
-              </div>
+            <div class="card-header">
+              <div class="card-kicker">Modern</div>
+              <div class="card-title">Modern Physics</div>
+            </div>
+            <div class="card-body">
+              Quantum ideas, relativity, and nuclear physics — concepts that power modern technology
+              and research frontiers in science and engineering.
             </div>
             <div class="card-footer">
-              <a href="#" class="btn-primary" style="opacity:0.65;cursor:not-allowed;">
-                Coming soon
+              <a href="modern-physics.html" class="btn-primary">
+                Start Modern Physics
               </a>
-              <span>Advanced track for later.</span>
+              <span>Advanced track once the core is solid.</span>
             </div>
           </article>
 
@@ -429,7 +548,12 @@
   </main>
 
   <footer>
-    © 2025 PromptSchola. All rights reserved.
+    <div class="container">
+      <div class="footer-inner">
+        <span>© 2025 PromptSchola. All rights reserved.</span>
+        <div></div>
+      </div>
+    </div>
   </footer>
 </div>
 
