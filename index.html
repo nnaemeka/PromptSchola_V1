@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptSchola – Master Physics with Purpose</title>
+  <title>PromptSchola – Master STEM with Purpose</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="PromptSchola helps you master Physics through a 6-step prompt-based mastery system, with more STEM subjects coming soon. Stop guessing what to ask AI and start learning with purpose."
+    content="PromptSchola helps you master Mathematics, Physics, Chemistry and Biology through a 6-step prompt-based mastery system. Stop guessing what to ask AI and start learning STEM with purpose."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -204,6 +204,20 @@
     /* Hero */
     .hero {
       padding: 3.2rem 0 3.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
+        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
     }
 
     .hero-heading {
@@ -695,149 +709,132 @@
         min-height: 0;
       }
     }
-	.hero {
-  position: relative;
-  overflow: hidden;
-}
 
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: -80px;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
-    radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
-  opacity: 0.9;
-  z-index: -1;
-}
-/* =========================================
-   PROMPTSCHOLA TYPOGRAPHY PATCH (BALANCED)
-   Paste after existing styles
-   ========================================= */
+    /* =========================================
+       PROMPTSCHOLA TYPOGRAPHY PATCH (BALANCED)
+       ========================================= */
 
-/* --- Global fine-tunes --- */
-body {
-  /* Keep your base size as agreed */
-  font-size: 16.5px;
-}
+    /* --- Global fine-tunes --- */
+    body {
+      /* Keep your base size as agreed */
+      font-size: 16.5px;
+    }
 
-/* NAV tweaks (slightly clearer) */
-.nav-links {
-  font-size: 0.95rem;
-}
+    /* NAV tweaks (slightly clearer) */
+    .nav-links {
+      font-size: 0.95rem;
+    }
 
-.nav-right {
-  font-size: 0.9rem;
-}
+    .nav-right {
+      font-size: 0.9rem;
+    }
 
-/* --- Hero section --- */
-.hero-title {
-  /* Keep size, just ensure strong presence */
-  font-weight: 800;
-}
+    /* --- Hero section --- */
+    .hero-title {
+      /* Keep size, just ensure strong presence */
+      font-weight: 800;
+    }
 
-.hero-subtitle {
-  font-size: 1.1rem;   /* was 1.05rem */
-}
+    .hero-subtitle {
+      font-size: 1.1rem;   /* was 1.05rem */
+    }
 
-.hero-bullets {
-  font-size: 1rem;     /* was 0.94rem */
-}
+    .hero-bullets {
+      font-size: 1rem;     /* was 0.94rem */
+    }
 
-.hero-note {
-  font-size: 0.88rem;  /* was 0.82rem */
-}
+    .hero-note {
+      font-size: 0.88rem;  /* was 0.82rem */
+    }
 
-/* --- Section headings --- */
-.section-title {
-  font-size: 1.85rem;  /* was 1.5rem */
-  font-weight: 800;    /* make sections visually anchor the page */
-}
+    /* --- Section headings --- */
+    .section-title {
+      font-size: 1.85rem;  /* was 1.5rem */
+      font-weight: 800;    /* make sections visually anchor the page */
+    }
 
-.section-subtitle {
-  font-size: 1.05rem;  /* was 0.96rem */
-}
+    .section-subtitle {
+      font-size: 1.05rem;  /* was 0.96rem */
+    }
 
-/* --- Step cards (How it works) --- */
-.step-card .step-label {
-  font-size: 0.9rem;   /* was 0.82rem */
-  font-weight: 600;
-}
+    /* --- Step cards (How it works) --- */
+    .step-card .step-label {
+      font-size: 0.9rem;   /* was 0.82rem */
+      font-weight: 600;
+    }
 
-.step-badge {
-  font-size: 0.82rem;  /* was 0.74rem */
-  font-weight: 600;
-}
+    .step-badge {
+      font-size: 0.82rem;  /* was 0.74rem */
+      font-weight: 600;
+    }
 
-.step-card h3 {
-  font-size: 1.25rem;  /* was 1.02rem */
-  font-weight: 700;
-}
+    .step-card h3 {
+      font-size: 1.25rem;  /* was 1.02rem */
+      font-weight: 700;
+    }
 
-.step-card p {
-  font-size: 1rem;     /* was ~0.92rem */
-  line-height: 1.7;
-}
+    .step-card p {
+      font-size: 1rem;     /* was ~0.92rem */
+      line-height: 1.7;
+    }
 
-/* --- Subjects cards --- */
-.subject-title {
-  font-size: 1.2rem;   /* was 1.02rem */
-  font-weight: 700;
-}
+    /* --- Subjects cards --- */
+    .subject-title {
+      font-size: 1.2rem;   /* was 1.02rem */
+      font-weight: 700;
+    }
 
-.subject-topline {
-  font-size: 0.98rem;  /* was 0.82rem */
-}
+    .subject-topline {
+      font-size: 0.98rem;  /* was 0.82rem */
+    }
 
-.subject-list {
-  font-size: 1rem;     /* was 0.88rem */
-}
+    .subject-list {
+      font-size: 1rem;     /* was 0.88rem */
+    }
 
-.subject-cta {
-  font-size: 0.92rem;  /* was 0.84rem */
-}
+    .subject-cta {
+      font-size: 0.92rem;  /* was 0.84rem */
+    }
 
-/* --- Why PromptSchola cards --- */
-.why-card h3 {
-  font-size: 1.25rem;  /* was 1.02rem */
-  font-weight: 700;
-}
+    /* --- Why PromptSchola cards --- */
+    .why-card h3 {
+      font-size: 1.25rem;  /* was 1.02rem */
+      font-weight: 700;
+    }
 
-.why-card p {
-  font-size: 1rem;     /* was 0.92rem */
-}
+    .why-card p {
+      font-size: 1rem;     /* was 0.92rem */
+    }
 
-/* --- Pricing section --- */
-.pricing-text {
-  font-size: 1rem;     /* was 0.94rem */
-}
+    /* --- Pricing section --- */
+    .pricing-text {
+      font-size: 1rem;     /* was 0.94rem */
+    }
 
-.pricing-card {
-  font-size: 1rem;     /* overall body in card */
-}
+    .pricing-card {
+      font-size: 1rem;     /* overall body in card */
+    }
 
-.pricing-plan-name {
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
+    .pricing-plan-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
 
-.pricing-price {
-  font-size: 1.8rem;   /* was 1.45rem */
-  font-weight: 800;
-}
+    .pricing-price {
+      font-size: 1.8rem;   /* was 1.45rem */
+      font-weight: 800;
+    }
 
-.pricing-note {
-  font-size: 0.9rem;   /* was 0.82rem */
-}
+    .pricing-note {
+      font-size: 0.9rem;   /* was 0.82rem */
+    }
 
-/* --- Footer --- */
-footer {
-  font-size: 0.86rem;  /* slight bump from 0.84rem */
-}
-
+    /* --- Footer --- */
+    footer {
+      font-size: 0.86rem;  /* slight bump from 0.84rem */
+    }
 
   </style>
 </head>
@@ -850,13 +847,14 @@ footer {
           <div class="logo-mark">P</div>
           <div class="logo-text">
             <span>PromptSchola</span>
-            <span>Prompt-based Physics mastery</span>
+            <span>Prompt-based STEM subjects mastery</span>
           </div>
         </div>
         <nav class="nav-links">
-          <a href="#how-it-works">How it works</a>
-          <a href="#subjects">Subjects roadmap</a>
           <a href="physics.html">Physics</a>
+          <a href="math.html">Math</a>
+          <a href="chemistry.html">Chemistry</a>
+          <a href="biology.html">Biology</a>
           <a href="#pricing">Pricing</a>
         </nav>
         <div class="nav-right">
@@ -901,35 +899,17 @@ footer {
         <div class="hero-heading">
           <div class="hero-kicker">
             <span class="label">New</span>
-            <span>Prompt-based learning for Physics</span>
+            <span>Prompt-based learning for STEM subjects</span>
           </div>
           <h1 class="hero-title">
-            Stop guessing what to ask AI and start mastering Physics with purpose.
+            Stop guessing what to ask AI and start mastering Mathematics, Physics, Chemistry and Biology with purpose.
           </h1>
         </div>
 
         <div class="hero-grid hero-no-image">
           <div class="hero-text">
             <p class="hero-subtitle">
-              PromptSchola turns Physics into a guided 6-step conversation. You always know where to begin,
-              what to ask next, and how to move toward mastery.
-            </p>
-            <ul class="hero-bullets">
-              <li>
-                <span class="hero-dot"></span>
-                Follow a clear 6-step flow instead of random AI questions.
-              </li>
-              <li>
-                <span class="hero-dot"></span>
-                Start free with Orient, Understand, and Apply for every Physics topic.
-              </li>
-            </ul>
-            <div class="hero-actions">
-              <a href="physics.html" class="btn-primary">Start with Physics</a>
-              <a href="#pricing" class="btn-ghost">See Mastery options</a>
-            </div>
-            <p class="hero-note">
-              No credit card needed to explore. Designed for advanced high school and university learners.
+              PromptSchola turns Mathematics, Physics, Chemistry and Biology into a guided 6-step process. You always know where to begin, what to ask next, how to move toward mastery, and are guided through common mistakes, tricky parts and edge cases.
             </p>
           </div>
         </div>
@@ -1023,7 +1003,6 @@ footer {
             </div>
             <div class="subject-cta">
               <a href="physics.html" class="btn-subject-primary">Explore Physics</a>
-              <span class="pill-mini">Available now</span>
             </div>
           </article>
 
@@ -1038,8 +1017,7 @@ footer {
               </ul>
             </div>
             <div class="subject-cta">
-              <span class="link-soft disabled">Coming soon</span>
-              <span class="pill-mini">In roadmap</span>
+              <a href="math.html" class="btn-subject-primary">Explore Math</a>
             </div>
           </article>
 
@@ -1054,8 +1032,7 @@ footer {
               </ul>
             </div>
             <div class="subject-cta">
-              <span class="link-soft disabled">Coming soon</span>
-              <span class="pill-mini">In roadmap</span>
+              <a href="chemistry.html" class="btn-subject-primary">Explore Chemistry</a>
             </div>
           </article>
 
@@ -1070,8 +1047,7 @@ footer {
               </ul>
             </div>
             <div class="subject-cta">
-              <span class="link-soft disabled">Coming soon</span>
-              <span class="pill-mini">In roadmap</span>
+              <a href="biology.html" class="btn-subject-primary">Explore Biology</a>
             </div>
           </article>
         </div>
