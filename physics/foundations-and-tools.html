@@ -6,38 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Foundations & Tools track in PromptSchola: units, vectors, motion graphs, calculus tools, and problem-solving strategies — all built as guided nano-lessons."
+    content="Foundations & Tools track in PromptSchola Physics: units, vectors, motion graphs, calculus tools, problem-solving strategies, and practice sets — all built as guided nano-lessons."
   />
 
+  <!-- Inter font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg-body: #f3f4f6;
-      --bg-surface: #f9fafb;
       --bg-card: #ffffff;
+      --bg-surface: #f9fafb;
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
       --accent-soft: rgba(126, 34, 206, 0.09);
-      --accent-soft2: rgba(129, 140, 248, 0.12);
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
       --text-strong: #020617;
-      --border-subtle: rgba(209, 213, 219, 0.55);
+      --border-subtle: rgba(209, 213, 219, 0.6);
       --radius-card: 18px;
       --radius-pill: 999px;
-      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --transition-fast: 0.25s ease-out;
+      --font-main: 'Inter', system-ui, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--font-main);
@@ -48,29 +43,20 @@
       line-height: 1.7;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    a { text-decoration: none; color: inherit; }
 
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
 
     .container {
       width: 100%;
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0 1.4rem;
+      padding: 0 1.3rem;
     }
 
-    /* Header / Nav – canonical */
+    /* NAV — PromptSchola canonical */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
+      position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
       background: linear-gradient(
         to bottom,
@@ -80,86 +66,52 @@
       );
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
-
     .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       padding: 0.75rem 0;
     }
 
     .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      display:flex;align-items:center;gap:0.75rem;
     }
 
     .logo-mark {
-      width: 34px;
-      height: 34px;
+      width: 34px; height: 34px;
       border-radius: 40%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1rem;
-      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: #fff;
     }
-
     .logo-text span:first-child {
-      display: block;
-      font-weight: 700;
-      font-size: 1.02rem;
+      font-weight: 700; font-size: 1.02rem; color: var(--text-strong);
       letter-spacing: 0.02em;
-      color: var(--text-strong);
     }
-
     .logo-text span:last-child {
-      display: block;
-      font-size: 0.76rem;
-      color: var(--text-subtle);
+      font-size: 0.76rem; color: var(--text-subtle);
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.3rem;
-      font-size: 0.95rem;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      opacity: 0.9;
-      transition: opacity var(--transition-fast), color var(--transition-fast);
-    }
-
-    .nav-links a:hover {
-      opacity: 1;
-      color: var(--accent-strong);
-    }
+    .nav-links { display: flex; gap: 1.3rem; font-size: 0.95rem; align-items:center; }
+    .nav-links a { opacity: 0.9; color: var(--text-muted); transition: opacity var(--transition-fast), color var(--transition-fast); }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); }
 
     .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      display: flex; align-items: center; gap: 0.6rem;
       font-size: 0.9rem;
     }
 
     .btn-pill {
       border-radius: var(--radius-pill);
       padding: 0.45rem 0.95rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
+      border: 1px solid rgba(209,213,219,0.9);
       background: #fff;
       cursor: pointer;
       font-size: 0.86rem;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
+      transition: var(--transition-fast);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
     }
-
     .btn-pill:hover {
       background: #f3f4f6;
       transform: translateY(-1px);
@@ -176,23 +128,20 @@
       cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color: #fff;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      box-shadow: 0 10px 22px rgba(79,70,229,0.35);
+      transition: var(--transition-fast);
       white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
-
     .btn-primary:hover {
       transform: translateY(-1px);
       filter: brightness(1.03);
-      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
-      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+      box-shadow: 0 14px 30px rgba(79,70,229,0.45);
     }
 
-    /* HERO — centered with soft glow */
+    /* HERO — centered + glow */
     .hero {
       position: relative;
       overflow: hidden;
@@ -219,7 +168,6 @@
       color: var(--text-subtle);
       margin-bottom: 0.9rem;
     }
-
     .hero-title {
       font-size: clamp(2.2rem, 3.2vw, 2.8rem);
       font-weight: 800;
@@ -230,7 +178,6 @@
       margin-right: auto;
       line-height: 1.12;
     }
-
     .hero-subtitle {
       font-size: 1.1rem;
       max-width: 40rem;
@@ -244,7 +191,6 @@
       text-align: center;
       max-width: 40rem;
     }
-
     .topics-heading-kicker {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -252,21 +198,19 @@
       color: var(--text-subtle);
       margin-bottom: 0.35rem;
     }
-
     .topics-heading-title {
       font-size: 1.85rem;
       font-weight: 800;
       color: var(--text-strong);
       margin-bottom: 0.4rem;
     }
-
     .topics-heading-subtitle {
       font-size: 1.05rem;
       color: var(--text-muted);
       margin: 0 auto;
     }
 
-    /* TOPIC CARDS */
+    /* GRID */
     .topics-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -284,6 +228,7 @@
       flex-direction: column;
       justify-content: space-between;
       min-height: 210px;
+      position: relative;
     }
 
     .topic-kicker {
@@ -300,79 +245,73 @@
       color: var(--text-strong);
     }
 
+    /* BODY + BULLETS */
     .topic-body {
-      font-size: 1.05rem;
+      font-size: 1.03rem;
       color: var(--text-muted);
       margin-top: 0.4rem;
       line-height: 1.55;
     }
 
-    /* Bullet list — slightly larger bullets/text */
     .topic-list {
       list-style: disc;
-      margin-top: 0.45rem;
+      margin-top: 0.55rem;
       padding-left: 1.35rem;
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      line-height: 1.55;
+      font-size: 1.08rem;
+      color: var(--text-main);
+      font-weight: 500;
+      line-height: 1.6;
     }
 
     .topic-list li {
-      margin-bottom: 0.22rem;
+      margin-bottom: 0.28rem;
+    }
+
+    .topic-list li::marker {
+      color: #1f2937;
+    }
+
+    /* Toggle */
+    .topic-toggle {
+      background: transparent;
+      border: none;
+      color: var(--accent-strong);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 0.2rem;
+    }
+    .topic-toggle:hover {
+      text-decoration: underline;
     }
 
     .topic-footer {
       margin-top: 1rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.55rem;
       font-size: 0.82rem;
       color: var(--text-subtle);
-      flex-wrap: wrap;
-      gap: 0.5rem;
     }
 
-    /* Footer – canonical */
     footer {
       margin-top: auto;
-      padding: 1.8rem 0 2.1rem;
+      padding: 1.9rem 0;
+      text-align: center;
       font-size: 0.86rem;
       color: var(--text-subtle);
     }
 
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 0.9rem;
-      align-items: center;
-      border-top: 1px solid rgba(209, 213, 219, 0.9);
-      padding-top: 0.95rem;
-    }
-
     /* Responsive */
     @media (max-width: 960px) {
-      .topics-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-
     @media (max-width: 800px) {
-      .topics-grid {
-        grid-template-columns: 1fr;
-      }
-      .nav-links {
-        display: none;
-      }
-      .hero-title {
-        font-size: 2.1rem;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .topic-card {
-        min-height: 0;
-      }
+      .topics-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-title { font-size: 2.1rem; }
     }
   </style>
 </head>
@@ -393,21 +332,19 @@
         </div>
 
         <nav class="nav-links">
-          <a href="physics.html">Physics</a>
-          <a href="math.html">Math</a>
-          <a href="chemistry.html">Chemistry</a>
-          <a href="biology.html">Biology</a>
-          <a href="pricing.html">Pricing</a>
+          <a href="../physics.html">Physics</a>
+          <a href="../math.html">Math</a>
+          <a href="../chemistry.html">Chemistry</a>
+          <a href="../biology.html">Biology</a>
+          <a href="../pricing.html">Pricing</a>
         </nav>
 
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
 
-          <!-- Logged OUT -->
-          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <a id="nav-login-btn" href="../auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="../auth.html?mode=signup" class="btn-primary">Register for Free</a>
 
-          <!-- Logged IN -->
           <button id="nav-signout-btn" class="btn-pill" style="display:none;">Sign out</button>
         </div>
       </div>
@@ -422,7 +359,7 @@
         <h1 class="hero-title">Build the core tools you’ll use in all of Physics.</h1>
         <p class="hero-subtitle">
           Start with units, vectors, graphs, and calculus-based tools — the foundation for Mechanics,
-          Electricity &amp; Magnetism, Waves, Thermodynamics, and Modern Physics.
+          Electricity &amp; Magnetism, Waves, Thermal Physics, and Modern Physics.
         </p>
       </div>
     </section>
@@ -434,7 +371,7 @@
         <!-- Centered heading -->
         <div class="topics-heading">
           <div class="topics-heading-kicker">Foundations &amp; Tools topics</div>
-          <h2 class="topics-heading-title">Sections in Foundations & Tools</h2>
+          <h2 class="topics-heading-title">Core foundations in this track</h2>
           <p class="topics-heading-subtitle">
             Work through these in order for a strong base, or jump directly to the tools you need right now.
           </p>
@@ -448,8 +385,8 @@
             <div>
               <div class="topic-kicker">Start here</div>
               <div class="topic-title">Units, Dimensions &amp; Measurement</div>
-              <div class="topic-body">
-                The language of physics. Learn how quantities are defined, measured, and combined.
+              <div class="topic-body" data-lines="9">
+                The language of physics: how quantities are defined, measured, and combined.
                 <ul class="topic-list">
                   <li>What is physics</li>
                   <li>Physical quantities &amp; SI units</li>
@@ -461,6 +398,7 @@
               </div>
             </div>
             <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
               <a href="units-dimensions-measurement.html" class="btn-primary">Start topic</a>
               <span>Multiple nano-lessons inside.</span>
             </div>
@@ -471,8 +409,8 @@
             <div>
               <div class="topic-kicker">Core tool</div>
               <div class="topic-title">Scalars &amp; Vectors</div>
-              <div class="topic-body">
-                Learn how to represent physical quantities in 2D and 3D.
+              <div class="topic-body" data-lines="9">
+                Represent physical quantities in 2D and 3D so you can analyze real systems.
                 <ul class="topic-list">
                   <li>Scalars vs vectors</li>
                   <li>Vector components (2D &amp; 3D)</li>
@@ -484,6 +422,7 @@
               </div>
             </div>
             <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
               <a href="scalars-and-vectors.html" class="btn-primary">Start topic</a>
               <span>Essential for Mechanics and E&amp;M.</span>
             </div>
@@ -494,18 +433,19 @@
             <div>
               <div class="topic-kicker">Core representation</div>
               <div class="topic-title">Motion Graphs &amp; Representations</div>
-              <div class="topic-body">
-                Interpret physical motion from graphs — a skill used everywhere in physics.
+              <div class="topic-body" data-lines="9">
+                Learn to read and create graphs that describe motion in time.
                 <ul class="topic-list">
                   <li>Position–time graphs</li>
                   <li>Velocity–time graphs</li>
                   <li>Acceleration–time graphs</li>
                   <li>Meaning of slopes and areas</li>
-                  <li>Motion interpretation from graphs</li>
+                  <li>Interpreting motion from graphs</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
               <a href="motion-graphs-representations.html" class="btn-primary">Start topic</a>
               <span>Graph-based nano-lessons.</span>
             </div>
@@ -516,8 +456,8 @@
             <div>
               <div class="topic-kicker">Mathematical tool</div>
               <div class="topic-title">Calculus Tools for Physics</div>
-              <div class="topic-body">
-                Use derivatives and integrals to build motion models.
+              <div class="topic-body" data-lines="9">
+                Use derivatives and integrals to build motion and field models.
                 <ul class="topic-list">
                   <li>Derivatives in motion (v = dx/dt, a = dv/dt)</li>
                   <li>Integrals in motion (area under curves)</li>
@@ -527,6 +467,7 @@
               </div>
             </div>
             <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
               <a href="calculus-tools-physics.html" class="btn-primary">Start topic</a>
               <span>Needed for Mechanics &amp; E&amp;M.</span>
             </div>
@@ -537,8 +478,8 @@
             <div>
               <div class="topic-kicker">Skillset</div>
               <div class="topic-title">Problem-Solving Strategies in Physics</div>
-              <div class="topic-body">
-                A systematic approach for any physics problem.
+              <div class="topic-body" data-lines="9">
+                A systematic approach you can reuse on any physics problem.
                 <ul class="topic-list">
                   <li>Identifying knowns and unknowns</li>
                   <li>Representing systems with diagrams</li>
@@ -548,8 +489,33 @@
               </div>
             </div>
             <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
               <a href="problem-solving-strategies.html" class="btn-primary">Start topic</a>
               <span>Universal method.</span>
+            </div>
+          </article>
+
+          <!-- Practice & Exercises -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Practice</div>
+              <div class="topic-title">Practice &amp; Exercises</div>
+              <div class="topic-body" data-lines="9">
+                Reinforce foundations with mixed problems and quick checks.
+                <ul class="topic-list">
+                  <li>Units &amp; dimensional analysis drills</li>
+                  <li>Vector practice (components &amp; operations)</li>
+                  <li>Graph-reading and interpretation sets</li>
+                  <li>Error, uncertainty &amp; significant-figure exercises</li>
+                  <li>Mini mixed sets connecting multiple tools</li>
+                  <li>Exam-style data interpretation questions</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="foundations-practice.html" class="btn-primary">Open practice sets</a>
+              <span>Move from familiarity to fluency.</span>
             </div>
           </article>
 
@@ -559,18 +525,13 @@
   </main>
 
   <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <span>© 2025 PromptSchola. All rights reserved.</span>
-        <div></div>
-      </div>
-    </div>
+    © 2025 PromptSchola. All rights reserved.
   </footer>
 </div>
 
 <!-- Supabase + auth helpers -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
+<script src="../auth.js"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
@@ -599,6 +560,52 @@
     if (signOutBtn && typeof signOutUser === 'function') {
       signOutBtn.addEventListener('click', signOutUser);
     }
+
+    /* === MORE/LESS TOGGLE, PER CARD === */
+    document.querySelectorAll('.topic-card').forEach(card => {
+      const body = card.querySelector('.topic-body');
+      const toggle = card.querySelector('.topic-toggle');
+      if (!body || !toggle) return;
+
+      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+
+      // Base clamp styles
+      body.style.display = '-webkit-box';
+      body.style.webkitBoxOrient = 'vertical';
+      body.style.overflow = 'hidden';
+
+      // Measure clamped vs full height to decide if toggle is needed
+      body.style.webkitLineClamp = maxLines;
+      const clampedHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = 'unset';
+      const fullHeight = body.getBoundingClientRect().height;
+
+      // Restore clamped
+      body.style.webkitLineClamp = maxLines;
+
+      if (fullHeight <= clampedHeight + 1) {
+        // No extra content: hide toggle
+        toggle.style.display = 'none';
+        return;
+      }
+
+      // There is more content: show toggle
+      toggle.style.display = 'inline';
+      toggle.textContent = 'More';
+
+      let expanded = false;
+      toggle.addEventListener('click', () => {
+        expanded = !expanded;
+        if (expanded) {
+          body.style.webkitLineClamp = 'unset';
+          toggle.textContent = 'Less';
+        } else {
+          body.style.webkitLineClamp = maxLines;
+          toggle.textContent = 'More';
+        }
+      });
+    });
   });
 </script>
 
