@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Foundations &amp; Tools – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Foundations & Tools track in PromptSchola: units, vectors, motion graphs, calculus tools, and problem-solving strategies — all built as guided nano-lessons."
+  />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      font-size: 16.5px;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.4rem;
+    }
+
+    /* Header / Nav – canonical */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .logo-text span:first-child {
+      display: block;
+      font-weight: 700;
+      font-size: 1.02rem;
+      letter-spacing: 0.02em;
+      color: var(--text-strong);
+    }
+
+    .logo-text span:last-child {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.3rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      opacity: 0.9;
+      transition: opacity var(--transition-fast), color var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      color: var(--accent-strong);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 0.95rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.86rem;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+    }
+
+    /* HERO — centered with soft glow */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 3.2rem 0 3rem;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
+        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .hero-kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 0.6rem;
+      max-width: 40rem;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.12;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      max-width: 40rem;
+      margin: 0 auto;
+      color: var(--text-muted);
+    }
+
+    /* TOPICS HEADING — centered */
+    .topics-heading {
+      margin: 2.8rem auto 1.7rem;
+      text-align: center;
+      max-width: 40rem;
+    }
+
+    .topics-heading-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+      margin-bottom: 0.35rem;
+    }
+
+    .topics-heading-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 0.4rem;
+    }
+
+    .topics-heading-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin: 0 auto;
+    }
+
+    /* TOPIC CARDS */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.4rem;
+    }
+
+    .topic-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1.1rem 1.15rem 1.2rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 210px;
+    }
+
+    .topic-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+      margin-bottom: 0.2rem;
+    }
+
+    .topic-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-strong);
+    }
+
+    .topic-body {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      line-height: 1.55;
+    }
+
+    /* Bullet list — slightly larger bullets/text */
+    .topic-list {
+      list-style: disc;
+      margin-top: 0.45rem;
+      padding-left: 1.35rem;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .topic-list li {
+      margin-bottom: 0.22rem;
+    }
+
+    .topic-footer {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* Footer – canonical */
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0 2.1rem;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.9rem;
+      align-items: center;
+      border-top: 1px solid rgba(209, 213, 219, 0.9);
+      padding-top: 0.95rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .topics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 800px) {
+      .topics-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+      .hero-title {
+        font-size: 2.1rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topic-card {
+        min-height: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="physics.html">Physics</a>
+          <a href="math.html">Math</a>
+          <a href="chemistry.html">Chemistry</a>
+          <a href="biology.html">Biology</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <!-- Logged OUT -->
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <!-- Logged IN -->
+          <button id="nav-signout-btn" class="btn-pill" style="display:none;">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Foundations &amp; Tools · Physics</div>
+        <h1 class="hero-title">Build the core tools you’ll use in all of Physics.</h1>
+        <p class="hero-subtitle">
+          Start with units, vectors, graphs, and calculus-based tools — the foundation for Mechanics,
+          Electricity &amp; Magnetism, Waves, Thermodynamics, and Modern Physics.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICS -->
+    <section>
+      <div class="container">
+
+        <!-- Centered heading -->
+        <div class="topics-heading">
+          <div class="topics-heading-kicker">Foundations &amp; Tools topics</div>
+          <h2 class="topics-heading-title">Sections in Foundations & Tools</h2>
+          <p class="topics-heading-subtitle">
+            Work through these in order for a strong base, or jump directly to the tools you need right now.
+          </p>
+        </div>
+
+        <!-- GRID -->
+        <div class="topics-grid">
+
+          <!-- Units, Dimensions, Measurement -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Start here</div>
+              <div class="topic-title">Units, Dimensions &amp; Measurement</div>
+              <div class="topic-body">
+                The language of physics. Learn how quantities are defined, measured, and combined.
+                <ul class="topic-list">
+                  <li>What is physics</li>
+                  <li>Physical quantities &amp; SI units</li>
+                  <li>Derived units</li>
+                  <li>Dimensional analysis</li>
+                  <li>Precision, accuracy, and uncertainty</li>
+                  <li>Significant figures</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <a href="units-dimensions-measurement.html" class="btn-primary">Start topic</a>
+              <span>Multiple nano-lessons inside.</span>
+            </div>
+          </article>
+
+          <!-- Scalars & Vectors -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Core tool</div>
+              <div class="topic-title">Scalars &amp; Vectors</div>
+              <div class="topic-body">
+                Learn how to represent physical quantities in 2D and 3D.
+                <ul class="topic-list">
+                  <li>Scalars vs vectors</li>
+                  <li>Vector components (2D &amp; 3D)</li>
+                  <li>Vector addition and subtraction</li>
+                  <li>Unit vectors</li>
+                  <li>Dot product (scalar product)</li>
+                  <li>Cross product (introductory)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <a href="scalars-and-vectors.html" class="btn-primary">Start topic</a>
+              <span>Essential for Mechanics and E&amp;M.</span>
+            </div>
+          </article>
+
+          <!-- Motion Graphs & Representations -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Core representation</div>
+              <div class="topic-title">Motion Graphs &amp; Representations</div>
+              <div class="topic-body">
+                Interpret physical motion from graphs — a skill used everywhere in physics.
+                <ul class="topic-list">
+                  <li>Position–time graphs</li>
+                  <li>Velocity–time graphs</li>
+                  <li>Acceleration–time graphs</li>
+                  <li>Meaning of slopes and areas</li>
+                  <li>Motion interpretation from graphs</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <a href="motion-graphs-representations.html" class="btn-primary">Start topic</a>
+              <span>Graph-based nano-lessons.</span>
+            </div>
+          </article>
+
+          <!-- Calculus Tools for Physics -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Mathematical tool</div>
+              <div class="topic-title">Calculus Tools for Physics</div>
+              <div class="topic-body">
+                Use derivatives and integrals to build motion models.
+                <ul class="topic-list">
+                  <li>Derivatives in motion (v = dx/dt, a = dv/dt)</li>
+                  <li>Integrals in motion (area under curves)</li>
+                  <li>Using calculus to build motion equations</li>
+                  <li>Simple modeling with differential equations</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <a href="calculus-tools-physics.html" class="btn-primary">Start topic</a>
+              <span>Needed for Mechanics &amp; E&amp;M.</span>
+            </div>
+          </article>
+
+          <!-- Problem-Solving Strategies -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Skillset</div>
+              <div class="topic-title">Problem-Solving Strategies in Physics</div>
+              <div class="topic-body">
+                A systematic approach for any physics problem.
+                <ul class="topic-list">
+                  <li>Identifying knowns and unknowns</li>
+                  <li>Representing systems with diagrams</li>
+                  <li>Modeling assumptions</li>
+                  <li>Systematic multi-step problem solving</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <a href="problem-solving-strategies.html" class="btn-primary">Start topic</a>
+              <span>Universal method.</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span>© 2025 PromptSchola. All rights reserved.</span>
+        <div></div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- Supabase + auth helpers -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
+  });
+</script>
+
+</body>
+</html>
