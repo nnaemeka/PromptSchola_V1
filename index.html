@@ -851,11 +851,12 @@
           </div>
         </div>
         <nav class="nav-links">
-          <a href="physics/physics.html">Physics</a>
-          <a href="math.html">Math</a>
-          <a href="chemistry.html">Chemistry</a>
-          <a href="biology.html">Biology</a>
-          <a href="#pricing">Pricing</a>
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
         </nav>
         <div class="nav-right">
           <!-- Filled by auth.js / script when logged in -->
@@ -864,14 +865,14 @@
           <!-- 🔹 Shown when logged OUT -->
           <a
             id="nav-login-btn"
-            href="auth.html"
+            href="/auth.html"
             class="btn-pill"
           >
             Sign In
           </a>
           <a
             id="nav-register-btn"
-            href="auth.html?mode=signup"
+            href="/auth.html?mode=signup"
             class="btn-primary"
           >
             Register for Free
@@ -883,7 +884,7 @@
             type="button"
             class="btn-pill"
             style="display:none;"
-            onclick="signOutUser()"
+            onclick="signOutUser && signOutUser()"
           >
             Sign out
           </button>
@@ -1002,7 +1003,7 @@
               </ul>
             </div>
             <div class="subject-cta">
-              <a href="physics/physics.html" class="btn-subject-primary">Explore Physics</a>
+              <a href="/physics/physics.html" class="btn-subject-primary">Explore Physics</a>
             </div>
           </article>
 
@@ -1017,7 +1018,7 @@
               </ul>
             </div>
             <div class="subject-cta">
-              <a href="math/math.html" class="btn-subject-primary">Explore Math</a>
+              <a href="/math/math.html" class="btn-subject-primary">Explore Math</a>
             </div>
           </article>
 
@@ -1032,7 +1033,7 @@
               </ul>
             </div>
             <div class="subject-cta">
-              <a href="chemistry/chemistry.html" class="btn-subject-primary">Explore Chemistry</a>
+              <a href="/chemistry/chemistry.html" class="btn-subject-primary">Explore Chemistry</a>
             </div>
           </article>
 
@@ -1047,7 +1048,7 @@
               </ul>
             </div>
             <div class="subject-cta">
-              <a href="biology/biology.html" class="btn-subject-primary">Explore Biology</a>
+              <a href="/biology/biology.html" class="btn-subject-primary">Explore Biology</a>
             </div>
           </article>
         </div>
@@ -1117,7 +1118,7 @@
             <div class="pricing-note">
               Final pricing will be clearly shown in your account before you subscribe. You stay in control.
             </div>
-            <button class="btn-full" onclick="window.location.href='pricing.html'">
+            <button class="btn-full" onclick="window.location.href='/pricing.html'">
               View full pricing details
             </button>
           </div>
@@ -1134,7 +1135,7 @@
           <a href="#how-it-works">How it works</a>
           <a href="#subjects">Subjects roadmap</a>
           <a href="#pricing">Pricing</a>
-          <a href="auth.html">Account</a>
+          <a href="/auth.html">Account</a>
         </div>
       </div>
     </div>
@@ -1145,12 +1146,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <!-- 🔹 Shared auth helpers (supabaseClient, getCurrentUser, updateNavUserDisplay, signOutUser, etc.) -->
-<script src="auth.js"></script>
+<script src="/auth.js"></script>
 
 <!-- 🔹 Initialize nav user display & toggle buttons -->
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
-    // Keep your existing label behavior
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
     }
@@ -1163,12 +1163,10 @@
       const user = await getCurrentUser();
 
       if (user) {
-        // Logged in: show Sign out, hide Sign in / Register
         if (signoutBtn) signoutBtn.style.display = 'inline-flex';
         if (loginBtn) loginBtn.style.display = 'none';
         if (registerBtn) registerBtn.style.display = 'none';
       } else {
-        // Logged out: show Sign in / Register, hide Sign out
         if (signoutBtn) signoutBtn.style.display = 'none';
         if (loginBtn) loginBtn.style.display = 'inline-flex';
         if (registerBtn) registerBtn.style.display = 'inline-flex';
