@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Forces &amp; Newton’s Laws – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Forces & Newton’s Laws track in PromptSchola Physics: interactions, Newton’s laws, free-body diagrams, friction, inclines, circular dynamics, pulleys, and non-inertial frames — built as guided nano-lessons."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg-body:#f3f4f6;--bg-card:#ffffff;--bg-surface:#f9fafb;--accent:#7e22ce;--accent-strong:#6d28d9;--accent-soft:rgba(126,34,206,.09);--accent-soft2:rgba(129,140,248,.12);--text-main:#111827;--text-muted:#4b5563;--text-subtle:#9ca3af;--text-strong:#020617;--border-subtle:rgba(209,213,219,.6);--radius-card:18px;--radius-pill:999px;--shadow-card:0 16px 35px rgba(15,23,42,.12);--transition-fast:.25s ease-out;--font-main:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-main);background:radial-gradient(circle at top,#e5e7eb,#f9fafb 45%,#f3f4f6);font-size:16.5px;color:var(--text-main);-webkit-font-smoothing:antialiased;line-height:1.7}
+    a{text-decoration:none;color:inherit}
+    .page{min-height:100vh;display:flex;flex-direction:column}
+    .container{width:100%;max-width:1120px;margin:0 auto;padding:0 1.4rem}
+    header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:linear-gradient(to bottom,rgba(249,250,251,.96),rgba(249,250,251,.94),rgba(249,250,251,.9));border-bottom:1px solid rgba(209,213,219,.9)}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}
+    .nav-left{display:flex;align-items:center;gap:.75rem}
+    .logo-mark{width:34px;height:34px;border-radius:40%;background:radial-gradient(circle at 30% 30%,var(--accent),var(--accent-strong));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff}
+    .logo-text span:first-child{display:block;font-weight:700;font-size:1.02rem;color:var(--text-strong);letter-spacing:.02em}
+    .logo-text span:last-child{display:block;font-size:.76rem;color:var(--text-subtle)}
+    .nav-links{display:flex;gap:1.3rem;font-size:.95rem;align-items:center}
+    .nav-links a{opacity:.9;color:var(--text-muted);transition:opacity var(--transition-fast),color var(--transition-fast)}
+    .nav-links a:hover{opacity:1;color:var(--accent-strong)}
+    .nav-right{display:flex;align-items:center;gap:.6rem;font-size:.9rem}
+    .btn-pill{border-radius:var(--radius-pill);padding:.45rem .95rem;border:1px solid rgba(209,213,219,.9);background:#fff;cursor:pointer;font-size:.86rem;transition:background var(--transition-fast),transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+    .btn-pill:hover{background:#f3f4f6;transform:translateY(-1px);border-color:rgba(156,163,175,.9);box-shadow:0 8px 20px rgba(148,163,184,.35)}
+    .btn-primary{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);padding:.6rem 1.3rem;font-size:.9rem;font-weight:600;border:none;cursor:pointer;background:radial-gradient(circle at 30% 0%,#a855f7,#7e22ce,#4c1d95);color:#fff;box-shadow:0 10px 22px rgba(79,70,229,.35);transition:transform var(--transition-fast),filter var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast);white-space:nowrap;text-decoration:none}
+    .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.03);box-shadow:0 14px 30px rgba(79,70,229,.45);background:radial-gradient(circle at 30% 0%,#c084fc,#7e22ce,#4c1d95)}
+    .hero{position:relative;overflow:hidden;padding:3.2rem 0 3rem;text-align:center}
+    .hero::before{content:"";position:absolute;inset:-80px;pointer-events:none;background:radial-gradient(circle at 10% 0%,rgba(129,140,248,.40),transparent 60%),radial-gradient(circle at 90% 40%,rgba(168,85,247,.35),transparent 55%);opacity:.9;z-index:-1}
+    .hero-kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:.9rem}
+    .hero-title{font-size:clamp(2.2rem,3.2vw,2.8rem);font-weight:800;color:var(--text-strong);margin-bottom:.6rem;max-width:46rem;margin-left:auto;margin-right:auto;line-height:1.12}
+    .hero-subtitle{font-size:1.1rem;max-width:46rem;margin:0 auto;color:var(--text-muted)}
+    .topics-heading{margin:2.8rem auto 1.7rem;text-align:center;max-width:46rem}
+    .topics-heading-kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.35rem}
+    .topics-heading-title{font-size:1.85rem;font-weight:800;color:var(--text-strong);margin-bottom:.4rem}
+    .topics-heading-subtitle{font-size:1.05rem;color:var(--text-muted);margin:0 auto}
+    .topics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin-top:1.4rem}
+    .topic-card{background:var(--bg-card);border-radius:var(--radius-card);border:1px solid rgba(209,213,219,.55);padding:1.1rem 1.15rem 1.2rem;box-shadow:0 16px 35px rgba(15,23,42,.12);display:flex;flex-direction:column;justify-content:space-between;min-height:210px;position:relative}
+    .topic-kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.2rem}
+    .topic-title{font-size:1.2rem;font-weight:700;color:var(--text-strong)}
+    .topic-body{font-size:.96rem;color:var(--text-muted);margin-top:.45rem;line-height:1.65}
+    .topic-list{list-style:none;margin-top:.55rem;padding-left:0;font-size:1rem;color:var(--text-main);font-weight:400;line-height:1.6}
+    .topic-list li{margin-bottom:.25rem}
+    .topic-list li::before{content:"•";display:inline-block;width:1.1rem;color:var(--text-subtle)}
+    .topic-toggle{background:transparent;border:none;color:var(--accent-strong);font-size:.9rem;font-weight:600;cursor:pointer;padding:0;margin-top:.2rem}
+    .topic-toggle:hover{text-decoration:underline}
+    .topic-footer{margin-top:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;font-size:.82rem;color:var(--text-subtle)}
+    footer{margin-top:auto;padding:1.9rem 0;text-align:center;font-size:.86rem;color:var(--text-subtle)}
+    @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Dynamics · Physics</div>
+        <h1 class="hero-title">Forces &amp; Newton’s Laws</h1>
+        <p class="hero-subtitle">
+          Learn how forces cause (or don’t cause) motion: interactions, Newton’s laws, free-body diagrams,
+          friction, inclines, circular dynamics, pulleys, and frames of reference.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="topics-heading">
+          <div class="topics-heading-kicker">Dynamics topics</div>
+          <h2 class="topics-heading-title">Core topics in this track</h2>
+          <p class="topics-heading-subtitle">
+            Work through these in order for a clean Newton’s-law workflow — then practice until it feels automatic.
+          </p>
+        </div>
+
+        <div class="topics-grid">
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Start here</div>
+              <div class="topic-title">Forces and Interactions</div>
+              <div class="topic-body" data-lines="9">
+                What a force is, how forces come in interactions, and how to define your system.
+                <ul class="topic-list">
+                  <li>Contact vs non-contact forces</li>
+                  <li>System vs surroundings</li>
+                  <li>Force diagrams vs free-body diagrams</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="forces-and-interactions.html" class="btn-primary">Start topic</a>
+              <span>Sets up everything else.</span>
+            </div>
+          </article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Law 1</div><div class="topic-title">Newton’s First Law (Inertia)</div><div class="topic-body" data-lines="9">What zero net force really means, and why motion doesn’t “need a force” to keep going.<ul class="topic-list"><li>Inertia &amp; inertial frames</li><li>Zero net force motion</li><li>Common misconceptions</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="newtons-first-law.html" class="btn-primary">Start topic</a><span>Fix the intuition.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Law 2</div><div class="topic-title">Newton’s Second Law (F = ma)</div><div class="topic-body" data-lines="9">Turn forces into equations of motion in 1D and 2D.<ul class="topic-list"><li>Net force and acceleration</li><li>Vector nature of F and a</li><li>Solving equations of motion</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="newtons-second-law.html" class="btn-primary">Start topic</a><span>The main problem-solving engine.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Law 3</div><div class="topic-title">Newton’s Third Law</div><div class="topic-body" data-lines="9">Action–reaction pairs: equal and opposite, but on different objects.<ul class="topic-list"><li>Correct force pairs</li><li>Forces on different objects</li><li>Examples: walking, pushing</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="newtons-third-law.html" class="btn-primary">Start topic</a><span>Stop the “forces cancel” confusion.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Skill</div><div class="topic-title">Free-Body Diagrams</div><div class="topic-body" data-lines="9">Isolate one object and translate forces into equations cleanly.<ul class="topic-list"><li>Identify all forces</li><li>Choose axes</li><li>Write ΣF equations</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="free-body-diagrams.html" class="btn-primary">Start topic</a><span>Your universal method.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Forces</div><div class="topic-title">Types of Forces</div><div class="topic-body" data-lines="9">Recognize the major forces and what they look like in FBDs.<ul class="topic-list"><li>Gravity, normal, tension</li><li>Friction, drag (conceptual)</li><li>When each appears</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="types-of-forces.html" class="btn-primary">Start topic</a><span>Build your force vocabulary.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Concept</div><div class="topic-title">Weight vs Mass</div><div class="topic-body" data-lines="9">Mass is inertia; weight is a force (and can change).<ul class="topic-list"><li>Weight as a force</li><li>Apparent weight</li><li>Different environments</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="weight-vs-mass.html" class="btn-primary">Start topic</a><span>Commonly confused.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Balance</div><div class="topic-title">Equilibrium and Net Force</div><div class="topic-body" data-lines="9">Solve problems where ΣF = 0 (static or constant-velocity).<ul class="topic-list"><li>Conditions for equilibrium</li><li>Static vs dynamic</li><li>Applications</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="equilibrium-and-net-force.html" class="btn-primary">Start topic</a><span>Many real structures rely on this.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Classic</div><div class="topic-title">Inclined Planes</div><div class="topic-body" data-lines="9">Resolve forces parallel/perpendicular to the slope and solve motion.<ul class="topic-list"><li>Normal force on incline</li><li>Motion up/down</li><li>Inclines with friction</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="inclined-planes.html" class="btn-primary">Start topic</a><span>The “axes choice” masterclass.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Resistance</div><div class="topic-title">Friction</div><div class="topic-body" data-lines="9">Static vs kinetic friction and how to model them correctly.<ul class="topic-list"><li>Coefficients</li><li>Horizontal &amp; inclined surfaces</li><li>Energy loss ideas</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="friction.html" class="btn-primary">Start topic</a><span>Where many mistakes happen.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Curved motion</div><div class="topic-title">Circular Motion (Dynamics)</div><div class="topic-body" data-lines="9">Centripetal acceleration needs a net inward force from something real.<ul class="topic-list"><li>Sources of centripetal force</li><li>Constant-speed circles</li><li>Banking / vertical circle intro</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="circular-motion-dynamics.html" class="btn-primary">Start topic</a><span>Preps you for gravitation &amp; rotation.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Systems</div><div class="topic-title">Pulley Systems</div><div class="topic-body" data-lines="9">Connected bodies, shared constraints, and tension modeling.<ul class="topic-list"><li>Atwood machine</li><li>Multiple-object systems</li><li>Ideal vs non-ideal pulleys</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="pulley-systems.html" class="btn-primary">Start topic</a><span>System thinking level-up.</span></div></article>
+
+          <article class="topic-card"><div><div class="topic-kicker">Intro</div><div class="topic-title">Non-Inertial Frames</div><div class="topic-body" data-lines="9">What changes when your frame accelerates, and why “pseudo-forces” show up (conceptually).<ul class="topic-list"><li>Accelerating frames</li><li>Pseudo-forces (conceptual)</li><li>Everyday examples</li></ul></div></div><div class="topic-footer"><button type="button" class="topic-toggle" style="display:none;">More</button><a href="non-inertial-frames.html" class="btn-primary">Start topic</a><span>Build intuition carefully.</span></div></article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+
+    if (signOutBtn && typeof signOutUser === 'function') signOutBtn.addEventListener('click', signOutUser);
+
+    document.querySelectorAll('.topic-card').forEach(card => {
+      const body = card.querySelector('.topic-body');
+      const toggle = card.querySelector('.topic-toggle');
+      if (!body || !toggle) return;
+
+      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+
+      body.style.display = '-webkit-box';
+      body.style.webkitBoxOrient = 'vertical';
+      body.style.overflow = 'hidden';
+
+      body.style.webkitLineClamp = maxLines;
+      const clampedHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = 'unset';
+      const fullHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = maxLines;
+
+      if (fullHeight <= clampedHeight + 1) { toggle.style.display = 'none'; return; }
+
+      toggle.style.display = 'inline';
+      toggle.textContent = 'More';
+
+      let expanded = false;
+      toggle.addEventListener('click', () => {
+        expanded = !expanded;
+        body.style.webkitLineClamp = expanded ? 'unset' : maxLines;
+        toggle.textContent = expanded ? 'Less' : 'More';
+      });
+    });
+  });
+</script>
+</body>
+</html>
