@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Work Done by a Force – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Work Done by a Force in PromptSchola Physics: line integral definition, constant-force work, directional dependence, perpendicular/zero work, plus practice." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body:#f3f4f6; --bg-card:#ffffff; --bg-surface:#f9fafb;
+      --accent:#7e22ce; --accent-strong:#6d28d9; --accent-soft:rgba(126,34,206,.09); --accent-soft2:rgba(129,140,248,.12);
+      --text-main:#111827; --text-muted:#4b5563; --text-subtle:#9ca3af; --text-strong:#020617;
+      --border-subtle:rgba(209,213,219,.6); --radius-card:18px; --radius-pill:999px;
+      --shadow-card:0 16px 35px rgba(15,23,42,.12); --transition-fast:.25s ease-out;
+      --font-main:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-main);background:radial-gradient(circle at top,#e5e7eb,#f9fafb 45%,#f3f4f6);font-size:16.5px;color:var(--text-main);-webkit-font-smoothing:antialiased;line-height:1.7}
+    a{text-decoration:none;color:inherit}
+    .page{min-height:100vh;display:flex;flex-direction:column}
+    .container{width:100%;max-width:1120px;margin:0 auto;padding:0 1.4rem}
+
+    header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
+      background:linear-gradient(to bottom,rgba(249,250,251,.96),rgba(249,250,251,.94),rgba(249,250,251,.9));
+      border-bottom:1px solid rgba(209,213,219,.9)}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}
+    .nav-left{display:flex;align-items:center;gap:.75rem}
+    .logo-mark{width:34px;height:34px;border-radius:40%;background:radial-gradient(circle at 30% 30%,var(--accent),var(--accent-strong));
+      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff}
+    .logo-text span:first-child{display:block;font-weight:700;font-size:1.02rem;color:var(--text-strong);letter-spacing:.02em}
+    .logo-text span:last-child{display:block;font-size:.76rem;color:var(--text-subtle)}
+    .nav-links{display:flex;gap:1.3rem;font-size:.95rem;align-items:center}
+    .nav-links a{opacity:.9;color:var(--text-muted);transition:opacity var(--transition-fast),color var(--transition-fast)}
+    .nav-links a:hover{opacity:1;color:var(--accent-strong)}
+    .nav-right{display:flex;align-items:center;gap:.6rem;font-size:.9rem}
+
+    .btn-pill{border-radius:var(--radius-pill);padding:.45rem .95rem;border:1px solid rgba(209,213,219,.9);background:#fff;cursor:pointer;font-size:.86rem;
+      transition:background var(--transition-fast),transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast);
+      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+    .btn-pill:hover{background:#f3f4f6;transform:translateY(-1px);border-color:rgba(156,163,175,.9);box-shadow:0 8px 20px rgba(148,163,184,.35)}
+    .btn-primary{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);padding:.6rem 1.3rem;font-size:.9rem;font-weight:600;border:none;cursor:pointer;
+      background:radial-gradient(circle at 30% 0%,#a855f7,#7e22ce,#4c1d95);color:#fff;box-shadow:0 10px 22px rgba(79,70,229,.35);
+      transition:transform var(--transition-fast),filter var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast);white-space:nowrap}
+    .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.03);box-shadow:0 14px 30px rgba(79,70,229,.45);
+      background:radial-gradient(circle at 30% 0%,#c084fc,#7e22ce,#4c1d95)}
+
+    .hero{position:relative;overflow:hidden;padding:3.2rem 0 3rem;text-align:center}
+    .hero::before{content:"";position:absolute;inset:-80px;pointer-events:none;
+      background:radial-gradient(circle at 10% 0%,rgba(129,140,248,.40),transparent 60%),
+                 radial-gradient(circle at 90% 40%,rgba(168,85,247,.35),transparent 55%);
+      opacity:.9;z-index:-1}
+    .hero-kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:.9rem}
+    .hero-title{font-size:clamp(2.2rem,3.2vw,2.8rem);font-weight:800;color:var(--text-strong);margin-bottom:.6rem;max-width:46rem;margin-left:auto;margin-right:auto;line-height:1.12}
+    .hero-subtitle{font-size:1.1rem;max-width:46rem;margin:0 auto;color:var(--text-muted)}
+
+    .topics-heading{margin:2.8rem auto 1.7rem;text-align:center;max-width:46rem}
+    .topics-heading-kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.35rem}
+    .topics-heading-title{font-size:1.85rem;font-weight:800;color:var(--text-strong);margin-bottom:.4rem}
+    .topics-heading-subtitle{font-size:1.05rem;color:var(--text-muted);margin:0 auto}
+
+    .topics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin-top:1.4rem}
+    .topic-card{background:var(--bg-card);border-radius:var(--radius-card);border:1px solid rgba(209,213,219,.55);
+      padding:1.1rem 1.15rem 1.2rem;box-shadow:var(--shadow-card);display:flex;flex-direction:column;justify-content:space-between;min-height:210px}
+    .topic-kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.2rem}
+    .topic-title{font-size:1.2rem;font-weight:700;color:var(--text-strong)}
+    .topic-body{font-size:.96rem;color:var(--text-muted);margin-top:.45rem;line-height:1.65}
+    .topic-list{list-style:none;margin-top:.55rem;padding-left:0;font-size:1rem;color:var(--text-main);font-weight:400;line-height:1.6}
+    .topic-list li{margin-bottom:.25rem}
+    .topic-list li::before{content:"•";display:inline-block;width:1.1rem;color:var(--text-subtle)}
+    .topic-toggle{background:transparent;border:none;color:var(--accent-strong);font-size:.9rem;font-weight:600;cursor:pointer;padding:0;margin-top:.2rem}
+    .topic-toggle:hover{text-decoration:underline}
+    .topic-footer{margin-top:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;font-size:.82rem;color:var(--text-subtle)}
+
+    footer{margin-top:auto;padding:1.9rem 0;text-align:center;font-size:.86rem;color:var(--text-subtle)}
+    @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Work &amp; Energy · Physics</div>
+        <h1 class="hero-title">Work Done by a Force</h1>
+        <p class="hero-subtitle">Work measures energy transfer by a force along a displacement — and direction matters.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="topics-heading">
+          <div class="topics-heading-kicker">This topic includes</div>
+          <h2 class="topics-heading-title">Subtopics to master</h2>
+          <p class="topics-heading-subtitle">Build the definition, then apply it to constant forces and special angle cases.</p>
+        </div>
+
+        <div class="topics-grid">
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Definition</div>
+              <div class="topic-title">Work as a Line Integral</div>
+              <div class="topic-body" data-lines="9">
+                Work along a path: \(W=\int \vec F \cdot d\vec r\). The dot product captures “along the motion.”
+                <ul class="topic-list">
+                  <li>Path + displacement element</li>
+                  <li>Dot product meaning</li>
+                  <li>Units: joules (N·m)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="#" class="btn-primary">Start subtopic</a>
+              <span>Core definition.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Constant force</div>
+              <div class="topic-title">Work by a Constant Force</div>
+              <div class="topic-body" data-lines="9">
+                For constant \(\vec F\): \(W=\vec F\cdot \Delta \vec r = F\,\Delta r \cos\theta\).
+                <ul class="topic-list">
+                  <li>Angle dependence</li>
+                  <li>Positive vs negative work</li>
+                  <li>Simple examples</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="#" class="btn-primary">Start subtopic</a>
+              <span>Quick computations.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Direction</div>
+              <div class="topic-title">Directional Dependence of Work</div>
+              <div class="topic-body" data-lines="9">
+                Only the component of force parallel to motion does work: \(F_\parallel = F\cos\theta\).
+                <ul class="topic-list">
+                  <li>Decompose force</li>
+                  <li>Interpret signs</li>
+                  <li>Common misconceptions</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="#" class="btn-primary">Start subtopic</a>
+              <span>Build intuition.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Special case</div>
+              <div class="topic-title">Zero Work &amp; Perpendicular Forces</div>
+              <div class="topic-body" data-lines="9">
+                If \(\theta=90^\circ\), \(W=0\). Example: centripetal force in uniform circular motion.
+                <ul class="topic-list">
+                  <li>Perpendicular component only</li>
+                  <li>Normal force examples</li>
+                  <li>Why speed can stay constant</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="#" class="btn-primary">Start subtopic</a>
+              <span>High-yield insight.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Practice</div>
+              <div class="topic-title">Practice &amp; Exercises</div>
+              <div class="topic-body" data-lines="9">
+                Practice computing work with angles, signs, and simple paths.
+                <ul class="topic-list">
+                  <li>Dot-product work drills</li>
+                  <li>Sign (positive/negative) sets</li>
+                  <li>Perpendicular/zero-work checks</li>
+                  <li>Mixed multi-force examples</li>
+                  <li>Mini conceptual questions</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="#" class="btn-primary">Open practice</a>
+              <span>Turn definition into skill.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Bridge</div>
+              <div class="topic-title">Work as Energy Transfer</div>
+              <div class="topic-body" data-lines="9">
+                Work is a mechanism for changing energy. This leads directly to kinetic energy and the work–energy theorem.
+                <ul class="topic-list">
+                  <li>Energy language</li>
+                  <li>Connection to ΔK</li>
+                  <li>Setup for energy methods</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="#" class="btn-primary">Start subtopic</a>
+              <span>Prepares next topic.</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+
+    if (signOutBtn && typeof signOutUser === 'function') signOutBtn.addEventListener('click', signOutUser);
+
+    document.querySelectorAll('.topic-card').forEach(card => {
+      const body = card.querySelector('.topic-body');
+      const toggle = card.querySelector('.topic-toggle');
+      if (!body || !toggle) return;
+
+      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+      body.style.display = '-webkit-box';
+      body.style.webkitBoxOrient = 'vertical';
+      body.style.overflow = 'hidden';
+
+      body.style.webkitLineClamp = maxLines;
+      const clampedHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = 'unset';
+      const fullHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = maxLines;
+
+      if (fullHeight <= clampedHeight + 1) { toggle.style.display = 'none'; return; }
+
+      toggle.style.display = 'inline';
+      toggle.textContent = 'More';
+
+      let expanded = false;
+      toggle.addEventListener('click', () => {
+        expanded = !expanded;
+        body.style.webkitLineClamp = expanded ? 'unset' : maxLines;
+        toggle.textContent = expanded ? 'Less' : 'More';
+      });
+    });
+  });
+</script>
+
+<!-- MathJax (optional if you already include globally elsewhere) -->
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)'], ['$', '$']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
+</html>
