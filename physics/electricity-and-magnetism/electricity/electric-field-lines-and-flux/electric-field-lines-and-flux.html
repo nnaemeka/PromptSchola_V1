@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Electric field lines and flux: representation rules, density and strength, and flux through flat and curved surfaces."
+    content="Electric field lines and electric flux: visualizing fields, interpreting line density, and computing flux through surfaces."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -140,10 +140,10 @@
     <section class="hero">
       <div class="container">
         <div class="hero-kicker">Electricity · Physics</div>
-        <h1 class="hero-title">Field lines help you see E. Flux helps you measure it.</h1>
+        <h1 class="hero-title">Field lines help you see direction. Flux helps you measure it.</h1>
         <p class="hero-subtitle">
-          Field lines are a visual representation of a vector field. Electric flux converts “field through a surface”
-          into a number, preparing you for Gauss’s law.
+          Field lines are a visualization tool: they show the direction a positive test charge would accelerate.
+          Electric flux is a scalar that measures how much field “passes through” a surface.
         </p>
       </div>
     </section>
@@ -154,7 +154,7 @@
           <div class="topics-heading-kicker">This topic</div>
           <h2 class="topics-heading-title">Electric Field Lines and Flux</h2>
           <p class="topics-heading-subtitle">
-            Learn the rules for drawing field lines, then compute flux through flat and curved surfaces.
+            Learn the rules for drawing field lines and the meaning of flux through flat and curved surfaces.
           </p>
         </div>
 
@@ -163,26 +163,172 @@
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Visualization</div>
-              <div class="topic-title">Field line representation</div>
+              <div class="topic-title">Field lines: what they represent</div>
               <div class="topic-body" data-lines="9">
-                Field lines are a drawing tool: the tangent to a line gives the field direction, and arrows show the direction a positive test charge would move.
+                Electric field lines are a visual representation of the vector field. They do not “exist” physically as strings; they are a drawing rule that encodes direction and relative strength.
                 <ul class="topic-list">
-                  <li>Lines point from + to − (by convention)</li>
-                  <li>Tangent gives direction of E</li>
-                  <li>Lines never cross</li>
-                  <li>Lines are not trajectories</li>
+                  <li>Line tangent gives the direction of <em>E</em></li>
+                  <li>Lines begin on + charges and end on − charges (or infinity)</li>
+                  <li>Lines never cross (field has a unique direction at a point)</li>
+                  <li>Field lines are denser where the field is stronger</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="/physics/nano/electric-field-lines-rules.html" class="btn-primary">Start nano-lesson</a>
-              <span>Use lines to communicate direction clearly.</span>
+              <a href="/physics/nano/electric-field-lines-representation.html" class="btn-primary">Start nano-lesson</a>
+              <span>Lines show direction; density hints at magnitude.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Strength</div>
+              <div class="topic-kicker">Rules</div>
               <div class="topic-title">Field line density and field strength</div>
-              <div class="topic-body" data
+              <div class="topic-body" data-lines="9">
+                The number of lines you draw is arbitrary, but the <em>relative</em> density should reflect the relative magnitude of the field. Symmetry and charge sign control the pattern.
+                <ul class="topic-list">
+                  <li>More line density → larger |E|</li>
+                  <li>Near a point charge, lines are radial</li>
+                  <li>For equal and opposite charges, dipole patterns appear</li>
+                  <li>For conductors (electrostatic equilibrium), lines meet the surface perpendicular</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/nano/field-line-density-strength.html" class="btn-primary">Start nano-lesson</a>
+              <span>Keep patterns consistent with symmetry.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Definition</div>
+              <div class="topic-title">Electric flux</div>
+              <div class="topic-body" data-lines="9">
+                Electric flux measures the field passing through a surface. It depends on the field, the surface area, and the surface’s orientation relative to the field.
+                <ul class="topic-list">
+                  <li>Flux is a scalar (can be positive, negative, or zero)</li>
+                  <li>For uniform field and flat surface: Φ = EA cos(θ)</li>
+                  <li>θ is the angle between <em>E</em> and the surface normal</li>
+                  <li>Units: N·m²/C</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/nano/electric-flux-definition.html" class="btn-primary">Start nano-lesson</a>
+              <span>Flux uses the surface normal, not the surface itself.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Surfaces</div>
+              <div class="topic-title">Flux through flat and curved surfaces</div>
+              <div class="topic-body" data-lines="9">
+                For a non-uniform field or a curved surface, you add up contributions from small surface patches. The idea is the same: field component normal to the surface times area.
+                <ul class="topic-list">
+                  <li>Break the surface into small patches dA</li>
+                  <li>Only the normal component of <em>E</em> contributes</li>
+                  <li>Closed surfaces: outward normal by convention</li>
+                  <li>Sets up Gauss’s law (next topic)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/nano/flux-flat-and-curved-surfaces.html" class="btn-primary">Start nano-lesson</a>
+              <span>Think “sum of E·dA.”</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Practice</div>
+              <div class="topic-title">Practice &amp; Exercises</div>
+              <div class="topic-body" data-lines="9">
+                Practice interpreting field line diagrams and computing flux for simple geometries and orientations.
+                <ul class="topic-list">
+                  <li>Read direction and relative strength from field lines</li>
+                  <li>Decide the sign of flux using the chosen normal</li>
+                  <li>Compute flux for uniform fields through tilted planes</li>
+                  <li>Concept checks: when is flux zero?</li>
+                  <li>Exam-style flux problems (intro)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/practice/electric-field-lines-and-flux-practice.html" class="btn-primary">Open practice sets</a>
+              <span>Draw the surface normal first.</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+    if (signOutBtn && typeof signOutUser === 'function') signOutBtn.addEventListener('click', signOutUser);
+
+    document.querySelectorAll('.topic-card').forEach(card => {
+      const body = card.querySelector('.topic-body');
+      const toggle = card.querySelector('.topic-toggle');
+      if (!body || !toggle) return;
+
+      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+      body.style.display = '-webkit-box';
+      body.style.webkitBoxOrient = 'vertical';
+      body.style.overflow = 'hidden';
+
+      body.style.webkitLineClamp = maxLines;
+      const clampedHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = 'unset';
+      const fullHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = maxLines;
+
+      if (fullHeight <= clampedHeight + 1) { toggle.style.display = 'none'; return; }
+
+      toggle.style.display = 'inline';
+      toggle.textContent = 'More';
+
+      let expanded = false;
+      toggle.addEventListener('click', () => {
+        expanded = !expanded;
+        if (expanded) { body.style.webkitLineClamp = 'unset'; toggle.textContent = 'Less'; }
+        else { body.style.webkitLineClamp = maxLines; toggle.textContent = 'More'; }
+      });
+    });
+  });
+</script>
+</body>
+</html>
