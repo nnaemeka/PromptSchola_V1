@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rolling Motion Without Slipping – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Rolling without slipping: the v = Rω constraint, energy split, acceleration down inclines, and the role of static friction."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-body:#f3f4f6;--bg-card:#ffffff;
+      --accent:#7e22ce;--accent-strong:#6d28d9;
+      --text-main:#111827;--text-muted:#4b5563;--text-subtle:#9ca3af;--text-strong:#020617;
+      --radius-card:18px;--radius-pill:999px;
+      --shadow-card:0 16px 35px rgba(15,23,42,.12);
+      --transition-fast:.25s ease-out;
+      --font-main:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:var(--font-main);
+      background:radial-gradient(circle at top,#e5e7eb,#f9fafb 45%,#f3f4f6);
+      font-size:16.5px;color:var(--text-main);line-height:1.7;-webkit-font-smoothing:antialiased;
+    }
+    a{text-decoration:none;color:inherit}
+    .page{min-height:100vh;display:flex;flex-direction:column}
+    .container{width:100%;max-width:1120px;margin:0 auto;padding:0 1.4rem}
+
+    header{
+      position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
+      background:linear-gradient(to bottom,rgba(249,250,251,.96),rgba(249,250,251,.94),rgba(249,250,251,.9));
+      border-bottom:1px solid rgba(209,213,219,.9);
+    }
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}
+    .nav-left{display:flex;align-items:center;gap:.75rem}
+    .logo-mark{
+      width:34px;height:34px;border-radius:40%;
+      background:radial-gradient(circle at 30% 30%,var(--accent),var(--accent-strong));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;
+    }
+    .logo-text span:first-child{display:block;font-weight:700;font-size:1.02rem;color:var(--text-strong);letter-spacing:.02em}
+    .logo-text span:last-child{display:block;font-size:.76rem;color:var(--text-subtle)}
+    .nav-links{display:flex;gap:1.3rem;font-size:.95rem;align-items:center}
+    .nav-links a{opacity:.9;color:var(--text-muted);transition:opacity var(--transition-fast),color var(--transition-fast)}
+    .nav-links a:hover{opacity:1;color:var(--accent-strong)}
+    .nav-right{display:flex;align-items:center;gap:.6rem;font-size:.9rem}
+
+    .btn-pill{
+      border-radius:var(--radius-pill);padding:.45rem .95rem;border:1px solid rgba(209,213,219,.9);
+      background:#fff;cursor:pointer;font-size:.86rem;
+      transition:background var(--transition-fast),transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast);
+      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
+    }
+    .btn-pill:hover{background:#f3f4f6;transform:translateY(-1px);border-color:rgba(156,163,175,.9);box-shadow:0 8px 20px rgba(148,163,184,.35)}
+    .btn-primary{
+      display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);
+      padding:.6rem 1.3rem;font-size:.9rem;font-weight:600;border:none;cursor:pointer;color:#fff;
+      background:radial-gradient(circle at 30% 0%,#a855f7,#7e22ce,#4c1d95);
+      box-shadow:0 10px 22px rgba(79,70,229,.35);
+      transition:transform var(--transition-fast),filter var(--transition-fast),box-shadow var(--transition-fast);
+      white-space:nowrap;
+    }
+    .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.03);box-shadow:0 14px 30px rgba(79,70,229,.45)}
+
+    .hero{position:relative;overflow:hidden;padding:3.2rem 0 2.7rem;text-align:center}
+    .hero::before{
+      content:"";position:absolute;inset:-80px;pointer-events:none;
+      background:radial-gradient(circle at 10% 0%,rgba(129,140,248,.40),transparent 60%),
+                 radial-gradient(circle at 90% 40%,rgba(168,85,247,.35),transparent 55%);
+      opacity:.9;z-index:-1;
+    }
+    .hero-kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:.9rem}
+    .hero-title{font-size:clamp(2.2rem,3.2vw,2.8rem);font-weight:800;color:var(--text-strong);margin-bottom:.6rem;max-width:56rem;margin:0 auto;line-height:1.12}
+    .hero-subtitle{font-size:1.1rem;max-width:56rem;margin:0 auto;color:var(--text-muted)}
+
+    .topics-heading{margin:2.7rem auto 1.7rem;text-align:center;max-width:44rem}
+    .topics-heading-kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.35rem}
+    .topics-heading-title{font-size:1.85rem;font-weight:800;color:var(--text-strong);margin-bottom:.4rem}
+    .topics-heading-subtitle{font-size:1.05rem;color:var(--text-muted);margin:0 auto}
+
+    .topics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin-top:1.4rem}
+    .topic-card{
+      background:var(--bg-card);border-radius:var(--radius-card);
+      border:1px solid rgba(209,213,219,.55);
+      padding:1.1rem 1.15rem 1.2rem;box-shadow:var(--shadow-card);
+      display:flex;flex-direction:column;justify-content:space-between;min-height:210px;
+    }
+    .topic-kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.2rem}
+    .topic-title{font-size:1.2rem;font-weight:700;color:var(--text-strong)}
+    .topic-body{font-size:.96rem;color:var(--text-muted);margin-top:.45rem;line-height:1.65}
+    .topic-list{list-style:none;margin-top:.55rem;padding-left:0;font-size:1rem;color:var(--text-main);font-weight:400;line-height:1.6}
+    .topic-list li{margin-bottom:.25rem}
+    .topic-list li::before{content:"•";display:inline-block;width:1.1rem;color:var(--text-subtle)}
+    .topic-toggle{background:transparent;border:none;color:var(--accent-strong);font-size:.9rem;font-weight:600;cursor:pointer;padding:0;margin-top:.2rem}
+    .topic-toggle:hover{text-decoration:underline}
+    .topic-footer{margin-top:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;font-size:.82rem;color:var(--text-subtle)}
+    footer{margin-top:auto;padding:1.9rem 0;text-align:center;font-size:.86rem;color:var(--text-subtle)}
+    @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Rotation &amp; Angular Dynamics · Physics</div>
+        <h1 class="hero-title">Rolling without slipping ties translation to rotation.</h1>
+        <p class="hero-subtitle">
+          In pure rolling, the contact point is instantaneously at rest relative to the ground. That single constraint
+          links v and ω, shapes the energy, and determines acceleration down an incline.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="topics-heading">
+          <div class="topics-heading-kicker">This topic</div>
+          <h2 class="topics-heading-title">Rolling Motion Without Slipping</h2>
+          <p class="topics-heading-subtitle">
+            Learn the no-slip constraint, then use it to solve rolling problems with energy and (when needed) dynamics.
+          </p>
+        </div>
+
+        <div class="topics-grid">
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Constraint</div>
+              <div class="topic-title">No-slip condition (v = Rω)</div>
+              <div class="topic-body" data-lines="9">
+                Rolling without slipping imposes a geometric constraint: the center-of-mass speed and angular speed are linked by the radius.
+                <ul class="topic-list">
+                  <li>Meaning of “no slipping” at the contact point</li>
+                  <li>Constraint: v<sub>CM</sub> = Rω</li>
+                  <li>Also for accelerations: a<sub>CM</sub> = Rα (when valid)</li>
+                  <li>Common confusion: sliding vs rolling</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/nano/rolling-no-slip-condition.html" class="btn-primary">Start nano-lesson</a>
+              <span>One constraint does a lot of work.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Energy</div>
+              <div class="topic-title">Energy split: translation + rotation</div>
+              <div class="topic-body" data-lines="9">
+                A rolling object has both translational and rotational kinetic energy. The no-slip condition lets you write everything in terms of v or ω.
+                <ul class="topic-list">
+                  <li>K = ½mv² + ½Iω²</li>
+                  <li>Use v = Rω to combine terms</li>
+                  <li>Why shape matters (I controls the split)</li>
+                  <li>Energy conservation for rolling down inclines</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/nano/rolling-energy-split.html" class="btn-primary">Start nano-lesson</a>
+              <span>Same drop height, different speeds by shape.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Dynamics</div>
+              <div class="topic-title">Acceleration down an incline (rolling)</div>
+              <div class="topic-body" data-lines="9">
+                Rolling acceleration depends on mass distribution because torque is needed to spin the body. A larger I generally means smaller acceleration for the same slope.
+                <ul class="topic-list">
+                  <li>Role of torque about the center</li>
+                  <li>Why rolling can be slower than sliding</li>
+                  <li>Qualitative dependence on I/(mR²)</li>
+                  <li>When to use energy vs ΣF and Στ</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/nano/rolling-acceleration-incline.html" class="btn-primary">Start nano-lesson</a>
+              <span>I/(mR²) controls “how rotational” the motion is.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Forces</div>
+              <div class="topic-title">Static friction’s role (and when it does work)</div>
+              <div class="topic-body" data-lines="9">
+                Static friction provides the torque that enforces rolling without slipping. In many ideal rolling problems, it does no net work on the object’s mechanical energy—yet it is essential.
+                <ul class="topic-list">
+                  <li>Static friction can be nonzero with no slipping</li>
+                  <li>Why it can do zero work in pure rolling on a rigid surface</li>
+                  <li>Direction of friction depends on the situation</li>
+                  <li>Common pitfall: assuming friction always opposes motion</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/nano/static-friction-in-rolling.html" class="btn-primary">Start nano-lesson</a>
+              <span>Friction enforces the constraint.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Practice</div>
+              <div class="topic-title">Practice &amp; Exercises</div>
+              <div class="topic-body" data-lines="9">
+                Practice applying the no-slip constraint, using energy conservation, and predicting how shape affects rolling outcomes.
+                <ul class="topic-list">
+                  <li>Identify rolling vs slipping from given information</li>
+                  <li>Use v = Rω and a = Rα correctly</li>
+                  <li>Energy problems: solve for speed at the bottom</li>
+                  <li>Incline problems: compare disk vs hoop vs sphere</li>
+                  <li>Exam-style rolling motion sets</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/practice/rolling-motion-without-slipping-practice.html" class="btn-primary">Open practice sets</a>
+              <span>Start every solution with the constraint.</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+    if (signOutBtn && typeof signOutUser === 'function') signOutBtn.addEventListener('click', signOutUser);
+
+    document.querySelectorAll('.topic-card').forEach(card => {
+      const body = card.querySelector('.topic-body');
+      const toggle = card.querySelector('.topic-toggle');
+      if (!body || !toggle) return;
+
+      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+      body.style.display = '-webkit-box';
+      body.style.webkitBoxOrient = 'vertical';
+      body.style.overflow = 'hidden';
+
+      body.style.webkitLineClamp = maxLines;
+      const clampedHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = 'unset';
+      const fullHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = maxLines;
+
+      if (fullHeight <= clampedHeight + 1) { toggle.style.display = 'none'; return; }
+
+      toggle.style.display = 'inline';
+      toggle.textContent = 'More';
+
+      let expanded = false;
+      toggle.addEventListener('click', () => {
+        expanded = !expanded;
+        if (expanded) { body.style.webkitLineClamp = 'unset'; toggle.textContent = 'Less'; }
+        else { body.style.webkitLineClamp = maxLines; toggle.textContent = 'More'; }
+      });
+    });
+  });
+</script>
+</body>
+</html>
