@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="PromptSchola Electricity track: electrostatics through circuits, organized into focused topic pages with nano-lessons and practice."
+    content="Electricity track hub: electrostatics, electric potential, capacitance, and DC circuits with PromptSchola nano-lessons and practice."
   />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -98,6 +98,7 @@
     .topic-toggle{background:transparent;border:none;color:var(--accent-strong);font-size:.9rem;font-weight:600;cursor:pointer;padding:0;margin-top:.2rem}
     .topic-toggle:hover{text-decoration:underline}
     .topic-footer{margin-top:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;font-size:.82rem;color:var(--text-subtle)}
+
     footer{margin-top:auto;padding:1.9rem 0;text-align:center;font-size:.86rem;color:var(--text-subtle)}
     @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
@@ -140,10 +141,10 @@
     <section class="hero">
       <div class="container">
         <div class="hero-kicker">Electricity · Physics</div>
-        <h1 class="hero-title">Build electrostatics carefully, then scale to circuits.</h1>
+        <h1 class="hero-title">From charge and fields to circuits and transients.</h1>
         <p class="hero-subtitle">
-          Start with charge and Coulomb’s law, then define electric fields and learn how flux and Gauss’s law simplify symmetric situations.
-          Later topics connect energy, capacitance, and circuit behavior.
+          Build electrostatics first (charge, force, field, potential), then connect those ideas to capacitance,
+          current, resistance, and circuit behavior.
         </p>
       </div>
     </section>
@@ -154,7 +155,7 @@
           <div class="topics-heading-kicker">This track</div>
           <h2 class="topics-heading-title">Electricity</h2>
           <p class="topics-heading-subtitle">
-            Each topic page contains focused nano-lessons plus a dedicated practice card.
+            Each topic is a set of nano-lessons designed for final-year high school and first-year university physics.
           </p>
         </div>
 
@@ -165,18 +166,19 @@
               <div class="topic-kicker">Topic 1</div>
               <div class="topic-title">Electric Charge</div>
               <div class="topic-body" data-lines="9">
-                Define what charge is, how it behaves, and how objects become charged in real situations.
+                Identify what electric charge is, how it is conserved, and how objects become charged.
                 <ul class="topic-list">
-                  <li>Properties and conservation of charge</li>
+                  <li>Properties of charge</li>
+                  <li>Conservation of charge</li>
                   <li>Conductors vs insulators</li>
-                  <li>Charging by contact and induction</li>
+                  <li>Contact and induction</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="electric-charge/electric-charge.html" class="btn-primary">Start topic</a>
-              <span>Start with definitions that do not drift.</span>
+              <a href="/physics/electric-charge/electric-charge.html" class="btn-primary">Start topic</a>
+              <span>Start with definitions and models.</span>
             </div>
           </article>
 
@@ -185,18 +187,19 @@
               <div class="topic-kicker">Topic 2</div>
               <div class="topic-title">Coulomb’s Law</div>
               <div class="topic-body" data-lines="9">
-                Compute and interpret the electric force between charges, including direction and superposition.
+                Use Coulomb’s law as a vector force law and apply superposition to multiple charges.
                 <ul class="topic-list">
-                  <li>Mathematical form and vector nature</li>
+                  <li>Mathematical form</li>
+                  <li>Vector nature of force</li>
                   <li>Superposition principle</li>
-                  <li>Comparison with gravity</li>
+                  <li>Compare with gravity</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="coulombs-law/coulombs-law.html" class="btn-primary">Start topic</a>
-              <span>Keep direction and sign explicit.</span>
+              <a href="/physics/coulombs-law/coulombs-law.html" class="btn-primary">Start topic</a>
+              <span>Draw vectors before computing.</span>
             </div>
           </article>
 
@@ -205,19 +208,19 @@
               <div class="topic-kicker">Topic 3</div>
               <div class="topic-title">Electric Field</div>
               <div class="topic-body" data-lines="9">
-                Replace “force between pairs” with a field description that scales to many charges.
+                Treat the field as a mapping from space to force-per-charge, and compute fields from charge distributions (starting with point charges).
                 <ul class="topic-list">
-                  <li>Definition of electric field</li>
+                  <li>Definition of E</li>
                   <li>Field of a point charge</li>
                   <li>Superposition of fields</li>
-                  <li>Physical meaning of field vectors</li>
+                  <li>Meaning of field vectors</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="electric-field/electric-field.html" class="btn-primary">Start topic</a>
-              <span>Fields are properties of space, not objects.</span>
+              <a href="/physics/electric-field/electric-field.html" class="btn-primary">Start topic</a>
+              <span>Think “force per unit charge.”</span>
             </div>
           </article>
 
@@ -226,18 +229,229 @@
               <div class="topic-kicker">Topic 4</div>
               <div class="topic-title">Electric Field Lines and Flux</div>
               <div class="topic-body" data-lines="9">
-                Learn the visual grammar of fields, then define flux as a quantitative “through a surface” measure.
+                Visualize fields with field lines and quantify “how much field passes through” a surface using flux.
                 <ul class="topic-list">
-                  <li>Field line representation and density</li>
-                  <li>Electric flux definition</li>
-                  <li>Flux through flat and curved surfaces</li>
+                  <li>Field line representation</li>
+                  <li>Density and strength</li>
+                  <li>Electric flux</li>
+                  <li>Flat and curved surfaces</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="electric-field-lines-and-flux/electric-field-lines-and-flux.html" class="btn-primary">Start topic</a>
-              <span>Use flux to prepare for Gauss’s law.</span>
+              <a href="/physics/electric-field-lines-and-flux/electric-field-lines-and-flux.html" class="btn-primary">Start topic</a>
+              <span>Flux needs area and orientation.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 5</div>
+              <div class="topic-title">Gauss’s Law</div>
+              <div class="topic-body" data-lines="9">
+                Use symmetry to compute fields quickly by relating flux to enclosed charge.
+                <ul class="topic-list">
+                  <li>Statement of Gauss’s law</li>
+                  <li>Symmetry requirements</li>
+                  <li>Gaussian surfaces</li>
+                  <li>Spherical / cylindrical / planar cases</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/gausss-law/gausss-law.html" class="btn-primary">Start topic</a>
+              <span>Symmetry is the whole game.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 6</div>
+              <div class="topic-title">Electric Potential and Potential Energy</div>
+              <div class="topic-body" data-lines="9">
+                Move from forces to energy: define potential, relate it to work, and connect E and V.
+                <ul class="topic-list">
+                  <li>Potential vs potential energy</li>
+                  <li>Potential difference</li>
+                  <li>Work by electric forces</li>
+                  <li>Relationship between E and V</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/electric-potential-and-potential-energy/electric-potential-and-potential-energy.html" class="btn-primary">Start topic</a>
+              <span>Energy methods simplify many problems.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 7</div>
+              <div class="topic-title">Equipotential Surfaces</div>
+              <div class="topic-body" data-lines="9">
+                Understand equipotentials as constant-V surfaces and how they relate to field direction and strength.
+                <ul class="topic-list">
+                  <li>Definition of equipotentials</li>
+                  <li>Relation to field lines</li>
+                  <li>Common charge distributions</li>
+                  <li>Motion on equipotentials</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/equipotential-surfaces/equipotential-surfaces.html" class="btn-primary">Start topic</a>
+              <span>E is perpendicular to equipotentials.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 8</div>
+              <div class="topic-title">Capacitance</div>
+              <div class="topic-body" data-lines="9">
+                Model charge storage and voltage relationships for common capacitor geometries.
+                <ul class="topic-list">
+                  <li>Definition of capacitance</li>
+                  <li>Parallel-plate capacitors</li>
+                  <li>Other geometries</li>
+                  <li>Energy stored</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/capacitance/capacitance.html" class="btn-primary">Start topic</a>
+              <span>C links Q and V.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 9</div>
+              <div class="topic-title">Dielectrics</div>
+              <div class="topic-body" data-lines="9">
+                See how polarization changes fields, capacitance, and energy in capacitors.
+                <ul class="topic-list">
+                  <li>Polarization</li>
+                  <li>Dielectric constant</li>
+                  <li>Effect on capacitance</li>
+                  <li>Energy considerations</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/dielectrics/dielectrics.html" class="btn-primary">Start topic</a>
+              <span>Materials reshape the field inside.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 10</div>
+              <div class="topic-title">Electric Current</div>
+              <div class="topic-body" data-lines="9">
+                Connect macroscopic current to microscopic charge motion and current density.
+                <ul class="topic-list">
+                  <li>Definition of current</li>
+                  <li>Drift velocity</li>
+                  <li>Microscopic view</li>
+                  <li>Current density</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/electric-current/electric-current.html" class="btn-primary">Start topic</a>
+              <span>Current is charge flow rate.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 11</div>
+              <div class="topic-title">Resistance and Resistivity</div>
+              <div class="topic-body" data-lines="9">
+                Use Ohm’s law and material properties to model energy dissipation in circuits.
+                <ul class="topic-list">
+                  <li>Ohm’s law</li>
+                  <li>Resistivity and conductivity</li>
+                  <li>Temperature dependence</li>
+                  <li>Power dissipation</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/resistance-and-resistivity/resistance-and-resistivity.html" class="btn-primary">Start topic</a>
+              <span>Separate material from geometry.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 12</div>
+              <div class="topic-title">DC Circuits</div>
+              <div class="topic-body" data-lines="9">
+                Combine elements, compute equivalent resistance, and track energy and power in steady-state circuits.
+                <ul class="topic-list">
+                  <li>Circuit elements</li>
+                  <li>Series and parallel</li>
+                  <li>Equivalent resistance</li>
+                  <li>Energy and power</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/dc-circuits/dc-circuits.html" class="btn-primary">Start topic</a>
+              <span>Reduce step-by-step.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 13</div>
+              <div class="topic-title">Kirchhoff’s Laws</div>
+              <div class="topic-body" data-lines="9">
+                Apply junction and loop rules with consistent sign conventions to solve multi-loop networks.
+                <ul class="topic-list">
+                  <li>Junction (current) rule</li>
+                  <li>Loop (voltage) rule</li>
+                  <li>Sign conventions</li>
+                  <li>Multi-loop solving</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/kirchhoffs-laws/kirchhoffs-laws.html" class="btn-primary">Start topic</a>
+              <span>Choose directions, then stay consistent.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Topic 14</div>
+              <div class="topic-title">RC Circuits</div>
+              <div class="topic-body" data-lines="9">
+                Model charging and discharging as exponential transients with a time constant.
+                <ul class="topic-list">
+                  <li>Charging and discharging</li>
+                  <li>Time constant</li>
+                  <li>Exponential behavior</li>
+                  <li>Energy flow in transients</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="/physics/rc-circuits/rc-circuits.html" class="btn-primary">Start topic</a>
+              <span>τ = RC controls the time scale.</span>
             </div>
           </article>
 
@@ -246,20 +460,20 @@
               <div class="topic-kicker">Practice</div>
               <div class="topic-title">Practice &amp; Exercises</div>
               <div class="topic-body" data-lines="9">
-                Mixed practice for the Electricity track, from fundamentals to multi-step reasoning.
+                Mixed practice across electricity topics, from electrostatics to circuits.
                 <ul class="topic-list">
-                  <li>Concept checks (charge, force, field)</li>
-                  <li>Vector and superposition drills</li>
-                  <li>Field line interpretation prompts</li>
-                  <li>Flux computation and sign practice</li>
-                  <li>Exam-style mixed electrostatics sets</li>
+                  <li>Charge, force, and field concept checks</li>
+                  <li>Potential, flux, and Gauss’s law drills</li>
+                  <li>Capacitance and dielectrics computations</li>
+                  <li>DC circuit reductions and power questions</li>
+                  <li>Kirchhoff and RC transient exam-style sets</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
               <a href="/physics/practice/electricity-practice.html" class="btn-primary">Open practice sets</a>
-              <span>Start with clean diagrams and units.</span>
+              <span>Mix conceptual and computational work.</span>
             </div>
           </article>
 
