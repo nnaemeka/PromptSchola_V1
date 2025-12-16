@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Special Relativity – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Special relativity: postulates, simultaneity, time dilation, length contraction, and relativistic velocity addition."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-body:#f3f4f6;--bg-card:#ffffff;
+      --accent:#7e22ce;--accent-strong:#6d28d9;
+      --text-main:#111827;--text-muted:#4b5563;--text-subtle:#9ca3af;--text-strong:#020617;
+      --radius-card:18px;--radius-pill:999px;
+      --shadow-card:0 16px 35px rgba(15,23,42,.12);
+      --transition-fast:.25s ease-out;
+      --font-main:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:var(--font-main);
+      background:radial-gradient(circle at top,#e5e7eb,#f9fafb 45%,#f3f4f6);
+      font-size:16.5px;color:var(--text-main);line-height:1.7;-webkit-font-smoothing:antialiased;
+    }
+    a{text-decoration:none;color:inherit}
+    .page{min-height:100vh;display:flex;flex-direction:column}
+    .container{width:100%;max-width:1120px;margin:0 auto;padding:0 1.4rem}
+
+    header{
+      position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
+      background:linear-gradient(to bottom,rgba(249,250,251,.96),rgba(249,250,251,.94),rgba(249,250,251,.9));
+      border-bottom:1px solid rgba(209,213,219,.9);
+    }
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}
+    .nav-left{display:flex;align-items:center;gap:.75rem}
+    .logo-mark{
+      width:34px;height:34px;border-radius:40%;
+      background:radial-gradient(circle at 30% 30%,var(--accent),var(--accent-strong));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;
+    }
+    .logo-text span:first-child{display:block;font-weight:700;font-size:1.02rem;color:var(--text-strong);letter-spacing:.02em}
+    .logo-text span:last-child{display:block;font-size:.76rem;color:var(--text-subtle)}
+    .nav-links{display:flex;gap:1.3rem;font-size:.95rem;align-items:center}
+    .nav-links a{opacity:.9;color:var(--text-muted);transition:opacity var(--transition-fast),color var(--transition-fast)}
+    .nav-links a:hover{opacity:1;color:var(--accent-strong)}
+    .nav-right{display:flex;align-items:center;gap:.6rem;font-size:.9rem}
+
+    .btn-pill{
+      border-radius:var(--radius-pill);padding:.45rem .95rem;border:1px solid rgba(209,213,219,.9);
+      background:#fff;cursor:pointer;font-size:.86rem;
+      transition:background var(--transition-fast),transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast);
+      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
+    }
+    .btn-pill:hover{background:#f3f4f6;transform:translateY(-1px);border-color:rgba(156,163,175,.9);box-shadow:0 8px 20px rgba(148,163,184,.35)}
+    .btn-primary{
+      display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);
+      padding:.6rem 1.3rem;font-size:.9rem;font-weight:600;border:none;cursor:pointer;color:#fff;
+      background:radial-gradient(circle at 30% 0%,#a855f7,#7e22ce,#4c1d95);
+      box-shadow:0 10px 22px rgba(79,70,229,.35);
+      transition:transform var(--transition-fast),filter var(--transition-fast),box-shadow var(--transition-fast);
+      white-space:nowrap;
+    }
+    .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.03);box-shadow:0 14px 30px rgba(79,70,229,.45)}
+
+    .hero{position:relative;overflow:hidden;padding:3.2rem 0 2.7rem;text-align:center}
+    .hero::before{
+      content:"";position:absolute;inset:-80px;pointer-events:none;
+      background:radial-gradient(circle at 10% 0%,rgba(129,140,248,.40),transparent 60%),
+                 radial-gradient(circle at 90% 40%,rgba(168,85,247,.35),transparent 55%);
+      opacity:.9;z-index:-1;
+    }
+    .hero-kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:.9rem}
+    .hero-title{font-size:clamp(2.2rem,3.2vw,2.8rem);font-weight:800;color:var(--text-strong);margin-bottom:.6rem;max-width:56rem;margin:0 auto;line-height:1.12}
+    .hero-subtitle{font-size:1.1rem;max-width:56rem;margin:0 auto;color:var(--text-muted)}
+
+    .topics-heading{margin:2.7rem auto 1.7rem;text-align:center;max-width:44rem}
+    .topics-heading-kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.35rem}
+    .topics-heading-title{font-size:1.85rem;font-weight:800;color:var(--text-strong);margin-bottom:.4rem}
+    .topics-heading-subtitle{font-size:1.05rem;color:var(--text-muted);margin:0 auto}
+
+    .topics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin-top:1.4rem}
+    .topic-card{
+      background:var(--bg-card);border-radius:var(--radius-card);
+      border:1px solid rgba(209,213,219,.55);
+      padding:1.1rem 1.15rem 1.2rem;box-shadow:var(--shadow-card);
+      display:flex;flex-direction:column;justify-content:space-between;min-height:210px;
+    }
+    .topic-kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.2rem}
+    .topic-title{font-size:1.2rem;font-weight:700;color:var(--text-strong)}
+    .topic-body{font-size:.96rem;color:var(--text-muted);margin-top:.45rem;line-height:1.65}
+    .topic-list{list-style:none;margin-top:.55rem;padding-left:0;font-size:1rem;color:var(--text-main);font-weight:400;line-height:1.6}
+    .topic-list li{margin-bottom:.25rem}
+    .topic-list li::before{content:"•";display:inline-block;width:1.1rem;color:var(--text-subtle)}
+    .topic-toggle{background:transparent;border:none;color:var(--accent-strong);font-size:.9rem;font-weight:600;cursor:pointer;padding:0;margin-top:.2rem}
+    .topic-toggle:hover{text-decoration:underline}
+    .topic-footer{margin-top:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;font-size:.82rem;color:var(--text-subtle)}
+    footer{margin-top:auto;padding:1.9rem 0;text-align:center;font-size:.86rem;color:var(--text-subtle)}
+    @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="math/math.html">Math</a>
+          <a href="chemistry/chemistry.html">Chemistry</a>
+          <a href="biology/biology.html">Biology</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">Modern Physics · Physics</div>
+        <h1 class="hero-title">When space and time depend on the observer.</h1>
+        <p class="hero-subtitle">
+          Special relativity replaces absolute time with frame-dependent measurements tied together by the speed of light.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="topics-heading">
+          <div class="topics-heading-kicker">This topic</div>
+          <h2 class="topics-heading-title">Special Relativity</h2>
+          <p class="topics-heading-subtitle">
+            Build the core kinematics: postulates, simultaneity, time dilation, length contraction, and velocity addition.
+          </p>
+        </div>
+
+        <div class="topics-grid">
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Foundations</div>
+              <div class="topic-title">Postulates of special relativity</div>
+              <div class="topic-body" data-lines="9">
+                Relativity begins with two experimentally grounded statements that constrain all inertial frames.
+                <ul class="topic-list">
+                  <li>Same laws of physics in all inertial frames</li>
+                  <li>Speed of light is invariant</li>
+                  <li>Implications for measurements of space and time</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="nano/relativity-postulates.html" class="btn-primary">Start nano-lesson</a>
+              <span>Postulates first, formulas later.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Time</div>
+              <div class="topic-title">Relativity of simultaneity</div>
+              <div class="topic-body" data-lines="9">
+                “At the same time” is not universal. Different inertial observers can disagree on simultaneity.
+                <ul class="topic-list">
+                  <li>Events and frames: what is being compared</li>
+                  <li>Light-signal synchronization logic</li>
+                  <li>Why simultaneity shifts between frames</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="nano/relativity-of-simultaneity.html" class="btn-primary">Start nano-lesson</a>
+              <span>Define the frame and events.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Time</div>
+              <div class="topic-title">Time dilation</div>
+              <div class="topic-body" data-lines="9">
+                Moving clocks run slow relative to an observer’s frame, when compared carefully using proper time.
+                <ul class="topic-list">
+                  <li>Proper time: time measured by the clock itself</li>
+                  <li>Dilated time measured in another frame</li>
+                  <li>Common interpretation mistakes to avoid</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="nano/time-dilation.html" class="btn-primary">Start nano-lesson</a>
+              <span>Find the proper time first.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Space</div>
+              <div class="topic-title">Length contraction</div>
+              <div class="topic-body" data-lines="9">
+                Lengths measured parallel to motion depend on the observer. The “proper length” is measured in the object’s rest frame.
+                <ul class="topic-list">
+                  <li>Proper length vs measured length</li>
+                  <li>Simultaneous endpoint measurement condition</li>
+                  <li>When contraction applies (and when it does not)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="nano/length-contraction.html" class="btn-primary">Start nano-lesson</a>
+              <span>Measure endpoints simultaneously in your frame.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Velocities</div>
+              <div class="topic-title">Relativistic velocity addition</div>
+              <div class="topic-body" data-lines="9">
+                Velocities do not add linearly at high speeds. The relativistic rule preserves the invariant speed of light.
+                <ul class="topic-list">
+                  <li>Why classical addition fails near c</li>
+                  <li>Velocity-addition formula (1D)</li>
+                  <li>Low-speed limit consistency check</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="nano/relativistic-velocity-addition.html" class="btn-primary">Start nano-lesson</a>
+              <span>Always check v ≪ c.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Practice</div>
+              <div class="topic-title">Practice &amp; Exercises</div>
+              <div class="topic-body" data-lines="9">
+                Build fluency with frames, events, and proper quantities before heavy algebra.
+                <ul class="topic-list">
+                  <li>Identify proper time and proper length</li>
+                  <li>Time dilation and length contraction sets</li>
+                  <li>Simultaneity reasoning questions</li>
+                  <li>Velocity addition computations (intro)</li>
+                  <li>Quick “classical limit” checks</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="practice/special-relativity-practice.html" class="btn-primary">Open practice</a>
+              <span>Write the frame on every line.</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+    if (signOutBtn && typeof signOutUser === 'function') signOutBtn.addEventListener('click', signOutUser);
+
+    document.querySelectorAll('.topic-card').forEach(card => {
+      const body = card.querySelector('.topic-body');
+      const toggle = card.querySelector('.topic-toggle');
+      if (!body || !toggle) return;
+
+      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+      body.style.display = '-webkit-box';
+      body.style.webkitBoxOrient = 'vertical';
+      body.style.overflow = 'hidden';
+
+      body.style.webkitLineClamp = maxLines;
+      const clampedHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = 'unset';
+      const fullHeight = body.getBoundingClientRect().height;
+
+      body.style.webkitLineClamp = maxLines;
+
+      if (fullHeight <= clampedHeight + 1) { toggle.style.display = 'none'; return; }
+
+      toggle.style.display = 'inline';
+      toggle.textContent = 'More';
+
+      let expanded = false;
+      toggle.addEventListener('click', () => {
+        expanded = !expanded;
+        if (expanded) { body.style.webkitLineClamp = 'unset'; toggle.textContent = 'Less'; }
+        else { body.style.webkitLineClamp = maxLines; toggle.textContent = 'More'; }
+      });
+    });
+  });
+</script>
+</body>
+</html>
