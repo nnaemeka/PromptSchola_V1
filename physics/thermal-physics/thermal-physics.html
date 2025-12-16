@@ -6,323 +6,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Thermal Physics track in PromptSchola: temperature, heat, thermodynamics, ideal gases, entropy, and heat engines — broken into guided nano-lessons."
+    content="Thermal Physics hub: temperature, heat, ideal gases, the laws of thermodynamics, entropy, and heat engines."
   />
-
-  <!-- Inter font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    :root {
-      --bg-body: #f3f4f6;
-      --bg-card: #ffffff;
-      --bg-surface: #f9fafb;
-      --accent: #7e22ce;
-      --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.09);
-      --accent-soft2: rgba(129, 140, 248, 0.12);
-      --text-main: #111827;
-      --text-muted: #4b5563;
-      --text-subtle: #9ca3af;
-      --text-strong: #020617;
-      --border-subtle: rgba(209, 213, 219, 0.6);
-      --radius-card: 18px;
-      --radius-pill: 999px;
-      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --transition-fast: 0.25s ease-out;
-      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    :root{
+      --bg-body:#f3f4f6;--bg-card:#ffffff;
+      --accent:#7e22ce;--accent-strong:#6d28d9;
+      --text-main:#111827;--text-muted:#4b5563;--text-subtle:#9ca3af;--text-strong:#020617;
+      --radius-card:18px;--radius-pill:999px;
+      --shadow-card:0 16px 35px rgba(15,23,42,.12);
+      --transition-fast:.25s ease-out;
+      --font-main:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font-main);
-      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
-      font-size: 16.5px;
-      color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.7;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:var(--font-main);
+      background:radial-gradient(circle at top,#e5e7eb,#f9fafb 45%,#f3f4f6);
+      font-size:16.5px;color:var(--text-main);line-height:1.7;-webkit-font-smoothing:antialiased;
     }
+    a{text-decoration:none;color:inherit}
+    .page{min-height:100vh;display:flex;flex-direction:column}
+    .container{width:100%;max-width:1120px;margin:0 auto;padding:0 1.4rem}
 
-    a { text-decoration: none; color: inherit; }
-
-    .page { min-height: 100vh; display: flex; flex-direction: column; }
-
-    .container {
-      width: 100%;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 1.4rem;
+    header{
+      position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
+      background:linear-gradient(to bottom,rgba(249,250,251,.96),rgba(249,250,251,.94),rgba(249,250,251,.9));
+      border-bottom:1px solid rgba(209,213,219,.9);
     }
-
-    /* NAV — canonical (WITH Home link) */
-    header {
-      position: sticky; top: 0; z-index: 40;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(
-        to bottom,
-        rgba(249, 250, 251, 0.96),
-        rgba(249, 250, 251, 0.94),
-        rgba(249, 250, 251, 0.9)
-      );
-      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}
+    .nav-left{display:flex;align-items:center;gap:.75rem}
+    .logo-mark{
+      width:34px;height:34px;border-radius:40%;
+      background:radial-gradient(circle at 30% 30%,var(--accent),var(--accent-strong));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;
     }
+    .logo-text span:first-child{display:block;font-weight:700;font-size:1.02rem;color:var(--text-strong);letter-spacing:.02em}
+    .logo-text span:last-child{display:block;font-size:.76rem;color:var(--text-subtle)}
+    .nav-links{display:flex;gap:1.3rem;font-size:.95rem;align-items:center}
+    .nav-links a{opacity:.9;color:var(--text-muted);transition:opacity var(--transition-fast),color var(--transition-fast)}
+    .nav-links a:hover{opacity:1;color:var(--accent-strong)}
+    .nav-right{display:flex;align-items:center;gap:.6rem;font-size:.9rem}
 
-    .nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.75rem 0;
+    .btn-pill{
+      border-radius:var(--radius-pill);padding:.45rem .95rem;border:1px solid rgba(209,213,219,.9);
+      background:#fff;cursor:pointer;font-size:.86rem;
+      transition:background var(--transition-fast),transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast);
+      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
     }
-
-    .nav-left { display:flex;align-items:center;gap:0.75rem; }
-
-    .logo-mark {
-      width: 34px; height: 34px;
-      border-radius: 40%;
-      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 1rem; color: #fff;
-      box-shadow: none;
-    }
-
-    .logo-text span:first-child {
-      display:block;
-      font-weight: 700; font-size: 1.02rem; color: var(--text-strong);
-      letter-spacing: 0.02em;
-    }
-    .logo-text span:last-child { display:block; font-size: 0.76rem; color: var(--text-subtle); }
-
-    .nav-links { display: flex; gap: 1.3rem; font-size: 0.95rem; align-items:center; }
-    .nav-links a { opacity: 0.9; color: var(--text-muted); transition: opacity var(--transition-fast), color var(--transition-fast); }
-    .nav-links a:hover { opacity: 1; color: var(--accent-strong); }
-
-    .nav-right {
-      display: flex; align-items: center; gap: 0.6rem;
-      font-size: 0.9rem;
-    }
-
-    .btn-pill {
-      border-radius: var(--radius-pill);
-      padding: 0.45rem 0.95rem;
-      border: 1px solid rgba(209,213,219,0.9);
-      background: #fff;
-      cursor: pointer;
-      font-size: 0.86rem;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+    .btn-pill:hover{background:#f3f4f6;transform:translateY(-1px);border-color:rgba(156,163,175,.9);box-shadow:0 8px 20px rgba(148,163,184,.35)}
+    .btn-primary{
+      display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);
+      padding:.6rem 1.3rem;font-size:.9rem;font-weight:600;border:none;cursor:pointer;color:#fff;
+      background:radial-gradient(circle at 30% 0%,#a855f7,#7e22ce,#4c1d95);
+      box-shadow:0 10px 22px rgba(79,70,229,.35);
+      transition:transform var(--transition-fast),filter var(--transition-fast),box-shadow var(--transition-fast);
       white-space:nowrap;
     }
-    .btn-pill:hover {
-      background: #f3f4f6;
-      transform: translateY(-1px);
-      border-color: rgba(156, 163, 175, 0.9);
-      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
-    }
+    .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.03);box-shadow:0 14px 30px rgba(79,70,229,.45)}
 
-    .btn-primary {
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius: var(--radius-pill);
-      padding: 0.6rem 1.3rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
-      box-shadow: 0 10px 22px rgba(79,70,229,0.35);
-      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-      white-space: nowrap;
-      text-decoration:none;
+    .hero{position:relative;overflow:hidden;padding:3.2rem 0 2.7rem;text-align:center}
+    .hero::before{
+      content:"";position:absolute;inset:-80px;pointer-events:none;
+      background:radial-gradient(circle at 10% 0%,rgba(129,140,248,.40),transparent 60%),
+                 radial-gradient(circle at 90% 40%,rgba(168,85,247,.35),transparent 55%);
+      opacity:.9;z-index:-1;
     }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow: 0 14px 30px rgba(79,70,229,0.45);
-      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
-    }
+    .hero-kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:.9rem}
+    .hero-title{font-size:clamp(2.2rem,3.2vw,2.8rem);font-weight:800;color:var(--text-strong);margin-bottom:.6rem;max-width:56rem;margin:0 auto;line-height:1.12}
+    .hero-subtitle{font-size:1.1rem;max-width:56rem;margin:0 auto;color:var(--text-muted)}
 
-    /* HERO — centered + glow */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 3.2rem 0 3rem;
-      text-align: center;
-    }
+    .topics-heading{margin:2.7rem auto 1.7rem;text-align:center;max-width:44rem}
+    .topics-heading-kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.35rem}
+    .topics-heading-title{font-size:1.85rem;font-weight:800;color:var(--text-strong);margin-bottom:.4rem}
+    .topics-heading-subtitle{font-size:1.05rem;color:var(--text-muted);margin:0 auto}
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: -80px;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
-        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
-      opacity: 0.9;
-      z-index: -1;
+    .topics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin-top:1.4rem}
+    .topic-card{
+      background:var(--bg-card);border-radius:var(--radius-card);
+      border:1px solid rgba(209,213,219,.55);
+      padding:1.1rem 1.15rem 1.2rem;box-shadow:var(--shadow-card);
+      display:flex;flex-direction:column;justify-content:space-between;min-height:210px;
     }
-
-    .hero-kicker {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-subtle);
-      margin-bottom: 0.9rem;
-    }
-    .hero-title {
-      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
-      font-weight: 800;
-      color: var(--text-strong);
-      margin-bottom: 0.6rem;
-      max-width: 40rem;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.12;
-    }
-    .hero-subtitle {
-      font-size: 1.1rem;
-      max-width: 40rem;
-      margin: 0 auto;
-      color: var(--text-muted);
-    }
-
-    /* TOPICS HEADING — centered */
-    .topics-heading {
-      margin: 2.8rem auto 1.7rem;
-      text-align: center;
-      max-width: 40rem;
-    }
-    .topics-heading-kicker {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-subtle);
-      margin-bottom: 0.35rem;
-    }
-    .topics-heading-title {
-      font-size: 1.85rem;
-      font-weight: 800;
-      color: var(--text-strong);
-      margin-bottom: 0.4rem;
-    }
-    .topics-heading-subtitle {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      margin: 0 auto;
-    }
-
-    /* GRID */
-    .topics-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.2rem;
-      margin-top: 1.4rem;
-    }
-
-    /* CARD — standard template */
-    .topic-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-card);
-      border: 1px solid rgba(209, 213, 219, 0.55);
-      padding: 1.1rem 1.15rem 1.2rem;
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 210px;
-      position: relative;
-    }
-
-    .topic-kicker {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-subtle);
-      margin-bottom: 0.2rem;
-    }
-
-    .topic-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text-strong);
-    }
-
-    /* Description + list hierarchy (index.html-style) */
-    .topic-body {
-      font-size: 0.96rem;
-      color: var(--text-muted);
-      margin-top: 0.45rem;
-      line-height: 1.65;
-    }
-
-    .topic-list {
-      list-style: none;
-      margin-top: 0.55rem;
-      padding-left: 0;
-      font-size: 1rem;
-      color: var(--text-main);
-      font-weight: 400;
-      line-height: 1.6;
-    }
-
-    .topic-list li { margin-bottom: 0.25rem; }
-
-    .topic-list li::before {
-      content: "•";
-      display: inline-block;
-      width: 1.1rem;
-      color: var(--text-subtle);
-    }
-
-    /* Toggle */
-    .topic-toggle {
-      background: transparent;
-      border: none;
-      color: var(--accent-strong);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 0;
-      margin-top: 0.2rem;
-    }
-    .topic-toggle:hover { text-decoration: underline; }
-
-    .topic-footer {
-      margin-top: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.55rem;
-      font-size: 0.82rem;
-      color: var(--text-subtle);
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 1.9rem 0;
-      text-align: center;
-      font-size: 0.86rem;
-      color: var(--text-subtle);
-    }
-
-    /* Responsive */
-    @media (max-width: 960px) {
-      .topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 800px) {
-      .topics-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .hero-title { font-size: 2.1rem; }
-    }
+    .topic-kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.2rem}
+    .topic-title{font-size:1.2rem;font-weight:700;color:var(--text-strong)}
+    .topic-body{font-size:.96rem;color:var(--text-muted);margin-top:.45rem;line-height:1.65}
+    .topic-list{list-style:none;margin-top:.55rem;padding-left:0;font-size:1rem;color:var(--text-main);font-weight:400;line-height:1.6}
+    .topic-list li{margin-bottom:.25rem}
+    .topic-list li::before{content:"•";display:inline-block;width:1.1rem;color:var(--text-subtle)}
+    .topic-toggle{background:transparent;border:none;color:var(--accent-strong);font-size:.9rem;font-weight:600;cursor:pointer;padding:0;margin-top:.2rem}
+    .topic-toggle:hover{text-decoration:underline}
+    .topic-footer{margin-top:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;font-size:.82rem;color:var(--text-subtle)}
+    footer{margin-top:auto;padding:1.9rem 0;text-align:center;font-size:.86rem;color:var(--text-subtle)}
+    @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
   </style>
 </head>
 
 <body>
 <div class="page">
-
-  <!-- NAV -->
   <header>
     <div class="container">
       <div class="nav">
@@ -335,56 +117,42 @@
         </div>
 
         <nav class="nav-links">
-          <a href="/index.html">Home</a>
-          <a href="/physics/physics.html">Physics</a>
-          <a href="/math/math.html">Math</a>
-          <a href="/chemistry/chemistry.html">Chemistry</a>
-          <a href="/biology/biology.html">Biology</a>
-          <a href="/pricing.html">Pricing</a>
+          <a href="index.html">Home</a>
+          <a href="physics.html">Physics</a>
+          <a href="math/math.html">Math</a>
+          <a href="chemistry/chemistry.html">Chemistry</a>
+          <a href="biology/biology.html">Biology</a>
+          <a href="pricing.html">Pricing</a>
         </nav>
 
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
-
-          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
-
-          <button
-            id="nav-signout-btn"
-            type="button"
-            class="btn-pill"
-            style="display:none;"
-            onclick="signOutUser && signOutUser()"
-          >
-            Sign out
-          </button>
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">Sign out</button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- HERO -->
   <main>
     <section class="hero">
       <div class="container">
         <div class="hero-kicker">Thermal Physics · Physics</div>
-        <h1 class="hero-title">Build a strong foundation in heat and thermodynamics.</h1>
+        <h1 class="hero-title">Energy, temperature, and the direction of real processes.</h1>
         <p class="hero-subtitle">
-          Study temperature, heat, ideal gases, and the laws of thermodynamics — then connect the ideas
-          to engines, refrigerators, and efficiency limits.
+          Build a clear chain from temperature and heat transfer to gases, entropy, and the efficiency limits of engines.
         </p>
       </div>
     </section>
 
-    <!-- TOPICS -->
     <section>
       <div class="container">
-
         <div class="topics-heading">
-          <div class="topics-heading-kicker">Thermal Physics topics</div>
-          <h2 class="topics-heading-title">Explore the chapters in this track</h2>
+          <div class="topics-heading-kicker">Track hub</div>
+          <h2 class="topics-heading-title">Thermal Physics</h2>
           <p class="topics-heading-subtitle">
-            Each chapter contains guided nano-lessons using the same PromptSchola 6-step flow.
+            Choose a topic. Each page contains focused nano-lessons and ends with Practice &amp; Exercises.
           </p>
         </div>
 
@@ -392,295 +160,338 @@
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter A</div>
-              <div class="topic-title">Temperature &amp; Thermal Equilibrium</div>
+              <div class="topic-kicker">1</div>
+              <div class="topic-title">Temperature and Thermal Equilibrium</div>
               <div class="topic-body" data-lines="9">
-                Define temperature, understand equilibrium, and learn how thermometers “work.”
+                Temperature, equilibrium, and how we measure thermal state.
                 <ul class="topic-list">
+                  <li>Temperature as a measure of thermal state</li>
                   <li>Zeroth Law of Thermodynamics</li>
-                  <li>Thermal contact and equilibrium</li>
-                  <li>Temperature scales and conversions</li>
-                  <li>What a thermometer actually measures</li>
+                  <li>Thermal equilibrium and thermal contact</li>
+                  <li>Thermometers and temperature scales</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="temperature-thermal-equilibrium.html" class="btn-primary">Start chapter</a>
-              <span>Set the language of thermal physics.</span>
+              <a href="temperature-and-thermal-equilibrium/temperature-and-thermal-equilibrium.html" class="btn-primary">Start topic</a>
+              <span>Equilibrium is the foundation.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter B</div>
-              <div class="topic-title">Thermal Expansion of Solids and Liquids</div>
+              <div class="topic-kicker">2</div>
+              <div class="topic-title">Thermal Expansion</div>
               <div class="topic-body" data-lines="9">
-                Predict how length, area, and volume change with temperature.
+                Materials expand with temperature—sometimes with large mechanical consequences.
                 <ul class="topic-list">
-                  <li>Linear, area, and volume expansion</li>
-                  <li>Expansion coefficients</li>
-                  <li>Everyday examples (gaps, bridges, pipes)</li>
-                  <li>Liquids and apparent expansion</li>
+                  <li>Linear expansion</li>
+                  <li>Area and volume expansion</li>
+                  <li>Thermal stress and constrained expansion</li>
+                  <li>Applications and real-world effects</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="thermal-expansion.html" class="btn-primary">Start chapter</a>
-              <span>From metals to fluids.</span>
+              <a href="thermal-expansion/thermal-expansion.html" class="btn-primary">Start topic</a>
+              <span>Expansion meets mechanics.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter C</div>
+              <div class="topic-kicker">3</div>
               <div class="topic-title">Heat, Work, and Internal Energy</div>
               <div class="topic-body" data-lines="9">
-                Distinguish heat vs temperature, and connect energy transfer to work and internal energy.
+                Separate energy transfer (heat/work) from stored energy (internal energy).
                 <ul class="topic-list">
-                  <li>Heat vs temperature</li>
-                  <li>Internal energy concept</li>
-                  <li>Work as energy transfer</li>
-                  <li>Sign conventions (Q and W)</li>
+                  <li>Heat as energy transfer</li>
+                  <li>Work done by and on a system</li>
+                  <li>Internal energy of a system</li>
+                  <li>Distinction between heat and temperature</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="heat-work-internal-energy.html" class="btn-primary">Start chapter</a>
-              <span>Core bookkeeping ideas.</span>
+              <a href="heat-work-and-internal-energy/heat-work-and-internal-energy.html" class="btn-primary">Start topic</a>
+              <span>Define the system first.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter D</div>
+              <div class="topic-kicker">4</div>
               <div class="topic-title">Heat Transfer</div>
               <div class="topic-body" data-lines="9">
-                Understand how heat flows in real systems and how to estimate rates.
+                Conduction, convection, and radiation—plus steady vs transient flow.
                 <ul class="topic-list">
-                  <li>Conduction (Fourier’s law)</li>
-                  <li>Convection (basic intuition)</li>
-                  <li>Radiation (Stefan–Boltzmann law)</li>
-                  <li>Thermal resistance idea (intro)</li>
+                  <li>Conduction</li>
+                  <li>Convection</li>
+                  <li>Radiation</li>
+                  <li>Steady-state vs transient heat flow</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="heat-transfer.html" class="btn-primary">Start chapter</a>
-              <span>Mechanisms and rates.</span>
+              <a href="heat-transfer/heat-transfer.html" class="btn-primary">Start topic</a>
+              <span>Mechanism depends on context.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter E</div>
-              <div class="topic-title">Specific Heat &amp; Calorimetry</div>
+              <div class="topic-kicker">5</div>
+              <div class="topic-title">Specific Heat and Calorimetry</div>
               <div class="topic-body" data-lines="9">
-                Use energy balance to predict temperature changes and mixing outcomes.
+                Relate temperature change to energy exchange using heat capacity.
                 <ul class="topic-list">
-                  <li>Specific heat and heat capacity</li>
-                  <li>Calorimetry energy balance</li>
-                  <li>Mixing problems</li>
-                  <li>Common pitfalls in Q = mcΔT</li>
+                  <li>Specific heat capacity</li>
+                  <li>Molar heat capacity</li>
+                  <li>Calorimetry experiments</li>
+                  <li>Energy balance in thermal systems</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="calorimetry.html" class="btn-primary">Start chapter</a>
-              <span>Practical thermal calculations.</span>
+              <a href="specific-heat-and-calorimetry/specific-heat-and-calorimetry.html" class="btn-primary">Start topic</a>
+              <span>Energy accounting, carefully.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter F</div>
+              <div class="topic-kicker">6</div>
               <div class="topic-title">Ideal Gas Law</div>
               <div class="topic-body" data-lines="9">
-                Model gases simply and connect pressure, volume, and temperature.
+                A simple equation of state linking pressure, volume, and temperature.
                 <ul class="topic-list">
-                  <li>PV = nRT</li>
-                  <li>Units and constants</li>
-                  <li>Basic processes and assumptions</li>
-                  <li>When “ideal” is reasonable</li>
+                  <li>Pressure, volume, and temperature</li>
+                  <li>Equation of state for an ideal gas</li>
+                  <li>Applications to simple systems</li>
+                  <li>Limitations of the ideal gas model</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="ideal-gas-law.html" class="btn-primary">Start chapter</a>
-              <span>Foundation for thermodynamic cycles.</span>
+              <a href="ideal-gas-law/ideal-gas-law.html" class="btn-primary">Start topic</a>
+              <span>Know when “ideal” fails.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter G</div>
+              <div class="topic-kicker">7</div>
               <div class="topic-title">Kinetic Theory of Gases</div>
               <div class="topic-body" data-lines="9">
-                Explain macroscopic gas behavior using microscopic particle motion.
+                Connect microscopic motion to macroscopic pressure and temperature.
                 <ul class="topic-list">
-                  <li>Microscopic picture of pressure</li>
-                  <li>Average kinetic energy and temperature</li>
-                  <li>Root-mean-square speed</li>
-                  <li>Mean free path (intro)</li>
+                  <li>Microscopic model of gases</li>
+                  <li>Molecular speeds and distributions (conceptual)</li>
+                  <li>Temperature and kinetic energy</li>
+                  <li>Pressure from molecular motion</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="kinetic-theory-gases.html" class="btn-primary">Start chapter</a>
-              <span>Bridge between micro and macro.</span>
+              <a href="kinetic-theory-of-gases/kinetic-theory-of-gases.html" class="btn-primary">Start topic</a>
+              <span>Microscopic explanation.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter H</div>
-              <div class="topic-title">Work Done by a Gas &amp; P–V Diagrams</div>
+              <div class="topic-kicker">8</div>
+              <div class="topic-title">Work Done by a Gas</div>
               <div class="topic-body" data-lines="9">
-                Read PV graphs and compute work as the area under the curve.
+                Use P–V diagrams to compute work as area under a curve.
                 <ul class="topic-list">
-                  <li>Interpreting PV diagrams</li>
-                  <li>Work in expansion and compression</li>
-                  <li>Isothermal vs adiabatic intuition</li>
-                  <li>Sign conventions and common mistakes</li>
+                  <li>Pressure–volume (P–V) diagrams</li>
+                  <li>Quasi-static processes</li>
+                  <li>Isobaric, isochoric, isothermal</li>
+                  <li>Work as area under a curve</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="pv-diagrams-work.html" class="btn-primary">Start chapter</a>
-              <span>Visual thermodynamics.</span>
+              <a href="work-done-by-a-gas/work-done-by-a-gas.html" class="btn-primary">Start topic</a>
+              <span>Geometry meets thermodynamics.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter I</div>
+              <div class="topic-kicker">9</div>
               <div class="topic-title">First Law of Thermodynamics</div>
               <div class="topic-body" data-lines="9">
-                Use energy conservation to analyze thermodynamic processes.
+                Energy conservation for thermal systems.
                 <ul class="topic-list">
-                  <li>ΔU = Q − W</li>
-                  <li>Closed systems and processes</li>
-                  <li>Applications to ideal gases</li>
-                  <li>Process-based bookkeeping</li>
+                  <li>Statement of the first law</li>
+                  <li>Energy conservation in thermal systems</li>
+                  <li>Applications to gases and cycles</li>
+                  <li>Sign conventions</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="first-law.html" class="btn-primary">Start chapter</a>
-              <span>The core law of thermal accounting.</span>
+              <a href="first-law-of-thermodynamics/first-law-of-thermodynamics.html" class="btn-primary">Start topic</a>
+              <span>Track Q and W consistently.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter J</div>
+              <div class="topic-kicker">10</div>
               <div class="topic-title">Heat Capacities (Cp and Cv)</div>
               <div class="topic-body" data-lines="9">
-                Learn how heat input relates to temperature change under different constraints.
+                Compare heating at constant pressure vs constant volume.
                 <ul class="topic-list">
-                  <li>Constant-pressure vs constant-volume heating</li>
-                  <li>Cp and Cv meaning</li>
-                  <li>Relation for ideal gases (intro)</li>
-                  <li>Practical interpretation</li>
+                  <li>Heat capacity at constant volume</li>
+                  <li>Heat capacity at constant pressure</li>
+                  <li>Relationship between Cp and Cv</li>
+                  <li>Applications to ideal gases</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="cp-cv.html" class="btn-primary">Start chapter</a>
-              <span>Key for real processes.</span>
+              <a href="heat-capacities-cp-and-cv/heat-capacities-cp-and-cv.html" class="btn-primary">Start topic</a>
+              <span>Constraints change heat capacity.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter K</div>
-              <div class="topic-title">Phase Changes &amp; Latent Heat</div>
+              <div class="topic-kicker">11</div>
+              <div class="topic-title">Phase Changes and Latent Heat</div>
               <div class="topic-body" data-lines="9">
-                Understand why temperature can stay constant while heat flows.
+                Temperature can stay constant while energy flows during a phase change.
                 <ul class="topic-list">
-                  <li>Melting, freezing, boiling</li>
-                  <li>Latent heat</li>
+                  <li>Phase transitions</li>
+                  <li>Latent heat of fusion and vaporization</li>
                   <li>Heating curves</li>
-                  <li>Calorimetry with phase change</li>
+                  <li>Energy exchange during phase changes</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="phase-changes-latent-heat.html" class="btn-primary">Start chapter</a>
+              <a href="phase-changes-and-latent-heat/phase-changes-and-latent-heat.html" class="btn-primary">Start topic</a>
               <span>Energy without temperature change.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter L</div>
-              <div class="topic-title">Entropy &amp; the Second Law of Thermodynamics</div>
+              <div class="topic-kicker">12</div>
+              <div class="topic-title">Entropy</div>
               <div class="topic-body" data-lines="9">
-                Learn the direction of natural processes and the meaning of irreversibility.
+                A state variable that tracks irreversibility and the spread of energy.
                 <ul class="topic-list">
-                  <li>Entropy as a state function (intro)</li>
-                  <li>Second Law statements</li>
-                  <li>Irreversibility and “why things happen”</li>
-                  <li>Qualitative entropy changes</li>
+                  <li>Concept of entropy</li>
+                  <li>Entropy change in reversible processes</li>
+                  <li>Entropy and disorder (conceptual)</li>
+                  <li>Entropy in isolated systems</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="entropy-second-law.html" class="btn-primary">Start chapter</a>
-              <span>The arrow of thermal processes.</span>
+              <a href="entropy/entropy.html" class="btn-primary">Start topic</a>
+              <span>State variable with directionality.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter M</div>
-              <div class="topic-title">Heat Engines &amp; Refrigerators</div>
+              <div class="topic-kicker">13</div>
+              <div class="topic-title">Second Law of Thermodynamics</div>
               <div class="topic-body" data-lines="9">
-                See how thermodynamics sets limits for engines and cooling systems.
+                The direction of natural processes and the arrow of time.
                 <ul class="topic-list">
-                  <li>Heat engine idea and efficiency</li>
+                  <li>Statements of the second law</li>
+                  <li>Direction of natural processes</li>
+                  <li>Irreversibility</li>
+                  <li>Entropy and the arrow of time</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="second-law-of-thermodynamics/second-law-of-thermodynamics.html" class="btn-primary">Start topic</a>
+              <span>Not all energy is equally usable.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">14</div>
+              <div class="topic-title">Heat Engines and Refrigerators</div>
+              <div class="topic-body" data-lines="9">
+                Devices that move energy between reservoirs and do work.
+                <ul class="topic-list">
+                  <li>Heat engines</li>
                   <li>Refrigerators and heat pumps</li>
-                  <li>Coefficient of performance (COP)</li>
+                  <li>Efficiency and coefficient of performance</li>
                   <li>Energy flow diagrams</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="heat-engines-refrigerators.html" class="btn-primary">Start chapter</a>
-              <span>Applications that matter.</span>
+              <a href="heat-engines-and-refrigerators/heat-engines-and-refrigerators.html" class="btn-primary">Start topic</a>
+              <span>Track reservoirs and work.</span>
             </div>
           </article>
 
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter N</div>
-              <div class="topic-title">Carnot Cycle &amp; Efficiency Limits</div>
+              <div class="topic-kicker">15</div>
+              <div class="topic-title">Carnot Cycle and Efficiency Limits</div>
               <div class="topic-body" data-lines="9">
-                Understand the ideal benchmark cycle and why it defines maximum efficiency.
+                The ideal benchmark cycle that sets maximum possible efficiency.
                 <ul class="topic-list">
-                  <li>Carnot cycle steps (conceptual)</li>
-                  <li>Reversible processes idea</li>
-                  <li>Carnot efficiency limit</li>
-                  <li>Why no real engine can beat it</li>
+                  <li>Carnot engine</li>
+                  <li>Reversible cycles</li>
+                  <li>Maximum possible efficiency</li>
+                  <li>Absolute temperature scale</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="carnot-cycle.html" class="btn-primary">Start chapter</a>
-              <span>The gold standard of efficiency.</span>
+              <a href="carnot-cycle-and-efficiency-limits/carnot-cycle-and-efficiency-limits.html" class="btn-primary">Start topic</a>
+              <span>Upper bound, not a design recipe.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">Practice</div>
+              <div class="topic-title">Practice &amp; Exercises</div>
+              <div class="topic-body" data-lines="9">
+                Mixed practice across thermal concepts, ideal gases, and thermodynamic laws.
+                <ul class="topic-list">
+                  <li>Concept checks (equilibrium, heat vs temperature)</li>
+                  <li>Drills (expansion, calorimetry, ideal gas)</li>
+                  <li>P–V diagram and work computations</li>
+                  <li>First/Second law and entropy prompts</li>
+                  <li>Engines, COP, and Carnot-limit questions</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="practice/thermal-physics-practice.html" class="btn-primary">Open practice</a>
+              <span>Mix conceptual + computational.</span>
             </div>
           </article>
 
@@ -689,20 +500,14 @@
     </section>
   </main>
 
-  <footer>
-    © 2025 PromptSchola. All rights reserved.
-  </footer>
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
 </div>
 
-<!-- Supabase + auth helpers -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/auth.js"></script>
-
+<script src="auth.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
-    if (typeof updateNavUserDisplay === 'function') {
-      updateNavUserDisplay();
-    }
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
     const loginBtn = document.getElementById('nav-login-btn');
     const registerBtn = document.getElementById('nav-register-btn');
@@ -710,7 +515,6 @@
 
     if (typeof getCurrentUser === 'function') {
       const user = await getCurrentUser();
-
       if (user) {
         if (loginBtn) loginBtn.style.display = 'none';
         if (registerBtn) registerBtn.style.display = 'none';
@@ -721,19 +525,14 @@
         if (signOutBtn) signOutBtn.style.display = 'none';
       }
     }
+    if (signOutBtn && typeof signOutUser === 'function') signOutBtn.addEventListener('click', signOutUser);
 
-    if (signOutBtn && typeof signOutUser === 'function') {
-      signOutBtn.addEventListener('click', signOutUser);
-    }
-
-    /* === MORE/LESS TOGGLE, PER CARD === */
     document.querySelectorAll('.topic-card').forEach(card => {
       const body = card.querySelector('.topic-body');
       const toggle = card.querySelector('.topic-toggle');
       if (!body || !toggle) return;
 
       const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
-
       body.style.display = '-webkit-box';
       body.style.webkitBoxOrient = 'vertical';
       body.style.overflow = 'hidden';
@@ -746,10 +545,7 @@
 
       body.style.webkitLineClamp = maxLines;
 
-      if (fullHeight <= clampedHeight + 1) {
-        toggle.style.display = 'none';
-        return;
-      }
+      if (fullHeight <= clampedHeight + 1) { toggle.style.display = 'none'; return; }
 
       toggle.style.display = 'inline';
       toggle.textContent = 'More';
@@ -757,17 +553,11 @@
       let expanded = false;
       toggle.addEventListener('click', () => {
         expanded = !expanded;
-        if (expanded) {
-          body.style.webkitLineClamp = 'unset';
-          toggle.textContent = 'Less';
-        } else {
-          body.style.webkitLineClamp = maxLines;
-          toggle.textContent = 'More';
-        }
+        if (expanded) { body.style.webkitLineClamp = 'unset'; toggle.textContent = 'Less'; }
+        else { body.style.webkitLineClamp = maxLines; toggle.textContent = 'More'; }
       });
     });
   });
 </script>
-
 </body>
 </html>
