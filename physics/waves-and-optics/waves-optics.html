@@ -6,323 +6,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Waves & Optics track in PromptSchola: Oscillations & Waves, Optics, and practice — each broken into guided nano-lessons."
+    content="Waves & Optics hub: oscillations, mechanical waves, interference, standing waves, and geometrical + wave optics."
   />
-
-  <!-- Inter font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg-body: #f3f4f6;
-      --bg-card: #ffffff;
-      --bg-surface: #f9fafb;
-      --accent: #7e22ce;
-      --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.09);
-      --accent-soft2: rgba(129, 140, 248, 0.12);
-      --text-main: #111827;
-      --text-muted: #4b5563;
-      --text-subtle: #9ca3af;
-      --text-strong: #020617;
-      --border-subtle: rgba(209, 213, 219, 0.6);
-      --radius-card: 18px;
-      --radius-pill: 999px;
-      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --transition-fast: 0.25s ease-out;
-      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    :root{
+      --bg-body:#f3f4f6;--bg-card:#ffffff;
+      --accent:#7e22ce;--accent-strong:#6d28d9;
+      --text-main:#111827;--text-muted:#4b5563;--text-subtle:#9ca3af;--text-strong:#020617;
+      --radius-card:18px;--radius-pill:999px;
+      --shadow-card:0 16px 35px rgba(15,23,42,.12);
+      --transition-fast:.25s ease-out;
+      --font-main:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font-main);
-      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
-      font-size: 16.5px;
-      color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.7;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:var(--font-main);
+      background:radial-gradient(circle at top,#e5e7eb,#f9fafb 45%,#f3f4f6);
+      font-size:16.5px;color:var(--text-main);line-height:1.7;-webkit-font-smoothing:antialiased;
     }
+    a{text-decoration:none;color:inherit}
+    .page{min-height:100vh;display:flex;flex-direction:column}
+    .container{width:100%;max-width:1120px;margin:0 auto;padding:0 1.4rem}
 
-    a { text-decoration: none; color: inherit; }
-
-    .page { min-height: 100vh; display: flex; flex-direction: column; }
-
-    .container {
-      width: 100%;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 1.4rem;
+    header{
+      position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
+      background:linear-gradient(to bottom,rgba(249,250,251,.96),rgba(249,250,251,.94),rgba(249,250,251,.9));
+      border-bottom:1px solid rgba(209,213,219,.9);
     }
-
-    /* NAV — canonical (WITH Home link) */
-    header {
-      position: sticky; top: 0; z-index: 40;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(
-        to bottom,
-        rgba(249, 250, 251, 0.96),
-        rgba(249, 250, 251, 0.94),
-        rgba(249, 250, 251, 0.9)
-      );
-      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}
+    .nav-left{display:flex;align-items:center;gap:.75rem}
+    .logo-mark{
+      width:34px;height:34px;border-radius:40%;
+      background:radial-gradient(circle at 30% 30%,var(--accent),var(--accent-strong));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;
     }
+    .logo-text span:first-child{display:block;font-weight:700;font-size:1.02rem;color:var(--text-strong);letter-spacing:.02em}
+    .logo-text span:last-child{display:block;font-size:.76rem;color:var(--text-subtle)}
+    .nav-links{display:flex;gap:1.3rem;font-size:.95rem;align-items:center}
+    .nav-links a{opacity:.9;color:var(--text-muted);transition:opacity var(--transition-fast),color var(--transition-fast)}
+    .nav-links a:hover{opacity:1;color:var(--accent-strong)}
+    .nav-right{display:flex;align-items:center;gap:.6rem;font-size:.9rem}
 
-    .nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.75rem 0;
+    .btn-pill{
+      border-radius:var(--radius-pill);padding:.45rem .95rem;border:1px solid rgba(209,213,219,.9);
+      background:#fff;cursor:pointer;font-size:.86rem;
+      transition:background var(--transition-fast),transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast);
+      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
     }
-
-    .nav-left { display:flex;align-items:center;gap:0.75rem; }
-
-    .logo-mark {
-      width: 34px; height: 34px;
-      border-radius: 40%;
-      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 1rem; color: #fff;
-      box-shadow: none;
-    }
-
-    .logo-text span:first-child {
-      display:block;
-      font-weight: 700; font-size: 1.02rem; color: var(--text-strong);
-      letter-spacing: 0.02em;
-    }
-    .logo-text span:last-child { display:block; font-size: 0.76rem; color: var(--text-subtle); }
-
-    .nav-links { display: flex; gap: 1.3rem; font-size: 0.95rem; align-items:center; }
-    .nav-links a { opacity: 0.9; color: var(--text-muted); transition: opacity var(--transition-fast), color var(--transition-fast); }
-    .nav-links a:hover { opacity: 1; color: var(--accent-strong); }
-
-    .nav-right {
-      display: flex; align-items: center; gap: 0.6rem;
-      font-size: 0.9rem;
-    }
-
-    .btn-pill {
-      border-radius: var(--radius-pill);
-      padding: 0.45rem 0.95rem;
-      border: 1px solid rgba(209,213,219,0.9);
-      background: #fff;
-      cursor: pointer;
-      font-size: 0.86rem;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+    .btn-pill:hover{background:#f3f4f6;transform:translateY(-1px);border-color:rgba(156,163,175,.9);box-shadow:0 8px 20px rgba(148,163,184,.35)}
+    .btn-primary{
+      display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);
+      padding:.6rem 1.3rem;font-size:.9rem;font-weight:600;border:none;cursor:pointer;color:#fff;
+      background:radial-gradient(circle at 30% 0%,#a855f7,#7e22ce,#4c1d95);
+      box-shadow:0 10px 22px rgba(79,70,229,.35);
+      transition:transform var(--transition-fast),filter var(--transition-fast),box-shadow var(--transition-fast);
       white-space:nowrap;
     }
-    .btn-pill:hover {
-      background: #f3f4f6;
-      transform: translateY(-1px);
-      border-color: rgba(156, 163, 175, 0.9);
-      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
-    }
+    .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.03);box-shadow:0 14px 30px rgba(79,70,229,.45)}
 
-    .btn-primary {
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius: var(--radius-pill);
-      padding: 0.6rem 1.3rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
-      box-shadow: 0 10px 22px rgba(79,70,229,0.35);
-      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-      white-space: nowrap;
-      text-decoration:none;
+    .hero{position:relative;overflow:hidden;padding:3.2rem 0 2.7rem;text-align:center}
+    .hero::before{
+      content:"";position:absolute;inset:-80px;pointer-events:none;
+      background:radial-gradient(circle at 10% 0%,rgba(129,140,248,.40),transparent 60%),
+                 radial-gradient(circle at 90% 40%,rgba(168,85,247,.35),transparent 55%);
+      opacity:.9;z-index:-1;
     }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow: 0 14px 30px rgba(79,70,229,0.45);
-      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
-    }
+    .hero-kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:.9rem}
+    .hero-title{font-size:clamp(2.2rem,3.2vw,2.8rem);font-weight:800;color:var(--text-strong);margin-bottom:.6rem;max-width:56rem;margin:0 auto;line-height:1.12}
+    .hero-subtitle{font-size:1.1rem;max-width:56rem;margin:0 auto;color:var(--text-muted)}
 
-    /* HERO — centered + glow */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 3.2rem 0 3rem;
-      text-align: center;
-    }
+    .topics-heading{margin:2.7rem auto 1.7rem;text-align:center;max-width:44rem}
+    .topics-heading-kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.35rem}
+    .topics-heading-title{font-size:1.85rem;font-weight:800;color:var(--text-strong);margin-bottom:.4rem}
+    .topics-heading-subtitle{font-size:1.05rem;color:var(--text-muted);margin:0 auto}
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: -80px;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
-        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
-      opacity: 0.9;
-      z-index: -1;
+    .topics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin-top:1.4rem}
+    .topic-card{
+      background:var(--bg-card);border-radius:var(--radius-card);
+      border:1px solid rgba(209,213,219,.55);
+      padding:1.1rem 1.15rem 1.2rem;box-shadow:var(--shadow-card);
+      display:flex;flex-direction:column;justify-content:space-between;min-height:210px;
     }
-
-    .hero-kicker {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-subtle);
-      margin-bottom: 0.9rem;
-    }
-    .hero-title {
-      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
-      font-weight: 800;
-      color: var(--text-strong);
-      margin-bottom: 0.6rem;
-      max-width: 40rem;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.12;
-    }
-    .hero-subtitle {
-      font-size: 1.1rem;
-      max-width: 40rem;
-      margin: 0 auto;
-      color: var(--text-muted);
-    }
-
-    /* TOPICS HEADING — centered */
-    .topics-heading {
-      margin: 2.8rem auto 1.7rem;
-      text-align: center;
-      max-width: 40rem;
-    }
-    .topics-heading-kicker {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-subtle);
-      margin-bottom: 0.35rem;
-    }
-    .topics-heading-title {
-      font-size: 1.85rem;
-      font-weight: 800;
-      color: var(--text-strong);
-      margin-bottom: 0.4rem;
-    }
-    .topics-heading-subtitle {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      margin: 0 auto;
-    }
-
-    /* GRID */
-    .topics-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.2rem;
-      margin-top: 1.4rem;
-    }
-
-    /* CARD — standard template */
-    .topic-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-card);
-      border: 1px solid rgba(209, 213, 219, 0.55);
-      padding: 1.1rem 1.15rem 1.2rem;
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 210px;
-      position: relative;
-    }
-
-    .topic-kicker {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-subtle);
-      margin-bottom: 0.2rem;
-    }
-
-    .topic-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text-strong);
-    }
-
-    /* Description + list hierarchy (index.html-style) */
-    .topic-body {
-      font-size: 0.96rem;
-      color: var(--text-muted);
-      margin-top: 0.45rem;
-      line-height: 1.65;
-    }
-
-    .topic-list {
-      list-style: none;
-      margin-top: 0.55rem;
-      padding-left: 0;
-      font-size: 1rem;
-      color: var(--text-main);
-      font-weight: 400;
-      line-height: 1.6;
-    }
-
-    .topic-list li { margin-bottom: 0.25rem; }
-
-    .topic-list li::before {
-      content: "•";
-      display: inline-block;
-      width: 1.1rem;
-      color: var(--text-subtle);
-    }
-
-    /* Toggle */
-    .topic-toggle {
-      background: transparent;
-      border: none;
-      color: var(--accent-strong);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 0;
-      margin-top: 0.2rem;
-    }
-    .topic-toggle:hover { text-decoration: underline; }
-
-    .topic-footer {
-      margin-top: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.55rem;
-      font-size: 0.82rem;
-      color: var(--text-subtle);
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 1.9rem 0;
-      text-align: center;
-      font-size: 0.86rem;
-      color: var(--text-subtle);
-    }
-
-    /* Responsive */
-    @media (max-width: 960px) {
-      .topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 800px) {
-      .topics-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .hero-title { font-size: 2.1rem; }
-    }
+    .topic-kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.2rem}
+    .topic-title{font-size:1.2rem;font-weight:700;color:var(--text-strong)}
+    .topic-body{font-size:.96rem;color:var(--text-muted);margin-top:.45rem;line-height:1.65}
+    .topic-list{list-style:none;margin-top:.55rem;padding-left:0;font-size:1rem;color:var(--text-main);font-weight:400;line-height:1.6}
+    .topic-list li{margin-bottom:.25rem}
+    .topic-list li::before{content:"•";display:inline-block;width:1.1rem;color:var(--text-subtle)}
+    .topic-toggle{background:transparent;border:none;color:var(--accent-strong);font-size:.9rem;font-weight:600;cursor:pointer;padding:0;margin-top:.2rem}
+    .topic-toggle:hover{text-decoration:underline}
+    .topic-footer{margin-top:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;font-size:.82rem;color:var(--text-subtle)}
+    footer{margin-top:auto;padding:1.9rem 0;text-align:center;font-size:.86rem;color:var(--text-subtle)}
+    @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
   </style>
 </head>
 
 <body>
 <div class="page">
-
-  <!-- NAV -->
   <header>
     <div class="container">
       <div class="nav">
@@ -335,129 +118,466 @@
         </div>
 
         <nav class="nav-links">
-          <a href="/index.html">Home</a>
-          <a href="/physics/physics.html">Physics</a>
-          <a href="/math/math.html">Math</a>
-          <a href="/chemistry/chemistry.html">Chemistry</a>
-          <a href="/biology/biology.html">Biology</a>
-          <a href="/pricing.html">Pricing</a>
+          <a href="index.html">Home</a>
+          <a href="physics/physics.html">Physics</a>
+          <a href="math/math.html">Math</a>
+          <a href="chemistry/chemistry.html">Chemistry</a>
+          <a href="biology/biology.html">Biology</a>
+          <a href="pricing.html">Pricing</a>
         </nav>
 
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
-
-          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
-
-          <button
-            id="nav-signout-btn"
-            type="button"
-            class="btn-pill"
-            style="display:none;"
-            onclick="signOutUser && signOutUser()"
-          >
-            Sign out
-          </button>
+          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">Sign out</button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- HERO -->
   <main>
     <section class="hero">
       <div class="container">
         <div class="hero-kicker">Waves &amp; Optics · Physics</div>
-        <h1 class="hero-title">See how oscillations create waves, sound, and light.</h1>
+        <h1 class="hero-title">Oscillations lead to waves. Rays lead to images. Waves explain light.</h1>
         <p class="hero-subtitle">
-          Learn oscillations and wave behavior, then use that foundation to understand light, lenses,
-          interference, and diffraction — with guided nano-lessons and practice.
+          Build the foundations: simple harmonic motion and waves, then connect to geometrical optics and the wave nature of light.
         </p>
       </div>
     </section>
 
-    <!-- TOPICS -->
     <section>
       <div class="container">
-
         <div class="topics-heading">
-          <div class="topics-heading-kicker">Waves &amp; Optics topics</div>
-          <h2 class="topics-heading-title">Explore the chapters in this track</h2>
+          <div class="topics-heading-kicker">Track hub</div>
+          <h2 class="topics-heading-title">Waves &amp; Optics</h2>
           <p class="topics-heading-subtitle">
-            Start with Oscillations &amp; Waves, move into Optics, then lock it in with practice.
+            Each topic is a set of nano-lessons designed for mastery: clear concepts, compact worked examples, and practice prompts.
           </p>
         </div>
 
         <div class="topics-grid">
 
-          <!-- OSCILLATIONS & WAVES -->
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter A</div>
-              <div class="topic-title">Oscillations &amp; Waves</div>
+              <div class="topic-kicker">1</div>
+              <div class="topic-title">Simple Harmonic Motion</div>
               <div class="topic-body" data-lines="9">
-                Build intuition for periodic motion, wave speed, and wave superposition.
+                The universal model of small oscillations: restoring forces, sinusoidal motion, and energy exchange.
                 <ul class="topic-list">
-                  <li>Simple harmonic motion (mass–spring, pendulum)</li>
-                  <li>Amplitude, period, frequency, phase</li>
-                  <li>Energy in oscillations (conceptual)</li>
-                  <li>Wave description (wavelength, speed, frequency)</li>
-                  <li>Standing waves and resonance</li>
-                  <li>Superposition and interference (intro)</li>
+                  <li>Restoring force and equilibrium</li>
+                  <li>SHM equations, period, frequency</li>
+                  <li>Energy in SHM</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="oscillations-waves.html" class="btn-primary">Start Oscillations &amp; Waves</a>
-              <span>Foundation for sound and optics.</span>
+              <a href="simple-harmonic-motion/simple-harmonic-motion.html" class="btn-primary">Start topic</a>
+              <span>Small oscillations behave predictably.</span>
             </div>
           </article>
 
-          <!-- OPTICS -->
           <article class="topic-card">
             <div>
-              <div class="topic-kicker">Chapter B</div>
-              <div class="topic-title">Optics</div>
+              <div class="topic-kicker">2</div>
+              <div class="topic-title">Pendulums</div>
               <div class="topic-body" data-lines="9">
-                Understand how light reflects, refracts, and forms images.
+                A classic oscillator: small-angle approximation, period, and energy methods.
                 <ul class="topic-list">
-                  <li>Reflection and mirror geometry</li>
-                  <li>Refraction and Snell’s Law</li>
-                  <li>Lenses and image formation</li>
+                  <li>Simple pendulum model</li>
+                  <li>Small-angle approximation</li>
+                  <li>Physical pendulum (intro)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="pendulums/pendulums.html" class="btn-primary">Start topic</a>
+              <span>Approximation is the key step.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">3</div>
+              <div class="topic-title">Damped Oscillations</div>
+              <div class="topic-body" data-lines="9">
+                Real oscillators lose energy. Classify motion and connect to practical systems.
+                <ul class="topic-list">
+                  <li>Underdamped, critical, overdamped</li>
+                  <li>Energy loss and decay</li>
+                  <li>Practical damping examples</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="damped-oscillations/damped-oscillations.html" class="btn-primary">Start topic</a>
+              <span>Decay rate matters as much as frequency.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">4</div>
+              <div class="topic-title">Driven Oscillations and Resonance</div>
+              <div class="topic-body" data-lines="9">
+                External driving produces steady-state response, phase shifts, and resonance peaks.
+                <ul class="topic-list">
+                  <li>Driving forces and response</li>
+                  <li>Resonance condition</li>
+                  <li>Amplitude and phase</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="driven-oscillations-and-resonance/driven-oscillations-and-resonance.html" class="btn-primary">Start topic</a>
+              <span>Resonance is a matched-frequency effect.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">5</div>
+              <div class="topic-title">Mechanical Waves</div>
+              <div class="topic-body" data-lines="9">
+                Describe waves in media: types, parameters, propagation, and basic mathematical form.
+                <ul class="topic-list">
+                  <li>Transverse vs longitudinal</li>
+                  <li>λ, f, v relationships</li>
+                  <li>Wave description in space and time</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="mechanical-waves/mechanical-waves.html" class="btn-primary">Start topic</a>
+              <span>Waves transport energy, not matter.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">6</div>
+              <div class="topic-title">Wave Equation and Wave Speed</div>
+              <div class="topic-body" data-lines="9">
+                Link the 1D wave equation to physical wave speed and energy transport.
+                <ul class="topic-list">
+                  <li>1D wave equation</li>
+                  <li>Speed on a string</li>
+                  <li>Tension and linear density</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="wave-equation-and-wave-speed/wave-equation-and-wave-speed.html" class="btn-primary">Start topic</a>
+              <span>Speed depends on medium properties.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">7</div>
+              <div class="topic-title">Superposition Principle</div>
+              <div class="topic-body" data-lines="9">
+                Linear addition of waves produces interference patterns and pulse overlap behavior.
+                <ul class="topic-list">
+                  <li>Constructive/destructive interference</li>
+                  <li>Pulse overlap</li>
+                  <li>Linearity assumptions</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="superposition-principle/superposition-principle.html" class="btn-primary">Start topic</a>
+              <span>Add waves point-by-point.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">8</div>
+              <div class="topic-title">Interference of Waves</div>
+              <div class="topic-body" data-lines="9">
+                Use phase and path difference to predict maxima/minima and beats (intro).
+                <ul class="topic-list">
+                  <li>Path/phase difference</li>
+                  <li>Two-source interference</li>
+                  <li>Beats (intro)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="interference-of-waves/interference-of-waves.html" class="btn-primary">Start topic</a>
+              <span>Phase controls the pattern.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">9</div>
+              <div class="topic-title">Standing Waves</div>
+              <div class="topic-body" data-lines="9">
+                Boundary conditions create nodes/antinodes and quantized harmonics.
+                <ul class="topic-list">
+                  <li>Nodes and antinodes</li>
+                  <li>Harmonics and normal modes</li>
+                  <li>Boundary conditions</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="standing-waves/standing-waves.html" class="btn-primary">Start topic</a>
+              <span>Modes are selected by boundaries.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">10</div>
+              <div class="topic-title">Energy and Power in Waves</div>
+              <div class="topic-body" data-lines="9">
+                Quantify energy flow: power, intensity, and attenuation.
+                <ul class="topic-list">
+                  <li>Energy transport</li>
+                  <li>Power and intensity</li>
+                  <li>Attenuation and losses</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="energy-and-power-in-waves/energy-and-power-in-waves.html" class="btn-primary">Start topic</a>
+              <span>Amplitude often sets energy flow.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">11</div>
+              <div class="topic-title">Geometrical Optics</div>
+              <div class="topic-body" data-lines="9">
+                Use rays when wavelength is small compared with system size; learn where the approximation breaks.
+                <ul class="topic-list">
+                  <li>Ray approximation</li>
+                  <li>Reflection and refraction as rays</li>
+                  <li>Validity limits</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="geometrical-optics/geometrical-optics.html" class="btn-primary">Start topic</a>
+              <span>Rays are a modeling choice.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">12</div>
+              <div class="topic-title">Reflection and Mirrors</div>
+              <div class="topic-body" data-lines="9">
+                Apply the law of reflection to plane and spherical mirrors and predict image properties.
+                <ul class="topic-list">
+                  <li>Plane mirrors</li>
+                  <li>Spherical mirrors</li>
+                  <li>Image characteristics</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="reflection-and-mirrors/reflection-and-mirrors.html" class="btn-primary">Start topic</a>
+              <span>Ray diagrams keep sign confusion away.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">13</div>
+              <div class="topic-title">Refraction and Snell’s Law</div>
+              <div class="topic-body" data-lines="9">
+                Predict bending at boundaries using refractive index, and preview dispersion.
+                <ul class="topic-list">
+                  <li>Index of refraction</li>
+                  <li>Snell’s law</li>
+                  <li>Dispersion (intro)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="refraction-and-snells-law/refraction-and-snells-law.html" class="btn-primary">Start topic</a>
+              <span>Angles are measured from the normal.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">14</div>
+              <div class="topic-title">Total Internal Reflection</div>
+              <div class="topic-body" data-lines="9">
+                Learn the critical angle, when TIR occurs, and why fibers guide light efficiently.
+                <ul class="topic-list">
+                  <li>Critical angle</li>
+                  <li>TIR conditions</li>
+                  <li>Optical fibers</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="total-internal-reflection/total-internal-reflection.html" class="btn-primary">Start topic</a>
+              <span>TIR is refraction at its limit.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">15</div>
+              <div class="topic-title">Thin Lenses and Image Formation</div>
+              <div class="topic-body" data-lines="9">
+                Use the thin lens equation and ray diagrams to locate images and compute magnification.
+                <ul class="topic-list">
+                  <li>Converging vs diverging lenses</li>
+                  <li>Thin lens equation</li>
                   <li>Magnification and ray diagrams</li>
-                  <li>Interference and diffraction (conceptual)</li>
-                  <li>Polarization (intro)</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="optics.html" class="btn-primary">Start Optics</a>
-              <span>Make images and light behavior intuitive.</span>
+              <a href="thin-lenses-and-image-formation/thin-lenses-and-image-formation.html" class="btn-primary">Start topic</a>
+              <span>One equation, many interpretations.</span>
             </div>
           </article>
 
-          <!-- PRACTICE & EXERCISES -->
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">16</div>
+              <div class="topic-title">Optical Instruments</div>
+              <div class="topic-body" data-lines="9">
+                Apply lenses to devices: the eye, magnifiers, microscopes, and telescopes.
+                <ul class="topic-list">
+                  <li>Human eye</li>
+                  <li>Magnifier</li>
+                  <li>Microscope and telescope</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="optical-instruments/optical-instruments.html" class="btn-primary">Start topic</a>
+              <span>Systems are built from simple elements.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">17</div>
+              <div class="topic-title">Wave Nature of Light</div>
+              <div class="topic-body" data-lines="9">
+                Treat light as an electromagnetic wave; introduce coherence and when wave optics is required.
+                <ul class="topic-list">
+                  <li>Light as EM wave</li>
+                  <li>Coherence and monochromaticity</li>
+                  <li>Ray-to-wave transition</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="wave-nature-of-light/wave-nature-of-light.html" class="btn-primary">Start topic</a>
+              <span>Wavelength starts to matter.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">18</div>
+              <div class="topic-title">Interference of Light</div>
+              <div class="topic-body" data-lines="9">
+                Double-slit and thin-film interference: fringe spacing, phase conditions, and coherence constraints.
+                <ul class="topic-list">
+                  <li>Young’s double slit</li>
+                  <li>Thin-film interference</li>
+                  <li>Coherence conditions</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="interference-of-light/interference-of-light.html" class="btn-primary">Start topic</a>
+              <span>Phase creates bright and dark.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">19</div>
+              <div class="topic-title">Diffraction</div>
+              <div class="topic-body" data-lines="9">
+                Single-slit patterns, gratings, and why diffraction limits resolution.
+                <ul class="topic-list">
+                  <li>Single-slit diffraction</li>
+                  <li>Diffraction gratings</li>
+                  <li>Resolution limits</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="diffraction/diffraction.html" class="btn-primary">Start topic</a>
+              <span>Edges and apertures spread waves.</span>
+            </div>
+          </article>
+
+          <article class="topic-card">
+            <div>
+              <div class="topic-kicker">20</div>
+              <div class="topic-title">Polarization of Light</div>
+              <div class="topic-body" data-lines="9">
+                Use polarization to reveal light’s transverse nature and apply Malus’ law.
+                <ul class="topic-list">
+                  <li>Transverse nature of light</li>
+                  <li>Polarizers</li>
+                  <li>Malus’ law and applications</li>
+                </ul>
+              </div>
+            </div>
+            <div class="topic-footer">
+              <button type="button" class="topic-toggle" style="display:none;">More</button>
+              <a href="polarization-of-light/polarization-of-light.html" class="btn-primary">Start topic</a>
+              <span>Polarization is directional filtering.</span>
+            </div>
+          </article>
+
           <article class="topic-card">
             <div>
               <div class="topic-kicker">Practice</div>
               <div class="topic-title">Practice &amp; Exercises</div>
               <div class="topic-body" data-lines="9">
-                Strengthen your skills with oscillation math, wave reasoning, and optics problems.
+                Reinforce the full track with mixed conceptual checks and exam-style problems.
                 <ul class="topic-list">
-                  <li>SHM period/frequency drills</li>
-                  <li>Wave speed and wavelength practice</li>
-                  <li>Standing-wave and resonance problems</li>
-                  <li>Ray diagram and lens equation sets</li>
-                  <li>Interference pattern concept checks</li>
+                  <li>SHM and resonance drills</li>
+                  <li>Wave superposition and standing wave sets</li>
+                  <li>Ray diagrams and thin lens problems</li>
+                  <li>Interference and diffraction practice</li>
+                  <li>Polarization and intensity questions</li>
                 </ul>
               </div>
             </div>
             <div class="topic-footer">
               <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="waves-optics-practice.html" class="btn-primary">Open practice sets</a>
-              <span>From concepts to exam-ready confidence.</span>
+              <a href="waves-optics-practice/waves-optics-practice.html" class="btn-primary">Open practice</a>
+              <span>Mix skills across the track.</span>
             </div>
           </article>
 
@@ -466,20 +586,14 @@
     </section>
   </main>
 
-  <footer>
-    © 2025 PromptSchola. All rights reserved.
-  </footer>
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
 </div>
 
-<!-- Supabase + auth helpers -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/auth.js"></script>
-
+<script src="auth.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
-    if (typeof updateNavUserDisplay === 'function') {
-      updateNavUserDisplay();
-    }
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
     const loginBtn = document.getElementById('nav-login-btn');
     const registerBtn = document.getElementById('nav-register-btn');
@@ -487,7 +601,6 @@
 
     if (typeof getCurrentUser === 'function') {
       const user = await getCurrentUser();
-
       if (user) {
         if (loginBtn) loginBtn.style.display = 'none';
         if (registerBtn) registerBtn.style.display = 'none';
@@ -498,19 +611,14 @@
         if (signOutBtn) signOutBtn.style.display = 'none';
       }
     }
+    if (signOutBtn && typeof signOutUser === 'function') signOutBtn.addEventListener('click', signOutUser);
 
-    if (signOutBtn && typeof signOutUser === 'function') {
-      signOutBtn.addEventListener('click', signOutUser);
-    }
-
-    /* === MORE/LESS TOGGLE, PER CARD === */
     document.querySelectorAll('.topic-card').forEach(card => {
       const body = card.querySelector('.topic-body');
       const toggle = card.querySelector('.topic-toggle');
       if (!body || !toggle) return;
 
       const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
-
       body.style.display = '-webkit-box';
       body.style.webkitBoxOrient = 'vertical';
       body.style.overflow = 'hidden';
@@ -523,10 +631,7 @@
 
       body.style.webkitLineClamp = maxLines;
 
-      if (fullHeight <= clampedHeight + 1) {
-        toggle.style.display = 'none';
-        return;
-      }
+      if (fullHeight <= clampedHeight + 1) { toggle.style.display = 'none'; return; }
 
       toggle.style.display = 'inline';
       toggle.textContent = 'More';
@@ -534,17 +639,11 @@
       let expanded = false;
       toggle.addEventListener('click', () => {
         expanded = !expanded;
-        if (expanded) {
-          body.style.webkitLineClamp = 'unset';
-          toggle.textContent = 'Less';
-        } else {
-          body.style.webkitLineClamp = maxLines;
-          toggle.textContent = 'More';
-        }
+        if (expanded) { body.style.webkitLineClamp = 'unset'; toggle.textContent = 'Less'; }
+        else { body.style.webkitLineClamp = maxLines; toggle.textContent = 'More'; }
       });
     });
   });
 </script>
-
 </body>
 </html>
