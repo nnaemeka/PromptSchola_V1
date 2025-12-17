@@ -685,8 +685,18 @@
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
 
-          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
+          <a href="/auth.html"
+   class="btn-pill"
+   onclick="PS_setPostAuthRedirect()">
+  Sign In
+</a>
+
+<a href="/auth.html?mode=signup"
+   class="btn-primary"
+   onclick="PS_setPostAuthRedirect()">
+  Register for Free
+</a>
+
 
           <button
             id="nav-signout-btn"
@@ -1350,6 +1360,14 @@
 
     applyGating(loggedIn);
   });
+</script>
+  <script>
+  function PS_setPostAuthRedirect() {
+    try {
+      const path = window.location.pathname + window.location.search + window.location.hash;
+      localStorage.setItem('ps_post_auth_redirect', path);
+    } catch (e) {}
+  }
 </script>
 
 </body>
