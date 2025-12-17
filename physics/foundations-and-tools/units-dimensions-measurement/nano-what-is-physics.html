@@ -685,18 +685,20 @@
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
 
-          <a href="/auth.html"
-   class="btn-pill"
-   onclick="PS_setPostAuthRedirect()">
-  Sign In
-</a>
+          <!-- ✅ Added ids so your nav toggle code can find them -->
+          <a id="nav-login-btn"
+             href="/auth.html"
+             class="btn-pill"
+             onclick="PS_setPostAuthRedirect()">
+            Sign In
+          </a>
 
-<a href="/auth.html?mode=signup"
-   class="btn-primary"
-   onclick="PS_setPostAuthRedirect()">
-  Register for Free
-</a>
-
+          <a id="nav-register-btn"
+             href="/auth.html?mode=signup"
+             class="btn-primary"
+             onclick="PS_setPostAuthRedirect()">
+            Register for Free
+          </a>
 
           <button
             id="nav-signout-btn"
@@ -808,8 +810,8 @@
                     <div class="locked-title">Locked</div>
                     <div class="locked-desc">Sign in to access this step.</div>
                     <div class="locked-actions">
-                      <a class="btn-primary" href="/auth.html?mode=signup">Register for Free</a>
-                      <a class="btn-pill" href="/auth.html">Sign In</a>
+                      <a class="btn-primary" href="/auth.html?mode=signup" onclick="PS_setPostAuthRedirect()">Register for Free</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -859,8 +861,8 @@
                     <div class="locked-title">Locked</div>
                     <div class="locked-desc">Sign in to access this step.</div>
                     <div class="locked-actions">
-                      <a class="btn-primary" href="/auth.html?mode=signup">Register for Free</a>
-                      <a class="btn-pill" href="/auth.html">Sign In</a>
+                      <a class="btn-primary" href="/auth.html?mode=signup" onclick="PS_setPostAuthRedirect()">Register for Free</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -910,8 +912,8 @@
                     <div class="locked-title">Locked</div>
                     <div class="locked-desc">Sign in to access this step.</div>
                     <div class="locked-actions">
-                      <a class="btn-primary" href="/auth.html?mode=signup">Register for Free</a>
-                      <a class="btn-pill" href="/auth.html">Sign In</a>
+                      <a class="btn-primary" href="/auth.html?mode=signup" onclick="PS_setPostAuthRedirect()">Register for Free</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -961,8 +963,8 @@
                     <div class="locked-title">Mastery step</div>
                     <div class="locked-desc">Steps 4–6 are part of Mastery Access. Sign in to unlock.</div>
                     <div class="locked-actions">
-                      <a class="btn-primary" href="/auth.html?mode=signup">Register for Free</a>
-                      <a class="btn-pill" href="/auth.html">Sign In</a>
+                      <a class="btn-primary" href="/auth.html?mode=signup" onclick="PS_setPostAuthRedirect()">Register for Free</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -1012,8 +1014,8 @@
                     <div class="locked-title">Mastery step</div>
                     <div class="locked-desc">Steps 4–6 are part of Mastery Access. Sign in to unlock.</div>
                     <div class="locked-actions">
-                      <a class="btn-primary" href="/auth.html?mode=signup">Register for Free</a>
-                      <a class="btn-pill" href="/auth.html">Sign In</a>
+                      <a class="btn-primary" href="/auth.html?mode=signup" onclick="PS_setPostAuthRedirect()">Register for Free</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -1063,8 +1065,8 @@
                     <div class="locked-title">Mastery step</div>
                     <div class="locked-desc">Steps 4–6 are part of Mastery Access. Sign in to unlock.</div>
                     <div class="locked-actions">
-                      <a class="btn-primary" href="/auth.html?mode=signup">Register for Free</a>
-                      <a class="btn-pill" href="/auth.html">Sign In</a>
+                      <a class="btn-primary" href="/auth.html?mode=signup" onclick="PS_setPostAuthRedirect()">Register for Free</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -1361,7 +1363,9 @@
     applyGating(loggedIn);
   });
 </script>
-  <script>
+
+<script>
+  // ✅ Store the current page so auth.html can send the student back here after sign-in/sign-up
   function PS_setPostAuthRedirect() {
     try {
       const path = window.location.pathname + window.location.search + window.location.hash;
