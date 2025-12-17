@@ -115,7 +115,6 @@
       font-weight: 800;
       font-size: 1rem;
       color: #f9fafb;
-      box-shadow: none;
       font-family: var(--font-body);
     }
 
@@ -158,6 +157,7 @@
       align-items: center;
       gap: 0.6rem;
       font-size: 0.9rem;
+      font-family: var(--font-body);
     }
 
     .btn-pill {
@@ -199,7 +199,7 @@
       background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
     }
 
-    /* Hero (✅ aligned like your second design: centered, more breathing room) */
+    /* Hero */
     .hero {
       padding: 4.5rem 0 3rem;
       position: relative;
@@ -266,7 +266,7 @@
       font-family: var(--font-body);
     }
 
-    /* After-hero STEM Thought (keep your original placement; typography improves naturally) */
+    /* STEM Thought band */
     .stem-thought-band { padding: 0 0 2.6rem; }
 
     .stem-thought {
@@ -506,7 +506,7 @@
       font-family: var(--font-body);
     }
 
-    /* ✅ Dark Access Band (replaces pricing teaser) */
+    /* ✅ Dark Access Band */
     .access-band {
       background: #0f172a;
       color: #f8fafc;
@@ -544,6 +544,8 @@
       margin-bottom: 0.65rem;
       color: #ffffff;
       font-weight: 700;
+      font-family: var(--font-heading);
+      line-height: 1.15;
     }
 
     .access-lede {
@@ -655,6 +657,7 @@
     }
   </style>
 </head>
+
 <body>
 <div class="page">
   <header>
@@ -667,6 +670,7 @@
             <span>Prompt-based STEM subjects mastery</span>
           </div>
         </div>
+
         <nav class="nav-links">
           <a href="/index.html">Home</a>
           <a href="/physics/physics.html">Physics</a>
@@ -675,6 +679,7 @@
           <a href="/biology/biology.html">Biology</a>
           <a href="/pricing.html">Pricing</a>
         </nav>
+
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
           <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
@@ -887,7 +892,7 @@
       </div>
     </section>
 
-    <!-- ✅ Access band (replaces pricing) -->
+    <!-- ✅ Access band (auth-aware + continue learning) -->
     <section id="access">
       <div class="container">
         <div class="access-band">
@@ -905,8 +910,18 @@
             </div>
 
             <div class="access-ctas">
-              <a href="/auth.html?mode=signup" class="btn-primary large">Create Free Account</a>
-              <a href="/pricing.html" class="btn-pill dark-outline">View Full Access Tiers</a>
+              <!-- Logged OUT -->
+              <a id="access-register-btn" href="/auth.html?mode=signup" class="btn-primary large">
+                Create Free Account
+              </a>
+              <a id="access-pricing-btn" href="/pricing.html" class="btn-pill dark-outline">
+                View Full Access Tiers
+              </a>
+
+              <!-- Logged IN (dynamic) -->
+              <a id="access-continue-btn" href="/physics/physics.html" class="btn-primary large" style="display:none;">
+                Continue Learning
+              </a>
             </div>
           </div>
         </div>
@@ -934,6 +949,54 @@
 <script src="/auth.js"></script>
 
 <script>
+  /**
+   * "Continue Learning" support
+   * - Other pages should store a last-visited learning page in localStorage.
+   * - This index page reads it and, when logged in, routes the user there.
+   *
+   * Recommended: include this snippet on OTHER pages too (physics hub, topics, nano-lessons):
+   *   window.PS_markLastLearningPage();
+   */
+
+  window.PS_markLastLearningPage = function () {
+    try {
+      const path = window.location.pathname || '';
+      const isIndex = path === '/' || path.endsWith('/index.html');
+      const isAuth = path.endsWith('/auth.html');
+      const isPricing = path.endsWith('/pricing.html');
+
+      // Only record "learning" pages (skip index/auth/pricing)
+      if (isIndex || isAuth || isPricing) return;
+
+      // Use a friendly label if you have <title>, otherwise fallback to path.
+      const title = (document.title || '').replace(/\s+–\s+PromptSchola.*$/i, '').trim();
+      const label = title || 'Continue Learning';
+
+      localStorage.setItem('ps_last_page_path', path);
+      localStorage.setItem('ps_last_page_label', label);
+      localStorage.setItem('ps_last_seen_ts', String(Date.now()));
+    } catch (e) {
+      // no-op
+    }
+  };
+
+  function PS_getContinueTarget() {
+    try {
+      const path = localStorage.getItem('ps_last_page_path');
+      const label = localStorage.getItem('ps_last_page_label');
+
+      // Basic safety: only allow internal paths.
+      const safePath = (path && path.startsWith('/')) ? path : null;
+
+      return {
+        href: safePath || '/physics/physics.html',
+        label: (label && label.length <= 60) ? label : null
+      };
+    } catch (e) {
+      return { href: '/physics/physics.html', label: null };
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
@@ -943,17 +1006,42 @@
     const loginBtn = document.getElementById('nav-login-btn');
     const registerBtn = document.getElementById('nav-register-btn');
 
+    // Access band buttons
+    const accessRegisterBtn = document.getElementById('access-register-btn');
+    const accessPricingBtn = document.getElementById('access-pricing-btn');
+    const accessContinueBtn = document.getElementById('access-continue-btn');
+
     if (typeof getCurrentUser === 'function') {
       const user = await getCurrentUser();
 
       if (user) {
+        // Nav
         if (signoutBtn) signoutBtn.style.display = 'inline-flex';
         if (loginBtn) loginBtn.style.display = 'none';
         if (registerBtn) registerBtn.style.display = 'none';
+
+        // Access band (logged in)
+        if (accessRegisterBtn) accessRegisterBtn.style.display = 'none';
+        if (accessPricingBtn) accessPricingBtn.style.display = 'none';
+        if (accessContinueBtn) {
+          const target = PS_getContinueTarget();
+          accessContinueBtn.href = target.href;
+
+          // If we have a specific lesson/page label, show it as a "resume" style text.
+          // Example: "Continue: Constant Acceleration"
+          accessContinueBtn.textContent = target.label ? `Continue: ${target.label}` : 'Continue Learning';
+          accessContinueBtn.style.display = 'inline-flex';
+        }
       } else {
+        // Nav
         if (signoutBtn) signoutBtn.style.display = 'none';
         if (loginBtn) loginBtn.style.display = 'inline-flex';
         if (registerBtn) registerBtn.style.display = 'inline-flex';
+
+        // Access band (logged out)
+        if (accessRegisterBtn) accessRegisterBtn.style.display = 'inline-flex';
+        if (accessPricingBtn) accessPricingBtn.style.display = 'inline-flex';
+        if (accessContinueBtn) accessContinueBtn.style.display = 'none';
       }
     }
   });
