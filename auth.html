@@ -1,503 +1,581 @@
+<!-- =========================
+OPTION C
+Inter + Manrope for headings (more premium/modern)
+========================= -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Sign in – PromptSchola</title>
+  <title>PromptSchola – Master STEM with Purpose</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta
+    name="description"
+    content="PromptSchola helps you master Mathematics, Physics, Chemistry and Biology through a 6-step prompt-based mastery system. Stop guessing what to ask AI and start learning STEM with purpose."
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
       --bg-card: #ffffff;
       --accent: #7e22ce;
-      --accent-strong: #4c1d95;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
       --text-main: #111827;
-      --text-muted: #4b5563;
+      --text-muted: #374151;
       --text-subtle: #9ca3af;
-      --border-subtle: rgba(209, 213, 219, 0.7);
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
       --radius-card: 18px;
       --radius-pill: 999px;
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --font-main: 'Inter', system-ui, sans-serif;
+
+      --font-ui: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-heading: 'Manrope', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --transition-fast: 0.25s ease-out;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: var(--font-main);
+      font-family: var(--font-ui);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
       color: var(--text-main);
+      line-height: 1.8;
+      letter-spacing: 0.01em;
       -webkit-font-smoothing: antialiased;
+      font-size: 17px;
+      position: relative;
+      overflow-x: hidden;
     }
-    a { text-decoration: none; color: inherit; }
 
+    a { color: inherit; text-decoration: none; }
     .page { min-height: 100vh; display: flex; flex-direction: column; }
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.3rem; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
 
-    header {
-      position: sticky; top: 0; z-index: 20;
+    /* Aurora */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: -40vh -20vw;
+      z-index: -10;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(168, 85, 247, 0.22), transparent 52%),
+        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.22), transparent 55%),
+        radial-gradient(circle at 35% 85%, rgba(126, 34, 206, 0.14), transparent 58%);
+      filter: blur(22px);
+      animation: auroraDrift 18s ease-in-out infinite alternate;
+      opacity: 0.95;
+    }
+
+    @keyframes auroraDrift{
+      0%   { transform: translate3d(-2%, -1%, 0) scale(1); }
+      100% { transform: translate3d(2%, 1.5%, 0) scale(1.05); }
+    }
+
+    @media (prefers-reduced-motion: reduce){ body::before{ animation: none; } }
+
+    /* Heading font */
+    .hero-title, .section-title, .step-card h3, .why-card h3, .subject-title, .access-title{
+      font-family: var(--font-heading);
+      letter-spacing: -0.02em;
+    }
+    .hero-subtitle, .section-subtitle, .step-card p, .why-card p, .subject-list, .subject-topline, .access-lede, .access-item{
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Header/Nav */
+    header{
+      position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
-      background: rgba(249, 250, 251, 0.96);
-      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+      background: linear-gradient(to bottom, rgba(249,250,251,0.96), rgba(249,250,251,0.94), rgba(249,250,251,0.9));
+      border-bottom: 1px solid rgba(209,213,219,0.9);
     }
-    .nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.75rem 0;
-    }
-    .logo-mark {
-      width: 34px; height: 34px; border-radius: 50%;
+
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding:0.75rem 0; }
+    .nav-left{ display:flex; align-items:center; gap:0.75rem; }
+    .logo-mark{
+      width:34px; height:34px; border-radius:40%;
       background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; color: #fff;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size:1rem; color:#f9fafb;
     }
-    .logo-text span:first-child {
-      font-weight: 700; font-size: 0.98rem; color: #020617;
-    }
-    .logo-text span:last-child {
-      font-size: 0.72rem; color: #9ca3af;
-    }
-    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
-    .nav-links a { opacity: .9; }
-    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+    .logo-text span:first-child{ display:block; font-weight:700; font-size:1.02rem; letter-spacing:0.02em; color:var(--text-strong); }
+    .logo-text span:last-child{ display:block; font-size:0.76rem; color:var(--text-subtle); }
 
-    .btn-pill {
-      border-radius: var(--radius-pill);
-      padding: 0.45rem 1rem;
-      background: #ffffff;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
+    .nav-links{ display:flex; align-items:center; gap:1.3rem; font-size:0.95rem; }
+    .nav-links a{ color:var(--text-muted); opacity:0.9; transition:opacity var(--transition-fast), color var(--transition-fast); }
+    .nav-links a:hover{ opacity:1; color:var(--accent-strong); }
 
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2.5rem 1.3rem 3rem;
+    .nav-right{ display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; }
+
+    .btn-pill{
+      border-radius:999px; padding:0.45rem 0.95rem; font-size:0.86rem;
+      border:1px solid rgba(209,213,219,0.9);
+      background:#ffffff; color:var(--text-main);
+      cursor:pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+    .btn-pill:hover{
+      background:#f3f4f6; transform: translateY(-1px);
+      border-color: rgba(156,163,175,0.9);
+      box-shadow:0 8px 20px rgba(148,163,184,0.35);
     }
 
-    .auth-wrapper {
-      max-width: 420px;
-      width: 100%;
-      background: var(--bg-card);
-      border-radius: var(--radius-card);
-      box-shadow: var(--shadow-card);
-      padding: 1.8rem 1.9rem;
-      border: 1px solid var(--border-subtle);
-    }
-
-    /* 🔹 Reason banner for "Run with AI" flow */
-    .reason-banner {
-      display: none; /* shown via JS only when reason=run-ai */
-      margin-bottom: 1rem;
-      padding: 0.75rem 0.85rem;
-      border-radius: 12px;
-      border: 1px solid rgba(129, 140, 248, 0.5);
-      background: #eef2ff;
-      font-size: 0.85rem;
-      color: #111827;
-    }
-    .reason-banner strong {
-      font-weight: 600;
-    }
-    .reason-banner small {
-      display: block;
-      margin-top: 0.2rem;
-      font-size: 0.78rem;
-      color: #6b7280;
-    }
-
-    .auth-heading {
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-    .auth-heading h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.2rem;
-    }
-    .auth-heading p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .auth-toggle {
-      display: flex;
-      background: #f3f4f6;
-      border-radius: var(--radius-pill);
-      padding: 0.2rem;
-      margin: 1.1rem 0 1.4rem;
-    }
-    .auth-toggle button {
-      flex: 1;
-      border-radius: var(--radius-pill);
-      border: none;
-      padding: 0.35rem 0.2rem;
-      font-size: 0.85rem;
-      cursor: pointer;
-      background: transparent;
-      color: var(--text-muted);
-    }
-    .auth-toggle button.active {
-      background: #ffffff;
-      color: var(--accent-strong);
-      font-weight: 600;
-      box-shadow: 0 1px 4px rgba(148, 163, 184, 0.7);
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    label {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text-main);
-    }
-
-    input[type="email"],
-    input[type="password"],
-    input[type="text"] {
-      margin-top: 0.15rem;
-      width: 100%;
-      border-radius: 10px;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      padding: 0.55rem 0.65rem;
-      font-size: 0.88rem;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: var(--accent-strong);
-      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.55);
-    }
-
-    .btn-primary {
-      border-radius: var(--radius-pill);
-      border: none;
-      padding: 0.55rem 1.2rem;
-      font-size: 0.9rem;
-      font-weight: 600;
+    .btn-primary{
+      border-radius:999px; padding:0.6rem 1.3rem; font-size:0.9rem; font-weight:600;
+      border:none; cursor:pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
-      cursor: pointer;
-      margin-top: 0.4rem;
-      width: 100%;
+      color:#f9fafb;
+      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
     }
+    .btn-primary:hover{ transform: translateY(-1px); filter: brightness(1.03); background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95); }
 
-    .helper-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.4rem;
-      font-size: 0.8rem;
-      color: var(--text-subtle);
-      flex-wrap: wrap;
-      gap: 0.4rem;
+    /* Hero */
+    .hero{ padding:3.2rem 0 2.1rem; position:relative; overflow:hidden; }
+    .hero::before{
+      content:""; position:absolute; inset:-90px; pointer-events:none;
+      background: radial-gradient(circle at 10% 0%, rgba(129,140,248,0.42), transparent 60%),
+                  radial-gradient(circle at 90% 40%, rgba(168,85,247,0.38), transparent 55%);
+      z-index:-1;
     }
-    .helper-row a { color: var(--accent-strong); }
+    .hero-heading{ text-align:center; max-width:720px; margin:0 auto 1.7rem; }
+    .hero-kicker{ display:inline-flex; align-items:center; gap:0.4rem; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.18em; color:var(--text-subtle); margin-bottom:0.9rem; }
+    .hero-kicker span.label{ padding:0.18rem 0.7rem; border-radius:999px; border:1px solid rgba(209,213,219,0.9); background:#fff; color:var(--text-main); }
+    .hero-title{ font-size:clamp(2.3rem, 3.6vw, 3rem); line-height:1.12; font-weight:800; color:var(--text-strong); margin-bottom:0.8rem; max-width:40rem; margin-left:auto; margin-right:auto; }
+    .hero-grid.hero-no-image{ display:flex; justify-content:center; text-align:center; }
+    .hero-grid.hero-no-image .hero-text{ max-width:640px; margin:0 auto; text-align:center; }
+    .hero-subtitle{ font-size:1.1rem; max-width:36rem; margin:0 auto; }
 
-    .auth-message {
-      margin-top: 0.7rem;
-      font-size: 0.8rem;
-      min-height: 1.2rem;
+    /* Particles */
+    .hero-particles{ position:absolute; inset:0; pointer-events:none; z-index:-1; }
+    .hero-particles span{
+      position:absolute; width:12px; height:12px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(168,85,247,0.55), rgba(129,140,248,0.25));
+      opacity:0.55; animation: floaty 9s ease-in-out infinite;
     }
-    .auth-message.error { color: #b91c1c; }
-    .auth-message.success { color: #166534; }
+    .hero-particles span:nth-child(1){ left:10%; top:25%; animation-duration:10s; }
+    .hero-particles span:nth-child(2){ left:22%; top:70%; animation-duration:12s; }
+    .hero-particles span:nth-child(3){ left:55%; top:18%; animation-duration:11s; width:14px; height:14px; opacity:0.5; }
+    .hero-particles span:nth-child(4){ left:78%; top:55%; animation-duration:13s; width:10px; height:10px; opacity:0.45; }
+    .hero-particles span:nth-child(5){ left:88%; top:22%; animation-duration:14s; width:9px; height:9px; opacity:0.4; }
+    @keyframes floaty{ 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-18px,0)} 100%{transform:translate3d(0,0,0)} }
+    @media (prefers-reduced-motion: reduce){ .hero-particles span{ animation:none; } }
 
-    /* 🔹 Optional sign-out section styling */
-    .signed-in-box {
-      margin-top: 1.1rem;
-      padding-top: 0.8rem;
-      border-top: 1px solid rgba(209, 213, 219, 0.9);
-      font-size: 0.8rem;
-      color: var(--text-subtle);
-    }
-    .signed-in-box button {
-      margin-top: 0.4rem;
-      font-size: 0.8rem;
-    }
+    /* STEM thought */
+    .stem-thought-band{ padding:0 0 2.2rem; }
+    .stem-thought{ max-width:900px; margin:0 auto; background:var(--accent-soft2); border:1px solid rgba(129,140,248,0.18); border-left:4px solid var(--accent); border-radius:16px; padding:1.25rem 1.4rem; box-shadow:0 10px 22px rgba(15,23,42,0.06); }
+    .stem-thought-label{ font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent); font-weight:800; margin-bottom:0.45rem; }
+    .stem-thought-text{ font-size:1.18rem; color:var(--text-strong); font-weight:600; line-height:1.45; }
 
-    footer {
-      text-align: center;
-      padding: 1.4rem 0;
-      font-size: 0.8rem;
-      color: var(--text-subtle);
-    }
+    /* Sections + cards */
+    section{ padding:2.9rem 0 3.2rem; }
+    .section-header{ text-align:center; margin-bottom:1.9rem; }
+    .section-kicker{ font-size:0.8rem; text-transform:uppercase; letter-spacing:0.18em; color:var(--text-subtle); margin-bottom:0.4rem; }
+    .section-title{ font-size:1.85rem; color:var(--text-strong); font-weight:800; margin-bottom:0.45rem; }
+    .section-subtitle{ font-size:1.05rem; max-width:32rem; margin:0 auto; }
 
-    @media (max-width: 640px) {
-      .auth-wrapper {
-        padding: 1.5rem 1.4rem;
-      }
-      .nav-links { display: none; }
+    .steps-grid{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:1.1rem; margin-top:0.8rem; }
+    .step-card{ background:var(--bg-card); border-radius:18px; border:1px solid rgba(209,213,219,0.55); padding:1rem 1.05rem; box-shadow:var(--shadow-card); font-size:0.92rem; position:relative; min-height:150px; }
+    .step-card .step-label{ font-size:0.9rem; font-weight:600; color:var(--text-subtle); margin-bottom:0.3rem; }
+    .step-card h3{ font-size:1.25rem; font-weight:800; color:var(--text-main); margin-bottom:0.35rem; }
+    .step-badge{ position:absolute; top:0.7rem; right:0.75rem; font-size:0.82rem; font-weight:600; padding:0.1rem 0.6rem; border-radius:999px; border:1px solid rgba(209,213,219,0.9); background:#eef2ff; color:#4338ca; }
+    .step-card.free .step-badge{ border-color:rgba(22,163,74,0.8); background:#dcfce7; color:#166534; }
+    .steps-note{ font-size:0.9rem; color:var(--text-subtle); margin-top:0.9rem; text-align:center; }
+
+    .subjects-grid{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:0.9rem; margin-top:1.1rem; }
+    .subject-card{ background:var(--bg-card); border-radius:18px; border:1px solid rgba(209,213,219,0.55); padding:0.9rem 0.9rem 1rem; box-shadow:var(--shadow-card); font-size:0.88rem; display:flex; flex-direction:column; justify-content:space-between; gap:0.4rem; }
+    .subject-title{ font-size:1.2rem; font-weight:800; color:var(--text-main); margin-bottom:0.25rem; }
+    .subject-topline{ margin-bottom:0.6rem; }
+    .subject-list{ list-style:none; margin-bottom:0.5rem; font-size:1rem; }
+    .subject-list li{ margin-bottom:0.25rem; }
+    .subject-cta{ display:flex; justify-content:space-between; align-items:center; font-size:0.92rem; margin-top:0.1rem; gap:0.5rem; }
+    .btn-subject-primary{ display:inline-flex; align-items:center; justify-content:center; padding:0.45rem 0.9rem; border-radius:999px; font-size:0.86rem; font-weight:600; border:none; cursor:pointer; background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95); color:#f9fafb; box-shadow:0 10px 22px rgba(79,70,229,0.35); transition: transform 0.25s ease-out, filter 0.25s ease-out, box-shadow 0.25s ease-out; white-space:nowrap; }
+    .btn-subject-primary:hover{ transform:translateY(-1px); filter:brightness(1.03); box-shadow:0 14px 30px rgba(79,70,229,0.45); }
+
+    .why-grid{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:1rem; margin-top:1.1rem; }
+    .why-card{ background:var(--bg-card); border-radius:18px; border:1px solid rgba(209,213,219,0.55); box-shadow:var(--shadow-card); padding:1rem 1.05rem; font-size:0.92rem; min-height:150px; }
+    .why-card h3{ font-size:1.25rem; font-weight:800; color:var(--text-main); margin-bottom:0.4rem; }
+
+    /* Access Snapshot */
+    .access-wrap{ max-width:980px; margin:0 auto; }
+    .access-band{ margin-top:0.9rem; background:linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.7)); border:1px solid rgba(209,213,219,0.9); border-radius:22px; padding:1.2rem 1.25rem; box-shadow:0 14px 34px rgba(15,23,42,0.10); position:relative; overflow:hidden; }
+    .access-band::before{ content:""; position:absolute; inset:-40px; pointer-events:none; background: radial-gradient(circle at 15% 10%, rgba(129,140,248,0.18), transparent 55%), radial-gradient(circle at 90% 60%, rgba(168,85,247,0.16), transparent 50%); z-index:0; }
+    .access-inner{ position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:1.1rem; align-items:start; }
+    .access-title{ font-size:1.15rem; font-weight:800; color:var(--text-strong); margin-bottom:0.35rem; }
+    .access-lede{ margin-bottom:0.7rem; max-width:42rem; }
+    .access-list{ list-style:none; margin:0; padding:0; display:grid; gap:0.55rem; }
+    .access-item{ display:flex; align-items:flex-start; gap:0.55rem; line-height:1.6; }
+    .chip{ display:inline-flex; align-items:center; gap:0.35rem; padding:0.16rem 0.6rem; border-radius:999px; font-size:0.82rem; font-weight:700; border:1px solid rgba(209,213,219,0.9); background:rgba(255,255,255,0.9); color:var(--text-main); white-space:nowrap; margin-top:0.05rem; }
+    .chip.free{ border-color:rgba(22,163,74,0.7); background:#dcfce7; color:#166534; }
+    .chip.mastery{ border-color:rgba(99,102,241,0.55); background:#eef2ff; color:#3730a3; }
+    .access-cta{ display:flex; flex-direction:column; gap:0.6rem; align-items:stretch; justify-content:flex-start; padding-left:0.2rem; }
+
+    .btn-soft{ border-radius:999px; padding:0.55rem 0.95rem; font-size:0.9rem; font-weight:600; border:1px solid rgba(209,213,219,0.9); background:rgba(255,255,255,0.92); color:var(--text-main); cursor:pointer; transition: transform 0.25s ease-out, background 0.25s ease-out, box-shadow 0.25s ease-out, border-color 0.25s ease-out; text-align:center; }
+    .btn-soft:hover{ transform:translateY(-1px); background:#fff; border-color:rgba(156,163,175,0.9); box-shadow:0 10px 24px rgba(148,163,184,0.28); }
+    .btn-full{ border-radius:999px; padding:0.55rem 0.95rem; font-size:0.9rem; font-weight:600; border:none; cursor:pointer; width:100%; background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95); color:#f9fafb; transition: transform 0.25s ease-out, filter 0.25s ease-out, background 0.25s ease-out; text-align:center; display:inline-flex; align-items:center; justify-content:center; }
+    .btn-full:hover{ transform:translateY(-1px); filter:brightness(1.03); background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95); }
+    .access-footnote{ font-size:0.9rem; color:var(--text-subtle); margin-top:0.5rem; }
+
+    @media (max-width: 900px){ .access-inner{ grid-template-columns:minmax(0,1fr);} .access-cta{ flex-direction:row;} }
+    @media (max-width: 520px){ .access-cta{ flex-direction:column;} }
+
+    /* Reveal */
+    .reveal{ opacity:0; transform:translateY(14px); transition: opacity 520ms ease, transform 520ms ease; }
+    .reveal.is-visible{ opacity:1; transform:translateY(0); }
+    @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
+    /* Footer */
+    footer{ margin-top:auto; padding:1.8rem 0 2.1rem; font-size:0.9rem; color:var(--text-subtle); }
+    .footer-inner{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:0.9rem; align-items:center; border-top:1px solid rgba(209,213,219,0.9); padding-top:0.95rem; }
+    .footer-links{ display:flex; gap:0.9rem; }
+    .footer-links a{ color:var(--text-subtle); }
+    .footer-links a:hover{ color:var(--text-main); }
+
+    @media (max-width: 800px){
+      .subjects-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .why-grid{ grid-template-columns: minmax(0, 1fr); }
+      .steps-grid{ grid-template-columns: minmax(0, 1fr); }
+      .nav-links{ display:none; }
     }
+    @media (max-width: 520px){ .hero-title{ font-size:2.1rem; } }
   </style>
 </head>
+
 <body>
 <div class="page">
-
   <header>
     <div class="container">
       <div class="nav">
-        <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div class="nav-left">
           <div class="logo-mark">P</div>
           <div class="logo-text">
             <span>PromptSchola</span>
-            <span>Prompt-based Physics mastery</span>
+            <span>Prompt-based STEM subjects mastery</span>
           </div>
         </div>
+
         <nav class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="physics.html">Physics</a>
-          <a href="pricing.html">Pricing</a>
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
         </nav>
-        <!-- 🔹 NAV: ids for login/register/signout so auth.js can control them -->
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
-          <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
-          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:flex-end;">
-            <a
-              id="nav-login-btn"
-              href="auth.html"
-              class="btn-pill"
-            >
-              Sign In
-            </a>
-            <a
-              id="nav-register-btn"
-              href="auth.html?mode=signup"
-              class="btn-pill"
-            >
-              Register
-            </a>
-            <button
-              id="nav-signout-btn"
-              type="button"
-              class="btn-pill"
-              style="display:none;"
-              onclick="signOutUser()"
-            >
-              Sign out
-            </button>
-          </div>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">
+            Sign out
+          </button>
         </div>
       </div>
     </div>
   </header>
 
   <main>
-    <div class="auth-wrapper">
-      <!-- 🔹 Run-with-AI context banner -->
-      <div id="reason-banner" class="reason-banner">
-        <strong>To use “Run with AI” on this Physics lesson, please sign in or create a free account.</strong>
-        <small>After you’re done, we’ll send you back to the lesson where you clicked “Run with AI”.</small>
+    <section class="hero" id="start">
+      <div class="hero-particles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
       </div>
 
-      <div class="auth-heading">
-        <h1 id="auth-title">Sign in</h1>
-        <p id="auth-subtitle">Access your PromptSchola Physics journey.</p>
+      <div class="container">
+        <div class="hero-heading">
+          <div class="hero-kicker">
+            <span class="label">New</span>
+            <span>Prompt-based learning for STEM subjects</span>
+          </div>
+          <h1 class="hero-title">Learn Math and Science through guided prompts.</h1>
+        </div>
+
+        <div class="hero-grid hero-no-image">
+          <div class="hero-text">
+            <p class="hero-subtitle">A clear, step-by-step system that shows you what to ask and what comes next.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="auth-toggle">
-        <button id="btn-signin" class="active" type="button">Sign in</button>
-        <button id="btn-signup" type="button">Create account</button>
+    <section class="stem-thought-band" aria-label="Today’s STEM Thought">
+      <div class="container">
+        <div class="stem-thought reveal">
+          <div class="stem-thought-label">Today’s STEM Thought</div>
+          <p class="stem-thought-text">A good theory doesn’t end curiosity—it organizes it.</p>
+        </div>
       </div>
+    </section>
 
-      <form id="auth-form">
-        <div id="name-field" style="display:none;">
-          <label for="name">Full name (optional)</label>
-          <input type="text" id="name" autocomplete="name" />
+    <section id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">How PromptSchola works</div>
+          <h2 class="section-title">A repeatable 6-step flow for every topic</h2>
+          <p class="section-subtitle">Each topic uses the same simple, repeatable path to understanding.</p>
         </div>
 
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" required autocomplete="email" />
+        <div class="steps-grid">
+          <article class="step-card free reveal">
+            <div class="step-badge">Free</div>
+            <div class="step-label">Step 1</div>
+            <h3>Orient</h3>
+            <p>Get an overview of the topic and quick checks of what you already understand.</p>
+          </article>
+
+          <article class="step-card free reveal">
+            <div class="step-badge">Free</div>
+            <div class="step-label">Step 2</div>
+            <h3>Understand</h3>
+            <p>See the idea explained in plain language, with everyday examples.</p>
+          </article>
+
+          <article class="step-card free reveal">
+            <div class="step-badge">Free</div>
+            <div class="step-label">Step 3</div>
+            <h3>Apply</h3>
+            <p>Connect the concept to real systems, so it stops feeling abstract.</p>
+          </article>
+
+          <article class="step-card reveal">
+            <div class="step-badge">Mastery</div>
+            <div class="step-label">Step 4</div>
+            <h3>Work Through It</h3>
+            <p>Walk through carefully selected examples with step-by-step reasoning.</p>
+          </article>
+
+          <article class="step-card reveal">
+            <div class="step-badge">Mastery</div>
+            <div class="step-label">Step 5</div>
+            <h3>Review &amp; Practice</h3>
+            <p>Pull together key ideas and test yourself with problems that reveal gaps.</p>
+          </article>
+
+          <article class="step-card reveal">
+            <div class="step-badge">Mastery</div>
+            <div class="step-label">Step 6</div>
+            <h3>Simulation Lab</h3>
+            <p>Use simulations and visualizations to see the physics change as you adjust parameters.</p>
+          </article>
         </div>
 
-        <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" required autocomplete="current-password" />
-        </div>
-
-        <button type="submit" class="btn-primary" id="submit-btn">Sign in</button>
-
-        <div class="helper-row">
-          <span id="helper-text">No account? <a href="#" id="helper-link">Create one</a></span>
-          <a href="#" id="back-link">Back to previous page</a>
-        </div>
-
-        <div id="auth-message" class="auth-message"></div>
-      </form>
-
-      <!-- 🔹 Sign-out section, shown only if user is already logged in -->
-      <div id="signed-in-box" class="signed-in-box" style="display:none;">
-        <div>You are currently signed in. If this is not you, you can sign out.</div>
-        <button type="button" class="btn-pill" onclick="signOutUser()">Sign out</button>
+        <p class="steps-note">
+          Each step is driven by a carefully crafted prompt. You copy, paste, and learn — no more guessing what to ask AI.
+        </p>
       </div>
-    </div>
+    </section>
+
+    <section id="subjects">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">Subjects</div>
+          <h2 class="section-title">Start with Physics, expand into full STEM</h2>
+          <p class="section-subtitle">Dive into Physics, Math, Chemistry, or Biology.</p>
+        </div>
+
+        <div class="subjects-grid">
+          <article class="subject-card reveal">
+            <div>
+              <h3 class="subject-title">Physics</h3>
+              <p class="subject-topline">Mechanics, EM, Thermodynamics, Modern Physics</p>
+              <ul class="subject-list">
+                <li>• Forces &amp; Newton’s Laws</li>
+                <li>• Energy, Work &amp; Power</li>
+                <li>• Electric Fields &amp; Circuits</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <a href="/physics/physics.html" class="btn-subject-primary">Explore Physics</a>
+            </div>
+          </article>
+
+          <article class="subject-card reveal">
+            <div>
+              <h3 class="subject-title">Mathematics</h3>
+              <p class="subject-topline">Algebra, Calculus, Probability &amp; more</p>
+              <ul class="subject-list">
+                <li>• Functions &amp; Graphs</li>
+                <li>• Limits &amp; Derivatives</li>
+                <li>• Integrals &amp; Applications</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <a href="/math/math.html" class="btn-subject-primary">Explore Math</a>
+            </div>
+          </article>
+
+          <article class="subject-card reveal">
+            <div>
+              <h3 class="subject-title">Chemistry</h3>
+              <p class="subject-topline">Structure, reactions, thermochemistry</p>
+              <ul class="subject-list">
+                <li>• Atomic Structure &amp; Periodic Table</li>
+                <li>• Chemical Bonding</li>
+                <li>• Stoichiometry</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <a href="/chemistry/chemistry.html" class="btn-subject-primary">Explore Chemistry</a>
+            </div>
+          </article>
+
+          <article class="subject-card reveal">
+            <div>
+              <h3 class="subject-title">Biology</h3>
+              <p class="subject-topline">Cells, genetics, physiology</p>
+              <ul class="subject-list">
+                <li>• Cell Structure &amp; Function</li>
+                <li>• Genetics &amp; Inheritance</li>
+                <li>• Human Physiology</li>
+              </ul>
+            </div>
+            <div class="subject-cta">
+              <a href="/biology/biology.html" class="btn-subject-primary">Explore Biology</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">Why PromptSchola</div>
+          <h2 class="section-title">Built by a former university professor</h2>
+          <p class="section-subtitle">
+            PromptSchola turns aimless AI chatting into a rigorous, 6-step path to deep understanding.
+          </p>
+        </div>
+
+        <div class="why-grid">
+          <article class="why-card reveal">
+            <h3>Structured, not chaotic</h3>
+            <p>Instead of asking random questions to AI, you follow a clear 6-step flow that takes you from orientation to understanding, application, and simulation.</p>
+          </article>
+          <article class="why-card reveal">
+            <h3>Designed for core STEM subjects</h3>
+            <p>Every prompt, explanation, and example is carefully crafted for Mathematics, Physics, Chemistry, and Biology — from fundamentals to deeper mastery.</p>
+          </article>
+          <article class="why-card reveal">
+            <h3>Fits your tools</h3>
+            <p>Use our prompts with your favorite AI tool, or run them inside PromptSchola.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">Access</div>
+          <h2 class="section-title">Start learning free, unlock mastery when you're ready</h2>
+          <p class="section-subtitle">You can explore the system right away. When you want deeper practice and simulations, sign in to unlock the rest.</p>
+        </div>
+
+        <div class="access-wrap">
+          <div class="access-band reveal">
+            <div class="access-inner">
+              <div>
+                <div class="access-title">Access snapshot</div>
+                <p class="access-lede">PromptSchola is built to help you build real understanding first — then practice until it sticks.</p>
+
+                <ul class="access-list">
+                  <li class="access-item">
+                    <span class="chip free">Free</span>
+                    <span><strong>Steps 1–3</strong> (Orient, Understand, Apply) are open for everyone.</span>
+                  </li>
+                  <li class="access-item">
+                    <span class="chip mastery">Mastery</span>
+                    <span><strong>Steps 4–6</strong> (Worked examples, Practice, Simulation Lab) are available after sign-in.</span>
+                  </li>
+                  <li class="access-item">
+                    <span class="chip">Clear</span>
+                    <span>Pricing (if/when enabled) is always shown clearly on the pricing page before you subscribe.</span>
+                  </li>
+                </ul>
+
+                <div class="access-footnote">No pressure — you can start free and decide later.</div>
+              </div>
+
+              <div class="access-cta">
+                <a class="btn-full" href="/auth.html?mode=signup">Start free (create account)</a>
+                <a class="btn-soft" href="/pricing.html">See access details</a>
+                <a class="btn-soft" href="/physics/physics.html">Explore Physics first</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
   </main>
 
   <footer>
-    © 2025 PromptSchola. All rights reserved.
+    <div class="container">
+      <div class="footer-inner">
+        <span>&copy; 2025 PromptSchola. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="#how-it-works">How it works</a>
+          <a href="#subjects">Subjects roadmap</a>
+          <a href="#pricing">Access</a>
+          <a href="/auth.html">Account</a>
+        </div>
+      </div>
+    </div>
   </footer>
 </div>
 
-<!-- Supabase + shared auth helpers -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
+<script src="/auth.js"></script>
 
 <script>
-  const mode = { current: 'signin' };
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
-  const btnSignin = document.getElementById('btn-signin');
-  const btnSignup = document.getElementById('btn-signup');
-  const authTitle = document.getElementById('auth-title');
-  const authSubtitle = document.getElementById('auth-subtitle');
-  const nameField = document.getElementById('name-field');
-  const passwordInput = document.getElementById('password');
-  const submitBtn = document.getElementById('submit-btn');
-  const helperText = document.getElementById('helper-text');
-  const helperLink = document.getElementById('helper-link');
-  const authMessage = document.getElementById('auth-message');
-  const authForm = document.getElementById('auth-form');
-  const backLink = document.getElementById('back-link');
-  const signedInBox = document.getElementById('signed-in-box');
-  const reasonBanner = document.getElementById('reason-banner');
+    const signoutBtn = document.getElementById('nav-signout-btn');
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
 
-  // 🔹 Redirect target: use ?redirect=... if present, otherwise home
-  function getRedirectTarget() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('redirect') || 'index.html';
-  }
-
-  function showMessage(msg, type = 'error') {
-    authMessage.textContent = msg;
-    authMessage.className = 'auth-message ' + (type === 'success' ? 'success' : 'error');
-  }
-
-  function setMode(newMode) {
-    mode.current = newMode;
-    if (newMode === 'signin') {
-      btnSignin.classList.add('active');
-      btnSignup.classList.remove('active');
-      authTitle.textContent = 'Sign in';
-      // subtitle may be overridden later if reason=run-ai
-      if (!authSubtitle.dataset.originalRunAi) {
-        authSubtitle.textContent = 'Access your PromptSchola Physics journey.';
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+      if (user) {
+        if (signoutBtn) signoutBtn.style.display = 'inline-flex';
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+      } else {
+        if (signoutBtn) signoutBtn.style.display = 'none';
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
       }
-      nameField.style.display = 'none';
-      passwordInput.autocomplete = 'current-password';
-      submitBtn.textContent = 'Sign in';
-      helperText.innerHTML = 'No account? <a href="#" id="helper-link">Create one</a>';
-    } else {
-      btnSignin.classList.remove('active');
-      btnSignup.classList.add('active');
-      authTitle.textContent = 'Create account';
-      // subtitle may be overridden later if reason=run-ai
-      if (!authSubtitle.dataset.originalRunAi) {
-        authSubtitle.textContent = 'Start learning Physics with AI-guided prompts.';
-      }
-      nameField.style.display = 'block';
-      passwordInput.autocomplete = 'new-password';
-      submitBtn.textContent = 'Create account';
-      helperText.innerHTML = 'Already have an account? <a href="#" id="helper-link">Sign in</a>';
-    }
-
-    // Re-wire helper link after innerHTML change
-    const newHelperLink = document.querySelector('#helper-text a') || helperLink;
-    newHelperLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      setMode(mode.current === 'signin' ? 'signup' : 'signin');
-    });
-  }
-
-  btnSignin.addEventListener('click', () => setMode('signin'));
-  btnSignup.addEventListener('click', () => setMode('signup'));
-
-  helperLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    setMode('signup');
-  });
-
-  backLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    const target = getRedirectTarget();
-    if (target) {
-      window.location.href = target;
-    } else {
-      history.back();
     }
   });
+</script>
 
-  authForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    authMessage.textContent = '';
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const fullName = document.getElementById('name').value.trim();
-
-    if (!email || !password) {
-      showMessage('Email and password are required.');
+<script>
+  (function () {
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(el => el.classList.add('is-visible'));
       return;
     }
-
-    try {
-      if (mode.current === 'signin') {
-        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error) {
-          showMessage(error.message || 'Unable to sign in.');
-          return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
         }
-        showMessage('Signed in successfully.', 'success');
-        window.location.href = getRedirectTarget();
-      } else {
-        const { data, error } = await supabaseClient.auth.signUp({
-          email,
-          password,
-          options: {
-            data: { full_name: fullName || null }
-          }
-        });
-        if (error) {
-          showMessage(error.message || 'Unable to create account.');
-          return;
-        }
-        showMessage('Account created. Check your email if confirmation is required.', 'success');
-        window.location.href = getRedirectTarget();
-      }
-    } catch (err) {
-      console.error(err);
-      showMessage('Unexpected error. Please try again.');
-    }
-  });
-
-  // 🔹 Respect ?mode=signup and show signup tab by default when requested
-  document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const urlMode = params.get('mode');
-    const reason = params.get('reason');
-
-    // If this auth page was opened from "Run with AI", show banner + tweak subtitle
-    if (reason === 'run-ai' && reasonBanner) {
-      reasonBanner.style.display = 'block';
-      // mark that the subtitle is in "run-ai" mode so setMode won't overwrite it
-      authSubtitle.textContent = 'Sign in or create an account to continue “Run with AI” on your Physics lesson.';
-      authSubtitle.dataset.originalRunAi = 'true';
-    }
-
-    if (urlMode === 'signup') {
-      setMode('signup');
-    } else {
-      setMode('signin');
-    }
-  });
-
-  // 🔹 If already logged in, show sign-out box
-  (async function checkLoggedIn() {
-    const user = await getCurrentUser();
-    if (user && signedInBox) {
-      signedInBox.style.display = 'block';
-    }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
   })();
 </script>
 </body>
