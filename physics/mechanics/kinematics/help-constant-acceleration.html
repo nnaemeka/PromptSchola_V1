@@ -783,7 +783,7 @@
               <div class="actions-left">
                 <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentPrompt()">Copy prompt</button>
                 <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentAnswer()">Copy answer</button>
-                <button class="btn-primary" id="run-btn" type="button" onclick="runCurrentPromptWithAI()">Run with AI</button>
+                <button class="btn-primary" id="run-btn" type="button">Run with AI</button>
               </div>
               <div class="actions-right">
                 <span id="hint-text">Tip: You can also copy this prompt into another AI chat.</span>
@@ -1180,7 +1180,6 @@ Formatting rules:
 
     lastAiAnswer = '';
 
-    // Typeset any LaTeX that might appear in the directory labels
     if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
   }
 
@@ -1213,72 +1212,80 @@ Formatting rules:
     }
   }
 
- async function runCurrentPromptWithAI() {
-  if (!currentHelpId || !helpPromptLibrary[currentHelpId]) {
-    alert('No prompt selected yet.');
-    return;
-  }
+  // ✅ FIXED: uses currentId + HELP, and includes valid step (1–6)
+  async function runCurrentPromptWithAI() {
+    const aiOutputEl = document.getElementById('ai-output');
+    const promptEdit = document.getElementById('prompt-edit');
 
-  const prompt = helpPromptLibrary[currentHelpId].prompt;
-  const aiOutputEl = document.getElementById('ai-output');
-  if (!aiOutputEl) return;
+    if (!aiOutputEl || !promptEdit) return;
 
-  // Require login (same behavior as nano pages)
-  if (typeof ensureLoggedInOrRedirect === 'function') {
-    const user = await ensureLoggedInOrRedirect();
-    if (!user) return; // redirected
-  } else {
-    aiOutputEl.textContent = 'Auth helper missing. Please sign in again.';
-    return;
-  }
-
-  const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
-  if (!token) {
-    aiOutputEl.textContent = 'Session missing. Please sign in again.';
-    return;
-  }
-
-  try {
-    aiOutputEl.textContent = 'Running with AI…';
-
-    const res = await fetch('/api/run-step', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      // ✅ KEY FIX: include a valid step (1–6)
-      // Help is paid-only → use step 4 (paid tier boundary in your system)
-      body: JSON.stringify({ prompt, step: 4 })
-    });
-
-    if (!res.ok) {
-      let msg = 'There was an error contacting the AI. Please try again later.';
-      try {
-        const err = await res.json();
-        if (err?.error) msg = err.error;
-        if (err?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
-        if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
-        if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
-      } catch (_) {}
-      aiOutputEl.textContent = msg;
+    if (!currentId || !HELP[currentId]) {
+      aiOutputEl.textContent = 'No help topic selected yet.';
       return;
     }
 
-    const data = await res.json();
-    const raw = data.content || 'No response received from AI.';
-    lastAiAnswer = raw;
-    aiOutputEl.innerHTML = formatOutput(raw);
-
-    if (window.MathJax?.typesetPromise) {
-      MathJax.typesetPromise([aiOutputEl]).catch(()=>{});
+    const prompt = (promptEdit.value || '').trim();
+    if (!prompt) {
+      aiOutputEl.textContent = 'Prompt is empty.';
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    aiOutputEl.textContent = 'Unexpected error. Please try again.';
-  }
-}
 
+    // Require login (same behavior as nano pages)
+    if (typeof ensureLoggedInOrRedirect === 'function') {
+      const user = await ensureLoggedInOrRedirect();
+      if (!user) return; // redirected
+    } else {
+      aiOutputEl.textContent = 'Auth helper missing. Please sign in again.';
+      return;
+    }
+
+    const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+    if (!token) {
+      aiOutputEl.textContent = 'Session missing. Please sign in again.';
+      return;
+    }
+
+    setRunBtnRunning(true);
+
+    try {
+      aiOutputEl.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        // Help is paid-only → use a paid step number so your backend accepts it.
+        body: JSON.stringify({ prompt, step: 4 })
+      });
+
+      if (!res.ok) {
+        let msg = 'There was an error contacting the AI. Please try again later.';
+        try {
+          const err = await res.json();
+          if (err?.error) msg = err.error;
+          if (err?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
+          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+        } catch (_) {}
+        aiOutputEl.textContent = msg;
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastAiAnswer = raw;
+
+      aiOutputEl.innerHTML = formatOutput(raw);
+      if (window.MathJax?.typesetPromise) MathJax.typesetPromise([aiOutputEl]).catch(()=>{});
+    } catch (err) {
+      console.error(err);
+      aiOutputEl.textContent = 'Unexpected error. Please try again.';
+    } finally {
+      setRunBtnRunning(false);
+    }
+  }
 
   function initDirectoryToggles() {
     document.querySelectorAll('.dir-cat-toggle').forEach(btn => {
@@ -1296,7 +1303,6 @@ Formatting rules:
   }
 
   async function configureAccess() {
-    // Default assumptions
     let loggedIn = false;
     let tier = 'anon';
 
@@ -1314,21 +1320,13 @@ Formatting rules:
     const isPaid = tier === 'paid';
 
     const lockedWrap = document.getElementById('help-locked-wrap');
-    const mainWrap = document.getElementById('help-main-wrap');
-
-    // If you want the whole page paid-only, enforce it here:
-    // - show locked message
-    // - still allow directory browsing (it stays visible via mainWrap)
-    //
-    // This implementation:
-    // - if not paid: show locked banner AND disable run button + prompt editing
-    // - still shows the directory and the selected title/lead so the UX makes sense
     const runBtn = document.getElementById('run-btn');
     const promptEdit = document.getElementById('prompt-edit');
     const hint = document.getElementById('hint-text');
 
     if (!isPaid) {
       if (lockedWrap) lockedWrap.style.display = 'block';
+
       if (runBtn) {
         runBtn.disabled = false;
         runBtn.textContent = loggedIn ? 'Unlock to run' : 'Sign in to run';
@@ -1341,19 +1339,21 @@ Formatting rules:
           }
         };
       }
+
       if (promptEdit) promptEdit.setAttribute('readonly', 'readonly');
-      if (hint) hint.textContent = 'Tip: You can still copy the prompt title list; upgrade to run with AI.';
+      if (hint) hint.textContent = 'Tip: You can browse titles; upgrade to run with AI.';
     } else {
       if (lockedWrap) lockedWrap.style.display = 'none';
+
       if (runBtn) {
         runBtn.textContent = 'Run with AI';
         runBtn.onclick = runCurrentPromptWithAI;
       }
+
       if (promptEdit) promptEdit.removeAttribute('readonly');
       if (hint) hint.textContent = 'Tip: Edit the prompt before running if you want a more specific answer.';
     }
 
-    // Update nav
     if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
   }
 
@@ -1362,10 +1362,6 @@ Formatting rules:
     loadFromUrl();
     await configureAccess();
 
-    // Re-load when navigating between help IDs (same page)
-    window.addEventListener('popstate', loadFromUrl);
-
-    // Sign out button wiring (in case you prefer event listener)
     const signOutBtn = document.getElementById('nav-signout-btn');
     if (signOutBtn && typeof signOutUser === 'function') {
       signOutBtn.addEventListener('click', signOutUser);
