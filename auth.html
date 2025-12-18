@@ -85,9 +85,8 @@
       border: 1px solid var(--border-subtle);
     }
 
-    /* 🔹 Reason banner for "Run with AI" flow */
     .reason-banner {
-      display: none; /* shown via JS only when reason=run-ai */
+      display: none;
       margin-bottom: 1rem;
       padding: 0.75rem 0.85rem;
       border-radius: 12px;
@@ -96,9 +95,7 @@
       font-size: 0.85rem;
       color: #111827;
     }
-    .reason-banner strong {
-      font-weight: 600;
-    }
+    .reason-banner strong { font-weight: 600; }
     .reason-banner small {
       display: block;
       margin-top: 0.2rem;
@@ -144,11 +141,7 @@
       box-shadow: 0 1px 4px rgba(148, 163, 184, 0.7);
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
+    form { display: flex; flex-direction: column; gap: 0.85rem; }
 
     label {
       font-size: 0.8rem;
@@ -206,7 +199,6 @@
     .auth-message.error { color: #b91c1c; }
     .auth-message.success { color: #166534; }
 
-    /* 🔹 Optional sign-out section styling */
     .signed-in-box {
       margin-top: 1.1rem;
       padding-top: 0.8rem;
@@ -214,10 +206,7 @@
       font-size: 0.8rem;
       color: var(--text-subtle);
     }
-    .signed-in-box button {
-      margin-top: 0.4rem;
-      font-size: 0.8rem;
-    }
+    .signed-in-box button { margin-top: 0.4rem; font-size: 0.8rem; }
 
     footer {
       text-align: center;
@@ -227,9 +216,7 @@
     }
 
     @media (max-width: 640px) {
-      .auth-wrapper {
-        padding: 1.5rem 1.4rem;
-      }
+      .auth-wrapper { padding: 1.5rem 1.4rem; }
       .nav-links { display: none; }
     }
   </style>
@@ -248,28 +235,15 @@
           </div>
         </div>
         <nav class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="physics.html">Physics</a>
-          <a href="pricing.html">Pricing</a>
+          <a href="/index.html">Home</a>
+          <a href="/physics.html">Physics</a>
+          <a href="/pricing.html">Pricing</a>
         </nav>
-        <!-- 🔹 NAV: ids for login/register/signout so auth.js can control them -->
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
           <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
           <div style="display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:flex-end;">
-            <a
-              id="nav-login-btn"
-              href="auth.html"
-              class="btn-pill"
-            >
-              Sign In
-            </a>
-            <a
-              id="nav-register-btn"
-              href="auth.html?mode=signup"
-              class="btn-pill"
-            >
-              Register
-            </a>
+            <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+            <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-pill">Register</a>
             <button
               id="nav-signout-btn"
               type="button"
@@ -287,7 +261,6 @@
 
   <main>
     <div class="auth-wrapper">
-      <!-- 🔹 Run-with-AI context banner -->
       <div id="reason-banner" class="reason-banner">
         <strong>To use “Run with AI” on this Physics lesson, please sign in or create a free account.</strong>
         <small>After you’re done, we’ll send you back to the lesson where you clicked “Run with AI”.</small>
@@ -329,7 +302,6 @@
         <div id="auth-message" class="auth-message"></div>
       </form>
 
-      <!-- 🔹 Sign-out section, shown only if user is already logged in -->
       <div id="signed-in-box" class="signed-in-box" style="display:none;">
         <div>You are currently signed in. If this is not you, you can sign out.</div>
         <button type="button" class="btn-pill" onclick="signOutUser()">Sign out</button>
@@ -342,9 +314,8 @@
   </footer>
 </div>
 
-<!-- Supabase + shared auth helpers -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
+<script src="/auth.js"></script>
 
 <script>
   const mode = { current: 'signin' };
@@ -364,41 +335,39 @@
   const signedInBox = document.getElementById('signed-in-box');
   const reasonBanner = document.getElementById('reason-banner');
 
-  /**
-   * Canonical post-auth redirect:
-   * - Prefer localStorage('ps_post_auth_redirect') set by the page the user came from.
-   * - Fallback to ?redirect=...
-   * - Final fallback: index.html
-   */
   function PS_getRedirectCandidate() {
-    // 1) localStorage (preferred)
     try {
       const stored = localStorage.getItem('ps_post_auth_redirect');
       if (stored && stored.startsWith('/')) return stored;
-      // If your site sometimes uses relative paths (e.g. "physics.html"), allow it too:
       if (stored && !stored.includes('://') && !stored.startsWith('javascript:')) return stored;
     } catch (e) {}
 
-    // 2) query param fallback
     const params = new URLSearchParams(window.location.search);
     const qp = params.get('redirect');
     if (qp && !qp.includes('://') && !qp.startsWith('javascript:')) return qp;
 
-    // 3) default
-    return 'index.html';
+    return '/index.html';
   }
 
   function PS_redirectAfterAuth() {
-    let target = 'index.html';
+    let target = '/index.html';
     try {
       target = PS_getRedirectCandidate();
-      // Clear stored redirect once used
       localStorage.removeItem('ps_post_auth_redirect');
     } catch (e) {}
+
+    // Avoid looping back to auth
+    const lower = String(target || '').toLowerCase();
+    if (lower.includes('auth.html')) target = '/index.html';
+
+    // Ensure absolute-ish for safety
+    if (!String(target).startsWith('/') && !String(target).startsWith('http')) {
+      target = '/' + String(target).replace(/^\.?\//, '');
+    }
+
     window.location.href = target;
   }
 
-  // Keep your existing helper name for compatibility (now uses the canonical logic)
   function getRedirectTarget() {
     return PS_getRedirectCandidate();
   }
@@ -452,12 +421,37 @@
   backLink.addEventListener('click', (e) => {
     e.preventDefault();
     const target = getRedirectTarget();
-    if (target) {
-      window.location.href = target;
-    } else {
-      history.back();
-    }
+    if (target) window.location.href = target;
+    else history.back();
   });
+
+  // ✅ NEW: consume Supabase verify/callback redirect (prevents "error page" UX)
+  async function PS_consumeSupabaseRedirectIfPresent() {
+    try {
+      // If PKCE code flow is used, Supabase returns ?code=...
+      const url = new URL(window.location.href);
+      const hasCode = url.searchParams.has('code');
+
+      if (hasCode && supabaseClient?.auth?.exchangeCodeForSession) {
+        const { error } = await supabaseClient.auth.exchangeCodeForSession(window.location.href);
+        if (error) console.warn('exchangeCodeForSession error:', error);
+      }
+
+      // Implicit/token hash flows: getSession consumes tokens from the URL
+      const { data, error } = await supabaseClient.auth.getSession();
+      if (error) {
+        console.warn('getSession error:', error);
+        return;
+      }
+
+      if (data?.session) {
+        // Session established → bounce user back to intended page
+        PS_redirectAfterAuth();
+      }
+    } catch (e) {
+      console.warn('PS_consumeSupabaseRedirectIfPresent exception:', e);
+    }
+  }
 
   authForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -481,19 +475,34 @@
         showMessage('Signed in successfully.', 'success');
         PS_redirectAfterAuth();
       } else {
+        // ✅ Ensure the verification email returns to *this* auth page on this Vercel origin
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        const base = window.location.origin + '/auth.html';
+        const emailRedirectTo = redirect ? `${base}?redirect=${encodeURIComponent(redirect)}` : base;
+
         const { data, error } = await supabaseClient.auth.signUp({
           email,
           password,
           options: {
-            data: { full_name: fullName || null }
+            data: { full_name: fullName || null },
+            emailRedirectTo
           }
         });
+
         if (error) {
           showMessage(error.message || 'Unable to create account.');
           return;
         }
-        showMessage('Account created. Check your email if confirmation is required.', 'success');
-        PS_redirectAfterAuth();
+
+        // If email confirmation is ON, user may not be signed in yet.
+        // If session exists (confirmation OFF), redirect now.
+        if (data?.session) {
+          showMessage('Account created. You are signed in.', 'success');
+          PS_redirectAfterAuth();
+        } else {
+          showMessage('Account created. Please check your email to verify your account.', 'success');
+        }
       }
     } catch (err) {
       console.error(err);
@@ -501,31 +510,27 @@
     }
   });
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    // ✅ consume verification redirects BEFORE rendering anything else
+    await PS_consumeSupabaseRedirectIfPresent();
+
     const params = new URLSearchParams(window.location.search);
     const urlMode = params.get('mode');
     const reason = params.get('reason');
 
-    // If opened from "Run with AI", show banner + tweak subtitle
     if (reason === 'run-ai' && reasonBanner) {
       reasonBanner.style.display = 'block';
       authSubtitle.textContent = 'Sign in or create an account to continue “Run with AI” on your Physics lesson.';
       authSubtitle.dataset.originalRunAi = 'true';
     }
 
-    if (urlMode === 'signup') {
-      setMode('signup');
-    } else {
-      setMode('signin');
-    }
+    if (urlMode === 'signup') setMode('signup');
+    else setMode('signin');
   });
 
-  // 🔹 If already logged in, show sign-out box
   (async function checkLoggedIn() {
     const user = await getCurrentUser();
-    if (user && signedInBox) {
-      signedInBox.style.display = 'block';
-    }
+    if (user && signedInBox) signedInBox.style.display = 'block';
   })();
 </script>
 </body>
