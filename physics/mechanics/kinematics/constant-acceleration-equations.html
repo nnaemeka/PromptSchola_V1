@@ -2,58 +2,629 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Constant Acceleration Equations – PromptSchola Physics</title>
+  <title>Constant Acceleration – PromptSchola Physics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Constant Acceleration Equations in PromptSchola Physics: meaning of constant acceleration, SUVAT kinematics, free-fall motion, and practice sets."
+    content="Nano-lesson on constant acceleration in 1D motion: definition, intuition, real-world connections, quiz, summary & reflection, and exploration/simulation."
   />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]'], ['$$','$$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
 
   <style>
-    :root{--bg-body:#f3f4f6;--bg-card:#ffffff;--bg-surface:#f9fafb;--accent:#7e22ce;--accent-strong:#6d28d9;--accent-soft:rgba(126,34,206,.09);--accent-soft2:rgba(129,140,248,.12);--text-main:#111827;--text-muted:#4b5563;--text-subtle:#9ca3af;--text-strong:#020617;--border-subtle:rgba(209,213,219,.6);--radius-card:18px;--radius-pill:999px;--shadow-card:0 16px 35px rgba(15,23,42,.12);--transition-fast:.25s ease-out;--font-main:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:var(--font-main);background:radial-gradient(circle at top,#e5e7eb,#f9fafb 45%,#f3f4f6);font-size:16.5px;color:var(--text-main);-webkit-font-smoothing:antialiased;line-height:1.7}
-    a{text-decoration:none;color:inherit}
-    .page{min-height:100vh;display:flex;flex-direction:column}
-    .container{width:100%;max-width:1120px;margin:0 auto;padding:0 1.4rem}
-    header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:linear-gradient(to bottom,rgba(249,250,251,.96),rgba(249,250,251,.94),rgba(249,250,251,.9));border-bottom:1px solid rgba(209,213,219,.9)}
-    .nav{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}
-    .nav-left{display:flex;align-items:center;gap:.75rem}
-    .logo-mark{width:34px;height:34px;border-radius:40%;background:radial-gradient(circle at 30% 30%,var(--accent),var(--accent-strong));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff}
-    .logo-text span:first-child{display:block;font-weight:700;font-size:1.02rem;color:var(--text-strong);letter-spacing:.02em}
-    .logo-text span:last-child{display:block;font-size:.76rem;color:var(--text-subtle)}
-    .nav-links{display:flex;gap:1.3rem;font-size:.95rem;align-items:center}
-    .nav-links a{opacity:.9;color:var(--text-muted);transition:opacity var(--transition-fast),color var(--transition-fast)}
-    .nav-links a:hover{opacity:1;color:var(--accent-strong)}
-    .nav-right{display:flex;align-items:center;gap:.6rem;font-size:.9rem}
-    .btn-pill{border-radius:var(--radius-pill);padding:.45rem .95rem;border:1px solid rgba(209,213,219,.9);background:#fff;cursor:pointer;font-size:.86rem;transition:background var(--transition-fast),transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast);display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
-    .btn-pill:hover{background:#f3f4f6;transform:translateY(-1px);border-color:rgba(156,163,175,.9);box-shadow:0 8px 20px rgba(148,163,184,.35)}
-    .btn-primary{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);padding:.6rem 1.3rem;font-size:.9rem;font-weight:600;border:none;cursor:pointer;background:radial-gradient(circle at 30% 0%,#a855f7,#7e22ce,#4c1d95);color:#fff;box-shadow:0 10px 22px rgba(79,70,229,.35);transition:transform var(--transition-fast),filter var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast);white-space:nowrap;text-decoration:none}
-    .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.03);box-shadow:0 14px 30px rgba(79,70,229,.45);background:radial-gradient(circle at 30% 0%,#c084fc,#7e22ce,#4c1d95)}
-    .hero{position:relative;overflow:hidden;padding:3.2rem 0 3rem;text-align:center}
-    .hero::before{content:"";position:absolute;inset:-80px;pointer-events:none;background:radial-gradient(circle at 10% 0%,rgba(129,140,248,.40),transparent 60%),radial-gradient(circle at 90% 40%,rgba(168,85,247,.35),transparent 55%);opacity:.9;z-index:-1}
-    .hero-kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:.9rem}
-    .hero-title{font-size:clamp(2.2rem,3.2vw,2.8rem);font-weight:800;color:var(--text-strong);margin-bottom:.6rem;max-width:44rem;margin-left:auto;margin-right:auto;line-height:1.12}
-    .hero-subtitle{font-size:1.1rem;max-width:44rem;margin:0 auto;color:var(--text-muted)}
-    .topics-heading{margin:2.8rem auto 1.7rem;text-align:center;max-width:44rem}
-    .topics-heading-kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.35rem}
-    .topics-heading-title{font-size:1.85rem;font-weight:800;color:var(--text-strong);margin-bottom:.4rem}
-    .topics-heading-subtitle{font-size:1.05rem;color:var(--text-muted);margin:0 auto}
-    .topics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin-top:1.4rem}
-    .topic-card{background:var(--bg-card);border-radius:var(--radius-card);border:1px solid rgba(209,213,219,.55);padding:1.1rem 1.15rem 1.2rem;box-shadow:0 16px 35px rgba(15,23,42,.12);display:flex;flex-direction:column;justify-content:space-between;min-height:210px;position:relative}
-    .topic-kicker{font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-subtle);margin-bottom:.2rem}
-    .topic-title{font-size:1.2rem;font-weight:700;color:var(--text-strong)}
-    .topic-body{font-size:.96rem;color:var(--text-muted);margin-top:.45rem;line-height:1.65}
-    .topic-list{list-style:none;margin-top:.55rem;padding-left:0;font-size:1rem;color:var(--text-main);font-weight:400;line-height:1.6}
-    .topic-list li{margin-bottom:.25rem}
-    .topic-list li::before{content:"•";display:inline-block;width:1.1rem;color:var(--text-subtle)}
-    .topic-toggle{background:transparent;border:none;color:var(--accent-strong);font-size:.9rem;font-weight:600;cursor:pointer;padding:0;margin-top:.2rem}
-    .topic-toggle:hover{text-decoration:underline}
-    .topic-footer{margin-top:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;font-size:.82rem;color:var(--text-subtle)}
-    footer{margin-top:auto;padding:1.9rem 0;text-align:center;font-size:.86rem;color:var(--text-subtle)}
-    @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      color: var(--text-strong);
+      line-height: 1.15;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      gap: 1rem;
+    }
+
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+    }
+
+    .logo-text span:first-child {
+      display: block; font-weight: 700; font-size: 1.02rem;
+      letter-spacing: 0.02em; color: var(--text-strong);
+      font-family: var(--font-body); line-height: 1.1;
+    }
+
+    .logo-text span:last-child {
+      display: block; font-size: 0.76rem; color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 1.3rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.9;
+      transition: opacity var(--transition-fast), color var(--transition-fast);
+      font-family: var(--font-body);
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.9rem; font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 0.95rem;
+      font-size: 0.86rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: none;
+      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+    }
+
+    .btn-primary[disabled],
+    .btn-pill[disabled],
+    .btn-ghost[disabled] {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-ghost {
+      padding: 0.42rem 0.9rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.82rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); }
+    .btn-copy { font-size: 0.78rem; padding: 0.32rem 0.85rem; }
+
+    .hero {
+      padding: 4.0rem 0 2.2rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
+        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-strong);
+      font-weight: 700;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+    }
+
+    .hero-kicker span.label {
+      padding: 0.18rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid rgba(129, 140, 248, 0.22);
+      background: var(--accent-soft2);
+      color: var(--accent-strong);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      font-family: var(--font-body);
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4vw, 2.9rem);
+      line-height: 1.12;
+      font-weight: 700;
+      margin: 0 auto 0.85rem;
+      max-width: 56rem;
+      color: var(--text-strong);
+    }
+
+    .hero-subtitle {
+      font-size: 1.10rem;
+      max-width: 48rem;
+      color: var(--text-muted);
+      margin: 0 auto;
+      line-height: 1.6;
+      font-family: var(--font-body);
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 0.95rem;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+    .hero-breadcrumbs a { color: var(--accent-strong); }
+
+    .access-band {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 28px;
+      padding: 1.55rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .access-band::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.20), transparent 58%);
+      filter: blur(16px);
+      opacity: 0.9;
+    }
+
+    .access-band-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .access-band-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 0.2rem;
+      font-weight: 700;
+    }
+
+    .access-band-desc {
+      font-family: var(--font-body);
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      max-width: 52rem;
+    }
+
+    .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 800;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+    .chip.free { background: #10b981; color: #ffffff; }
+    .chip.mastery { background: #6366f1; color: #ffffff; }
+
+    main { padding-bottom: 2.6rem; }
+    section { padding: 1.4rem 0; }
+
+    .lesson-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(280px, 1.1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 0.8rem;
+    }
+
+    .steps-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+
+    .step-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      font-size: 0.95rem;
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+      padding: 1rem 1.15rem 1.05rem;
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .step-header-left { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+
+    .step-index {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #4c1d95;
+      background: #ede9fe;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      font-weight: 800;
+      font-family: var(--font-body);
+      width: fit-content;
+    }
+
+    .step-title {
+      font-size: 1.06rem;
+      font-weight: 700;
+      color: #111827;
+      font-family: var(--font-heading);
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .step-header-right { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; justify-content: flex-end; }
+
+    .step-access-pill {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      background: #dcfce7;
+      color: #166534;
+      white-space: nowrap;
+      font-family: var(--font-body);
+      font-weight: 700;
+    }
+    .step-access-pill.mastery {
+      border-color: rgba(99, 102, 241, 0.9);
+      background: rgba(99, 102, 241, 0.12);
+      color: #3730a3;
+    }
+
+    .toggle-btn {
+      width: 30px; height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      color: #4c1d95;
+      font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      font-family: var(--font-body);
+    }
+    .toggle-btn:hover { transform: translateY(-1px) scale(1.07); box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75); background: #e0e7ff; }
+
+    .step-content { margin-top: 0.35rem; display: block; }
+
+    .step-body {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      line-height: 1.7;
+    }
+
+    .prompt-preview {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid rgba(229, 231, 235, 0.8);
+      font-size: 0.83rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      min-height: 2.2rem;
+      white-space: pre-wrap;
+      display: none;
+    }
+
+    .ai-response {
+      margin-top: 0.6rem;
+      padding: 1.05rem 1.15rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      font-size: 0.98rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.75;
+      font-family: var(--font-body);
+      min-height: 1.2rem;
+    }
+
+    .ai-response p { margin-bottom: 0.9rem; }
+    .ai-response ul, .ai-response ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+    .ai-response strong { font-weight: 800; color: inherit; }
+    .ai-response em { font-style: italic; }
+
+    .copy-row {
+      margin-top: 0.55rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .step-footer {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+      font-family: var(--font-body);
+    }
+
+    .step-footer .left-actions { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+
+    .locked-panel {
+      margin-top: 0.55rem;
+      border-radius: 16px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.95rem 1rem;
+      color: #111827;
+      font-family: var(--font-body);
+    }
+    .locked-title { font-family: var(--font-heading); font-size: 1.05rem; color: var(--text-strong); margin-bottom: 0.25rem; font-weight: 700; }
+    .locked-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin-bottom: 0.7rem; }
+    .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    .help-panel-inner { position: sticky; top: 6rem; }
+
+    .help-panel-toggle {
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: radial-gradient(circle at 0 0, #f9fafb, #eef2ff);
+      color: var(--text-main);
+      padding: 0.45rem 0.95rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 0.6rem;
+      box-shadow: 0 6px 16px rgba(148, 163, 184, 0.3);
+      font-family: var(--font-body);
+    }
+
+    .nano-help-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.12rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(126, 34, 206, 0.35);
+      color: #4c1d95;
+      background: rgba(126, 34, 206, 0.06);
+      font-size: 0.8rem;
+      font-weight: 800;
+      font-family: var(--font-body);
+    }
+
+    .help-panel-toggle-icon { font-size: 0.95rem; opacity: 0.85; }
+
+    .help-panel-body {
+      border-radius: 1.1rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: radial-gradient(circle at 0 0, #ffffff, #eef2ff);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.16);
+      padding: 0.9rem 0.95rem;
+      font-size: 0.82rem;
+      font-family: var(--font-body);
+    }
+
+    .help-panel-body p { color: var(--text-muted); line-height: 1.65; }
+
+    .help-category {
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      margin-top: 0.65rem;
+    }
+    .help-category:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+    .help-category-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      font-size: 0.72rem;
+      color: var(--accent-strong);
+      font-family: var(--font-body);
+      font-weight: 800;
+    }
+
+    .help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
+
+    .help-prompts-bulleted {
+      margin-top: 0.4rem;
+      padding-left: 1.5rem;
+      list-style-type: disc;
+      list-style-position: outside;
+    }
+    .help-prompts-bulleted li { margin-bottom: 0.35rem; }
+    .help-prompts-bulleted li::marker { font-size: 1.15em; color: #4c1d95; }
+
+    .help-prompt-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.2rem;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      background: transparent;
+      color: #6b21a8;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
+      font-family: var(--font-body);
+    }
+    .help-prompt-btn:hover { background: rgba(76, 29, 149, 0.07); color: #4c1d95; text-decoration: underline; }
+
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0 2.1rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+
+    @media (max-width: 980px) {
+      .lesson-layout { grid-template-columns: minmax(0, 1fr); }
+      .help-panel-inner { position: static; }
+      .help-panel-toggle { margin-top: 1.25rem; }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
   </style>
 </head>
 
@@ -82,9 +653,24 @@
 
         <div class="nav-right">
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
-          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
-          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">Sign out</button>
+
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+            Sign In
+          </a>
+
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+            Register for Free
+          </a>
+
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+            onclick="signOutUser && signOutUser()"
+          >
+            Sign out
+          </button>
         </div>
       </div>
     </div>
@@ -93,109 +679,434 @@
   <main>
     <section class="hero">
       <div class="container">
-        <div class="hero-kicker">Kinematics · Physics</div>
-        <h1 class="hero-title">Constant Acceleration Equations</h1>
+        <div class="hero-kicker">
+          <span class="label">Nano</span>
+          <span>Physics · Mechanics · Kinematics (1D)</span>
+        </div>
+
+        <h1 class="hero-title">Constant Acceleration</h1>
+
         <p class="hero-subtitle">
-          Use constant-acceleration models (including free fall) to predict position, velocity, and time with confidence.
+          Learn what it truly means for acceleration to be constant, how it shapes motion graphs, and how to
+          solve 1D motion problems with confidence (final-year high school + first-year university).
         </p>
+
+        <div class="hero-breadcrumbs">
+          <a href="/physics/physics.html">Physics</a> ·
+          <a href="/physics/mechanics.html">Mechanics</a> ·
+          <a href="/physics/kinematics-in-one-dimension.html">Kinematics in 1D</a> ·
+          <span>Constant Acceleration</span>
+        </div>
       </div>
     </section>
 
     <section>
       <div class="container">
-
-        <div class="topics-heading">
-          <div class="topics-heading-kicker">This topic includes</div>
-          <h2 class="topics-heading-title">Subtopics to master</h2>
-          <p class="topics-heading-subtitle">
-            Build the model, learn the equations, then practice until it becomes automatic.
-          </p>
+        <div class="access-band">
+          <div class="access-band-inner">
+            <div>
+              <div class="access-band-title">Access for this nano-lesson</div>
+              <div class="access-band-desc">
+                Unsigned visitors can <strong>show &amp; copy prompts</strong> for Steps 1–3.
+                Signed-in free accounts can also <strong>Run with AI</strong> for Steps 1–2.
+                Paid accounts unlock everything (Steps 1–6 + Help prompts + AI).
+              </div>
+            </div>
+            <div class="access-chips">
+              <span class="chip free">Steps 1–3 Free</span>
+              <span class="chip mastery">Steps 4–6 Paid</span>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="topics-grid">
+    <section>
+      <div class="container">
+        <div class="lesson-layout">
 
-          <article class="topic-card">
-            <div>
-              <div class="topic-kicker">Concept</div>
-              <div class="topic-title">Meaning of Constant Acceleration</div>
-              <div class="topic-body" data-lines="9">
-                Understand what it means for acceleration to stay the same over time.
-                <ul class="topic-list">
-                  <li>Interpreting a(t) = constant</li>
-                  <li>Graph connections (v–t slope)</li>
-                  <li>Common physical examples</li>
-                </ul>
+          <div class="lesson-main">
+            <div class="steps-grid">
+
+              <!-- STEP 1 -->
+              <article class="step-card" data-step="1">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 1</div>
+                    <div class="step-title">Orient / Definition: what does “constant acceleration” mean?</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free</span>
+                    <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+                  </div>
+                </div>
+
+                <div class="step-content" id="step-content-1">
+                  <div class="step-unlocked" id="step-unlocked-1">
+                    <div class="step-body">
+                      Build a crisp definition, connect it to velocity change, and set sign conventions
+                      (positive direction) so later equations feel logical.
+                    </div>
+
+                    <div class="prompt-preview" id="preview-step1">Prompt preview will appear here.</div>
+                    <div class="ai-response" id="response-step1"></div>
+
+                    <div class="copy-row">
+                      <button class="btn-ghost btn-copy" onclick="copyPrompt(1)">Copy prompt</button>
+                      <button class="btn-ghost btn-copy" id="copy-answer-1" onclick="copyAnswer(1)" style="display:none;">Copy answer</button>
+                    </div>
+
+                    <div class="step-footer">
+                      <div class="left-actions">
+                        <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                        <button class="btn-primary" id="run-btn-1" type="button">Run with AI</button>
+                      </div>
+                      <span>Goal: define it so clearly you can explain it in one sentence.</span>
+                    </div>
+                  </div>
+
+                  <div class="locked-panel" id="step-locked-1" style="display:none;">
+                    <div class="locked-title">Locked</div>
+                    <div class="locked-desc">This step is not available for your account level.</div>
+                    <div class="locked-actions">
+                      <a class="btn-primary" href="/pricing.html">View plans</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 2 -->
+              <article class="step-card" data-step="2">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 2</div>
+                    <div class="step-title">Conceptual grounding: stories + graphs (v–t, a–t, x–t)</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free</span>
+                    <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
+                  </div>
+                </div>
+
+                <div class="step-content" id="step-content-2">
+                  <div class="step-unlocked" id="step-unlocked-2">
+                    <div class="step-body">
+                      Build intuition using everyday motion (car speeding up, free-fall, thrown up then down),
+                      and connect “constant a” to the shapes of graphs.
+                    </div>
+
+                    <div class="prompt-preview" id="preview-step2">Prompt preview will appear here.</div>
+                    <div class="ai-response" id="response-step2"></div>
+
+                    <div class="copy-row">
+                      <button class="btn-ghost btn-copy" onclick="copyPrompt(2)">Copy prompt</button>
+                      <button class="btn-ghost btn-copy" id="copy-answer-2" onclick="copyAnswer(2)" style="display:none;">Copy answer</button>
+                    </div>
+
+                    <div class="step-footer">
+                      <div class="left-actions">
+                        <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                        <button class="btn-primary" id="run-btn-2" type="button">Run with AI</button>
+                      </div>
+                      <span>Goal: know what each graph must look like before doing any math.</span>
+                    </div>
+                  </div>
+
+                  <div class="locked-panel" id="step-locked-2" style="display:none;">
+                    <div class="locked-title">Locked</div>
+                    <div class="locked-desc">This step is not available for your account level.</div>
+                    <div class="locked-actions">
+                      <a class="btn-primary" href="/pricing.html">View plans</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 3 -->
+              <article class="step-card" data-step="3">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 3</div>
+                    <div class="step-title">Real-world connection: when is acceleration “approximately constant”?</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill">Free</span>
+                    <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
+                  </div>
+                </div>
+
+                <div class="step-content" id="step-content-3">
+                  <div class="step-unlocked" id="step-unlocked-3">
+                    <div class="step-body">
+                      Learn when the constant-acceleration model is valid (or not): free-fall near Earth,
+                      braking, ramps, air resistance, and “average acceleration” vs “instantaneous acceleration.”
+                    </div>
+
+                    <div class="prompt-preview" id="preview-step3">Prompt preview will appear here.</div>
+                    <div class="ai-response" id="response-step3"></div>
+
+                    <div class="copy-row">
+                      <button class="btn-ghost btn-copy" onclick="copyPrompt(3)">Copy prompt</button>
+                      <button class="btn-ghost btn-copy" id="copy-answer-3" onclick="copyAnswer(3)" style="display:none;">Copy answer</button>
+                    </div>
+
+                    <div class="step-footer">
+                      <div class="left-actions">
+                        <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                        <button class="btn-primary" id="run-btn-3" type="button">Try with AI</button>
+                      </div>
+                      <span>Goal: understand the model’s boundaries (and what assumptions you’re making).</span>
+                    </div>
+                  </div>
+
+                  <div class="locked-panel" id="step-locked-3" style="display:none;">
+                    <div class="locked-title">Locked</div>
+                    <div class="locked-desc">This step is not available for your account level.</div>
+                    <div class="locked-actions">
+                      <a class="btn-primary" href="/pricing.html">View plans</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 4 -->
+              <article class="step-card" data-step="4">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 4</div>
+                    <div class="step-title">Check your understanding: mini-quiz (with feedback)</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill mastery">Paid</span>
+                    <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
+                  </div>
+                </div>
+
+                <div class="step-content" id="step-content-4">
+                  <div class="step-unlocked" id="step-unlocked-4">
+                    <div class="step-body">
+                      Use short conceptual and graph questions to reveal misunderstandings early
+                      (sign errors, slope/area confusion, “acceleration at the top” myths).
+                    </div>
+
+                    <div class="prompt-preview" id="preview-step4">Prompt preview will appear here.</div>
+                    <div class="ai-response" id="response-step4"></div>
+
+                    <div class="copy-row">
+                      <button class="btn-ghost btn-copy" onclick="copyPrompt(4)">Copy prompt</button>
+                      <button class="btn-ghost btn-copy" id="copy-answer-4" onclick="copyAnswer(4)" style="display:none;">Copy answer</button>
+                    </div>
+
+                    <div class="step-footer">
+                      <div class="left-actions">
+                        <button class="btn-ghost" onclick="showPrompt(4)">Show prompt</button>
+                        <button class="btn-primary" id="run-btn-4" type="button">Run with AI</button>
+                      </div>
+                      <span>Goal: catch misconceptions before you start heavier problem solving.</span>
+                    </div>
+                  </div>
+
+                  <div class="locked-panel" id="step-locked-4" style="display:none;">
+                    <div class="locked-title">Paid step</div>
+                    <div class="locked-desc">Steps 4–6 are part of paid access.</div>
+                    <div class="locked-actions">
+                      <a class="btn-primary" href="/pricing.html">Unlock full access</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 5 -->
+              <article class="step-card" data-step="5">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 5</div>
+                    <div class="step-title">Practice: solve 1D constant-a problems step-by-step</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill mastery">Paid</span>
+                    <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
+                  </div>
+                </div>
+
+                <div class="step-content" id="step-content-5">
+                  <div class="step-unlocked" id="step-unlocked-5">
+                    <div class="step-body">
+                      Work through carefully chosen problems (speeding up, braking, free-fall, thrown upward),
+                      with sign conventions and equation choices explained.
+                    </div>
+
+                    <div class="prompt-preview" id="preview-step5">Prompt preview will appear here.</div>
+                    <div class="ai-response" id="response-step5"></div>
+
+                    <div class="copy-row">
+                      <button class="btn-ghost btn-copy" onclick="copyPrompt(5)">Copy prompt</button>
+                      <button class="btn-ghost btn-copy" id="copy-answer-5" onclick="copyAnswer(5)" style="display:none;">Copy answer</button>
+                    </div>
+
+                    <div class="step-footer">
+                      <div class="left-actions">
+                        <button class="btn-ghost" onclick="showPrompt(5)">Show prompt</button>
+                        <button class="btn-primary" id="run-btn-5" type="button">Run with AI</button>
+                      </div>
+                      <span>Goal: reliably translate words → diagram → equations → answer.</span>
+                    </div>
+                  </div>
+
+                  <div class="locked-panel" id="step-locked-5" style="display:none;">
+                    <div class="locked-title">Paid step</div>
+                    <div class="locked-desc">Steps 4–6 are part of paid access.</div>
+                    <div class="locked-actions">
+                      <a class="btn-primary" href="/pricing.html">Unlock full access</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- STEP 6 -->
+              <article class="step-card" data-step="6">
+                <div class="step-header">
+                  <div class="step-header-left">
+                    <div class="step-index">STEP 6</div>
+                    <div class="step-title">Summary & reflection + Exploration / “simulation” prompts</div>
+                  </div>
+                  <div class="step-header-right">
+                    <span class="step-access-pill mastery">Paid</span>
+                    <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
+                  </div>
+                </div>
+
+                <div class="step-content" id="step-content-6">
+                  <div class="step-unlocked" id="step-unlocked-6">
+                    <div class="step-body">
+                      Consolidate the key takeaways, then explore “what if?” scenarios by changing parameters
+                      (u, a, t), predicting graph changes, and checking consistency.
+                    </div>
+
+                    <div class="prompt-preview" id="preview-step6">Prompt preview will appear here.</div>
+                    <div class="ai-response" id="response-step6"></div>
+
+                    <div class="copy-row">
+                      <button class="btn-ghost btn-copy" onclick="copyPrompt(6)">Copy prompt</button>
+                      <button class="btn-ghost btn-copy" id="copy-answer-6" onclick="copyAnswer(6)" style="display:none;">Copy answer</button>
+                    </div>
+
+                    <div class="step-footer">
+                      <div class="left-actions">
+                        <button class="btn-ghost" onclick="showPrompt(6)">Show prompt</button>
+                        <button class="btn-primary" id="run-btn-6" type="button">Run with AI</button>
+                      </div>
+                      <span>Goal: summarize + push your intuition using parameter tweaks and graph reasoning.</span>
+                    </div>
+                  </div>
+
+                  <div class="locked-panel" id="step-locked-6" style="display:none;">
+                    <div class="locked-title">Paid step</div>
+                    <div class="locked-desc">Steps 4–6 are part of paid access.</div>
+                    <div class="locked-actions">
+                      <a class="btn-primary" href="/pricing.html">Unlock full access</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- RIGHT: Help Panel (PAID ONLY) -->
+          <aside class="help-panel">
+            <div class="help-panel-inner">
+
+              <div id="help-locked" class="locked-panel" style="display:none;">
+                <div class="locked-title">Help prompts (Paid)</div>
+                <div class="locked-desc">
+                  This guided help panel is available to paid learners. It includes exam traps, common confusions,
+                  and deeper prompt paths for constant-acceleration problems.
+                </div>
+                <div class="locked-actions">
+                  <a class="btn-primary" href="/pricing.html">Unlock Help</a>
+                  <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                </div>
               </div>
-            </div>
-            <div class="topic-footer">
-              <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="#" class="btn-primary">Start subtopic</a>
-              <span>Set up the model correctly.</span>
-            </div>
-          </article>
 
-          <article class="topic-card">
-            <div>
-              <div class="topic-kicker">Equations</div>
-              <div class="topic-title">Kinematic Equations (SUVAT)</div>
-              <div class="topic-body" data-lines="9">
-                Use standard constant-acceleration equations to solve for unknowns.
-                <ul class="topic-list">
-                  <li>Choosing the right equation</li>
-                  <li>Given/unknown strategy</li>
-                  <li>Sign conventions &amp; direction</li>
-                </ul>
-              </div>
-            </div>
-            <div class="topic-footer">
-              <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="#" class="btn-primary">Start subtopic</a>
-              <span>Fast solving toolkit.</span>
-            </div>
-          </article>
+              <div id="help-paid">
+                <button class="help-panel-toggle" id="help-panel-toggle">
+                  <span class="nano-help-title">Deepen your understanding</span>
+                  <span class="help-panel-toggle-icon">▾</span>
+                </button>
 
-          <article class="topic-card">
-            <div>
-              <div class="topic-kicker">Application</div>
-              <div class="topic-title">Free-Fall Motion</div>
-              <div class="topic-body" data-lines="9">
-                Apply constant acceleration to vertical motion under gravity.
-                <ul class="topic-list">
-                  <li>Upward vs downward motion</li>
-                  <li>Peak point (v = 0) reasoning</li>
-                  <li>Common pitfalls &amp; sign errors</li>
-                </ul>
-              </div>
-            </div>
-            <div class="topic-footer">
-              <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="#" class="btn-primary">Start subtopic</a>
-              <span>High-frequency exam topic.</span>
-            </div>
-          </article>
+                <div class="help-panel-body" id="help-panel-body">
+                  <p>
+                    Use these prompt clusters when you feel stuck, when graphs feel confusing, or when answers
+                    don’t match your intuition.
+                  </p>
 
-          <!-- ✅ Practice card (added) -->
-          <article class="topic-card">
-            <div>
-              <div class="topic-kicker">Practice</div>
-              <div class="topic-title">Practice &amp; Exercises</div>
-              <div class="topic-body" data-lines="9">
-                Drill SUVAT selection, sign conventions, and free-fall reasoning with mixed problems.
-                <ul class="topic-list">
-                  <li>Identify knowns/unknowns sets</li>
-                  <li>SUVAT equation selection drills</li>
-                  <li>Free-fall (up/down) mixed questions</li>
-                  <li>Graph-to-equation translation</li>
-                  <li>Exam-style multi-step problems</li>
-                </ul>
+                  <div class="help-category">
+                    <div>
+                      <span class="help-category-label">Confusions &amp; look-alikes</span>
+                      <p class="help-category-desc">Separate velocity, acceleration, slope, and area ideas.</p>
+                    </div>
+                    <ul class="help-prompts-bulleted">
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C1">Slope vs value: what the v–t graph is really telling you</a></li>
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C2">Average vs instantaneous acceleration (and why constant-a makes them match)</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="help-category">
+                    <div>
+                      <span class="help-category-label">Tricky areas &amp; exam traps</span>
+                      <p class="help-category-desc">Avoid the classic sign and “top of motion” traps.</p>
+                    </div>
+                    <ul class="help-prompts-bulleted">
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C3">At the top of the throw: velocity is zero, acceleration is not</a></li>
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C4">Sign conventions: choosing + upward vs + downward without confusion</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="help-category">
+                    <div>
+                      <span class="help-category-label">Common mistakes</span>
+                      <p class="help-category-desc">Fix the errors that cause most wrong answers.</p>
+                    </div>
+                    <ul class="help-prompts-bulleted">
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C5">Mixing up “acceleration is constant” with “velocity is constant”</a></li>
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C6">Using the wrong kinematic equation for the knowns you have</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="help-category">
+                    <div>
+                      <span class="help-category-label">When you feel stuck</span>
+                      <p class="help-category-desc">Get unstuck with a reliable problem-solving routine.</p>
+                    </div>
+                    <ul class="help-prompts-bulleted">
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C7">How to draw a quick motion diagram and decide signs</a></li>
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C8">Given 3 variables, how to pick the right equation in 10 seconds</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="help-category">
+                    <div>
+                      <span class="help-category-label">Concept bridges</span>
+                      <p class="help-category-desc">Connect constant-a kinematics to dynamics and calculus.</p>
+                    </div>
+                    <ul class="help-prompts-bulleted">
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C9">How constant-a leads into Newton’s laws (forces cause acceleration)</a></li>
+                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C10">How derivatives/integrals connect to v = dx/dt and a = dv/dt</a></li>
+                    </ul>
+                  </div>
+
+                </div>
               </div>
+
             </div>
-            <div class="topic-footer">
-              <button type="button" class="topic-toggle" style="display:none;">More</button>
-              <a href="#" class="btn-primary">Open practice</a>
-              <span>Speed + accuracy training.</span>
-            </div>
-          </article>
+          </aside>
 
         </div>
       </div>
@@ -207,63 +1118,324 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/auth.js"></script>
+
 <script>
-  document.addEventListener('DOMContentLoaded', async () => {
-    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+  // Continue Learning marker
+  window.PS_markLastLearningPage = function () {
+    try {
+      const path = window.location.pathname || '';
+      const isIndex = path === '/' || path.endsWith('/index.html');
+      const isAuth = path.endsWith('/auth.html');
+      const isPricing = path.endsWith('/pricing.html');
+      if (isIndex || isAuth || isPricing) return;
 
-    const loginBtn = document.getElementById('nav-login-btn');
-    const registerBtn = document.getElementById('nav-register-btn');
-    const signOutBtn = document.getElementById('nav-signout-btn');
+      const title = (document.title || '').replace(/\s+–\s+PromptSchola.*$/i, '').trim();
+      const label = title || 'Continue Learning';
 
-    if (typeof getCurrentUser === 'function') {
-      const user = await getCurrentUser();
-      if (user) {
-        if (loginBtn) loginBtn.style.display = 'none';
-        if (registerBtn) registerBtn.style.display = 'none';
-        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
-      } else {
-        if (loginBtn) loginBtn.style.display = 'inline-flex';
-        if (registerBtn) registerBtn.style.display = 'inline-flex';
-        if (signOutBtn) signOutBtn.style.display = 'none';
+      localStorage.setItem('ps_last_page_path', path);
+      localStorage.setItem('ps_last_page_label', label);
+      localStorage.setItem('ps_last_seen_ts', String(Date.now()));
+    } catch (e) {}
+  };
+  window.PS_markLastLearningPage();
+
+  // Post-auth redirect helper
+  function PS_setPostAuthRedirect() {
+    try {
+      const path = window.location.pathname + window.location.search + window.location.hash;
+      localStorage.setItem('ps_post_auth_redirect', path);
+    } catch (e) {}
+  }
+  window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+
+  // Prompts (final-year high school + first-year university)
+  const prompts = {
+    1: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 1 (Orient/Definition): Explain clearly what “constant acceleration” means. Include:\n• A one-sentence definition\n• What it implies about how velocity changes with time\n• A quick note about choosing a positive direction and using sign conventions\n• 2 everyday examples (car speeding up steadily, free-fall near Earth)\n\nFormatting rules:\n• Short paragraphs + bullet points\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math, one per line:\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]\n  \\\\[ v = u + at \\\\]\n• Do NOT use markdown headings like # or ###.`,
+    2: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 2 (Conceptual grounding): Build intuition using:\n• A car accelerating at a steady rate\n• A ball dropped from rest (free-fall)\n• A ball thrown upward then coming down (address the myth “acceleration is zero at the top”)\n\nFor each, describe what the v–t, a–t, and x–t graphs should look like (qualitatively). Emphasize:\n• Slope of v–t is acceleration\n• Area under a–t gives change in velocity\n• Area under v–t gives displacement\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key concepts sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
+    3: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 3 (Real-world connection): Explain when constant acceleration is a good approximation and when it breaks.\nInclude:\n• Free-fall near Earth (when air resistance is negligible)\n• A car braking (roughly constant a over a short interval)\n• Why air resistance makes acceleration change\n• The difference between average acceleration and instantaneous acceleration, and why constant-a makes them match\n\nAdd 3 “modeling questions” students should ask before using constant-a equations.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
+    4: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 4 (Check your understanding – mini-quiz): Create 7 questions total:\n• 4 multiple-choice (A–D)\n• 2 short-answer\n• 1 graph reasoning question (describe the graph in words; no images)\n\nCoverage must include:\n• Sign conventions\n• “Top of motion” concept (v=0 but a≠0)\n• Interpreting slope/area on v–t / a–t\n• Choosing the right kinematics equation based on knowns\n\nAfter each question, provide:\n• Correct answer\n• A 1–2 sentence explanation\n\nFormatting rules:\n• Clear spacing\n• Bullets and numbering\n• No markdown headings like # or ###.`,
+    5: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 5 (Practice): Create 4 problems with increasing difficulty:\n1) Start from rest, constant a, find v and displacement after t\n2) Non-zero initial velocity, constant a, find time to reach a velocity\n3) Free-fall (choose + upward OR + downward, but be consistent), include sign convention explicitly\n4) Mixed: find displacement using v^2 = u^2 + 2as (or equivalent) with careful reasoning\n\nFor each problem:\n• State the problem clearly\n• Then provide a step-by-step solution with brief reasoning\n• Show equations as LaTeX display math, one per line\n\nFormatting rules:\n• Numbered problems\n• Bold “Solution” for each\n• No markdown headings like # or ###.`,
+    6: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 6 (Summary & reflection + Exploration/Simulation prompts):\nPART A — Summary & reflection:\n• Give a tight summary of the core ideas (definition, graphs, sign conventions)\n• Provide a “reflection checklist” with 6 yes/no items students can self-check\n\nPART B — Exploration:\nProvide 5 “what if” experiments students can do on paper:\n• Change u, a, or t and predict how v–t and x–t graphs change\n• Include at least 1 scenario where acceleration changes (air resistance) and ask them to compare to the constant-a model\n\nFormatting rules:\n• Short paragraphs + bullet lists\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`
+  };
+
+  const lastAiResponses = {};
+  const STORAGE_KEY = 'ps_nano_constant_acceleration_collapse';
+  let collapseState = {};
+
+  function formatOutput(text) {
+    if (!text) return '';
+    let safe = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    safe = safe
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]')
+      .replace(/\\\\\(/g, '\\(')
+      .replace(/\\\\\)/g, '\\)');
+
+    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    safe = safe.replace(/\n\n+/g, '</p><p>');
+    safe = safe.replace(/\n/g, '<br>');
+    return '<p>' + safe + '</p>';
+  }
+
+  function loadCollapseState() {
+    try { collapseState = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { collapseState = {}; }
+  }
+
+  function saveCollapseState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState)); }
+    catch (e) {}
+  }
+
+  function toggleStep(step) {
+    const content = document.getElementById(`step-content-${step}`);
+    const btn = document.getElementById(`toggle-btn-${step}`);
+    if (!content || !btn) return;
+
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'block' : 'none';
+    btn.textContent = isHidden ? '−' : '+';
+
+    collapseState[step] = isHidden;
+    saveCollapseState();
+  }
+
+  function showPrompt(step) {
+    const preview = document.getElementById('preview-step' + step);
+    if (!preview) return;
+    preview.textContent = prompts[step] || 'Prompt coming soon.';
+    preview.style.display = 'block';
+    if (window.MathJax?.typesetPromise) MathJax.typesetPromise([preview]).catch(()=>{});
+  }
+
+  function copyPrompt(step) {
+    const prompt = prompts[step];
+    if (!prompt) return alert('No prompt defined for this step yet.');
+    if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+    navigator.clipboard.writeText(prompt).then(() => alert('Prompt copied.')).catch(() => alert('Could not copy prompt.'));
+  }
+
+  function copyAnswer(step) {
+    const text = lastAiResponses[step];
+    if (!text) return alert('No AI answer to copy yet.');
+    if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+    navigator.clipboard.writeText(text).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
+  }
+
+  function redirectToSignupForRunAI() {
+    const redirectTarget = encodeURIComponent(window.location.href);
+    window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+  }
+
+  function setRunBtnRunning(step, running) {
+    const btn = document.getElementById(`run-btn-${step}`);
+    if (!btn) return;
+    if (running) {
+      btn.dataset.prevText = btn.textContent;
+      btn.textContent = 'Running…';
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+    } else {
+      btn.disabled = false;
+      btn.textContent = btn.dataset.prevText || btn.textContent;
+      btn.removeAttribute('aria-busy');
+    }
+  }
+
+  async function runWithAI(step) {
+    const prompt = prompts[step];
+    if (!prompt) return alert('No prompt defined for this step yet.');
+
+    const output = document.getElementById('response-step' + step);
+    if (!output) return alert('No response area found for this step.');
+
+    const preview = document.getElementById('preview-step' + step);
+    if (preview) preview.style.display = 'none';
+
+    // Require login for Run-with-AI (server enforces too)
+    if (typeof ensureLoggedInOrRedirect === 'function') {
+      const user = await ensureLoggedInOrRedirect();
+      if (!user) return; // redirected
+    } else {
+      redirectToSignupForRunAI();
+      return;
+    }
+
+    const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+    if (!token) {
+      output.textContent = 'Session missing. Please sign in again.';
+      return;
+    }
+
+    setRunBtnRunning(step, true);
+
+    try {
+      output.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ prompt, step })
+      });
+
+      if (!res.ok) {
+        let msg = 'There was an error contacting the AI. Please try again later.';
+        try {
+          const err = await res.json();
+          if (err?.error) msg = err.error;
+          if (err?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
+          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+        } catch (_) {}
+        output.textContent = msg;
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastAiResponses[step] = raw;
+
+      output.innerHTML = formatOutput(raw);
+      if (window.MathJax?.typesetPromise) MathJax.typesetPromise([output]).catch(()=>{});
+
+      // Show copy answer only after success
+      const copyAnswerBtn = document.getElementById(`copy-answer-${step}`);
+      if (copyAnswerBtn) copyAnswerBtn.style.display = 'inline-flex';
+    } catch (err) {
+      console.error(err);
+      output.textContent = 'Unexpected error. Please try again.';
+    } finally {
+      setRunBtnRunning(step, false);
+    }
+  }
+
+  function configureUI({ loggedIn, tier }) {
+    const isPaid = tier === 'paid';
+    const isFreeSignedIn = loggedIn && !isPaid;
+
+    // Lock steps 4–6 unless paid
+    for (let step = 1; step <= 6; step++) {
+      const unlocked = document.getElementById(`step-unlocked-${step}`);
+      const locked = document.getElementById(`step-locked-${step}`);
+      if (!unlocked || !locked) continue;
+
+      const paidOnly = step >= 4;
+      const lock = paidOnly && !isPaid;
+
+      unlocked.style.display = lock ? 'none' : 'block';
+      locked.style.display = lock ? 'block' : 'none';
+    }
+
+    // Help panel paid-only
+    const helpPaid = document.getElementById('help-paid');
+    const helpLocked = document.getElementById('help-locked');
+    if (helpPaid && helpLocked) {
+      helpPaid.style.display = isPaid ? 'block' : 'none';
+      helpLocked.style.display = isPaid ? 'none' : 'block';
+    }
+
+    // Step 1–2:
+    [1,2].forEach((step) => {
+      const btn = document.getElementById(`run-btn-${step}`);
+      if (!btn) return;
+      btn.style.display = 'inline-flex';
+      btn.textContent = 'Run with AI';
+      btn.onclick = async () => {
+        if (!loggedIn) return redirectToSignupForRunAI();
+        return runWithAI(step);
+      };
+    });
+
+    // Step 3:
+    {
+      const btn = document.getElementById('run-btn-3');
+      if (btn) {
+        btn.style.display = 'inline-flex';
+        if (!loggedIn) {
+          btn.textContent = 'Try with AI';
+          btn.onclick = () => redirectToSignupForRunAI();
+        } else if (isFreeSignedIn) {
+          btn.textContent = 'Try with AI';
+          btn.onclick = () => { window.location.href = '/pricing.html'; };
+        } else {
+          btn.textContent = 'Run with AI';
+          btn.onclick = () => runWithAI(3);
+        }
       }
     }
 
-    if (signOutBtn && typeof signOutUser === 'function') {
-      signOutBtn.addEventListener('click', signOutUser);
+    // Steps 4–6 Run buttons only meaningful for paid
+    for (let step = 4; step <= 6; step++) {
+      const btn = document.getElementById(`run-btn-${step}`);
+      if (!btn) continue;
+      if (isPaid) {
+        btn.style.display = 'inline-flex';
+        btn.textContent = 'Run with AI';
+        btn.onclick = () => runWithAI(step);
+      } else {
+        btn.style.display = 'none';
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    loadCollapseState();
+    for (let step = 1; step <= 6; step++) {
+      const content = document.getElementById(`step-content-${step}`);
+      const btn = document.getElementById(`toggle-btn-${step}`);
+      if (!content || !btn) continue;
+
+      const isCollapsed = collapseState[step] === false; // stored false => collapsed
+      if (isCollapsed) { content.style.display = 'none'; btn.textContent = '+'; }
+      else { content.style.display = 'block'; btn.textContent = '−'; }
     }
 
-    document.querySelectorAll('.topic-card').forEach(card => {
-      const body = card.querySelector('.topic-body');
-      const toggle = card.querySelector('.topic-toggle');
-      if (!body || !toggle) return;
+    if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
 
-      const maxLines = parseInt(body.getAttribute('data-lines')) || 9;
+    // Help panel toggle (only visible for paid)
+    const toggleBtn = document.getElementById('help-panel-toggle');
+    const body = document.getElementById('help-panel-body');
+    const icon = document.querySelector('.help-panel-toggle-icon');
+    if (toggleBtn && body && icon) {
+      let open = true;
+      const updatePanel = () => { body.style.display = open ? 'block' : 'none'; icon.textContent = open ? '▾' : '▸'; };
+      updatePanel();
+      toggleBtn.addEventListener('click', (e) => { e.preventDefault(); open = !open; updatePanel(); });
+    }
 
-      body.style.display = '-webkit-box';
-      body.style.webkitBoxOrient = 'vertical';
-      body.style.overflow = 'hidden';
+    // 🔹 Update nav user display (auth.js)
+    if (typeof updateNavUserDisplay === 'function') {
+      updateNavUserDisplay();
+    }
 
-      body.style.webkitLineClamp = maxLines;
-      const clampedHeight = body.getBoundingClientRect().height;
+    // Determine logged-in + tier
+    let loggedIn = false;
+    let tier = 'anon';
 
-      body.style.webkitLineClamp = 'unset';
-      const fullHeight = body.getBoundingClientRect().height;
+    if (typeof getCurrentUser === 'function') {
+      try { loggedIn = !!(await getCurrentUser()); } catch (_) { loggedIn = false; }
+    }
 
-      body.style.webkitLineClamp = maxLines;
+    if (loggedIn && typeof PS_getUserTier === 'function') {
+      try { tier = await PS_getUserTier(); } catch (_) { tier = 'free'; }
+      if (!tier) tier = 'free';
+    }
 
-      if (fullHeight <= clampedHeight + 1) { toggle.style.display = 'none'; return; }
+    if (loggedIn && (tier === 'anon')) tier = 'free';
 
-      toggle.style.display = 'inline';
-      toggle.textContent = 'More';
-
-      let expanded = false;
-      toggle.addEventListener('click', () => {
-        expanded = !expanded;
-        body.style.webkitLineClamp = expanded ? 'unset' : maxLines;
-        toggle.textContent = expanded ? 'Less' : 'More';
-      });
-    });
+    configureUI({ loggedIn, tier });
   });
 </script>
+
 </body>
 </html>
