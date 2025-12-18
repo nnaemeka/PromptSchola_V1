@@ -4,7 +4,7 @@
 // IMPORTANT:
 // In every HTML page that uses this, you must have:
 //   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-//   <script src="auth.js"></script>
+//   <script src="/auth.js"></script>
 // BEFORE any other script that uses `supabaseClient`, isLoggedIn(), etc.
 
 // 1) Configure Supabase – replace with your real values
@@ -15,7 +15,7 @@ const SUPABASE_ANON_KEY =
 // 2) Create a single shared client
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ---------------------------------------------------------------------// ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
 // 3) Helper: isLoggedIn() → boolean
 async function isLoggedIn() {
   try {
@@ -54,19 +54,6 @@ async function PS_getAccessToken() {
 
 // ---------------------------------------------------------------------
 // ✅ NEW: Entitlements lookup from browser (RLS required)
-//
-// Table: entitlements
-//   - user_id uuid primary key
-//   - tier text ('free'|'paid' or others)
-//   - is_paid bool (optional)
-//   - updated_at timestamp
-//
-// IMPORTANT SECURITY NOTE:
-// - This is safe only if you enable RLS on entitlements and add policy:
-//     "Users can read own entitlement"
-//     USING (auth.uid() = user_id)
-// - Never expose other users' rows.
-//
 // Caches the result to reduce queries.
 // ---------------------------------------------------------------------
 const PS_TIER_CACHE_KEY = "ps_cached_tier_v1";
@@ -100,7 +87,7 @@ function PS_writeTierCache(tier) {
 async function PS_getUserTier(opts = {}) {
   const { forceRefresh = false } = opts;
 
-  // Not logged in → treat as free (visitor)
+  // Not logged in → anonymous
   const user = await getCurrentUser();
   if (!user) return "anon";
 
@@ -118,7 +105,7 @@ async function PS_getUserTier(opts = {}) {
 
     if (error) {
       console.warn("PS_getUserTier entitlements error:", error);
-      // Fail closed to "free" rather than breaking the UI
+      // Fail-closed to "free" so UI still works
       PS_writeTierCache("free");
       return "free";
     }
@@ -133,7 +120,6 @@ async function PS_getUserTier(opts = {}) {
   }
 }
 
-// Allow pages to clear tier cache (e.g., after checkout / webhook updates)
 function PS_clearTierCache() {
   try { localStorage.removeItem(PS_TIER_CACHE_KEY); } catch {}
 }
@@ -144,20 +130,15 @@ async function signOutUser() {
   try {
     await supabaseClient.auth.signOut();
 
-    // Optional: if you log events
     if (typeof logEvent === "function") {
-      try {
-        await logEvent("sign_out", {});
-      } catch (e) {
-        console.warn("Failed to log sign_out event", e);
-      }
+      try { await logEvent("sign_out", {}); } catch (e) {}
     }
   } catch (err) {
     console.error("Error signing out:", err);
   }
 
-  // After logout, send them to homepage
-  window.location.href = "index.html";
+  // ✅ FIX: always go to root homepage (avoids /physics/index.html 404)
+  window.location.href = "/index.html";
 }
 
 // 6) Update nav (sign in / register / sign out)
@@ -170,7 +151,6 @@ async function updateNavUserDisplay() {
   const user = await getCurrentUser();
 
   if (!user) {
-    // Not logged in
     if (userLabel) userLabel.textContent = "";
     if (loginBtn) loginBtn.style.display = "inline-flex";
     if (registerBtn) registerBtn.style.display = "inline-flex";
@@ -178,33 +158,31 @@ async function updateNavUserDisplay() {
     return;
   }
 
-  // Logged in
   if (userLabel) userLabel.textContent = `Signed in as ${user.email}`;
   if (loginBtn) loginBtn.style.display = "none";
   if (registerBtn) registerBtn.style.display = "none";
   if (signoutBtn) signoutBtn.style.display = "inline-flex";
 }
 
-// Run automatically on each page that includes auth.js
 document.addEventListener("DOMContentLoaded", updateNavUserDisplay);
 
 // ---------------------------------------------------------------------
 // 7) Helper for redirecting to auth on protected actions only
 //    (e.g. when clicking "Run with AI")
+// ✅ FIX: redirect to SIGNUP (your new desired behavior)
+// ---------------------------------------------------------------------
 async function ensureLoggedInOrRedirect() {
   const user = await getCurrentUser();
   if (!user) {
     const redirectTarget = encodeURIComponent(window.location.href);
-
-    // Send them to SIGN IN first, with context that they came from "Run with AI"
-    window.location.href = `auth.html?mode=signin&reason=run-ai&redirect=${redirectTarget}`;
+    window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
     return null;
   }
   return user;
 }
 
 // ---------------------------------------------------------------------
-// Expose helpers globally (for use in inline onclick etc.)
+// Expose helpers globally
 // ---------------------------------------------------------------------
 window.supabaseClient = supabaseClient;
 
@@ -214,7 +192,6 @@ window.updateNavUserDisplay = updateNavUserDisplay;
 window.ensureLoggedInOrRedirect = ensureLoggedInOrRedirect;
 window.signOutUser = signOutUser;
 
-// ✅ NEW exports for nano-lessons / gating
 window.PS_getAccessToken = PS_getAccessToken;
 window.PS_getUserTier = PS_getUserTier;
 window.PS_clearTierCache = PS_clearTierCache;
