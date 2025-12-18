@@ -30,7 +30,6 @@
 
   <style>
     :root {
-      /* ✅ Use the older scheme exactly */
       --bg-body: #f3f4f6;
       --bg-surface: #f9fafb;
       --bg-card: #ffffff;
@@ -51,7 +50,6 @@
       --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
 
-      /* ✅ Two-font system */
       --font-heading: 'Lora', serif;
       --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
@@ -72,7 +70,6 @@
       overflow-x: hidden;
     }
 
-    /* ✅ Headings use Lora */
     h1, h2, h3 {
       font-family: var(--font-heading);
       color: var(--text-strong);
@@ -82,7 +79,6 @@
     .page { min-height: 100vh; display: flex; flex-direction: column; }
     .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
 
-    /* NAV (match older scheme) */
     header {
       position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
@@ -237,7 +233,6 @@
     .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); }
     .btn-copy { font-size: 0.78rem; padding: 0.32rem 0.85rem; }
 
-    /* HERO (match older scheme) */
     .hero {
       padding: 4.0rem 0 2.2rem;
       position: relative;
@@ -307,7 +302,6 @@
     }
     .hero-breadcrumbs a { color: var(--accent-strong); }
 
-    /* ✅ Dark Access Band */
     .access-band {
       background: #0f172a;
       color: #f8fafc;
@@ -376,7 +370,6 @@
     .chip.free { background: #10b981; color: #ffffff; }
     .chip.mastery { background: #6366f1; color: #ffffff; }
 
-    /* Layout */
     main { padding-bottom: 2.6rem; }
     section { padding: 1.4rem 0; }
 
@@ -554,7 +547,6 @@
     .locked-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin-bottom: 0.7rem; }
     .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
-    /* Help panel */
     .help-panel-inner { position: sticky; top: 6rem; }
 
     .help-panel-toggle {
@@ -696,11 +688,11 @@
           <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
 
           <!-- IMPORTANT: keep ids so auth.js can toggle -->
-          <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect()">
             Sign In
           </a>
 
-          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect()">
             Register for Free
           </a>
 
@@ -781,7 +773,7 @@
                   </div>
                   <div class="step-header-right">
                     <span class="step-access-pill">Free</span>
-                    <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+                    <button type="button" class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
                   </div>
                 </div>
 
@@ -793,18 +785,17 @@
                     </div>
 
                     <div class="prompt-preview" id="preview-step1">Prompt preview will appear here.</div>
-
                     <div class="ai-response" id="response-step1"></div>
 
                     <div class="copy-row">
-                      <button class="btn-ghost btn-copy" onclick="copyPrompt(1)">Copy prompt</button>
-                      <button class="btn-ghost btn-copy" id="copy-answer-1" onclick="copyAnswer(1)">Copy answer</button>
+                      <button type="button" class="btn-ghost btn-copy" onclick="copyPrompt(1)">Copy prompt</button>
+                      <button type="button" class="btn-ghost btn-copy" id="copy-answer-1" onclick="copyAnswer(1)">Copy answer</button>
                     </div>
 
                     <div class="step-footer">
                       <div class="left-actions">
-                        <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
-                        <button class="btn-primary" id="run-btn-1" onclick="runWithAI(1)">Run with AI</button>
+                        <button type="button" class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                        <button type="button" class="btn-primary" id="run-btn-1" onclick="runWithAI(1)">Run with AI</button>
                       </div>
                       <span>Goal: have a crisp, memorable definition of physics.</span>
                     </div>
@@ -815,7 +806,7 @@
                     <div class="locked-desc">This step is not available for your account level.</div>
                     <div class="locked-actions">
                       <a class="btn-primary" href="/pricing.html">View plans</a>
-                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -830,7 +821,7 @@
                   </div>
                   <div class="step-header-right">
                     <span class="step-access-pill">Free</span>
-                    <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
+                    <button type="button" class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
                   </div>
                 </div>
 
@@ -842,18 +833,17 @@
                     </div>
 
                     <div class="prompt-preview" id="preview-step2">Prompt preview will appear here.</div>
-
                     <div class="ai-response" id="response-step2"></div>
 
                     <div class="copy-row">
-                      <button class="btn-ghost btn-copy" onclick="copyPrompt(2)">Copy prompt</button>
-                      <button class="btn-ghost btn-copy" id="copy-answer-2" onclick="copyAnswer(2)">Copy answer</button>
+                      <button type="button" class="btn-ghost btn-copy" onclick="copyPrompt(2)">Copy prompt</button>
+                      <button type="button" class="btn-ghost btn-copy" id="copy-answer-2" onclick="copyAnswer(2)">Copy answer</button>
                     </div>
 
                     <div class="step-footer">
                       <div class="left-actions">
-                        <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
-                        <button class="btn-primary" id="run-btn-2" onclick="runWithAI(2)">Run with AI</button>
+                        <button type="button" class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                        <button type="button" class="btn-primary" id="run-btn-2" onclick="runWithAI(2)">Run with AI</button>
                       </div>
                       <span>Goal: see physics as a story, not just formulas.</span>
                     </div>
@@ -864,7 +854,7 @@
                     <div class="locked-desc">This step is not available for your account level.</div>
                     <div class="locked-actions">
                       <a class="btn-primary" href="/pricing.html">View plans</a>
-                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -879,7 +869,7 @@
                   </div>
                   <div class="step-header-right">
                     <span class="step-access-pill">Free</span>
-                    <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
+                    <button type="button" class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
                   </div>
                 </div>
 
@@ -891,23 +881,17 @@
                     </div>
 
                     <div class="prompt-preview" id="preview-step3">Prompt preview will appear here.</div>
-
                     <div class="ai-response" id="response-step3"></div>
 
                     <div class="copy-row">
-                      <button class="btn-ghost btn-copy" onclick="copyPrompt(3)">Copy prompt</button>
-                      <button class="btn-ghost btn-copy" id="copy-answer-3" onclick="copyAnswer(3)">Copy answer</button>
+                      <button type="button" class="btn-ghost btn-copy" onclick="copyPrompt(3)">Copy prompt</button>
+                      <button type="button" class="btn-ghost btn-copy" id="copy-answer-3" onclick="copyAnswer(3)">Copy answer</button>
                     </div>
 
                     <div class="step-footer">
                       <div class="left-actions">
-                        <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
-
-                        <!-- This button will be dynamically:
-                             - hidden for unsigned
-                             - "Try with AI" (pricing nudge) for signed-in free
-                             - "Run with AI" for paid -->
-                        <button class="btn-primary" id="run-btn-3" onclick="runWithAI(3)">Run with AI</button>
+                        <button type="button" class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                        <button type="button" class="btn-primary" id="run-btn-3" onclick="runWithAI(3)">Run with AI</button>
                       </div>
                       <span>Goal: see physics everywhere around you.</span>
                     </div>
@@ -918,7 +902,7 @@
                     <div class="locked-desc">This step is not available for your account level.</div>
                     <div class="locked-actions">
                       <a class="btn-primary" href="/pricing.html">View plans</a>
-                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -933,7 +917,7 @@
                   </div>
                   <div class="step-header-right">
                     <span class="step-access-pill mastery">Paid</span>
-                    <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
+                    <button type="button" class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
                   </div>
                 </div>
 
@@ -945,18 +929,17 @@
                     </div>
 
                     <div class="prompt-preview" id="preview-step4">Prompt preview will appear here.</div>
-
                     <div class="ai-response" id="response-step4"></div>
 
                     <div class="copy-row">
-                      <button class="btn-ghost btn-copy" onclick="copyPrompt(4)">Copy prompt</button>
-                      <button class="btn-ghost btn-copy" id="copy-answer-4" onclick="copyAnswer(4)">Copy answer</button>
+                      <button type="button" class="btn-ghost btn-copy" onclick="copyPrompt(4)">Copy prompt</button>
+                      <button type="button" class="btn-ghost btn-copy" id="copy-answer-4" onclick="copyAnswer(4)">Copy answer</button>
                     </div>
 
                     <div class="step-footer">
                       <div class="left-actions">
-                        <button class="btn-ghost" onclick="showPrompt(4)">Show prompt</button>
-                        <button class="btn-primary" id="run-btn-4" onclick="runWithAI(4)">Run with AI</button>
+                        <button type="button" class="btn-ghost" onclick="showPrompt(4)">Show prompt</button>
+                        <button type="button" class="btn-primary" id="run-btn-4" onclick="runWithAI(4)">Run with AI</button>
                       </div>
                       <span>Goal: check if the core ideas are sticking.</span>
                     </div>
@@ -967,7 +950,7 @@
                     <div class="locked-desc">Steps 4–6 are part of paid access.</div>
                     <div class="locked-actions">
                       <a class="btn-primary" href="/pricing.html">Unlock full access</a>
-                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -982,7 +965,7 @@
                   </div>
                   <div class="step-header-right">
                     <span class="step-access-pill mastery">Paid</span>
-                    <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
+                    <button type="button" class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
                   </div>
                 </div>
 
@@ -994,18 +977,17 @@
                     </div>
 
                     <div class="prompt-preview" id="preview-step5">Prompt preview will appear here.</div>
-
                     <div class="ai-response" id="response-step5"></div>
 
                     <div class="copy-row">
-                      <button class="btn-ghost btn-copy" onclick="copyPrompt(5)">Copy prompt</button>
-                      <button class="btn-ghost btn-copy" id="copy-answer-5" onclick="copyAnswer(5)">Copy answer</button>
+                      <button type="button" class="btn-ghost btn-copy" onclick="copyPrompt(5)">Copy prompt</button>
+                      <button type="button" class="btn-ghost btn-copy" id="copy-answer-5" onclick="copyAnswer(5)">Copy answer</button>
                     </div>
 
                     <div class="step-footer">
                       <div class="left-actions">
-                        <button class="btn-ghost" onclick="showPrompt(5)">Show prompt</button>
-                        <button class="btn-primary" id="run-btn-5" onclick="runWithAI(5)">Run with AI</button>
+                        <button type="button" class="btn-ghost" onclick="showPrompt(5)">Show prompt</button>
+                        <button type="button" class="btn-primary" id="run-btn-5" onclick="runWithAI(5)">Run with AI</button>
                       </div>
                       <span>Goal: have a “ready-to-say” definition in your own words.</span>
                     </div>
@@ -1016,7 +998,7 @@
                     <div class="locked-desc">Steps 4–6 are part of paid access.</div>
                     <div class="locked-actions">
                       <a class="btn-primary" href="/pricing.html">Unlock full access</a>
-                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -1031,7 +1013,7 @@
                   </div>
                   <div class="step-header-right">
                     <span class="step-access-pill mastery">Paid</span>
-                    <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
+                    <button type="button" class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
                   </div>
                 </div>
 
@@ -1043,18 +1025,17 @@
                     </div>
 
                     <div class="prompt-preview" id="preview-step6">Prompt preview will appear here.</div>
-
                     <div class="ai-response" id="response-step6"></div>
 
                     <div class="copy-row">
-                      <button class="btn-ghost btn-copy" onclick="copyPrompt(6)">Copy prompt</button>
-                      <button class="btn-ghost btn-copy" id="copy-answer-6" onclick="copyAnswer(6)">Copy answer</button>
+                      <button type="button" class="btn-ghost btn-copy" onclick="copyPrompt(6)">Copy prompt</button>
+                      <button type="button" class="btn-ghost btn-copy" id="copy-answer-6" onclick="copyAnswer(6)">Copy answer</button>
                     </div>
 
                     <div class="step-footer">
                       <div class="left-actions">
-                        <button class="btn-ghost" onclick="showPrompt(6)">Show prompt</button>
-                        <button class="btn-primary" id="run-btn-6" onclick="runWithAI(6)">Run with AI</button>
+                        <button type="button" class="btn-ghost" onclick="showPrompt(6)">Show prompt</button>
+                        <button type="button" class="btn-primary" id="run-btn-6" onclick="runWithAI(6)">Run with AI</button>
                       </div>
                       <span>Goal: feel that physics is something you can observe, not just read.</span>
                     </div>
@@ -1065,7 +1046,7 @@
                     <div class="locked-desc">Steps 4–6 are part of paid access.</div>
                     <div class="locked-actions">
                       <a class="btn-primary" href="/pricing.html">Unlock full access</a>
-                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
                 </div>
@@ -1086,12 +1067,12 @@
                 </div>
                 <div class="locked-actions">
                   <a class="btn-primary" href="/pricing.html">Unlock Help</a>
-                  <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                  <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect()">Sign In</a>
                 </div>
               </div>
 
               <div id="help-paid">
-                <button class="help-panel-toggle" id="help-panel-toggle">
+                <button type="button" class="help-panel-toggle" id="help-panel-toggle">
                   <span class="nano-help-title">Deepen your understanding</span>
                   <span class="help-panel-toggle-icon">▾</span>
                 </button>
@@ -1176,7 +1157,16 @@
 <script src="/auth.js"></script>
 
 <script>
-  /* ✅ Continue Learning marker (so index can swap Go to Physics → Continue Learning) */
+  // ✅ Back-to-page redirect capture (nav buttons)
+  function PS_setPostAuthRedirect() {
+    try {
+      const path = window.location.pathname + window.location.search + window.location.hash;
+      localStorage.setItem('ps_post_auth_redirect', path);
+    } catch (e) {}
+  }
+  window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+
+  /* ✅ Continue Learning marker */
   window.PS_markLastLearningPage = function () {
     try {
       const path = window.location.pathname || '';
@@ -1193,7 +1183,6 @@
       localStorage.setItem('ps_last_seen_ts', String(Date.now()));
     } catch (e) {}
   };
-
   window.PS_markLastLearningPage();
 
   // Prompts
@@ -1252,11 +1241,12 @@
     const btn = document.getElementById(`toggle-btn-${step}`);
     if (!content || !btn) return;
 
-    const isHidden = content.style.display === 'none';
-    content.style.display = isHidden ? 'block' : 'none';
-    btn.textContent = isHidden ? '−' : '+';
+    const isCollapsed = content.style.display === 'none';
+    content.style.display = isCollapsed ? 'block' : 'none';
+    btn.textContent = isCollapsed ? '−' : '+';
 
-    collapseState[step] = isHidden;
+    // store collapsed state
+    collapseState[String(step)] = !isCollapsed;
     saveCollapseState();
   }
 
@@ -1269,7 +1259,6 @@
   }
 
   function copyPrompt(step) {
-    // Allowed for all on Steps 1–3 (and for paid on 4–6 because those are unlocked)
     const prompt = prompts[step];
     if (!prompt) return alert('No prompt defined for this step yet.');
     if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
@@ -1283,34 +1272,96 @@
     navigator.clipboard.writeText(text).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
   }
 
-  function setRunButtonState(step, state) {
-    // Option A: grey out Run-with-AI once clicked (disable during run + show “Running…”)
+  function setRunBtnRunning(step, running) {
     const btn = document.getElementById(`run-btn-${step}`);
     if (!btn) return;
-
-    if (state === 'running') {
-      btn.disabled = true;
+    if (running) {
       btn.dataset.prevText = btn.textContent;
+      btn.disabled = true;
       btn.textContent = 'Running…';
       btn.setAttribute('aria-busy', 'true');
-    } else if (state === 'done') {
-      btn.disabled = false;
-      btn.textContent = btn.dataset.prevText || 'Run with AI';
-      btn.removeAttribute('aria-busy');
-    } else if (state === 'disabled') {
-      btn.disabled = true;
-      btn.removeAttribute('aria-busy');
     } else {
       btn.disabled = false;
+      btn.textContent = btn.dataset.prevText || btn.textContent || 'Run with AI';
       btn.removeAttribute('aria-busy');
     }
   }
 
+  async function runWithAI(step) {
+    const prompt = prompts[step];
+    if (!prompt) return alert('No prompt defined for this step yet.');
+
+    const output = document.getElementById('response-step' + step);
+    if (!output) return alert('No response area found for this step.');
+
+    const preview = document.getElementById('preview-step' + step);
+    if (preview) preview.style.display = 'none';
+
+    // ✅ Require sign-in for Run-with-AI (auth.js should redirect)
+    if (typeof ensureLoggedInOrRedirect === 'function') {
+      const user = await ensureLoggedInOrRedirect();
+      if (!user) return; // redirected
+    }
+
+    // ✅ Need access token for /api/run-step
+    const token = (typeof PS_getAccessToken === 'function')
+      ? await PS_getAccessToken()
+      : null;
+
+    if (!token) {
+      output.textContent = 'Session missing. Please sign in again.';
+      return;
+    }
+
+    try {
+      setRunBtnRunning(step, true);
+      output.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ prompt, step })
+      });
+
+      if (!res.ok) {
+        let msg = 'There was an error contacting the AI. Please try again later.';
+        try {
+          const err = await res.json();
+          if (err?.error) msg = err.error;
+          if (err?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
+          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+        } catch (_) {}
+        output.textContent = msg;
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastAiResponses[step] = raw;
+      output.innerHTML = formatOutput(raw);
+
+      // show Copy Answer only when it exists + user is allowed
+      const copyBtn = document.getElementById(`copy-answer-${step}`);
+      if (copyBtn) copyBtn.style.display = 'inline-flex';
+
+      if (window.MathJax?.typesetPromise) MathJax.typesetPromise([output]).catch(()=>{});
+    } catch (err) {
+      console.error(err);
+      output.textContent = 'Unexpected error. Please try again.';
+    } finally {
+      setRunBtnRunning(step, false);
+    }
+  }
+
   function configureStepUI({ loggedIn, tier }) {
-    const isPaid = tier === 'paid';
+    const isPaid = String(tier || 'free').toLowerCase() === 'paid';
     const isFreeSignedIn = loggedIn && !isPaid;
 
-    // Step visibility (content panels)
+    // Step lock/unlock (Steps 4–6 paid)
     for (let step = 1; step <= 6; step++) {
       const unlocked = document.getElementById(`step-unlocked-${step}`);
       const locked = document.getElementById(`step-locked-${step}`);
@@ -1323,32 +1374,23 @@
       locked.style.display = lockedByTier ? 'block' : 'none';
     }
 
-    // Buttons rules:
-    // - Unsigned: show/copy prompt only for steps 1-3. No AI, no copy answer.
-    // - Signed-in free: steps 1-3 show/copy prompt. AI steps 1-2 only. Step 3 becomes "Try with AI" -> pricing.
-    // - Paid: everything.
+    // Copy answer buttons default hidden unless paid (or after AI run)
+    for (let step = 1; step <= 6; step++) {
+      const copyAnswerBtn = document.getElementById(`copy-answer-${step}`);
+      if (!copyAnswerBtn) continue;
+      copyAnswerBtn.style.display = isPaid ? 'inline-flex' : 'none';
+    }
 
+    // Run-with-AI buttons behavior
     for (let step = 1; step <= 6; step++) {
       const runBtn = document.getElementById(`run-btn-${step}`);
-      const copyAnswerBtn = document.getElementById(`copy-answer-${step}`);
-      const preview = document.getElementById(`preview-step${step}`);
-      const output = document.getElementById(`response-step${step}`);
-
-      // Default safe
-      if (preview) preview.style.display = 'none';
-      if (output) output.innerHTML = '';
-
-      // Copy Answer: only meaningful if AI ran and user has AI access.
-      // We'll hide it initially for everyone except paid; then show after run if permitted.
-      if (copyAnswerBtn) {
-        copyAnswerBtn.style.display = isPaid ? 'inline-flex' : 'none';
-      }
-
-      // Run-with-AI per tier
       if (!runBtn) continue;
 
-      // If step is paid-only and user isn't paid, the whole step is locked anyway.
-      if (step >= 4 && !isPaid) continue;
+      // Step locked? (paid-only)
+      if (step >= 4 && !isPaid) {
+        runBtn.style.display = 'none';
+        continue;
+      }
 
       if (!loggedIn) {
         // Unsigned: hide Run-with-AI everywhere (including 1-3)
@@ -1357,25 +1399,22 @@
       }
 
       if (isPaid) {
-        // Paid: Run with AI available for unlocked steps
         runBtn.style.display = 'inline-flex';
         runBtn.textContent = 'Run with AI';
         runBtn.onclick = () => runWithAI(step);
         continue;
       }
 
-      // Signed-in FREE
+      // Signed-in FREE: steps 1–2 allowed, step 3 is pricing nudge
       if (step === 1 || step === 2) {
         runBtn.style.display = 'inline-flex';
         runBtn.textContent = 'Run with AI';
         runBtn.onclick = () => runWithAI(step);
       } else if (step === 3) {
-        // pricing nudge
         runBtn.style.display = 'inline-flex';
         runBtn.textContent = 'Try with AI';
         runBtn.onclick = () => { window.location.href = '/pricing.html'; };
       } else {
-        // should never happen (4-6 locked)
         runBtn.style.display = 'none';
       }
     }
@@ -1392,112 +1431,25 @@
         helpLocked.style.display = 'block';
       }
     }
-
-    // Also: if unsigned OR free signed-in, keep copyPrompt/showPrompt working for Steps 1–3.
-    // (Those buttons are already in the markup; no extra needed.)
   }
-
- <script>
-  async function runWithAI(step) {
-    const prompt = prompts[step];
-    if (!prompt) return alert('No prompt defined for this step yet.');
-
-    const output = document.getElementById('response-step' + step);
-    if (!output) return alert('No response area found for this step.');
-
-    const preview = document.getElementById('preview-step' + step);
-    if (preview) preview.style.display = 'none';
-
-    // ✅ Gate + redirect if not signed in
-    if (typeof ensureLoggedInOrRedirect === 'function') {
-      const user = await ensureLoggedInOrRedirect();
-      if (!user) return; // redirected to auth.html
-    }
-
-    // ✅ Get token for Authorization header
-    const token = (typeof PS_getAccessToken === 'function')
-      ? await PS_getAccessToken()
-      : null;
-
-    if (!token) {
-      output.textContent = 'Please sign in again (session missing).';
-      return;
-    }
-
-    // ✅ Option A UI feedback: disable + show “Running…”
-    const runBtn = document.querySelector(`article[data-step="${step}"] .btn-primary`);
-    if (runBtn) {
-      runBtn.dataset.prevText = runBtn.textContent;
-      runBtn.textContent = 'Running…';
-      runBtn.disabled = true;
-      runBtn.style.opacity = '0.65';
-      runBtn.style.cursor = 'not-allowed';
-      runBtn.style.filter = 'grayscale(0.15)';
-    }
-
-    try {
-      output.textContent = 'Running with AI…';
-
-      const res = await fetch('/api/run-step', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ prompt, step })
-      });
-
-      // ✅ Show the server’s real error message (PAYWALL, AUTH_REQUIRED, etc.)
-      if (!res.ok) {
-        let msg = 'There was an error contacting the AI. Please try again later.';
-        try {
-          const err = await res.json();
-          if (err?.error) msg = err.error;
-          if (err?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
-          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
-        } catch (_) {}
-        output.textContent = msg;
-        return;
-      }
-
-      const data = await res.json();
-      const raw = data.content || 'No response received from AI.';
-      lastAiResponses[step] = raw;
-      output.innerHTML = formatOutput(raw);
-
-      if (window.MathJax?.typesetPromise) MathJax.typesetPromise([output]).catch(()=>{});
-    } catch (err) {
-      console.error(err);
-      output.textContent = 'Unexpected error. Please try again.';
-    } finally {
-      // Re-enable button
-      if (runBtn) {
-        runBtn.disabled = false;
-        runBtn.textContent = runBtn.dataset.prevText || 'Run with AI';
-        runBtn.style.opacity = '';
-        runBtn.style.cursor = '';
-        runBtn.style.filter = '';
-      }
-    }
-  }
-</script>
-
 
   document.addEventListener('DOMContentLoaded', async () => {
+    // Collapse restore
     loadCollapseState();
     for (let step = 1; step <= 6; step++) {
       const content = document.getElementById(`step-content-${step}`);
       const btn = document.getElementById(`toggle-btn-${step}`);
       if (!content || !btn) continue;
 
-      const expanded = collapseState[step];
-      if (expanded === false) { content.style.display = 'none'; btn.textContent = '+'; }
-      else { content.style.display = 'block'; btn.textContent = '−'; }
+      // collapseState[step] === true means "collapsed"
+      const collapsed = collapseState[String(step)] === true;
+      content.style.display = collapsed ? 'none' : 'block';
+      btn.textContent = collapsed ? '+' : '−';
     }
 
     if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
 
-    // Help panel expand/collapse (only meaningful when paid; harmless otherwise)
+    // Help panel expand/collapse (only meaningful when paid)
     const toggleBtn = document.getElementById('help-panel-toggle');
     const body = document.getElementById('help-panel-body');
     const icon = document.querySelector('.help-panel-toggle-icon');
@@ -1508,29 +1460,29 @@
       toggleBtn.addEventListener('click', (e) => { e.preventDefault(); open = !open; updatePanel(); });
     }
 
-    // Auth-aware nav already handled by auth.js, but we also need tier
+    // Determine auth + tier
     let loggedIn = false;
     let tier = 'free';
 
     if (typeof getCurrentUser === 'function') {
-      try {
-        const user = await getCurrentUser();
-        loggedIn = !!user;
-      } catch (e) {
-        loggedIn = false;
-      }
+      try { loggedIn = !!(await getCurrentUser()); }
+      catch (e) { loggedIn = false; }
     }
 
     if (loggedIn && typeof PS_getUserTier === 'function') {
-      try {
-        tier = await PS_getUserTier();
-      } catch (e) {
-        tier = 'free';
-      }
+      try { tier = await PS_getUserTier(); }
+      catch (e) { tier = 'free'; }
     }
 
     configureStepUI({ loggedIn, tier });
   });
+
+  // ✅ IMPORTANT: inline onclick needs globals
+  window.toggleStep = toggleStep;
+  window.showPrompt = showPrompt;
+  window.copyPrompt = copyPrompt;
+  window.copyAnswer = copyAnswer;
+  window.runWithAI = runWithAI;
 </script>
 
 </body>
