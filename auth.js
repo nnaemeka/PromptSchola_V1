@@ -1,11 +1,11 @@
 // auth.js
-// Shared Supabase client + helpers for PromptSchola
+// Shared Supabase client + small helpers for PromptSchola
 
 // IMPORTANT:
 // In every HTML page that uses this, you must have:
 //   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-//   <script src="/auth.js"></script>
-// BEFORE any other script that uses `supabaseClient`, getCurrentUser(), etc.
+//   <script src="auth.js"></script>
+// BEFORE any other script that uses `supabaseClient`, isLoggedIn(), etc.
 
 // 1) Configure Supabase – replace with your real values
 const SUPABASE_URL = "https://ohaoloyxnduoebyiecah.supabase.co";
@@ -15,51 +15,8 @@ const SUPABASE_ANON_KEY =
 // 2) Create a single shared client
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ---------------------------------------------------------------------
-// Redirect helpers (send people back to the page they came from)
-// ---------------------------------------------------------------------
-const PS_POST_AUTH_REDIRECT_KEY = "ps_post_auth_redirect";
-
-// Store a safe internal path (not full URL)
-function PS_currentInternalPath() {
-  try {
-    const path = window.location.pathname || "/";
-    const search = window.location.search || "";
-    const hash = window.location.hash || "";
-    return path + search + hash;
-  } catch (e) {
-    return "/index.html";
-  }
-}
-
-function PS_setPostAuthRedirect(pathOverride) {
-  try {
-    const target = (typeof pathOverride === "string" && pathOverride.trim())
-      ? pathOverride.trim()
-      : PS_currentInternalPath();
-
-    // Basic safety: only store internal routes
-    if (!target.startsWith("/")) return;
-
-    localStorage.setItem(PS_POST_AUTH_REDIRECT_KEY, target);
-  } catch (e) {}
-}
-
-function PS_getPostAuthRedirect(fallback = "/index.html") {
-  try {
-    const t = localStorage.getItem(PS_POST_AUTH_REDIRECT_KEY);
-    if (t && typeof t === "string" && t.startsWith("/") && t.length < 300) return t;
-    return fallback;
-  } catch (e) {
-    return fallback;
-  }
-}
-
-// ---------------------------------------------------------------------
-// Session / user helpers
-// ---------------------------------------------------------------------
-
-// isLoggedIn() → boolean
+// ---------------------------------------------------------------------// ---------------------------------------------------------------------
+// 3) Helper: isLoggedIn() → boolean
 async function isLoggedIn() {
   try {
     const { data, error } = await supabaseClient.auth.getUser();
@@ -71,7 +28,7 @@ async function isLoggedIn() {
   }
 }
 
-// getCurrentUser() → user object or null
+// 4) Helper: getCurrentUser() → user object or null
 async function getCurrentUser() {
   try {
     const { data, error } = await supabaseClient.auth.getUser();
@@ -83,12 +40,12 @@ async function getCurrentUser() {
   }
 }
 
-// PS_getAccessToken() → access token string or null
+// ✅ NEW: get current access token (for Authorization: Bearer <token>)
 async function PS_getAccessToken() {
   try {
-    const { data } = await supabaseClient.auth.getSession();
-    const token = data?.session?.access_token || null;
-    return token;
+    const { data, error } = await supabaseClient.auth.getSession();
+    if (error) return null;
+    return data?.session?.access_token || null;
   } catch (e) {
     console.error("PS_getAccessToken error:", e);
     return null;
@@ -96,25 +53,40 @@ async function PS_getAccessToken() {
 }
 
 // ---------------------------------------------------------------------
-// Tier / entitlements helpers
-// Requires a table like:
-// entitlements: user_id (uuid, pk), tier ('free'|'paid'), updated_at
-// with RLS allowing users to read their own row.
+// ✅ NEW: Entitlements lookup from browser (RLS required)
+//
+// Table: entitlements
+//   - user_id uuid primary key
+//   - tier text ('free'|'paid' or others)
+//   - is_paid bool (optional)
+//   - updated_at timestamp
+//
+// IMPORTANT SECURITY NOTE:
+// - This is safe only if you enable RLS on entitlements and add policy:
+//     "Users can read own entitlement"
+//     USING (auth.uid() = user_id)
+// - Never expose other users' rows.
+//
+// Caches the result to reduce queries.
 // ---------------------------------------------------------------------
-
 const PS_TIER_CACHE_KEY = "ps_cached_tier_v1";
-const PS_TIER_CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes
+const PS_TIER_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+function PS_normalizeTier(rawTier, isPaidFlag) {
+  const raw = (rawTier ? String(rawTier).toLowerCase() : "") || (isPaidFlag ? "paid" : "free");
+  const paidTiers = new Set(["paid", "pro", "premium", "mastery"]);
+  return paidTiers.has(raw) ? "paid" : "free";
+}
 
 function PS_readTierCache() {
   try {
-    const raw = localStorage.getItem(PS_TIER_CACHE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== "object") return null;
-    if (!parsed.tier || !parsed.ts) return null;
-    if (Date.now() - parsed.ts > PS_TIER_CACHE_TTL_MS) return null;
-    return String(parsed.tier);
-  } catch (e) {
+    const txt = localStorage.getItem(PS_TIER_CACHE_KEY);
+    if (!txt) return null;
+    const obj = JSON.parse(txt);
+    if (!obj || !obj.tier || !obj.ts) return null;
+    if (Date.now() - obj.ts > PS_TIER_CACHE_TTL_MS) return null;
+    return obj.tier;
+  } catch {
     return null;
   }
 }
@@ -122,16 +94,20 @@ function PS_readTierCache() {
 function PS_writeTierCache(tier) {
   try {
     localStorage.setItem(PS_TIER_CACHE_KEY, JSON.stringify({ tier, ts: Date.now() }));
-  } catch (e) {}
+  } catch {}
 }
 
-// PS_getUserTier() → 'paid' | 'free'
-async function PS_getUserTier() {
-  const cached = PS_readTierCache();
-  if (cached === "paid" || cached === "free") return cached;
+async function PS_getUserTier(opts = {}) {
+  const { forceRefresh = false } = opts;
 
+  // Not logged in → treat as free (visitor)
   const user = await getCurrentUser();
-  if (!user) return "free";
+  if (!user) return "anon";
+
+  if (!forceRefresh) {
+    const cached = PS_readTierCache();
+    if (cached) return cached;
+  }
 
   try {
     const { data, error } = await supabaseClient
@@ -141,37 +117,34 @@ async function PS_getUserTier() {
       .maybeSingle();
 
     if (error) {
-      // If table/RLS isn't ready yet, default to free (safe)
       console.warn("PS_getUserTier entitlements error:", error);
+      // Fail closed to "free" rather than breaking the UI
+      PS_writeTierCache("free");
       return "free";
     }
 
-    const tier =
-      (data?.tier && String(data.tier).toLowerCase()) ||
-      (data?.is_paid ? "paid" : "free") ||
-      "free";
-
-    const normalized = tier === "paid" ? "paid" : "free";
-    PS_writeTierCache(normalized);
-    return normalized;
+    const tier = PS_normalizeTier(data?.tier, data?.is_paid);
+    PS_writeTierCache(tier);
+    return tier;
   } catch (e) {
-    console.warn("PS_getUserTier error:", e);
+    console.warn("PS_getUserTier exception:", e);
+    PS_writeTierCache("free");
     return "free";
   }
 }
 
-async function PS_isPaidUser() {
-  const tier = await PS_getUserTier();
-  return tier === "paid";
+// Allow pages to clear tier cache (e.g., after checkout / webhook updates)
+function PS_clearTierCache() {
+  try { localStorage.removeItem(PS_TIER_CACHE_KEY); } catch {}
 }
 
 // ---------------------------------------------------------------------
-// Sign-out
-// ---------------------------------------------------------------------
+// 5) Sign-out: clear Supabase session and go back to homepage
 async function signOutUser() {
   try {
     await supabaseClient.auth.signOut();
 
+    // Optional: if you log events
     if (typeof logEvent === "function") {
       try {
         await logEvent("sign_out", {});
@@ -184,12 +157,10 @@ async function signOutUser() {
   }
 
   // After logout, send them to homepage
-  window.location.href = "/index.html";
+  window.location.href = "index.html";
 }
 
-// ---------------------------------------------------------------------
-// Nav updates (sign in / register / sign out)
-// ---------------------------------------------------------------------
+// 6) Update nav (sign in / register / sign out)
 async function updateNavUserDisplay() {
   const userLabel = document.getElementById("nav-user");
   const loginBtn = document.getElementById("nav-login-btn");
@@ -199,6 +170,7 @@ async function updateNavUserDisplay() {
   const user = await getCurrentUser();
 
   if (!user) {
+    // Not logged in
     if (userLabel) userLabel.textContent = "";
     if (loginBtn) loginBtn.style.display = "inline-flex";
     if (registerBtn) registerBtn.style.display = "inline-flex";
@@ -206,74 +178,43 @@ async function updateNavUserDisplay() {
     return;
   }
 
+  // Logged in
   if (userLabel) userLabel.textContent = `Signed in as ${user.email}`;
   if (loginBtn) loginBtn.style.display = "none";
   if (registerBtn) registerBtn.style.display = "none";
   if (signoutBtn) signoutBtn.style.display = "inline-flex";
 }
 
+// Run automatically on each page that includes auth.js
+document.addEventListener("DOMContentLoaded", updateNavUserDisplay);
+
 // ---------------------------------------------------------------------
-// Protected action helper: redirect to auth when not logged in
-// (also stores localStorage redirect + passes ?redirect= for auth.html)
-// ---------------------------------------------------------------------
-async function ensureLoggedInOrRedirect(reason = "run-ai") {
+// 7) Helper for redirecting to auth on protected actions only
+//    (e.g. when clicking "Run with AI")
+async function ensureLoggedInOrRedirect() {
   const user = await getCurrentUser();
   if (!user) {
-    const internalPath = PS_currentInternalPath();
-    PS_setPostAuthRedirect(internalPath);
+    const redirectTarget = encodeURIComponent(window.location.href);
 
-    const redirectTarget = encodeURIComponent(internalPath);
-
-    // Always send them to SIGN IN first for protected actions
-    window.location.href = `/auth.html?mode=signin&reason=${encodeURIComponent(
-      reason
-    )}&redirect=${redirectTarget}`;
-
+    // Send them to SIGN IN first, with context that they came from "Run with AI"
+    window.location.href = `auth.html?mode=signin&reason=run-ai&redirect=${redirectTarget}`;
     return null;
   }
   return user;
 }
 
 // ---------------------------------------------------------------------
-// Auto-wire Sign In/Register links to remember where they came from.
-// If the page has #nav-login-btn/#nav-register-btn, we store redirect on click.
+// Expose helpers globally (for use in inline onclick etc.)
 // ---------------------------------------------------------------------
-function PS_wireAuthLinks() {
-  try {
-    const loginBtn = document.getElementById("nav-login-btn");
-    const registerBtn = document.getElementById("nav-register-btn");
-
-    const wire = (el) => {
-      if (!el) return;
-      el.addEventListener("click", () => {
-        PS_setPostAuthRedirect();
-      });
-    };
-
-    wire(loginBtn);
-    wire(registerBtn);
-  } catch (e) {}
-}
-
-// Run automatically on each page that includes auth.js
-document.addEventListener("DOMContentLoaded", () => {
-  updateNavUserDisplay();
-  PS_wireAuthLinks();
-});
-
-// Expose helpers globally
 window.supabaseClient = supabaseClient;
 
 window.isLoggedIn = isLoggedIn;
 window.getCurrentUser = getCurrentUser;
 window.updateNavUserDisplay = updateNavUserDisplay;
+window.ensureLoggedInOrRedirect = ensureLoggedInOrRedirect;
 window.signOutUser = signOutUser;
 
-window.ensureLoggedInOrRedirect = ensureLoggedInOrRedirect;
-
+// ✅ NEW exports for nano-lessons / gating
 window.PS_getAccessToken = PS_getAccessToken;
 window.PS_getUserTier = PS_getUserTier;
-window.PS_isPaidUser = PS_isPaidUser;
-
-window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
-window.PS_getPostAuthRedirect = PS_getPostAuthRedirect;
+window.PS_clearTierCache = PS_clearTierCache;
