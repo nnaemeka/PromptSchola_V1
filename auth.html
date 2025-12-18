@@ -5,7 +5,6 @@
   <title>Sign in – PromptSchola</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --bg-body: #f3f4f6;
@@ -21,52 +20,110 @@
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
       --font-main: 'Inter', system-ui, sans-serif;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: var(--font-main);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
       color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
     }
+    a { text-decoration: none; color: inherit; }
 
     .page { min-height: 100vh; display: flex; flex-direction: column; }
-    main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 2.5rem 1rem; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.3rem; }
+
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(249, 250, 251, 0.96);
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0;
+    }
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff;
+    }
+    .logo-text span:first-child {
+      font-weight: 700; font-size: 0.98rem; color: #020617;
+    }
+    .logo-text span:last-child {
+      font-size: 0.72rem; color: #9ca3af;
+    }
+    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { opacity: .9; }
+    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 1rem;
+      background: #ffffff;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.3rem 3rem;
+    }
 
     .auth-wrapper {
-      width: 100%;
       max-width: 420px;
+      width: 100%;
       background: var(--bg-card);
       border-radius: var(--radius-card);
       box-shadow: var(--shadow-card);
-      padding: 1.8rem;
+      padding: 1.8rem 1.9rem;
       border: 1px solid var(--border-subtle);
     }
 
-    .reason-banner {
-      display: none;
-      margin-bottom: 1rem;
-      padding: 0.75rem;
-      border-radius: 12px;
-      border: 1px solid rgba(129, 140, 248, 0.5);
-      background: #eef2ff;
-      font-size: 0.85rem;
-    }
-
     /* ✅ Post-verification success banner */
-    #verify-success-banner {
+    .verify-success-banner {
       display: none;
       margin-bottom: 1rem;
-      padding: 0.75rem;
+      padding: 0.75rem 0.85rem;
       border-radius: 12px;
       border: 1px solid rgba(34,197,94,0.5);
       background: #ecfdf5;
       font-size: 0.85rem;
       color: #065f46;
     }
+    .verify-success-banner strong { font-weight: 650; }
+    .verify-success-banner small {
+      display: block;
+      margin-top: 0.25rem;
+      color: #047857;
+      font-size: 0.8rem;
+    }
 
-    .auth-heading { text-align: center; margin-bottom: 0.75rem; }
-    .auth-heading h1 { font-size: 1.5rem; font-weight: 700; }
+    .reason-banner {
+      display: none;
+      margin-bottom: 1rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      background: #eef2ff;
+      font-size: 0.85rem;
+      color: #111827;
+    }
+    .reason-banner strong { font-weight: 600; }
+    .reason-banner small {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .auth-heading { text-align: center; margin-bottom: 0.5rem; }
+    .auth-heading h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.2rem; }
     .auth-heading p { font-size: 0.9rem; color: var(--text-muted); }
 
     .auth-toggle {
@@ -74,84 +131,145 @@
       background: #f3f4f6;
       border-radius: var(--radius-pill);
       padding: 0.2rem;
-      margin: 1rem 0 1.4rem;
+      margin: 1.1rem 0 1.4rem;
     }
-
     .auth-toggle button {
       flex: 1;
-      border: none;
-      background: transparent;
-      padding: 0.4rem;
       border-radius: var(--radius-pill);
-      cursor: pointer;
+      border: none;
+      padding: 0.35rem 0.2rem;
       font-size: 0.85rem;
+      cursor: pointer;
+      background: transparent;
       color: var(--text-muted);
     }
-
     .auth-toggle button.active {
-      background: #fff;
+      background: #ffffff;
       color: var(--accent-strong);
       font-weight: 600;
-      box-shadow: 0 1px 4px rgba(148,163,184,0.7);
+      box-shadow: 0 1px 4px rgba(148, 163, 184, 0.7);
     }
 
     form { display: flex; flex-direction: column; gap: 0.85rem; }
+    label { font-size: 0.8rem; font-weight: 500; color: var(--text-main); }
 
-    label { font-size: 0.8rem; font-weight: 500; }
-
-    input {
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      margin-top: 0.15rem;
       width: 100%;
-      padding: 0.55rem;
-      font-size: 0.88rem;
       border-radius: 10px;
-      border: 1px solid rgba(209,213,219,0.9);
-    }
-
-    input:focus {
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      padding: 0.55rem 0.65rem;
+      font-size: 0.88rem;
       outline: none;
+    }
+    input:focus {
       border-color: var(--accent-strong);
-      box-shadow: 0 0 0 1px rgba(129,140,248,0.55);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.55);
     }
 
     .btn-primary {
-      margin-top: 0.5rem;
-      border: none;
       border-radius: var(--radius-pill);
-      padding: 0.6rem;
+      border: none;
+      padding: 0.55rem 1.2rem;
       font-size: 0.9rem;
       font-weight: 600;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: white;
+      color: #fff;
       cursor: pointer;
+      margin-top: 0.4rem;
+      width: 100%;
     }
 
-    .auth-message {
-      min-height: 1.2rem;
+    .helper-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.4rem;
       font-size: 0.8rem;
-      margin-top: 0.5rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+      gap: 0.4rem;
     }
+    .helper-row a { color: var(--accent-strong); }
 
+    .auth-message { margin-top: 0.7rem; font-size: 0.8rem; min-height: 1.2rem; }
     .auth-message.error { color: #b91c1c; }
     .auth-message.success { color: #166534; }
+
+    .signed-in-box {
+      margin-top: 1.1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.9);
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+    .signed-in-box button { margin-top: 0.4rem; font-size: 0.8rem; }
+
+    footer {
+      text-align: center;
+      padding: 1.4rem 0;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 640px) {
+      .auth-wrapper { padding: 1.5rem 1.4rem; }
+      .nav-links { display: none; }
+    }
   </style>
 </head>
-
 <body>
 <div class="page">
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based Physics mastery</span>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics.html">Physics</a>
+          <a href="/pricing.html">Pricing</a>
+        </nav>
+
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.1rem;">
+          <span id="nav-user" style="font-size:0.72rem;color:#9ca3af;"></span>
+          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:flex-end;">
+            <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+            <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-pill">Register</a>
+            <button
+              id="nav-signout-btn"
+              type="button"
+              class="btn-pill"
+              style="display:none;"
+              onclick="signOutUser()"
+            >Sign out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
   <main>
     <div class="auth-wrapper">
 
-      <!-- ✅ Verification success banner -->
-      <div id="verify-success-banner">
+      <!-- ✅ Post-verification success -->
+      <div id="verify-success-banner" class="verify-success-banner">
         <strong>✅ Email verified</strong>
-        <div style="margin-top:0.25rem;color:#047857;">
-          You’re all set. Taking you back to where you left off…
-        </div>
+        <small>You’re all set. Taking you back to where you left off…</small>
       </div>
 
       <!-- Run-with-AI banner -->
       <div id="reason-banner" class="reason-banner">
-        <strong>To use “Run with AI”, please sign in or create an account.</strong>
+        <strong>To use “Run with AI” on this Physics lesson, please sign in or create a free account.</strong>
+        <small>After you’re done, we’ll send you back to the lesson where you clicked “Run with AI”.</small>
       </div>
 
       <div class="auth-heading">
@@ -160,56 +278,256 @@
       </div>
 
       <div class="auth-toggle">
-        <button id="btn-signin" class="active">Sign in</button>
-        <button id="btn-signup">Create account</button>
+        <button id="btn-signin" class="active" type="button">Sign in</button>
+        <button id="btn-signup" type="button">Create account</button>
       </div>
 
       <form id="auth-form">
         <div id="name-field" style="display:none;">
-          <label>Full name (optional)</label>
-          <input type="text" id="name" />
+          <label for="name">Full name (optional)</label>
+          <input type="text" id="name" autocomplete="name" />
         </div>
 
-        <label>Email</label>
-        <input type="email" id="email" required />
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" required autocomplete="email" />
+        </div>
 
-        <label>Password</label>
-        <input type="password" id="password" required />
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" required autocomplete="current-password" />
+        </div>
 
-        <button class="btn-primary" id="submit-btn">Sign in</button>
+        <button type="submit" class="btn-primary" id="submit-btn">Sign in</button>
+
+        <div class="helper-row">
+          <span id="helper-text">No account? <a href="#" id="helper-link">Create one</a></span>
+          <a href="#" id="back-link">Back to previous page</a>
+        </div>
+
         <div id="auth-message" class="auth-message"></div>
       </form>
 
+      <div id="signed-in-box" class="signed-in-box" style="display:none;">
+        <div>You are currently signed in. If this is not you, you can sign out.</div>
+        <button type="button" class="btn-pill" onclick="signOutUser()">Sign out</button>
+      </div>
     </div>
   </main>
+
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/auth.js"></script>
 
 <script>
-  const verifyBanner = document.getElementById("verify-success-banner");
+  const mode = { current: 'signin' };
 
-  async function PS_consumeSupabaseRedirectIfPresent() {
-    const url = new URL(window.location.href);
-    const cameFromVerify =
-      url.searchParams.has("code") ||
-      url.hash.includes("access_token");
+  const btnSignin = document.getElementById('btn-signin');
+  const btnSignup = document.getElementById('btn-signup');
+  const authTitle = document.getElementById('auth-title');
+  const authSubtitle = document.getElementById('auth-subtitle');
+  const nameField = document.getElementById('name-field');
+  const passwordInput = document.getElementById('password');
+  const submitBtn = document.getElementById('submit-btn');
+  const helperText = document.getElementById('helper-text');
+  const helperLink = document.getElementById('helper-link');
+  const authMessage = document.getElementById('auth-message');
+  const authForm = document.getElementById('auth-form');
+  const backLink = document.getElementById('back-link');
+  const signedInBox = document.getElementById('signed-in-box');
+  const reasonBanner = document.getElementById('reason-banner');
+  const verifyBanner = document.getElementById('verify-success-banner');
 
-    if (url.searchParams.has("code")) {
-      await supabaseClient.auth.exchangeCodeForSession(window.location.href);
+  function PS_getRedirectCandidate() {
+    try {
+      const stored = localStorage.getItem('ps_post_auth_redirect');
+      if (stored && stored.startsWith('/')) return stored;
+      if (stored && !stored.includes('://') && !stored.startsWith('javascript:')) return stored;
+    } catch (e) {}
+
+    const params = new URLSearchParams(window.location.search);
+    const qp = params.get('redirect');
+    if (qp && !qp.includes('://') && !qp.startsWith('javascript:')) return qp;
+
+    return '/index.html';
+  }
+
+  function PS_redirectAfterAuth() {
+    let target = '/index.html';
+    try {
+      target = PS_getRedirectCandidate();
+      localStorage.removeItem('ps_post_auth_redirect');
+    } catch (e) {}
+
+    // Avoid loops to auth
+    if (String(target).toLowerCase().includes('auth.html')) target = '/index.html';
+
+    if (!String(target).startsWith('/') && !String(target).startsWith('http')) {
+      target = '/' + String(target).replace(/^\.?\//, '');
     }
 
-    const { data } = await supabaseClient.auth.getSession();
-    if (data?.session && cameFromVerify) {
-      verifyBanner.style.display = "block";
-      setTimeout(() => {
-        window.location.href = "/index.html";
-      }, 1800);
+    window.location.href = target;
+  }
+
+  function showMessage(msg, type = 'error') {
+    authMessage.textContent = msg;
+    authMessage.className = 'auth-message ' + (type === 'success' ? 'success' : 'error');
+  }
+
+  function setMode(newMode) {
+    mode.current = newMode;
+
+    if (newMode === 'signin') {
+      btnSignin.classList.add('active');
+      btnSignup.classList.remove('active');
+      authTitle.textContent = 'Sign in';
+      if (!authSubtitle.dataset.originalRunAi) authSubtitle.textContent = 'Access your PromptSchola Physics journey.';
+      nameField.style.display = 'none';
+      passwordInput.autocomplete = 'current-password';
+      submitBtn.textContent = 'Sign in';
+      helperText.innerHTML = 'No account? <a href="#" id="helper-link">Create one</a>';
+    } else {
+      btnSignin.classList.remove('active');
+      btnSignup.classList.add('active');
+      authTitle.textContent = 'Create account';
+      if (!authSubtitle.dataset.originalRunAi) authSubtitle.textContent = 'Start learning Physics with AI-guided prompts.';
+      nameField.style.display = 'block';
+      passwordInput.autocomplete = 'new-password';
+      submitBtn.textContent = 'Create account';
+      helperText.innerHTML = 'Already have an account? <a href="#" id="helper-link">Sign in</a>';
+    }
+
+    const newHelperLink = document.querySelector('#helper-text a') || helperLink;
+    newHelperLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      setMode(mode.current === 'signin' ? 'signup' : 'signin');
+    });
+  }
+
+  btnSignin.addEventListener('click', () => setMode('signin'));
+  btnSignup.addEventListener('click', () => setMode('signup'));
+
+  helperLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    setMode('signup');
+  });
+
+  backLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams(window.location.search);
+    const target = params.get('redirect') || '/index.html';
+    window.location.href = target;
+  });
+
+  // ✅ Post-verification handler (shows banner, then redirects)
+  async function PS_consumeSupabaseRedirectIfPresent() {
+    try {
+      const url = new URL(window.location.href);
+      const cameFromVerification =
+        url.searchParams.has('code') ||
+        url.hash.includes('access_token');
+
+      if (url.searchParams.has('code') && supabaseClient?.auth?.exchangeCodeForSession) {
+        const { error } = await supabaseClient.auth.exchangeCodeForSession(window.location.href);
+        if (error) console.warn('exchangeCodeForSession error:', error);
+      }
+
+      const { data, error } = await supabaseClient.auth.getSession();
+      if (error) {
+        console.warn('getSession error:', error);
+        return;
+      }
+
+      if (data?.session && cameFromVerification) {
+        if (verifyBanner) verifyBanner.style.display = 'block';
+        setTimeout(() => PS_redirectAfterAuth(), 1800);
+      }
+    } catch (e) {
+      console.warn('PS_consumeSupabaseRedirectIfPresent exception:', e);
     }
   }
 
-  document.addEventListener("DOMContentLoaded", PS_consumeSupabaseRedirectIfPresent);
+  authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    authMessage.textContent = '';
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const fullName = document.getElementById('name').value.trim();
+
+    if (!email || !password) {
+      showMessage('Email and password are required.');
+      return;
+    }
+
+    try {
+      if (mode.current === 'signin') {
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) {
+          showMessage(error.message || 'Unable to sign in.');
+          return;
+        }
+        showMessage('Signed in successfully.', 'success');
+        PS_redirectAfterAuth();
+      } else {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+
+        // ✅ Ensure verification email returns to this Vercel origin + keeps redirect
+        const base = window.location.origin + '/auth.html';
+        const emailRedirectTo = redirect ? `${base}?redirect=${encodeURIComponent(redirect)}` : base;
+
+        const { data, error } = await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: fullName || null },
+            emailRedirectTo
+          }
+        });
+
+        if (error) {
+          showMessage(error.message || 'Unable to create account.');
+          return;
+        }
+
+        // If email confirmation is required, Supabase returns no session:
+        if (data?.session) {
+          showMessage('Account created. You are signed in.', 'success');
+          PS_redirectAfterAuth();
+        } else {
+          showMessage('Account created. Please check your email to verify your account.', 'success');
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      showMessage('Unexpected error. Please try again.');
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await PS_consumeSupabaseRedirectIfPresent();
+
+    const params = new URLSearchParams(window.location.search);
+    const urlMode = params.get('mode');
+    const reason = params.get('reason');
+
+    if (reason === 'run-ai' && reasonBanner) {
+      reasonBanner.style.display = 'block';
+      authSubtitle.textContent = 'Sign in or create an account to continue “Run with AI” on your Physics lesson.';
+      authSubtitle.dataset.originalRunAi = 'true';
+    }
+
+    if (urlMode === 'signup') setMode('signup');
+    else setMode('signin');
+  });
+
+  (async function checkLoggedIn() {
+    const user = await getCurrentUser();
+    if (user && signedInBox) signedInBox.style.display = 'block';
+  })();
 </script>
 </body>
 </html>
