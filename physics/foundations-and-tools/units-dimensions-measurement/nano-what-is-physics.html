@@ -1397,6 +1397,7 @@
     // (Those buttons are already in the markup; no extra needed.)
   }
 
+ <script>
   async function runWithAI(step) {
     const prompt = prompts[step];
     if (!prompt) return alert('No prompt defined for this step yet.');
@@ -1407,36 +1408,54 @@
     const preview = document.getElementById('preview-step' + step);
     if (preview) preview.style.display = 'none';
 
-    // Must be logged in (and tier logic already set the button behavior)
+    // ✅ Gate + redirect if not signed in
     if (typeof ensureLoggedInOrRedirect === 'function') {
-      const user = await ensureLoggedInOrRedirect('run-ai');
-      if (!user) return;
+      const user = await ensureLoggedInOrRedirect();
+      if (!user) return; // redirected to auth.html
     }
 
-    // Disable button (Option A)
-    setRunButtonState(step, 'running');
+    // ✅ Get token for Authorization header
+    const token = (typeof PS_getAccessToken === 'function')
+      ? await PS_getAccessToken()
+      : null;
+
+    if (!token) {
+      output.textContent = 'Please sign in again (session missing).';
+      return;
+    }
+
+    // ✅ Option A UI feedback: disable + show “Running…”
+    const runBtn = document.querySelector(`article[data-step="${step}"] .btn-primary`);
+    if (runBtn) {
+      runBtn.dataset.prevText = runBtn.textContent;
+      runBtn.textContent = 'Running…';
+      runBtn.disabled = true;
+      runBtn.style.opacity = '0.65';
+      runBtn.style.cursor = 'not-allowed';
+      runBtn.style.filter = 'grayscale(0.15)';
+    }
 
     try {
       output.textContent = 'Running with AI…';
-
-      // Include Supabase access token so API can enforce tier/step rules server-side
-      const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
 
       const res = await fetch('/api/run-step', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ prompt, step })
       });
 
+      // ✅ Show the server’s real error message (PAYWALL, AUTH_REQUIRED, etc.)
       if (!res.ok) {
-        const msg = (res.status === 401)
-          ? 'Please sign in to run this step with AI.'
-          : (res.status === 402)
-            ? 'This AI step requires paid access.'
-            : 'There was an error contacting the AI. Please try again later.';
+        let msg = 'There was an error contacting the AI. Please try again later.';
+        try {
+          const err = await res.json();
+          if (err?.error) msg = err.error;
+          if (err?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
+          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+        } catch (_) {}
         output.textContent = msg;
         return;
       }
@@ -1446,18 +1465,23 @@
       lastAiResponses[step] = raw;
       output.innerHTML = formatOutput(raw);
 
-      // Show copy-answer button only after we actually have an answer AND the user can run AI
-      const copyAnswerBtn = document.getElementById(`copy-answer-${step}`);
-      if (copyAnswerBtn) copyAnswerBtn.style.display = 'inline-flex';
-
       if (window.MathJax?.typesetPromise) MathJax.typesetPromise([output]).catch(()=>{});
     } catch (err) {
       console.error(err);
       output.textContent = 'Unexpected error. Please try again.';
     } finally {
-      setRunButtonState(step, 'done');
+      // Re-enable button
+      if (runBtn) {
+        runBtn.disabled = false;
+        runBtn.textContent = runBtn.dataset.prevText || 'Run with AI';
+        runBtn.style.opacity = '';
+        runBtn.style.cursor = '';
+        runBtn.style.filter = '';
+      }
     }
   }
+</script>
+
 
   document.addEventListener('DOMContentLoaded', async () => {
     loadCollapseState();
