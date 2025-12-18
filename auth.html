@@ -75,7 +75,7 @@
       padding: 0 1.4rem;
     }
 
-    /* ✅ Header / Nav — EXACT STYLE FAMILY from latest index */
+    /* ✅ Header / Nav — matches latest index */
     header {
       position: sticky;
       top: 0;
@@ -174,6 +174,9 @@
       cursor: pointer;
       transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
       font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .btn-pill:hover {
@@ -216,13 +219,14 @@
     }
 
     .auth-wrapper {
-      max-width: 430px;
+      max-width: 460px;
       width: 100%;
       background: var(--bg-card);
       border-radius: var(--radius-card);
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-card);
       padding: 1.7rem 1.8rem;
+      position: relative;
     }
 
     /* ✅ Verification success banner */
@@ -243,6 +247,54 @@
       margin-top: 0.25rem;
       color: #047857;
       font-size: 0.82rem;
+    }
+
+    /* ✅ Signup success state (prominent) */
+    .signup-success-panel {
+      display: none;
+      margin-bottom: 1rem;
+      padding: 0.95rem 0.95rem;
+      border-radius: 16px;
+      border: 1px solid rgba(129, 140, 248, 0.22);
+      background: linear-gradient(180deg, rgba(238, 242, 255, 0.95), rgba(245, 243, 255, 0.75));
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+      font-family: var(--font-body);
+    }
+
+    .signup-success-panel strong {
+      display: block;
+      font-weight: 900;
+      color: var(--text-strong);
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+    }
+
+    .signup-success-panel small {
+      display: block;
+      margin-top: 0.35rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .panel-actions {
+      margin-top: 0.85rem;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .panel-hint {
+      margin-top: 0.7rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .panel-hint a {
+      font-weight: 800;
+      color: var(--accent-strong);
     }
 
     /* Run-with-AI banner */
@@ -466,6 +518,22 @@
         <small>You’re all set. Taking you back to where you left off…</small>
       </div>
 
+      <!-- ✅ Signup success state (prominent) -->
+      <div id="signup-success-panel" class="signup-success-panel">
+        <strong>✅ Account created</strong>
+        <small id="signup-success-text">Check your email to verify your account.</small>
+
+        <div class="panel-actions">
+          <a class="btn-primary" id="open-email-btn" href="#" style="text-decoration:none;">Open email</a>
+          <button class="btn-pill" id="resend-btn" type="button">Resend verification email</button>
+        </div>
+
+        <div class="panel-hint">
+          Didn’t get it? Check spam/junk. It can take a minute.
+          <a href="#" id="change-email-link" style="margin-left:0.35rem;">Change email</a>
+        </div>
+      </div>
+
       <!-- ✅ Run-with-AI context banner -->
       <div id="reason-banner" class="reason-banner">
         <strong>To use “Run with AI” on this Physics lesson, please sign in or create a free account.</strong>
@@ -555,6 +623,13 @@
   const reasonBanner = document.getElementById('reason-banner');
   const verifyBanner = document.getElementById('verify-success-banner');
 
+  // ✅ New: prominent signup success state elements
+  const signupPanel = document.getElementById('signup-success-panel');
+  const signupText = document.getElementById('signup-success-text');
+  const resendBtn = document.getElementById('resend-btn');
+  const openEmailBtn = document.getElementById('open-email-btn');
+  const changeEmailLink = document.getElementById('change-email-link');
+
   function PS_getRedirectCandidate() {
     // 1) localStorage preferred
     try {
@@ -579,10 +654,8 @@
       localStorage.removeItem('ps_post_auth_redirect');
     } catch (e) {}
 
-    // Avoid loops to auth
     if (String(target).toLowerCase().includes('auth.html')) target = '/index.html';
 
-    // Normalize relative → absolute
     if (!String(target).startsWith('/') && !String(target).startsWith('http')) {
       target = '/' + String(target).replace(/^\.?\//, '');
     }
@@ -595,8 +668,54 @@
     authMessage.className = 'auth-message ' + (type === 'success' ? 'success' : 'error');
   }
 
+  function PS_showSignupSuccess(email) {
+    // Persist for refresh
+    try {
+      localStorage.setItem('ps_pending_verify_email', email);
+      localStorage.setItem('ps_pending_verify_ts', String(Date.now()));
+    } catch {}
+
+    // Turn page into success state
+    if (signupPanel) signupPanel.style.display = 'block';
+    if (authForm) authForm.style.display = 'none';
+
+    if (authTitle) authTitle.textContent = 'Check your email';
+    if (authSubtitle) authSubtitle.textContent = 'Verify your account to start learning.';
+
+    if (signupText) {
+      signupText.innerHTML = `We sent a verification link to <strong>${email}</strong>. Open it to activate your account.`;
+    }
+
+    // Helpful "open email" link
+    if (openEmailBtn) {
+      openEmailBtn.href = 'https://mail.google.com/';
+      openEmailBtn.target = '_blank';
+      openEmailBtn.rel = 'noopener';
+    }
+  }
+
+  function PS_restoreSignupSuccessIfPending() {
+    try {
+      const email = localStorage.getItem('ps_pending_verify_email');
+      const ts = Number(localStorage.getItem('ps_pending_verify_ts') || 0);
+      const ageMs = Date.now() - ts;
+
+      // Show if within 30 minutes
+      if (email && ts && ageMs < 30 * 60 * 1000) {
+        PS_showSignupSuccess(email);
+      }
+    } catch (e) {}
+  }
+
   function setMode(newMode) {
     mode.current = newMode;
+
+    // If user switches modes, ensure form is visible (unless in success state)
+    if (authForm && authForm.style.display === 'none') {
+      // keep hidden if pending verify panel is showing
+    } else {
+      if (authForm) authForm.style.display = 'flex';
+    }
 
     if (newMode === 'signin') {
       btnSignin.classList.add('active');
@@ -659,8 +778,14 @@
       }
 
       if (data?.session && cameFromVerification) {
+        // Clear pending verify state after success
+        try {
+          localStorage.removeItem('ps_pending_verify_email');
+          localStorage.removeItem('ps_pending_verify_ts');
+        } catch {}
+
         if (verifyBanner) verifyBanner.style.display = 'block';
-        setTimeout(() => PS_redirectAfterAuth(), 1800);
+        setTimeout(() => PS_redirectAfterAuth(), 1400);
       }
     } catch (e) {
       console.warn('PS_consumeSupabaseRedirectIfPresent exception:', e);
@@ -716,7 +841,8 @@
           showMessage('Account created. You are signed in.', 'success');
           PS_redirectAfterAuth();
         } else {
-          showMessage('Account created. Please check your email to verify your account.', 'success');
+          // ✅ Prominent state
+          PS_showSignupSuccess(email);
         }
       }
     } catch (err) {
@@ -725,8 +851,62 @@
     }
   });
 
+  // Resend verification email
+  if (resendBtn) {
+    resendBtn.addEventListener('click', async () => {
+      const email = (localStorage.getItem('ps_pending_verify_email') || document.getElementById('email')?.value?.trim());
+      if (!email) return;
+
+      resendBtn.disabled = true;
+      resendBtn.textContent = 'Sending...';
+
+      try {
+        const base = window.location.origin + '/auth.html';
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        const emailRedirectTo = redirect ? `${base}?redirect=${encodeURIComponent(redirect)}` : base;
+
+        const { error } = await supabaseClient.auth.resend({
+          type: 'signup',
+          email,
+          options: { emailRedirectTo }
+        });
+
+        if (error) showMessage(error.message || 'Unable to resend email.');
+        else showMessage('Verification email sent again. Check your inbox.', 'success');
+      } catch (e) {
+        showMessage('Unable to resend verification email.');
+      } finally {
+        resendBtn.disabled = false;
+        resendBtn.textContent = 'Resend verification email';
+      }
+    });
+  }
+
+  // Change email (return to form)
+  if (changeEmailLink) {
+    changeEmailLink.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      try {
+        localStorage.removeItem('ps_pending_verify_email');
+        localStorage.removeItem('ps_pending_verify_ts');
+      } catch {}
+
+      if (signupPanel) signupPanel.style.display = 'none';
+      if (authForm) authForm.style.display = 'flex';
+
+      // restore default heading for current mode
+      setMode(mode.current === 'signin' ? 'signin' : 'signup');
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
+    // If user just verified, handle and redirect
     await PS_consumeSupabaseRedirectIfPresent();
+
+    // If user just created account and refreshed, keep the success state visible
+    PS_restoreSignupSuccessIfPending();
 
     const params = new URLSearchParams(window.location.search);
     const urlMode = params.get('mode');
