@@ -12,6 +12,17 @@ function jsonError(res, status, code, message, extra = {}) {
   return res.status(status).json({ error: message, code, ...extra });
 }
 
+function normalizeTier(ent) {
+  const raw =
+    (ent?.tier && String(ent.tier).toLowerCase()) ||
+    (ent?.is_paid ? 'paid' : '') ||
+    'free';
+
+  // Treat any of these as paid (handy if you later use 'pro', 'premium', etc.)
+  const paidTiers = new Set(['paid', 'pro', 'premium', 'mastery']);
+  return paidTiers.has(raw) ? 'paid' : 'free';
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return jsonError(res, 405, 'METHOD_NOT_ALLOWED', 'Method not allowed');
@@ -69,8 +80,7 @@ export default async function handler(req, res) {
     }
 
     // ---- Entitlements: determine tier ----
-    // Recommended table:
-    // entitlements: { user_id (uuid pk), tier ('free'|'paid'), updated_at }
+    // entitlements: { user_id (uuid pk), tier ('free'|'paid'...), is_paid (bool optional), updated_at }
     const { data: ent, error: entErr } = await supabaseAdmin
       .from('entitlements')
       .select('tier,is_paid')
@@ -82,19 +92,16 @@ export default async function handler(req, res) {
       return jsonError(res, 500, 'ENTITLEMENTS_ERROR', 'Unable to check account access. Please try again.');
     }
 
-    const tier =
-      (ent?.tier && String(ent.tier).toLowerCase()) ||
-      (ent?.is_paid ? 'paid' : 'free') ||
-      'free';
-
+    const tier = normalizeTier(ent);
     const isPaid = tier === 'paid';
 
     // ---- Access rule enforcement ----
-    // Agreed rule:
+    // Rule:
     // - signed-in free users: Run with AI only for steps 1–2
     // - paid users: Run with AI for steps 1–6
     if (!isPaid && stepNum > 2) {
-      return jsonError(res, 403, 'PAYWALL', 'This step requires Mastery (paid) access.', {
+      // IMPORTANT: return 402 so front-end can show paywall copy cleanly
+      return jsonError(res, 402, 'PAYWALL', 'This step requires Mastery (paid) access.', {
         required: 'paid',
         current: tier,
         step: stepNum
