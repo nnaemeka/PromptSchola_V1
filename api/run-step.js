@@ -18,9 +18,16 @@ function normalizeTier(ent) {
     (ent?.is_paid ? 'paid' : '') ||
     'free';
 
-  // Treat any of these as paid (handy if you later use 'pro', 'premium', etc.)
   const paidTiers = new Set(['paid', 'pro', 'premium', 'mastery']);
   return paidTiers.has(raw) ? 'paid' : 'free';
+}
+
+function looksLikeMissingEntitlementsTable(err) {
+  const msg = String(err?.message || err || '').toLowerCase();
+  // Common PostgREST/Supabase patterns
+  return (
+    msg.includes('relation') && msg.includes('entitlements') && msg.includes('does not exist')
+  ) || msg.includes('could not find the table') || msg.includes('not found');
 }
 
 export default async function handler(req, res) {
@@ -79,28 +86,45 @@ export default async function handler(req, res) {
       return jsonError(res, 401, 'INVALID_SESSION', 'Your session is invalid or expired. Please sign in again.');
     }
 
-    // ---- Entitlements: determine tier ----
-    // entitlements: { user_id (uuid pk), tier ('free'|'paid'...), is_paid (bool optional), updated_at }
-    const { data: ent, error: entErr } = await supabaseAdmin
-      .from('entitlements')
-      .select('tier,is_paid')
-      .eq('user_id', user.id)
-      .maybeSingle();
+    // ---- Entitlements: determine tier (FAIL-OPEN) ----
+    // If anything goes wrong here, default to "free" instead of erroring.
+    let tier = 'free';
+    let isPaid = false;
 
-    if (entErr) {
-      console.error('Entitlements lookup error:', entErr);
-      return jsonError(res, 500, 'ENTITLEMENTS_ERROR', 'Unable to check account access. Please try again.');
+    try {
+      const { data: ent, error: entErr } = await supabaseAdmin
+        .from('entitlements')
+        .select('tier,is_paid')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (entErr) {
+        console.warn('Entitlements lookup warning (defaulting to free):', entErr);
+
+        // If you want, you can surface an internal hint for debugging:
+        // - Missing table: create it
+        // - RLS/policy issues: but service_role should bypass RLS; so this usually means table missing.
+        if (looksLikeMissingEntitlementsTable(entErr)) {
+          console.warn('Hint: entitlements table may be missing.');
+        }
+
+        tier = 'free';
+      } else {
+        tier = normalizeTier(ent);
+      }
+    } catch (e) {
+      console.warn('Entitlements exception (defaulting to free):', e);
+      tier = 'free';
     }
 
-    const tier = normalizeTier(ent);
-    const isPaid = tier === 'paid';
+    isPaid = tier === 'paid';
 
     // ---- Access rule enforcement ----
     // Rule:
     // - signed-in free users: Run with AI only for steps 1–2
     // - paid users: Run with AI for steps 1–6
     if (!isPaid && stepNum > 2) {
-      // IMPORTANT: return 402 so front-end can show paywall copy cleanly
+      // Return 402 so front-end can show paywall copy cleanly
       return jsonError(res, 402, 'PAYWALL', 'This step requires Mastery (paid) access.', {
         required: 'paid',
         current: tier,
