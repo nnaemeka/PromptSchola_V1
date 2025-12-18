@@ -24,11 +24,141 @@ function normalizeTier(ent) {
 
 function looksLikeMissingEntitlementsTable(err) {
   const msg = String(err?.message || err || '').toLowerCase();
-  // Common PostgREST/Supabase patterns
   return (
-    msg.includes('relation') && msg.includes('entitlements') && msg.includes('does not exist')
-  ) || msg.includes('could not find the table') || msg.includes('not found');
+    (msg.includes('relation') && msg.includes('entitlements') && msg.includes('does not exist')) ||
+    msg.includes('could not find the table') ||
+    msg.includes('not found')
+  );
 }
+
+// ---------------------------------------------------------------------
+// ✅ PromptSchola Prompt Validator (v1)
+// - Validates prompt CONTENT against your canonical authoring rules
+// - Does NOT change your gating or auth rules
+// ---------------------------------------------------------------------
+
+function normalizeText(s) {
+  return String(s || '').replace(/\s+/g, ' ').trim();
+}
+
+function includesAny(haystack, needles) {
+  const h = haystack.toLowerCase();
+  return needles.some(n => h.includes(String(n).toLowerCase()));
+}
+
+function findDisallowedLatex(prompt) {
+  // Avoid environments that frequently break or bloat MathJax output consistency
+  const disallowed = [
+    '\\begin{align}', '\\end{align}',
+    '\\begin{aligned}', '\\end{aligned}',
+    '\\begin{cases}', '\\end{cases}',
+    '\\begin{eqnarray}', '\\end{eqnarray}',
+    '\\tag{'
+  ];
+  return disallowed.filter(tok => prompt.includes(tok));
+}
+
+function findToneFlags(prompt) {
+  // Soft warnings (not hard errors) — you can tune this list anytime
+  const flags = [
+    'obviously',
+    'clearly',
+    'trivial',
+    'as you already know',
+    'everyone knows',
+    "it's obvious",
+    'just trust',
+    'ai magic',
+    'magic',
+    'black box',
+    'no need to understand'
+  ];
+  const p = prompt.toLowerCase();
+  return flags.filter(f => p.includes(f));
+}
+
+function validatePromptContent({ prompt, stepNum }) {
+  const errors = [];
+  const warnings = [];
+
+  const p = normalizeText(prompt);
+
+  // 1) Audience phrase (required)
+  const audiencePhrase = 'final-year high school and first-year university students';
+  if (!p.toLowerCase().includes(audiencePhrase)) {
+    errors.push(
+      `Missing required audience phrase. Include exactly: "${audiencePhrase}".`
+    );
+  }
+
+  // 2) Length sanity (separate from your 12000 hard cap)
+  if (p.length < 80) errors.push('Prompt is too short to be useful (min ~80 characters).');
+
+  // 3) LaTeX constraints
+  const latexHits = findDisallowedLatex(prompt);
+  if (latexHits.length) {
+    errors.push(
+      `Disallowed LaTeX environment(s) found: ${latexHits.join(', ')}. Use simple \\[ ... \\] equations only.`
+    );
+  }
+
+  // 4) Tone warnings
+  const toneHits = findToneFlags(prompt);
+  if (toneHits.length) {
+    warnings.push(
+      `Tone warning: found phrase(s) that may reduce learner confidence: ${toneHits.join(', ')}. Consider removing.`
+    );
+  }
+
+  // 5) Step-specific canonical requirements
+  // Step 2 must include a worked anchor instruction
+  if (stepNum === 2) {
+    const hasWorkedAnchor = includesAny(p, [
+      'worked anchor',
+      'include one worked anchor',
+      'one worked example',
+      'one solved example',
+      'worked example',
+      'worked-out example'
+    ]);
+    if (!hasWorkedAnchor) {
+      errors.push(
+        'Step 2 must explicitly request a worked anchor (e.g., "include ONE worked anchor example" or "one worked example").'
+      );
+    }
+  }
+
+  // Step 4 must include "Check Your Understanding"
+  if (stepNum === 4) {
+    const hasCYU = includesAny(p, [
+      'check your understanding',
+      'part a — check your understanding',
+      'part a - check your understanding',
+      'part a: check your understanding'
+    ]);
+    if (!hasCYU) {
+      errors.push(
+        'Step 4 must include a "Check Your Understanding" diagnostic section (Part A).'
+      );
+    }
+  }
+
+  // Step 6 should stay exploratory (warning only)
+  if (stepNum === 6) {
+    const assessmentWords = ['quiz', 'test', 'graded', 'exam', 'score', 'marking scheme'];
+    if (includesAny(p, assessmentWords)) {
+      warnings.push(
+        'Step 6 should remain exploratory. Consider removing quiz/test/exam language.'
+      );
+    }
+  }
+
+  return { ok: errors.length === 0, errors, warnings };
+}
+
+// ---------------------------------------------------------------------
+// Handler
+// ---------------------------------------------------------------------
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -50,6 +180,15 @@ export default async function handler(req, res) {
 
     if (prompt.length > 12000) {
       return jsonError(res, 413, 'PROMPT_TOO_LARGE', 'Prompt is too long');
+    }
+
+    // ✅ NEW: Validate prompt CONTENT against PromptSchola rules
+    const v = validatePromptContent({ prompt, stepNum });
+    if (!v.ok) {
+      return jsonError(res, 400, 'PROMPT_INVALID', 'Prompt failed validation', {
+        details: v.errors,
+        warnings: v.warnings
+      });
     }
 
     // ---- Env ----
@@ -83,11 +222,15 @@ export default async function handler(req, res) {
     const user = userData?.user;
 
     if (userErr || !user) {
-      return jsonError(res, 401, 'INVALID_SESSION', 'Your session is invalid or expired. Please sign in again.');
+      return jsonError(
+        res,
+        401,
+        'INVALID_SESSION',
+        'Your session is invalid or expired. Please sign in again.'
+      );
     }
 
     // ---- Entitlements: determine tier (FAIL-OPEN) ----
-    // If anything goes wrong here, default to "free" instead of erroring.
     let tier = 'free';
     let isPaid = false;
 
@@ -100,14 +243,9 @@ export default async function handler(req, res) {
 
       if (entErr) {
         console.warn('Entitlements lookup warning (defaulting to free):', entErr);
-
-        // If you want, you can surface an internal hint for debugging:
-        // - Missing table: create it
-        // - RLS/policy issues: but service_role should bypass RLS; so this usually means table missing.
         if (looksLikeMissingEntitlementsTable(entErr)) {
           console.warn('Hint: entitlements table may be missing.');
         }
-
         tier = 'free';
       } else {
         tier = normalizeTier(ent);
@@ -120,11 +258,9 @@ export default async function handler(req, res) {
     isPaid = tier === 'paid';
 
     // ---- Access rule enforcement ----
-    // Rule:
-    // - signed-in free users: Run with AI only for steps 1–2
-    // - paid users: Run with AI for steps 1–6
+    // signed-in free users: Run with AI only for steps 1–2
+    // paid users: Run with AI for steps 1–6
     if (!isPaid && stepNum > 2) {
-      // Return 402 so front-end can show paywall copy cleanly
       return jsonError(res, 402, 'PAYWALL', 'This step requires Mastery (paid) access.', {
         required: 'paid',
         current: tier,
@@ -145,10 +281,13 @@ export default async function handler(req, res) {
           {
             role: 'system',
             content:
-              'You are a friendly, rigorous physics tutor for final high school and first-year university students. ' +
+              'You are a friendly, rigorous physics tutor for final-year high school and first-year university students. ' +
+              'Assume no prior university physics, but do not oversimplify. ' +
               'Always give a complete, correct explanation, but keep answers reasonably concise (about 400–700 words). ' +
-              'Never end your response in the middle of a sentence or in the middle of a bold marker (like starting with ** without closing it). ' +
-              'If you are running out of space, finish the current sentence and stop cleanly.'
+              'Use short paragraphs, bullet points where helpful, and clear spacing. ' +
+              'When you write equations, use simple LaTeX display math \\[ ... \\], one equation per line. ' +
+              'Avoid complex LaTeX environments like align/cases. ' +
+              'Never end your response in the middle of a sentence or in the middle of a bold marker.'
           },
           { role: 'user', content: prompt }
         ],
@@ -171,7 +310,9 @@ export default async function handler(req, res) {
       meta: {
         step: stepNum,
         tier,
-        isPaid
+        isPaid,
+        // ✅ NEW: surface validator warnings so you can debug prompt quality
+        promptWarnings: v.warnings || []
       }
     });
   } catch (err) {
