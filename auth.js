@@ -53,14 +53,18 @@ async function PS_getAccessToken() {
 }
 
 // ---------------------------------------------------------------------
-// ✅ Entitlements lookup from browser (RLS required)
-// Caches the result to reduce queries.
+// ✅ Tier/Entitlements
+// Best practice: use server endpoint (/api/get-tier) so RLS doesn't block.
+// Cache reduces requests.
 // ---------------------------------------------------------------------
 const PS_TIER_CACHE_KEY = "ps_cached_tier_v1";
 const PS_TIER_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 function PS_normalizeTier(rawTier, isPaidFlag) {
-  const raw = (rawTier ? String(rawTier).toLowerCase() : "") || (isPaidFlag ? "paid" : "free");
+  const raw =
+    (rawTier ? String(rawTier).toLowerCase() : "") ||
+    (isPaidFlag ? "paid" : "free");
+
   const paidTiers = new Set(["paid", "pro", "premium", "mastery"]);
   return paidTiers.has(raw) ? "paid" : "free";
 }
@@ -84,10 +88,56 @@ function PS_writeTierCache(tier) {
   } catch {}
 }
 
+function PS_clearTierCache() {
+  try { localStorage.removeItem(PS_TIER_CACHE_KEY); } catch {}
+}
+
+// ✅ Primary tier fetch: server endpoint
+async function PS_fetchTierFromApi() {
+  const token = await PS_getAccessToken();
+  if (!token) return "anon";
+
+  try {
+    const res = await fetch("/api/get-tier", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!res.ok) return "free";
+    const data = await res.json();
+    const tier = data?.tier;
+    if (tier === "paid" || tier === "free" || tier === "anon") return tier;
+    return "free";
+  } catch (e) {
+    console.warn("PS_fetchTierFromApi error:", e);
+    return "free";
+  }
+}
+
+// (Optional fallback) Browser-table lookup: requires RLS policy to allow reading own row
+async function PS_fetchTierFromTable(userId) {
+  try {
+    const { data, error } = await supabaseClient
+      .from("entitlements")
+      .select("tier,is_paid")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    if (error) {
+      console.warn("PS_fetchTierFromTable entitlements error:", error);
+      return "free";
+    }
+
+    return PS_normalizeTier(data?.tier, data?.is_paid);
+  } catch (e) {
+    console.warn("PS_fetchTierFromTable exception:", e);
+    return "free";
+  }
+}
+
 async function PS_getUserTier(opts = {}) {
   const { forceRefresh = false } = opts;
 
-  // Not logged in → anonymous
   const user = await getCurrentUser();
   if (!user) return "anon";
 
@@ -96,32 +146,17 @@ async function PS_getUserTier(opts = {}) {
     if (cached) return cached;
   }
 
-  try {
-    const { data, error } = await supabaseClient
-      .from("entitlements")
-      .select("tier,is_paid")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    if (error) {
-      console.warn("PS_getUserTier entitlements error:", error);
-      // Fail-closed to "free" so UI still works
-      PS_writeTierCache("free");
-      return "free";
-    }
-
-    const tier = PS_normalizeTier(data?.tier, data?.is_paid);
-    PS_writeTierCache(tier);
-    return tier;
-  } catch (e) {
-    console.warn("PS_getUserTier exception:", e);
-    PS_writeTierCache("free");
-    return "free";
+  // 1) Prefer server endpoint (no RLS issues)
+  const apiTier = await PS_fetchTierFromApi();
+  if (apiTier && apiTier !== "anon") {
+    PS_writeTierCache(apiTier);
+    return apiTier;
   }
-}
 
-function PS_clearTierCache() {
-  try { localStorage.removeItem(PS_TIER_CACHE_KEY); } catch {}
+  // 2) Fallback to table lookup if API not available
+  const tableTier = await PS_fetchTierFromTable(user.id);
+  PS_writeTierCache(tableTier);
+  return tableTier;
 }
 
 // ---------------------------------------------------------------------
@@ -129,6 +164,7 @@ function PS_clearTierCache() {
 async function signOutUser() {
   try {
     await supabaseClient.auth.signOut();
+    PS_clearTierCache();
 
     if (typeof logEvent === "function") {
       try { await logEvent("sign_out", {}); } catch (e) {}
@@ -137,7 +173,7 @@ async function signOutUser() {
     console.error("Error signing out:", err);
   }
 
-  // ✅ FIX: always go to root homepage (avoids /physics/index.html 404)
+  // ✅ always go to root homepage
   window.location.href = "/index.html";
 }
 
@@ -166,15 +202,17 @@ async function updateNavUserDisplay() {
 
 document.addEventListener("DOMContentLoaded", updateNavUserDisplay);
 
+// Clear tier cache when auth state changes (prevents "stuck free")
+supabaseClient.auth.onAuthStateChange((_event, _session) => {
+  PS_clearTierCache();
+});
+
 // ---------------------------------------------------------------------
 // 7) Helper for redirecting to auth on protected actions only
-//    (e.g. when clicking "Run with AI")
-// ✅ FIX: use same-origin path (preserves #step-x) rather than full URL
 // ---------------------------------------------------------------------
 async function ensureLoggedInOrRedirect() {
   const user = await getCurrentUser();
   if (!user) {
-    // Store safe path+query+hash (same-origin), so auth.html accepts it
     const safePath = window.location.pathname + window.location.search + window.location.hash;
     const redirectTarget = encodeURIComponent(safePath);
 
