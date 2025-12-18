@@ -783,7 +783,7 @@
               <div class="actions-left">
                 <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentPrompt()">Copy prompt</button>
                 <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentAnswer()">Copy answer</button>
-                <button class="btn-primary" id="run-btn" type="button">Run with AI</button>
+                <button class="btn-primary" id="run-btn" type="button" onclick="runCurrentPromptWithAI()">Run with AI</button>
               </div>
               <div class="actions-right">
                 <span id="hint-text">Tip: You can also copy this prompt into another AI chat.</span>
@@ -800,7 +800,7 @@
 
             <!-- Confusions -->
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-CL">
+              <button class="dir-cat-toggle" data-target="cat-CL" type="button">
                 <span class="dir-cat-label">Confusions & look-alikes</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
@@ -814,7 +814,7 @@
 
             <!-- Exam traps -->
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-ET">
+              <button class="dir-cat-toggle" data-target="cat-ET" type="button">
                 <span class="dir-cat-label">Tricky areas & exam traps</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
@@ -828,7 +828,7 @@
 
             <!-- Common mistakes -->
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-CM">
+              <button class="dir-cat-toggle" data-target="cat-CM" type="button">
                 <span class="dir-cat-label">Common mistakes</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
@@ -842,7 +842,7 @@
 
             <!-- Stuck -->
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-ST">
+              <button class="dir-cat-toggle" data-target="cat-ST" type="button">
                 <span class="dir-cat-label">When you feel stuck</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
@@ -856,7 +856,7 @@
 
             <!-- Bridges -->
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-BR">
+              <button class="dir-cat-toggle" data-target="cat-BR" type="button">
                 <span class="dir-cat-label">Concept bridges</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
@@ -1159,6 +1159,22 @@ Formatting rules:
     return '<p>' + safe + '</p>';
   }
 
+  // ✅ KEY FIX: sanitize prompt for strict backend validation (ASCII-safe)
+  function PS_sanitizePromptForApi(input) {
+    if (!input) return '';
+    return String(input)
+      .replace(/\r\n/g, '\n')
+      .replace(/\u2022/g, '- ')        // •
+      .replace(/\u2013/g, '-')         // –
+      .replace(/\u2014/g, '-')         // —
+      .replace(/\u2018|\u2019/g, "'")  // ‘ ’
+      .replace(/\u201C|\u201D/g, '"')  // “ ”
+      .replace(/\u2192/g, '->')        // →
+      .replace(/\u00A0/g, ' ')         // nbsp
+      .replace(/[^\x09\x0A\x0D\x20-\x7E]/g, '')
+      .trim();
+  }
+
   function loadFromUrl() {
     const params = new URLSearchParams(window.location.search);
     const id = (params.get('id') || 'CL01').trim();
@@ -1197,26 +1213,32 @@ Formatting rules:
     navigator.clipboard.writeText(lastAiAnswer).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
   }
 
+  // ✅ Mimic nano behavior: button grays out + says "Running…"
   function setRunBtnRunning(running) {
     const btn = document.getElementById('run-btn');
     if (!btn) return;
+
     if (running) {
-      btn.dataset.prevText = btn.textContent;
+      btn.dataset.prevText = btn.textContent || 'Run with AI';
       btn.textContent = 'Running…';
       btn.disabled = true;
-      btn.setAttribute('aria-busy', 'true');
+
+      // extra “nano-feel”
+      btn.style.filter = 'grayscale(0.25)';
+      btn.style.opacity = '0.72';
+      btn.style.transform = 'none';
     } else {
       btn.disabled = false;
       btn.textContent = btn.dataset.prevText || 'Run with AI';
-      btn.removeAttribute('aria-busy');
+      btn.style.filter = '';
+      btn.style.opacity = '';
+      btn.style.transform = '';
     }
   }
 
-  // ✅ FIXED: uses currentId + HELP, and includes valid step (1–6)
   async function runCurrentPromptWithAI() {
     const aiOutputEl = document.getElementById('ai-output');
     const promptEdit = document.getElementById('prompt-edit');
-
     if (!aiOutputEl || !promptEdit) return;
 
     if (!currentId || !HELP[currentId]) {
@@ -1224,11 +1246,14 @@ Formatting rules:
       return;
     }
 
-    const prompt = (promptEdit.value || '').trim();
-    if (!prompt) {
+    const rawPrompt = (promptEdit.value || '').trim();
+    if (!rawPrompt) {
       aiOutputEl.textContent = 'Prompt is empty.';
       return;
     }
+
+    // ✅ sanitize to avoid "Prompt failed validation"
+    const prompt = PS_sanitizePromptForApi(rawPrompt);
 
     // Require login (same behavior as nano pages)
     if (typeof ensureLoggedInOrRedirect === 'function') {
@@ -1256,24 +1281,26 @@ Formatting rules:
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        // Help is paid-only → use a paid step number so your backend accepts it.
+        // ✅ Help is paid-only → use a paid step (4)
         body: JSON.stringify({ prompt, step: 4 })
       });
 
+      const data = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        let msg = 'There was an error contacting the AI. Please try again later.';
-        try {
-          const err = await res.json();
-          if (err?.error) msg = err.error;
-          if (err?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
-          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
-          if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
-        } catch (_) {}
+        let msg =
+          (data && (data.error || data.message)) ||
+          'There was an error contacting the AI. Please try again later.';
+
+        // Optional: map your known codes if present
+        if (data?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
+        if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+        if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+
         aiOutputEl.textContent = msg;
         return;
       }
 
-      const data = await res.json();
       const raw = data.content || 'No response received from AI.';
       lastAiAnswer = raw;
 
@@ -1303,6 +1330,7 @@ Formatting rules:
   }
 
   async function configureAccess() {
+    // Default assumptions
     let loggedIn = false;
     let tier = 'anon';
 
@@ -1326,7 +1354,6 @@ Formatting rules:
 
     if (!isPaid) {
       if (lockedWrap) lockedWrap.style.display = 'block';
-
       if (runBtn) {
         runBtn.disabled = false;
         runBtn.textContent = loggedIn ? 'Unlock to run' : 'Sign in to run';
@@ -1339,29 +1366,37 @@ Formatting rules:
           }
         };
       }
-
       if (promptEdit) promptEdit.setAttribute('readonly', 'readonly');
-      if (hint) hint.textContent = 'Tip: You can browse titles; upgrade to run with AI.';
+      if (hint) hint.textContent = 'Tip: You can browse the help topics; upgrade to run with AI.';
     } else {
       if (lockedWrap) lockedWrap.style.display = 'none';
-
       if (runBtn) {
         runBtn.textContent = 'Run with AI';
         runBtn.onclick = runCurrentPromptWithAI;
       }
-
       if (promptEdit) promptEdit.removeAttribute('readonly');
       if (hint) hint.textContent = 'Tip: Edit the prompt before running if you want a more specific answer.';
     }
 
+    // Update nav
     if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
   }
 
+  // Build a tiny alias so HELP[id] works, while keeping your existing variable names
+  const HELP_ALIAS = HELP;
+  // (we used HELP in loadFromUrl; keep it consistent)
+  // If you prefer, remove HELP_ALIAS.
+
   document.addEventListener('DOMContentLoaded', async () => {
     initDirectoryToggles();
+
+    // Small compatibility: your code expects HELP; make sure it exists
+    window.HELP = HELP;
+
     loadFromUrl();
     await configureAccess();
 
+    // Sign out button wiring
     const signOutBtn = document.getElementById('nav-signout-btn');
     if (signOutBtn && typeof signOutUser === 'function') {
       signOutBtn.addEventListener('click', signOutUser);
