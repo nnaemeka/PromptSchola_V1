@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Targeted AI-powered study help for the nano-lesson 'Constant Acceleration' – fix confusions, avoid exam traps, and deepen intuition with prompts."
+    content="Targeted AI-powered study help for the nano-lesson 'Constant Acceleration' – exam traps, confusions, and deeper intuition prompts."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +40,6 @@
       --border-subtle: rgba(209, 213, 219, 0.55);
       --radius-card: 18px;
       --radius-pill: 999px;
-
       --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
 
@@ -64,10 +63,14 @@
       overflow-x: hidden;
     }
 
-    h1, h2, h3 { font-family: var(--font-heading); color: var(--text-strong); line-height: 1.15; }
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      color: var(--text-strong);
+      line-height: 1.15;
+    }
 
     .page { min-height: 100vh; display: flex; flex-direction: column; }
-    .container { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 1.4rem; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
 
     header {
       position: sticky; top: 0; z-index: 40;
@@ -113,6 +116,7 @@
       display: flex; align-items: center; gap: 1.3rem;
       font-size: 0.95rem;
     }
+
     .nav-links a {
       color: var(--text-muted); opacity: 0.9;
       transition: opacity var(--transition-fast), color var(--transition-fast);
@@ -281,7 +285,7 @@
       overflow: hidden;
       border: 1px solid rgba(148, 163, 184, 0.18);
       box-shadow: var(--shadow-soft);
-      max-width: 980px;
+      max-width: 1120px;
       margin: 0 auto;
     }
 
@@ -320,7 +324,7 @@
       color: #cbd5e1;
       font-size: 0.98rem;
       line-height: 1.6;
-      max-width: 54rem;
+      max-width: 58rem;
     }
 
     .chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
@@ -394,7 +398,7 @@
 
     .select {
       flex: 1;
-      min-width: 240px;
+      min-width: 260px;
       border-radius: 999px;
       border: 1px solid rgba(209, 213, 219, 0.9);
       background: #ffffff;
@@ -413,10 +417,7 @@
       align-items: flex-start;
     }
 
-    @media (max-width: 900px) {
-      .help-body-layout { grid-template-columns: minmax(0, 1fr); }
-      .container { max-width: 1120px; }
-    }
+    @media (max-width: 900px) { .help-body-layout { grid-template-columns: minmax(0, 1fr); } }
     @media (max-width: 860px) { .nav-links { display: none; } }
 
     .prompt-box {
@@ -539,17 +540,18 @@
           <span>Physics · Mechanics · Kinematics (1D)</span>
         </div>
 
-        <h1 class="hero-title">Targeted help for “Constant Acceleration”</h1>
+        <h1 class="hero-title">Help prompts for “Constant Acceleration”</h1>
 
         <p class="hero-subtitle">
-          Pick one focused prompt to clear a confusion, avoid an exam trap, or deepen intuition.
-          This help page is designed for final-year high school and first-year university students.
+          These are targeted prompt paths for the exact confusions and exam traps students face in 1D constant-acceleration problems.
+          You can copy prompts any time. Running with AI is paid-only.
         </p>
 
         <div class="hero-breadcrumbs">
+          <a href="/physics/physics.html">Physics</a> ·
           <a href="/physics/mechanics.html">Mechanics</a> ·
-          <a href="/physics/kinematics-1d.html">Kinematics in 1D</a> ·
-          <a href="/physics/constant-acceleration.html">Nano-lesson: Constant Acceleration</a> ·
+          <a href="/physics/kinematics-in-one-dimension.html">Kinematics in 1D</a> ·
+          <a href="/physics/constant-acceleration.html">Constant Acceleration</a> ·
           <span>Study help</span>
         </div>
       </div>
@@ -562,8 +564,7 @@
             <div>
               <div class="help-banner-title">How to use this page</div>
               <div class="help-banner-desc">
-                You arrived from a side-panel link in the nano-lesson. This page loads a specific help prompt based on the link you clicked.
-                You can also switch prompts using the selector below.
+                This page loads the exact prompt you clicked in the nano-lesson help panel. You can also switch prompts using the selector below.
               </div>
             </div>
             <div class="chips">
@@ -592,9 +593,7 @@
                 <!-- filled by JS -->
               </select>
 
-              <a class="btn-pill" href="/physics/constant-acceleration.html">
-                ← Back to nano-lesson
-              </a>
+              <a class="btn-pill" href="/physics/constant-acceleration.html">← Back to nano-lesson</a>
             </div>
           </div>
 
@@ -620,7 +619,7 @@
               <button class="btn-primary" id="run-help-btn" type="button" onclick="runCurrentPromptWithAI()">Run with AI</button>
             </div>
             <div id="help-footnote">
-              Tip: Use this when you feel stuck or want a deeper explanation than the main steps.
+              Tip: Use these prompts when graphs feel confusing, when signs trip you up, or when your answer doesn’t match your intuition.
             </div>
           </div>
         </article>
@@ -664,247 +663,219 @@
   window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
 
   // ---------------------------
-  // Help prompts library (A1..A10)
+  // Help prompts library (C1..C10) — MATCHES YOUR NANO HELP LINKS
   // ---------------------------
   const helpPromptLibrary = {
-    A1: {
-      id: 'A1',
+    C1: {
+      id: 'C1',
       category: 'Confusions & look-alikes',
-      title: 'Acceleration vs velocity: what changes, and what stays constant?',
-      lead: 'Use this if you keep mixing up velocity and acceleration, or you are not sure what “constant acceleration” really means.',
+      title: 'Slope vs value: what the v–t graph is really telling you',
+      lead: 'Use this when you confuse “the value of v” with “the slope of v–t” (which is acceleration).',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-Explain the difference between **velocity** and **acceleration** in 1D motion, and what it means for acceleration to be **constant**.
+Help a student understand the difference between:
+• The **value** of velocity on a v–t graph
+• The **slope** of the v–t graph
+• The **area** under the v–t graph
 
-Include:
-• Plain-language definitions
-• What changes with time when acceleration is constant (and what stays the same)
-• A quick link to the shape of the v–t and x–t graphs (qualitative, not heavy math)
-• 2 short everyday examples (car speeding up, free fall, etc.)
-• One “check your understanding” mini-question at the end (with the answer)
+Do ALL of the following:
+• Explain each idea in plain language
+• Give 2 short examples of common mistakes and correct them
+• Include a mini “check yourself” quiz: 3 questions with answers
 
-Formatting rules:
-• Short paragraphs and bullet points
-• Use **bold** for key terms
-• If you use equations, write each one on its own line in LaTeX display mode, like:
-  \\[ v = u + at \\]
-• Do not use markdown headings like # or ###.`
+If you include equations, write each on its own line in LaTeX display mode:
+  \\[ a = \\frac{\\Delta v}{\\Delta t} \\]
+
+Do NOT use markdown headings like # or ###. Use **bold** for key terms.`
     },
 
-    A2: {
-      id: 'A2',
+    C2: {
+      id: 'C2',
       category: 'Confusions & look-alikes',
-      title: 'Sign conventions: why your answers flip when you change “positive direction”',
-      lead: 'Use this if your free-fall or “thrown upward” problems keep giving negative numbers that confuse you.',
+      title: 'Average vs instantaneous acceleration (and why constant-a makes them match)',
+      lead: 'Use this when you feel unsure what “instantaneous” means, or why constant acceleration simplifies things.',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-Teach sign conventions for 1D motion with constant acceleration.
+Explain:
+• **Average acceleration** vs **instantaneous acceleration**
+• What “instantaneous” means in a simple way
+• Why in **constant acceleration** problems, these ideas effectively agree over any interval
+
+Include:
+• One v–t graph story in words (no images)
+• One example where acceleration is NOT constant (air resistance) and what changes conceptually
+• A short checklist: “How to tell if I can treat a as constant”
+
+Equations (if used) must be LaTeX display, one per line.
+No markdown headings like # or ###.`
+    },
+
+    C3: {
+      id: 'C3',
+      category: 'Tricky areas & exam traps',
+      title: 'At the top of the throw: velocity is zero, acceleration is not',
+      lead: 'Classic trap: at the top, v = 0 for a moment, but a is still downward.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Explain why, for a ball thrown upward under gravity:
+• At the top: **velocity is zero** for an instant
+• But **acceleration is not zero** and points downward the whole time
+
+Do ALL of the following:
+• Use a clear timeline explanation (going up → top → coming down)
+• Describe what the v–t graph looks like (in words)
+• Give 2 “exam trap” multiple-choice statements and explain which are true/false
+
+If you include equations, use LaTeX display mode, one per line, such as:
+  \\[ v = u + at \\]
+
+No markdown headings like # or ###.`
+    },
+
+    C4: {
+      id: 'C4',
+      category: 'Tricky areas & exam traps',
+      title: 'Sign conventions: choosing + upward vs + downward without confusion',
+      lead: 'Use this when negative signs feel “wrong” or when you change your sign convention mid-solution.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Teach a reliable sign-convention method for 1D constant-acceleration problems.
 
 Include:
 • How to choose a positive direction
-• What it means when velocity is negative vs acceleration is negative
-• A worked “thrown upward” explanation that shows: v changes sign, but a stays constant and downward
-• A short checklist students can follow before substituting into equations
+• How to assign signs to u, v, a, and s consistently
+• A “thrown upward” example with + upward
+• The SAME situation with + downward (show that both work if consistent)
 
-Formatting:
-• Use short paragraphs + bullets
-• Use **bold** for key terms
-• Any equation must be in LaTeX display mode, one per line
-• No markdown headings like # or ###.`
+End with a short checklist students can follow before substituting numbers.
+
+Equations in LaTeX display mode, one per line.
+No markdown headings like # or ###.`
     },
 
-    A3: {
-      id: 'A3',
-      category: 'Tricky areas & exam traps',
-      title: 'Graph traps: interpreting v–t and x–t for constant acceleration',
-      lead: 'Use this if you can solve equations but struggle to read motion from graphs (a very common exam trap).',
-      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
-
-Explain the most common exam traps with **velocity–time** and **position–time** graphs when acceleration is constant.
-
-Include:
-• What constant acceleration looks like on a v–t graph and an x–t graph
-• How to get acceleration from the slope of v–t
-• How to get displacement from the area under v–t
-• 3 quick graph “mini scenarios” in words (e.g., line with positive slope, line with negative slope, curve upward) and what each means physically
-• A short “check your understanding” question at the end
-
-Formatting:
-• Bullets + short paragraphs
-• Use **bold** for the big ideas
-• If you include equations, use LaTeX display mode, one per line
-• No markdown headings like # or ###.`
-    },
-
-    A4: {
-      id: 'A4',
-      category: 'Tricky areas & exam traps',
-      title: 'Which equation to use (without memorising blindly)',
-      lead: 'Use this if you freeze and don’t know which kinematics equation fits the given variables.',
-      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
-
-Teach a method for choosing the right constant-acceleration equation based on what is known and what is asked.
-
-Include:
-• The core variables (u, v, a, t, s) with plain meanings
-• A simple decision process (like: “If time is missing, consider v^2 = u^2 + 2as”)
-• 2 small examples showing the method (not heavy computation)
-• A short checklist students can use under exam pressure
-
-Formatting:
-• Short paragraphs + bullets
-• Use **bold** for key steps
-• Equations: LaTeX display mode, one per line
-• No markdown headings like # or ###.`
-    },
-
-    A5: {
-      id: 'A5',
+    C5: {
+      id: 'C5',
       category: 'Common mistakes',
-      title: 'Common mistakes with “constant acceleration” word problems',
-      lead: 'Use this if your answers are close but wrong—usually because of units, signs, or reading the question too fast.',
+      title: 'Mixing up “acceleration is constant” with “velocity is constant”',
+      lead: 'Use this if you mistakenly think constant acceleration means constant velocity.',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-List the most common mistakes students make in constant-acceleration problems, and show how to fix them.
+Explain the difference between:
+• **Constant velocity**
+• **Constant acceleration**
 
-Include:
-• Unit mistakes (m/s vs km/h, seconds vs minutes)
-• Sign mistakes (up vs down, left vs right)
-• Mixing up average vs instantaneous ideas
-• Forgetting that “from rest” means u = 0
-• A “do this every time” checklist
+Do ALL of the following:
+• Give plain-language definitions
+• Give one example of constant velocity (and its graphs)
+• Give one example of constant acceleration (and its graphs)
+• Include 4 quick “Which one is it?” scenarios with answers
 
-Add 2 short “bad solution vs corrected solution” mini-examples (very short).
-
-Formatting:
-• Bullets + short paragraphs
-• Use **bold** to highlight mistakes and fixes
-• Equations only in LaTeX display mode, one per line
-• No markdown headings like # or ###.`
+If you include equations, use LaTeX display mode, one per line.
+No markdown headings like # or ###. Use **bold** for key terms.`
     },
 
-    A6: {
-      id: 'A6',
+    C6: {
+      id: 'C6',
+      category: 'Common mistakes',
+      title: 'Using the wrong kinematic equation for the knowns you have',
+      lead: 'Use this when you freeze and don’t know which equation matches the given variables.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Teach a method for choosing the right constant-acceleration equation based on which variables are known and which are unknown.
+
+Include:
+• Define u, v, a, t, s in plain language
+• A “choose-the-equation” decision guide (simple and practical)
+• 3 mini examples where time is missing, displacement is missing, etc.
+• A short “sanity check” list (units, sign, magnitude)
+
+Equations in LaTeX display mode, one per line.
+No markdown headings like # or ###.`
+    },
+
+    C7: {
+      id: 'C7',
       category: 'When you feel stuck',
-      title: 'Turn a word problem into a diagram + knowns/unknowns table',
-      lead: 'Use this if you read the question and don’t know where to start.',
+      title: 'How to draw a quick motion diagram and decide signs',
+      lead: 'Use this when you don’t know how to start from the words.',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-Teach a step-by-step approach for starting any constant-acceleration word problem.
+Teach a step-by-step method to turn a constant-acceleration word problem into:
+• A simple motion diagram (1D line + arrows)
+• A list of knowns/unknowns (u, v, a, t, s)
+• A sign convention choice
 
-Include:
-• How to draw a simple motion diagram (1D line + arrows)
-• How to list knowns and unknowns (u, v, a, t, s)
-• How to decide the sign convention
-• How to choose an equation and check reasonableness
+Then demonstrate the method on 1 short example problem.
 
-Then give 1 example word problem and demonstrate the process (light math).
-
-Formatting:
-• Numbered steps + short bullets
-• Use **bold** for the step labels
-• Equations: LaTeX display mode, one per line
-• No markdown headings like # or ###.`
+Keep it concise, but very clear.
+No markdown headings like # or ###.
+Equations only if needed, in LaTeX display mode, one per line.`
     },
 
-    A7: {
-      id: 'A7',
-      category: 'Concept bridges',
-      title: 'How constant acceleration connects to Newton’s laws',
-      lead: 'Use this if you want the “why” behind the equations (excellent for deeper understanding).',
+    C8: {
+      id: 'C8',
+      category: 'When you feel stuck',
+      title: 'Given 3 variables, how to pick the right equation in 10 seconds',
+      lead: 'Use this as an “exam-speed” routine to avoid wasting time.',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-Explain how constant acceleration links to forces and Newton’s laws.
-
-Include:
-• Why a constant net force gives constant acceleration (conceptually)
-• A real-world example (e.g., a block pulled by a steady force with friction, or free fall)
-• How kinematics (motion) and dynamics (forces) fit together
-• A short “check your understanding” question at the end
-
-Formatting:
-• Short paragraphs + bullets
-• Use **bold** for key terms
-• Equations in LaTeX display mode, one per line (e.g., F = ma)
-• No markdown headings like # or ###.`
-    },
-
-    A8: {
-      id: 'A8',
-      category: 'Concept bridges',
-      title: 'Energy perspective: what changes when acceleration is constant?',
-      lead: 'Use this if you want an alternative viewpoint that helps in harder problems later.',
-      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
-
-Give an “energy lens” on constant acceleration problems.
-
-Include:
-• How speeding up means kinetic energy increases
-• When it is easier to think in energy instead of kinematics
-• A simple example (object sliding down a slope, or falling under gravity)
-• A short note on what assumptions are being made (ignore air resistance, etc.)
-
-Formatting:
-• Bullets + short paragraphs
-• Use **bold** for key ideas
-• Equations: LaTeX display mode, one per line (e.g., KE = 1/2 mv^2)
-• No markdown headings like # or ###.`
-    },
-
-    A9: {
-      id: 'A9',
-      category: 'Practice expansion',
-      title: 'Generate mixed practice (with answers) at the right level',
-      lead: 'Use this when you want extra practice that feels like your exam level.',
-      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
-
-Create a short practice set on constant acceleration in 1D.
+Create a fast routine for picking the right kinematics equation in constant-acceleration problems.
 
 Requirements:
-• 6 questions total
-• Mix: 2 easy, 3 medium, 1 challenging (but still first-year level)
-• Include at least: one free fall, one thrown-upward, one car braking (negative acceleration)
-• After the questions, include fully worked solutions
-• Include one quick “check your understanding” question between Q3 and Q4 (with answer)
+• Must fit in a short list of steps a student can memorize
+• Show how to handle the common “missing variable” cases
+• Give 2 fast examples using the routine
 
-Formatting:
-• Number the questions clearly
-• After each solution, add a one-line “common mistake” warning
-• Equations: LaTeX display mode, one per line
-• No markdown headings like # or ###.`
+No markdown headings like # or ###.
+Equations (if used) in LaTeX display mode, one per line.`
     },
 
-    A10: {
-      id: 'A10',
-      category: 'Exploration / simulation',
-      title: 'Mini “simulation lab” prompt: vary a and u and predict graphs',
-      lead: 'Use this to build intuition by exploring how graphs change when you vary initial velocity and acceleration.',
+    C9: {
+      id: 'C9',
+      category: 'Concept bridges',
+      title: 'How constant-a leads into Newton’s laws (forces cause acceleration)',
+      lead: 'Use this if you want the “why” behind constant acceleration and how it connects to forces.',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-Run a guided “simulation in the mind” for constant acceleration in 1D.
+Explain how constant acceleration connects to Newton’s laws.
 
-Do this:
-• Define a baseline scenario (choose u, a, and a time interval)
-• Ask the student to predict v(t) and x(t) shapes (qualitative)
-• Then vary ONE parameter at a time:
-  - increase u
-  - flip the sign of a
-  - double the magnitude of a
-• For each variation, explain how v–t slope and x–t curvature change
-• End with a short reflection prompt (“What pattern did you notice?”)
+Include:
+• Why constant net force implies constant acceleration (conceptually)
+• A real example: free fall (gravity) and/or a block pulled by a steady force
+• How kinematics (motion) and dynamics (forces) complement each other
+• One quick “check yourself” question with answer
 
-Formatting:
-• Steps + bullets
-• Use **bold** for the parameter changes
-• Equations only if helpful, in LaTeX display mode, one per line
-• No markdown headings like # or ###.`
+Equations in LaTeX display mode, one per line (e.g., F = ma).
+No markdown headings like # or ###.`
+    },
+
+    C10: {
+      id: 'C10',
+      category: 'Concept bridges',
+      title: 'How derivatives/integrals connect to v = dx/dt and a = dv/dt',
+      lead: 'Use this if you want to see how constant-a kinematics is really “calculus in disguise.”',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Explain the calculus connections behind constant-acceleration motion:
+
+• Velocity as the derivative of position
+• Acceleration as the derivative of velocity
+• Displacement as the integral of velocity
+• Change in velocity as the integral of acceleration
+
+Then explain (in plain language) why “constant acceleration” makes the graphs and equations so simple.
+
+Equations must be in LaTeX display mode, one per line, for example:
+  \\[ v = \\frac{dx}{dt} \\]
+  \\[ a = \\frac{dv}{dt} \\]
+
+No markdown headings like # or ###.`
     }
   };
 
   let currentHelpId = null;
   let lastAiAnswer = '';
 
-  // Canonical PromptSchola formatOutput (escape HTML + normalize LaTeX + clean bullets)
   function formatOutput(text) {
     if (!text) return '';
 
@@ -954,7 +925,7 @@ Formatting:
       return `<option value="${item.id}">${label}</option>`;
     }).join('');
 
-    selector.value = helpPromptLibrary[id] ? id : 'A1';
+    selector.value = helpPromptLibrary[id] ? id : 'C1';
 
     selector.addEventListener('change', () => {
       const newId = selector.value;
@@ -966,7 +937,7 @@ Formatting:
   }
 
   function loadHelpPromptFromId(id) {
-    const entry = helpPromptLibrary[id] || helpPromptLibrary['A1'];
+    const entry = helpPromptLibrary[id] || helpPromptLibrary['C1'];
     currentHelpId = entry.id;
 
     const categoryPill = document.getElementById('help-category-pill');
@@ -990,9 +961,28 @@ Formatting:
 
   function loadHelpPromptFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id') || 'A1';
+    const id = params.get('id') || 'C1';
     populateSelectorAndSetCurrent(id);
     loadHelpPromptFromId(id);
+  }
+
+  function gateHelpPageUI(isPaid) {
+    const runBtn = document.getElementById('run-help-btn');
+    const aiOutputEl = document.getElementById('ai-output');
+
+    if (!isPaid) {
+      if (runBtn) {
+        runBtn.textContent = 'Unlock Help';
+        runBtn.onclick = () => { window.location.href = '/pricing.html'; };
+      }
+      if (aiOutputEl) {
+        aiOutputEl.innerHTML = formatOutput(
+          `This page is part of **Mastery (paid)** access.\n\n` +
+          `You can still view and copy the prompt, but **Run with AI** is locked.\n\n` +
+          `Go to pricing to unlock Help.`
+        );
+      }
+    }
   }
 
   async function runCurrentPromptWithAI() {
@@ -1001,12 +991,13 @@ Formatting:
       return;
     }
 
-    // Help is paid-only. Require login and require paid tier in UI (defense in depth).
+    // Require login for Run-with-AI
     if (typeof ensureLoggedInOrRedirect === 'function') {
       const user = await ensureLoggedInOrRedirect();
       if (!user) return;
     }
 
+    // Require paid
     let tier = 'free';
     if (typeof PS_getUserTier === 'function') {
       try { tier = await PS_getUserTier({ forceRefresh: true }); } catch (_) { tier = 'free'; }
@@ -1037,7 +1028,7 @@ Formatting:
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        // ✅ Step 6 is always paid in your API rules; helps page is paid too
+        // Help is paid; use step 6 to align with paywall rules
         body: JSON.stringify({ prompt, step: 6 })
       });
 
@@ -1069,7 +1060,10 @@ Formatting:
   }
 
   function copyCurrentPrompt() {
-    if (!currentHelpId || !helpPromptLibrary[currentHelpId]) return alert('No prompt selected yet.');
+    if (!currentHelpId || !helpPromptLibrary[currentHelpId]) {
+      alert('No prompt selected yet.');
+      return;
+    }
     const prompt = helpPromptLibrary[currentHelpId].prompt;
     if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
     navigator.clipboard.writeText(prompt).then(() => alert('Prompt copied.')).catch(() => alert('Could not copy prompt.'));
@@ -1081,31 +1075,10 @@ Formatting:
     navigator.clipboard.writeText(lastAiAnswer).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
   }
 
-  function gateHelpPageUI(isPaid) {
-    const runBtn = document.getElementById('run-help-btn');
-    const aiOutputEl = document.getElementById('ai-output');
-
-    if (!isPaid) {
-      if (runBtn) {
-        runBtn.textContent = 'Unlock Help';
-        runBtn.onclick = () => { window.location.href = '/pricing.html'; };
-      }
-      if (aiOutputEl) {
-        aiOutputEl.innerHTML = formatOutput(
-          `This page is part of **Mastery (paid)** access.\n\n` +
-          `You can still view and copy the prompt, but **Run with AI** is locked.\n\n` +
-          `Go to pricing to unlock Help.`
-        );
-      }
-    }
-  }
-
   document.addEventListener('DOMContentLoaded', async () => {
     if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
-
     if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
-    // Load prompt from URL + fill selector
     loadHelpPromptFromUrl();
 
     // Determine tier and gate UI
