@@ -1213,72 +1213,72 @@ Formatting rules:
     }
   }
 
-  async function runCurrentPromptWithAI() {
-    const promptEdit = document.getElementById('prompt-edit');
-    const prompt = promptEdit ? promptEdit.value : '';
-    const ai = document.getElementById('ai-output');
-    if (!ai) return;
-
-    // Require login for any run with AI (server enforces too)
-    if (typeof ensureLoggedInOrRedirect === 'function') {
-      const user = await ensureLoggedInOrRedirect();
-      if (!user) return; // redirected
-    } else {
-      // fallback
-      const redirectTarget = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
-      window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
-      return;
-    }
-
-    const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
-    if (!token) {
-      ai.textContent = 'Session missing. Please sign in again.';
-      return;
-    }
-
-    setRunBtnRunning(true);
-
-    try {
-      ai.textContent = 'Running with AI…';
-
-      const res = await fetch('/api/run-step', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          prompt,
-          step: `HELP:${currentId || 'unknown'}`
-        })
-      });
-
-      if (!res.ok) {
-        let msg = 'There was an error contacting the AI. Please try again later.';
-        try {
-          const err = await res.json();
-          if (err?.error) msg = err.error;
-          if (err?.code === 'PAYWALL') msg = 'This help prompt requires Mastery (paid) access.';
-          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
-          if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
-        } catch (_) {}
-        ai.textContent = msg;
-        return;
-      }
-
-      const data = await res.json();
-      const raw = data.content || 'No response received from AI.';
-      lastAiAnswer = raw;
-
-      ai.innerHTML = formatOutput(raw);
-      if (window.MathJax?.typesetPromise) MathJax.typesetPromise([ai]).catch(()=>{});
-    } catch (e) {
-      console.error(e);
-      ai.textContent = 'Unexpected error. Please try again.';
-    } finally {
-      setRunBtnRunning(false);
-    }
+ async function runCurrentPromptWithAI() {
+  if (!currentHelpId || !helpPromptLibrary[currentHelpId]) {
+    alert('No prompt selected yet.');
+    return;
   }
+
+  const prompt = helpPromptLibrary[currentHelpId].prompt;
+  const aiOutputEl = document.getElementById('ai-output');
+  if (!aiOutputEl) return;
+
+  // Require login (same behavior as nano pages)
+  if (typeof ensureLoggedInOrRedirect === 'function') {
+    const user = await ensureLoggedInOrRedirect();
+    if (!user) return; // redirected
+  } else {
+    aiOutputEl.textContent = 'Auth helper missing. Please sign in again.';
+    return;
+  }
+
+  const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+  if (!token) {
+    aiOutputEl.textContent = 'Session missing. Please sign in again.';
+    return;
+  }
+
+  try {
+    aiOutputEl.textContent = 'Running with AI…';
+
+    const res = await fetch('/api/run-step', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      // ✅ KEY FIX: include a valid step (1–6)
+      // Help is paid-only → use step 4 (paid tier boundary in your system)
+      body: JSON.stringify({ prompt, step: 4 })
+    });
+
+    if (!res.ok) {
+      let msg = 'There was an error contacting the AI. Please try again later.';
+      try {
+        const err = await res.json();
+        if (err?.error) msg = err.error;
+        if (err?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
+        if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+        if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+      } catch (_) {}
+      aiOutputEl.textContent = msg;
+      return;
+    }
+
+    const data = await res.json();
+    const raw = data.content || 'No response received from AI.';
+    lastAiAnswer = raw;
+    aiOutputEl.innerHTML = formatOutput(raw);
+
+    if (window.MathJax?.typesetPromise) {
+      MathJax.typesetPromise([aiOutputEl]).catch(()=>{});
+    }
+  } catch (err) {
+    console.error(err);
+    aiOutputEl.textContent = 'Unexpected error. Please try again.';
+  }
+}
+
 
   function initDirectoryToggles() {
     document.querySelectorAll('.dir-cat-toggle').forEach(btn => {
