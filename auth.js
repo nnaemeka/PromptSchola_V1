@@ -40,7 +40,7 @@ async function getCurrentUser() {
   }
 }
 
-// ✅ NEW: get current access token (for Authorization: Bearer <token>)
+// ✅ get current access token (for Authorization: Bearer <token>)
 async function PS_getAccessToken() {
   try {
     const { data, error } = await supabaseClient.auth.getSession();
@@ -53,7 +53,7 @@ async function PS_getAccessToken() {
 }
 
 // ---------------------------------------------------------------------
-// ✅ NEW: Entitlements lookup from browser (RLS required)
+// ✅ Entitlements lookup from browser (RLS required)
 // Caches the result to reduce queries.
 // ---------------------------------------------------------------------
 const PS_TIER_CACHE_KEY = "ps_cached_tier_v1";
@@ -169,12 +169,15 @@ document.addEventListener("DOMContentLoaded", updateNavUserDisplay);
 // ---------------------------------------------------------------------
 // 7) Helper for redirecting to auth on protected actions only
 //    (e.g. when clicking "Run with AI")
-// ✅ FIX: redirect to SIGNUP (your new desired behavior)
+// ✅ FIX: use same-origin path (preserves #step-x) rather than full URL
 // ---------------------------------------------------------------------
 async function ensureLoggedInOrRedirect() {
   const user = await getCurrentUser();
   if (!user) {
-    const redirectTarget = encodeURIComponent(window.location.href);
+    // Store safe path+query+hash (same-origin), so auth.html accepts it
+    const safePath = window.location.pathname + window.location.search + window.location.hash;
+    const redirectTarget = encodeURIComponent(safePath);
+
     window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
     return null;
   }
