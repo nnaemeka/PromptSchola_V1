@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Constant Acceleration – Study Help · PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Targeted AI-powered study help for the nano-lesson 'Constant Acceleration' – clarify confusions, avoid exam traps, and strengthen your problem-solving."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]'], ['$$','$$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      color: var(--text-strong);
+      line-height: 1.15;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* NAV */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      gap: 1rem;
+    }
+
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+    }
+
+    .logo-text span:first-child {
+      display: block; font-weight: 700; font-size: 1.02rem;
+      letter-spacing: 0.02em; color: var(--text-strong);
+      font-family: var(--font-body); line-height: 1.1;
+    }
+
+    .logo-text span:last-child {
+      display: block; font-size: 0.76rem; color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 1.3rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.9;
+      transition: opacity var(--transition-fast), color var(--transition-fast);
+      font-family: var(--font-body);
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.9rem; font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 0.95rem;
+      font-size: 0.86rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: none;
+      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+    }
+
+    .btn-primary[disabled],
+    .btn-pill[disabled],
+    .btn-ghost[disabled] {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-ghost {
+      padding: 0.42rem 0.9rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.82rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); }
+
+    .btn-copy { font-size: 0.78rem; padding: 0.32rem 0.85rem; }
+
+    main { padding-bottom: 2.6rem; }
+    section { padding: 1.4rem 0; }
+
+    /* HERO */
+    .hero {
+      padding: 3.6rem 0 1.9rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
+        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-strong);
+      font-weight: 700;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+    }
+
+    .hero-kicker span.label {
+      padding: 0.18rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid rgba(129, 140, 248, 0.22);
+      background: var(--accent-soft2);
+      color: var(--accent-strong);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      font-family: var(--font-body);
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 4vw, 2.8rem);
+      line-height: 1.12;
+      font-weight: 700;
+      margin: 0 auto 0.85rem;
+      max-width: 60rem;
+      color: var(--text-strong);
+    }
+
+    .hero-subtitle {
+      font-size: 1.06rem;
+      max-width: 54rem;
+      color: var(--text-muted);
+      margin: 0 auto;
+      line-height: 1.6;
+      font-family: var(--font-body);
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 0.95rem;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+    .hero-breadcrumbs a { color: var(--accent-strong); }
+
+    /* Access band */
+    .access-band {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 28px;
+      padding: 1.35rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .access-band::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.20), transparent 58%);
+      filter: blur(16px);
+      opacity: 0.9;
+    }
+
+    .access-band-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .access-band-title {
+      font-family: var(--font-heading);
+      font-size: 1.28rem;
+      color: #ffffff;
+      margin-bottom: 0.15rem;
+      font-weight: 700;
+    }
+
+    .access-band-desc {
+      font-family: var(--font-body);
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      max-width: 56rem;
+    }
+
+    .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 800;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+    .chip.free { background: #10b981; color: #ffffff; }
+    .chip.mastery { background: #6366f1; color: #ffffff; }
+
+    /* Layout */
+    .help-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+      margin-top: 0.9rem;
+    }
+
+    /* Left: prompt + output card */
+    .help-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 1.05rem 1.15rem 1.1rem;
+    }
+
+    .help-card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .pill-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.14rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #f9fafb;
+      font-size: 0.74rem;
+      color: var(--text-subtle);
+      font-weight: 800;
+      font-family: var(--font-body);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .pill.topic {
+      border: 1px solid rgba(126, 34, 206, 0.35);
+      color: #4c1d95;
+      background: rgba(126, 34, 206, 0.06);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .help-title {
+      font-family: var(--font-heading);
+      font-size: 1.28rem;
+      color: var(--text-strong);
+      margin: 0.25rem 0 0.2rem;
+      line-height: 1.2;
+    }
+
+    .help-lead {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      max-width: 60rem;
+    }
+
+    .help-body-grid {
+      margin-top: 0.9rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.9rem;
+    }
+
+    .prompt-box {
+      border-radius: 14px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #f9fafb;
+      padding: 0.9rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      white-space: pre-wrap;
+    }
+
+    .prompt-box-header {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-subtle);
+      margin-bottom: 0.5rem;
+      font-family: var(--font-body);
+    }
+
+    .prompt-edit {
+      width: 100%;
+      min-height: 170px;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-main);
+      resize: vertical;
+    }
+
+    .ai-box {
+      border-radius: 14px;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      background: #ffffff;
+      padding: 1rem 1.1rem;
+      min-height: 160px;
+      font-size: 0.98rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.75;
+      font-family: var(--font-body);
+    }
+
+    .ai-box p { margin-bottom: 0.9rem; }
+    .ai-box ul, .ai-box ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+    .ai-box strong { font-weight: 800; color: inherit; }
+    .ai-box em { font-style: italic; }
+
+    .actions-row {
+      margin-top: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      align-items: center;
+    }
+
+    .actions-left { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+    .actions-right { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+
+    /* Right: directory */
+    .dir-card {
+      background: radial-gradient(circle at 0 0, #ffffff, #eef2ff);
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.16);
+      padding: 0.95rem 1rem;
+    }
+
+    .dir-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.12rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(126, 34, 206, 0.35);
+      color: #4c1d95;
+      background: rgba(126, 34, 206, 0.06);
+      font-size: 0.8rem;
+      font-weight: 900;
+      font-family: var(--font-body);
+      margin-bottom: 0.55rem;
+    }
+
+    .dir-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+      line-height: 1.6;
+      font-family: var(--font-body);
+    }
+
+    .dir-cat {
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      padding-top: 0.7rem;
+      margin-top: 0.7rem;
+    }
+    .dir-cat:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+    .dir-cat-toggle {
+      width: 100%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      padding: 0.15rem 0.1rem;
+    }
+
+    .dir-cat-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      font-size: 0.72rem;
+      color: var(--accent-strong);
+      font-family: var(--font-body);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .dir-cat-chev { font-size: 0.95rem; color: #4c1d95; opacity: 0.9; }
+
+    .dir-cat-body { margin-top: 0.45rem; }
+
+    .dir-list {
+      margin-top: 0.45rem;
+      padding-left: 1.35rem;
+      list-style-type: disc;
+      list-style-position: outside;
+    }
+    .dir-list li { margin-bottom: 0.35rem; }
+    .dir-list li::marker { font-size: 1.15em; color: #4c1d95; }
+
+    .dir-link {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.35rem 0.15rem;
+      border-radius: 10px;
+      background: transparent;
+      color: #6b21a8;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+    .dir-link:hover { background: rgba(76, 29, 149, 0.07); color: #4c1d95; text-decoration: underline; }
+
+    .mini-note {
+      margin-top: 0.75rem;
+      padding: 0.65rem 0.7rem;
+      border-radius: 14px;
+      border: 1px solid rgba(129, 140, 248, 0.32);
+      background: rgba(129, 140, 248, 0.08);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.55;
+      font-family: var(--font-body);
+    }
+
+    .locked-panel {
+      border-radius: 16px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.95rem 1rem;
+      color: #111827;
+      font-family: var(--font-body);
+      box-shadow: var(--shadow-card);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .locked-title { font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-strong); margin-bottom: 0.25rem; font-weight: 700; }
+    .locked-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 0.7rem; }
+    .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0 2.1rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+
+    @media (max-width: 980px) {
+      .help-layout { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+            Sign In
+          </a>
+
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+            Register for Free
+          </a>
+
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+            onclick="signOutUser && signOutUser()"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">
+          <span class="label">Help</span>
+          <span>Physics · Mechanics · Kinematics (1D)</span>
+        </div>
+
+        <h1 class="hero-title">Study Help: Constant Acceleration</h1>
+
+        <p class="hero-subtitle">
+          Targeted prompts for the exact places students get stuck: graphs, signs, “top of motion,” equation choice,
+          and real-world modeling limits.
+        </p>
+
+        <div class="hero-breadcrumbs">
+          <a href="/physics/physics.html">Physics</a> ·
+          <a href="/physics/mechanics.html">Mechanics</a> ·
+          <a href="nano-constant-acceleration.html">Nano-lesson: Constant Acceleration</a> ·
+          <span>Study Help</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESS (paid gating like nano) -->
+    <section>
+      <div class="container">
+        <div class="access-band">
+          <div class="access-band-inner">
+            <div>
+              <div class="access-band-title">Access for study help</div>
+              <div class="access-band-desc">
+                This help page is part of paid access (Mastery). You can still browse the titles, but running prompts
+                with AI is available to paid learners.
+              </div>
+            </div>
+            <div class="access-chips">
+              <span class="chip free">Browse titles</span>
+              <span class="chip mastery">Run with AI (Paid)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCKED VIEW (shown when not paid) -->
+    <section id="help-locked-wrap" style="display:none;">
+      <div class="container">
+        <div class="locked-panel">
+          <div class="locked-title">Study Help is a paid feature</div>
+          <div class="locked-desc">
+            You’re seeing the help library directory, but the full prompt + AI guidance is available to paid learners.
+            Upgrade to unlock all help prompts and run-with-AI support.
+          </div>
+          <div class="locked-actions">
+            <a class="btn-primary" href="/pricing.html">Unlock Help</a>
+            <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+            <a class="btn-ghost" href="nano-constant-acceleration.html">Back to nano-lesson</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN HELP UI (shown when paid) -->
+    <section id="help-main-wrap">
+      <div class="container">
+        <div class="help-layout">
+
+          <!-- LEFT: Current prompt + output -->
+          <article class="help-card">
+            <div class="help-card-top">
+              <div class="pill-row">
+                <span id="pill-category" class="pill">Category: …</span>
+                <span class="pill topic">Study help · Constant Acceleration</span>
+              </div>
+
+              <div class="pill-row">
+                <a class="btn-ghost" href="nano-constant-acceleration.html">Back to nano-lesson</a>
+              </div>
+            </div>
+
+            <h2 id="help-title" class="help-title">Loading help topic…</h2>
+            <p id="help-lead" class="help-lead">Please wait while the help prompt loads.</p>
+
+            <div class="help-body-grid">
+              <div class="prompt-box">
+                <div class="prompt-box-header">Prompt (edit before running)</div>
+                <textarea id="prompt-edit" class="prompt-edit" spellcheck="false">Loading prompt…</textarea>
+              </div>
+
+              <div id="ai-output" class="ai-box">
+                Run with AI to see a guided explanation here.
+              </div>
+            </div>
+
+            <div class="actions-row">
+              <div class="actions-left">
+                <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentPrompt()">Copy prompt</button>
+                <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentAnswer()">Copy answer</button>
+                <button class="btn-primary" id="run-btn" type="button" onclick="runCurrentPromptWithAI()">Run with AI</button>
+              </div>
+              <div class="actions-right">
+                <span id="hint-text">Tip: You can also copy this prompt into another AI chat.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- RIGHT: Directory (scales to many prompts) -->
+          <aside class="dir-card">
+            <div class="dir-title">Help library</div>
+            <p class="dir-desc">
+              Pick a help topic. You can add new ones later by adding new IDs in the library + links here.
+            </p>
+
+            <!-- Confusions -->
+            <div class="dir-cat">
+              <button class="dir-cat-toggle" data-target="cat-CL">
+                <span class="dir-cat-label">Confusions & look-alikes</span>
+                <span class="dir-cat-chev">▾</span>
+              </button>
+              <div class="dir-cat-body" id="cat-CL">
+                <ul class="dir-list">
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=CL01">Slope vs value: what the v–t graph is really telling you</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=CL02">Average vs instantaneous acceleration (and why constant-a makes them match)</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Exam traps -->
+            <div class="dir-cat">
+              <button class="dir-cat-toggle" data-target="cat-ET">
+                <span class="dir-cat-label">Tricky areas & exam traps</span>
+                <span class="dir-cat-chev">▾</span>
+              </button>
+              <div class="dir-cat-body" id="cat-ET">
+                <ul class="dir-list">
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=ET01">At the top of the throw: velocity is zero, acceleration is not</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=ET02">Sign conventions: choosing + upward vs + downward without confusion</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Common mistakes -->
+            <div class="dir-cat">
+              <button class="dir-cat-toggle" data-target="cat-CM">
+                <span class="dir-cat-label">Common mistakes</span>
+                <span class="dir-cat-chev">▾</span>
+              </button>
+              <div class="dir-cat-body" id="cat-CM">
+                <ul class="dir-list">
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=CM01">Mixing up “acceleration is constant” with “velocity is constant”</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=CM02">Using the wrong kinematics equation for the knowns you have</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Stuck -->
+            <div class="dir-cat">
+              <button class="dir-cat-toggle" data-target="cat-ST">
+                <span class="dir-cat-label">When you feel stuck</span>
+                <span class="dir-cat-chev">▾</span>
+              </button>
+              <div class="dir-cat-body" id="cat-ST">
+                <ul class="dir-list">
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=ST01">How to draw a quick motion diagram and decide signs</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=ST02">Given 3 variables, pick the right equation in 10 seconds</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Bridges -->
+            <div class="dir-cat">
+              <button class="dir-cat-toggle" data-target="cat-BR">
+                <span class="dir-cat-label">Concept bridges</span>
+                <span class="dir-cat-chev">▾</span>
+              </button>
+              <div class="dir-cat-body" id="cat-BR">
+                <ul class="dir-list">
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=BR01">How constant-a leads into Newton’s laws (forces cause acceleration)</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=BR02">How derivatives/integrals connect to \( v = \\frac{dx}{dt} \) and \( a = \\frac{dv}{dt} \)</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mini-note">
+              <strong>Adding more help later:</strong> add a new ID (e.g., <em>ET03</em>) in the <code>HELP</code> library below,
+              then add a matching link in this directory (or on the nano lesson help panel).
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 PromptSchola. All rights reserved.</footer>
+</div>
+
+<!-- Supabase + shared auth helpers -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
+
+<script>
+  // Post-auth redirect helper (matches your nano page behavior)
+  function PS_setPostAuthRedirect() {
+    try {
+      const path = window.location.pathname + window.location.search + window.location.hash;
+      localStorage.setItem('ps_post_auth_redirect', path);
+    } catch (e) {}
+  }
+  window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+
+  // ---- Help prompt library (extend any time) ----
+  const HELP = {
+    CL01: {
+      id: 'CL01',
+      category: 'Confusions & look-alikes',
+      title: 'Slope vs value: what the v–t graph is really telling you',
+      lead: 'Use this when you confuse “the value of velocity” with “the slope of the velocity–time graph.”',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Constant acceleration in 1D.
+
+A student is confused about the velocity–time (v–t) graph.
+
+Explain clearly:
+• What the value of v at a time means
+• What the slope of the v–t graph means
+• Why a straight-line v–t graph implies constant acceleration
+• How to read acceleration from the v–t graph in 2–3 steps
+• One short example with numbers (no heavy math)
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math, one per line:
+  \\[ a = \\frac{\\Delta v}{\\Delta t} \\]
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    CL02: {
+      id: 'CL02',
+      category: 'Confusions & look-alikes',
+      title: 'Average vs instantaneous acceleration (and why constant-a makes them match)',
+      lead: 'Use this when “average acceleration” and “instantaneous acceleration” feel like different concepts.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Constant acceleration in 1D.
+
+Explain:
+• What average acceleration means (over an interval)
+• What instantaneous acceleration means (at a moment)
+• Why, when acceleration is constant, the average acceleration over any interval equals the instantaneous acceleration
+• How this shows up on an a–t graph and a v–t graph
+
+Include one quick numerical example.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    ET01: {
+      id: 'ET01',
+      category: 'Tricky areas & exam traps',
+      title: 'At the top of the throw: velocity is zero, acceleration is not',
+      lead: 'Fix the classic misconception using reasoning + graphs.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: A ball thrown straight up (1D motion), ignoring air resistance.
+
+Explain clearly:
+• Why the velocity is zero at the top
+• Why the acceleration is NOT zero at the top
+• What the v–t and a–t graphs look like (describe in words)
+• How to answer exam questions that try to trick students here
+
+Include a short “common wrong thought → correct thought” pair.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    ET02: {
+      id: 'ET02',
+      category: 'Tricky areas & exam traps',
+      title: 'Sign conventions: choosing + upward vs + downward without confusion',
+      lead: 'Use this when signs keep flipping, especially in free-fall or throws.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Sign conventions in 1D constant-acceleration motion.
+
+Teach a student how to choose a positive direction and stay consistent.
+
+Do ALL:
+• Show the two common choices: +upward and +downward
+• For each choice, state the sign of acceleration in free-fall
+• Show how the SAME physical situation produces the same final answer even if the signs differ
+• Give a 6-item “sign convention checklist” they can follow every problem
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    CM01: {
+      id: 'CM01',
+      category: 'Common mistakes',
+      title: 'Mixing up “acceleration is constant” with “velocity is constant”',
+      lead: 'Use this when you hear “constant” and assume velocity must be constant too.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Constant acceleration vs constant velocity.
+
+Explain:
+• What “constant acceleration” means and what it does to velocity
+• What “constant velocity” means and what it implies about acceleration
+• How to tell the difference using v–t and a–t graphs
+• Two quick real-life examples: one constant velocity, one constant acceleration
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    CM02: {
+      id: 'CM02',
+      category: 'Common mistakes',
+      title: 'Using the wrong kinematic equation for the knowns you have',
+      lead: 'Use this when you can’t decide which equation fits the information given.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Choosing the right constant-acceleration equation in 1D.
+
+Teach a simple method:
+• List the 5 variables (u, v, a, t, s)
+• Given a set of knowns, show how to choose an equation that avoids the unknown you don't have
+• Include 3 mini-scenarios and show which equation you'd pick and why (no long solving)
+
+Include at least one scenario where time is not given (suggest using \\( v^2 = u^2 + 2as \\)).
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    ST01: {
+      id: 'ST01',
+      category: 'When you feel stuck',
+      title: 'How to draw a quick motion diagram and decide signs',
+      lead: 'Use this when the word problem feels messy and you don’t know where to begin.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Getting unstuck in 1D constant-acceleration problems.
+
+Teach a reliable routine:
+• Read → choose a positive direction → sketch a motion diagram → write knowns/unknowns → pick equation
+• Show one worked example: “a car slows down from 20 m/s to rest over 4 s” (brief)
+• Explain how the diagram helps prevent sign mistakes
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    ST02: {
+      id: 'ST02',
+      category: 'When you feel stuck',
+      title: 'Given 3 variables, pick the right equation in 10 seconds',
+      lead: 'A fast decision rule for typical exam problems.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Fast equation choice for constant-acceleration motion.
+
+Give a 10-second method:
+• Identify which of u, v, a, t, s are given
+• Identify which is asked
+• Choose an equation that contains only those plus one missing you can eliminate
+• Provide 4 rapid-fire examples and your chosen equation each time (no long solutions)
+
+Formatting rules:
+• Bullets + numbering
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    BR01: {
+      id: 'BR01',
+      category: 'Concept bridges',
+      title: 'How constant-a leads into Newton’s laws (forces cause acceleration)',
+      lead: 'Connect kinematics (describing motion) to dynamics (why motion changes).',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Bridge from constant-acceleration kinematics to Newton’s laws.
+
+Explain:
+• Kinematics tells you how motion changes; dynamics tells you why
+• In many constant-a problems, the reason a is constant is that the net force is constant
+• Give 2 examples (e.g., block pulled by constant force on smooth surface; free-fall near Earth)
+• Mention how \\( F=ma \\) connects to constant acceleration in these cases
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    },
+
+    BR02: {
+      id: 'BR02',
+      category: 'Concept bridges',
+      title: 'How derivatives/integrals connect to v = dx/dt and a = dv/dt',
+      lead: 'Use this when you want the calculus meaning behind the graphs and formulas.',
+      prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Calculus meaning of constant acceleration in 1D.
+
+Explain:
+• Why velocity is the derivative of position
+• Why acceleration is the derivative of velocity
+• Why constant acceleration implies velocity changes linearly with time
+• How areas under graphs relate to integrals (area under a–t gives change in v; area under v–t gives displacement)
+
+Include a short example using words + one simple equation per line.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line:
+  \\[ v = \\frac{dx}{dt} \\]
+  \\[ a = \\frac{dv}{dt} \\]
+• Do NOT use markdown headings like # or ###.`
+    }
+  };
+
+  let currentId = null;
+  let lastAiAnswer = '';
+
+  // Canonical PromptSchola formatOutput (HTML escaping + LaTeX normalization)
+  function formatOutput(text) {
+    if (!text) return '';
+    let safe = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    safe = safe
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]')
+      .replace(/\\\\\(/g, '\\(')
+      .replace(/\\\\\)/g, '\\)');
+
+    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    safe = safe.replace(/\n\n+/g, '</p><p>');
+    safe = safe.replace(/\n/g, '<br>');
+    return '<p>' + safe + '</p>';
+  }
+
+  function loadFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const id = (params.get('id') || 'CL01').trim();
+    const entry = HELP[id] || HELP['CL01'];
+
+    currentId = entry.id;
+
+    const cat = document.getElementById('pill-category');
+    const title = document.getElementById('help-title');
+    const lead = document.getElementById('help-lead');
+    const promptEdit = document.getElementById('prompt-edit');
+    const ai = document.getElementById('ai-output');
+
+    if (cat) cat.textContent = 'Category: ' + (entry.category || 'Study help');
+    if (title) title.textContent = entry.title || 'Study help';
+    if (lead) lead.textContent = entry.lead || '';
+    if (promptEdit) promptEdit.value = entry.prompt || '';
+    if (ai) ai.textContent = 'Run with AI to see a guided explanation here.';
+
+    lastAiAnswer = '';
+
+    // Typeset any LaTeX that might appear in the directory labels
+    if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
+  }
+
+  function copyCurrentPrompt() {
+    const promptEdit = document.getElementById('prompt-edit');
+    const prompt = promptEdit ? promptEdit.value : '';
+    if (!prompt) return alert('No prompt to copy.');
+    if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+    navigator.clipboard.writeText(prompt).then(() => alert('Prompt copied.')).catch(() => alert('Could not copy prompt.'));
+  }
+
+  function copyCurrentAnswer() {
+    if (!lastAiAnswer) return alert('No AI answer to copy yet. Run with AI first.');
+    if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+    navigator.clipboard.writeText(lastAiAnswer).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
+  }
+
+  function setRunBtnRunning(running) {
+    const btn = document.getElementById('run-btn');
+    if (!btn) return;
+    if (running) {
+      btn.dataset.prevText = btn.textContent;
+      btn.textContent = 'Running…';
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+    } else {
+      btn.disabled = false;
+      btn.textContent = btn.dataset.prevText || 'Run with AI';
+      btn.removeAttribute('aria-busy');
+    }
+  }
+
+  async function runCurrentPromptWithAI() {
+    const promptEdit = document.getElementById('prompt-edit');
+    const prompt = promptEdit ? promptEdit.value : '';
+    const ai = document.getElementById('ai-output');
+    if (!ai) return;
+
+    // Require login for any run with AI (server enforces too)
+    if (typeof ensureLoggedInOrRedirect === 'function') {
+      const user = await ensureLoggedInOrRedirect();
+      if (!user) return; // redirected
+    } else {
+      // fallback
+      const redirectTarget = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+      window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+      return;
+    }
+
+    const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+    if (!token) {
+      ai.textContent = 'Session missing. Please sign in again.';
+      return;
+    }
+
+    setRunBtnRunning(true);
+
+    try {
+      ai.textContent = 'Running with AI…';
+
+      const res = await fetch('/api/run-step', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          prompt,
+          step: `HELP:${currentId || 'unknown'}`
+        })
+      });
+
+      if (!res.ok) {
+        let msg = 'There was an error contacting the AI. Please try again later.';
+        try {
+          const err = await res.json();
+          if (err?.error) msg = err.error;
+          if (err?.code === 'PAYWALL') msg = 'This help prompt requires Mastery (paid) access.';
+          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+        } catch (_) {}
+        ai.textContent = msg;
+        return;
+      }
+
+      const data = await res.json();
+      const raw = data.content || 'No response received from AI.';
+      lastAiAnswer = raw;
+
+      ai.innerHTML = formatOutput(raw);
+      if (window.MathJax?.typesetPromise) MathJax.typesetPromise([ai]).catch(()=>{});
+    } catch (e) {
+      console.error(e);
+      ai.textContent = 'Unexpected error. Please try again.';
+    } finally {
+      setRunBtnRunning(false);
+    }
+  }
+
+  function initDirectoryToggles() {
+    document.querySelectorAll('.dir-cat-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        const body = document.getElementById(target);
+        const chev = btn.querySelector('.dir-cat-chev');
+        if (!body) return;
+
+        const open = body.style.display !== 'none';
+        body.style.display = open ? 'none' : 'block';
+        if (chev) chev.textContent = open ? '▸' : '▾';
+      });
+    });
+  }
+
+  async function configureAccess() {
+    // Default assumptions
+    let loggedIn = false;
+    let tier = 'anon';
+
+    if (typeof getCurrentUser === 'function') {
+      try { loggedIn = !!(await getCurrentUser()); } catch (_) { loggedIn = false; }
+    }
+
+    if (loggedIn && typeof PS_getUserTier === 'function') {
+      try { tier = await PS_getUserTier(); } catch (_) { tier = 'free'; }
+      if (!tier) tier = 'free';
+    }
+
+    if (loggedIn && tier === 'anon') tier = 'free';
+
+    const isPaid = tier === 'paid';
+
+    const lockedWrap = document.getElementById('help-locked-wrap');
+    const mainWrap = document.getElementById('help-main-wrap');
+
+    // If you want the whole page paid-only, enforce it here:
+    // - show locked message
+    // - still allow directory browsing (it stays visible via mainWrap)
+    //
+    // This implementation:
+    // - if not paid: show locked banner AND disable run button + prompt editing
+    // - still shows the directory and the selected title/lead so the UX makes sense
+    const runBtn = document.getElementById('run-btn');
+    const promptEdit = document.getElementById('prompt-edit');
+    const hint = document.getElementById('hint-text');
+
+    if (!isPaid) {
+      if (lockedWrap) lockedWrap.style.display = 'block';
+      if (runBtn) {
+        runBtn.disabled = false;
+        runBtn.textContent = loggedIn ? 'Unlock to run' : 'Sign in to run';
+        runBtn.onclick = () => {
+          if (!loggedIn) {
+            const redirectTarget = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+            window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+          } else {
+            window.location.href = '/pricing.html';
+          }
+        };
+      }
+      if (promptEdit) promptEdit.setAttribute('readonly', 'readonly');
+      if (hint) hint.textContent = 'Tip: You can still copy the prompt title list; upgrade to run with AI.';
+    } else {
+      if (lockedWrap) lockedWrap.style.display = 'none';
+      if (runBtn) {
+        runBtn.textContent = 'Run with AI';
+        runBtn.onclick = runCurrentPromptWithAI;
+      }
+      if (promptEdit) promptEdit.removeAttribute('readonly');
+      if (hint) hint.textContent = 'Tip: Edit the prompt before running if you want a more specific answer.';
+    }
+
+    // Update nav
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    initDirectoryToggles();
+    loadFromUrl();
+    await configureAccess();
+
+    // Re-load when navigating between help IDs (same page)
+    window.addEventListener('popstate', loadFromUrl);
+
+    // Sign out button wiring (in case you prefer event listener)
+    const signOutBtn = document.getElementById('nav-signout-btn');
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
+
+    if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
+  });
+</script>
+
+</body>
+</html>
