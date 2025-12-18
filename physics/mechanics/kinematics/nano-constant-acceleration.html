@@ -1036,7 +1036,7 @@
               </div>
 
               <div id="help-paid">
-                <button class="help-panel-toggle" id="help-panel-toggle">
+                <button class="help-panel-toggle" id="help-panel-toggle" type="button">
                   <span class="nano-help-title">Deepen your understanding</span>
                   <span class="help-panel-toggle-icon">▾</span>
                 </button>
@@ -1053,8 +1053,8 @@
                       <p class="help-category-desc">Separate velocity, acceleration, slope, and area ideas.</p>
                     </div>
                     <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C1">Slope vs value: what the v–t graph is really telling you</a></li>
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C2">Average vs instantaneous acceleration (and why constant-a makes them match)</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CL01">Slope vs value: what the v–t graph is really telling you</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CL02">Average vs instantaneous acceleration (and why constant-a makes them match)</a></li>
                     </ul>
                   </div>
 
@@ -1064,8 +1064,8 @@
                       <p class="help-category-desc">Avoid the classic sign and “top of motion” traps.</p>
                     </div>
                     <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C3">At the top of the throw: velocity is zero, acceleration is not</a></li>
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C4">Sign conventions: choosing + upward vs + downward without confusion</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ET01">At the top of the throw: velocity is zero, acceleration is not</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ET02">Sign conventions: choosing + upward vs + downward without confusion</a></li>
                     </ul>
                   </div>
 
@@ -1075,8 +1075,8 @@
                       <p class="help-category-desc">Fix the errors that cause most wrong answers.</p>
                     </div>
                     <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C5">Mixing up “acceleration is constant” with “velocity is constant”</a></li>
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C6">Using the wrong kinematic equation for the knowns you have</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM01">Mixing up “acceleration is constant” with “velocity is constant”</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM02">Using the wrong kinematic equation for the knowns you have</a></li>
                     </ul>
                   </div>
 
@@ -1086,8 +1086,8 @@
                       <p class="help-category-desc">Get unstuck with a reliable problem-solving routine.</p>
                     </div>
                     <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C7">How to draw a quick motion diagram and decide signs</a></li>
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C8">Given 3 variables, how to pick the right equation in 10 seconds</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST01">How to draw a quick motion diagram and decide signs</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST02">Given 3 variables, pick the right equation in 10 seconds</a></li>
                     </ul>
                   </div>
 
@@ -1097,8 +1097,8 @@
                       <p class="help-category-desc">Connect constant-a kinematics to dynamics and calculus.</p>
                     </div>
                     <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C9">How constant-a leads into Newton’s laws (forces cause acceleration)</a></li>
-                      <li><a class="help-prompt-btn" href="/physics/help/constant-acceleration-help.html?id=C10">How derivatives/integrals connect to v = dx/dt and a = dv/dt</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=BR01">How constant-a leads into Newton’s laws (forces cause acceleration)</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=BR02">How derivatives/integrals connect to v = dx/dt and a = dv/dt</a></li>
                     </ul>
                   </div>
 
@@ -1230,7 +1230,7 @@
   }
 
   function redirectToSignupForRunAI() {
-    const redirectTarget = encodeURIComponent(window.location.href);
+    const redirectTarget = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
     window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
   }
 
@@ -1413,7 +1413,7 @@
       toggleBtn.addEventListener('click', (e) => { e.preventDefault(); open = !open; updatePanel(); });
     }
 
-    // 🔹 Update nav user display (auth.js)
+    // Update nav based on auth state
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
     }
@@ -1434,6 +1434,16 @@
     if (loggedIn && (tier === 'anon')) tier = 'free';
 
     configureUI({ loggedIn, tier });
+
+    // ✅ OPTIONAL: append context to help links (future-proof for "back" chip / analytics)
+    document.querySelectorAll('a.help-prompt-btn[href^="help-constant-acceleration.html?id="]')
+      .forEach(a => {
+        try {
+          const url = new URL(a.getAttribute('href'), window.location.href);
+          url.searchParams.set('from', 'nano');
+          a.setAttribute('href', url.pathname + url.search);
+        } catch (e) {}
+      });
   });
 </script>
 
