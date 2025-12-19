@@ -73,7 +73,6 @@
     .page { min-height: 100vh; display: flex; flex-direction: column; }
     .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
 
-    /* NAV */
     header {
       position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
@@ -164,8 +163,7 @@
       cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color: #f9fafb;
-      box-shadow: none;
-      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+      transition: transform var(--transition-fast), filter var(--transition-fast);
       font-family: var(--font-body);
       display: inline-flex;
       align-items: center;
@@ -173,11 +171,7 @@
       gap: 0.35rem;
       white-space: nowrap;
     }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
-    }
+    .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.03); }
 
     .btn-primary[disabled],
     .btn-pill[disabled],
@@ -211,7 +205,6 @@
     main { padding-bottom: 2.6rem; }
     section { padding: 1.4rem 0; }
 
-    /* HERO */
     .hero {
       padding: 3.6rem 0 1.9rem;
       position: relative;
@@ -281,7 +274,6 @@
     }
     .hero-breadcrumbs a { color: var(--accent-strong); }
 
-    /* Access band */
     .access-band {
       background: #0f172a;
       color: #f8fafc;
@@ -294,7 +286,6 @@
       max-width: 980px;
       margin: 0 auto;
     }
-
     .access-band::before {
       content: "";
       position: absolute;
@@ -306,7 +297,6 @@
       filter: blur(16px);
       opacity: 0.9;
     }
-
     .access-band-inner {
       position: relative;
       z-index: 1;
@@ -316,7 +306,6 @@
       justify-content: space-between;
       flex-wrap: wrap;
     }
-
     .access-band-title {
       font-family: var(--font-heading);
       font-size: 1.28rem;
@@ -324,7 +313,6 @@
       margin-bottom: 0.15rem;
       font-weight: 700;
     }
-
     .access-band-desc {
       font-family: var(--font-body);
       color: #cbd5e1;
@@ -332,9 +320,7 @@
       line-height: 1.6;
       max-width: 56rem;
     }
-
     .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
-
     .chip {
       display: inline-flex;
       align-items: center;
@@ -350,7 +336,6 @@
     .chip.free { background: #10b981; color: #ffffff; }
     .chip.mastery { background: #6366f1; color: #ffffff; }
 
-    /* Layout */
     .help-layout {
       display: grid;
       grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
@@ -359,7 +344,6 @@
       margin-top: 0.9rem;
     }
 
-    /* Left: prompt + output card */
     .help-card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
@@ -475,11 +459,6 @@
       font-family: var(--font-body);
     }
 
-    .ai-box p { margin-bottom: 0.9rem; }
-    .ai-box ul, .ai-box ol { margin: 0.7rem 0 0.7rem 1.3rem; }
-    .ai-box strong { font-weight: 800; color: inherit; }
-    .ai-box em { font-style: italic; }
-
     .actions-row {
       margin-top: 0.85rem;
       display: flex;
@@ -497,7 +476,6 @@
     .actions-left { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
     .actions-right { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
 
-    /* Right: directory */
     .dir-card {
       background: radial-gradient(circle at 0 0, #ffffff, #eef2ff);
       border-radius: var(--radius-card);
@@ -565,7 +543,6 @@
     }
 
     .dir-cat-chev { font-size: 0.95rem; color: #4c1d95; opacity: 0.9; }
-
     .dir-cat-body { margin-top: 0.45rem; }
 
     .dir-list {
@@ -629,9 +606,7 @@
       font-family: var(--font-body);
     }
 
-    @media (max-width: 980px) {
-      .help-layout { grid-template-columns: minmax(0, 1fr); }
-    }
+    @media (max-width: 980px) { .help-layout { grid-template-columns: minmax(0, 1fr); } }
     @media (max-width: 860px) { .nav-links { display: none; } }
   </style>
 </head>
@@ -695,7 +670,7 @@
         <h1 class="hero-title">Study Help: Constant Acceleration</h1>
 
         <p class="hero-subtitle">
-          Targeted prompts for the exact places students get stuck: graphs, signs, “top of motion,” equation choice,
+          Targeted prompts for the exact places students get stuck: graphs, signs, "top of motion," equation choice,
           and real-world modeling limits.
         </p>
 
@@ -708,7 +683,6 @@
       </div>
     </section>
 
-    <!-- ACCESS (paid gating like nano) -->
     <section>
       <div class="container">
         <div class="access-band">
@@ -729,13 +703,12 @@
       </div>
     </section>
 
-    <!-- LOCKED VIEW (shown when not paid) -->
     <section id="help-locked-wrap" style="display:none;">
       <div class="container">
         <div class="locked-panel">
           <div class="locked-title">Study Help is a paid feature</div>
           <div class="locked-desc">
-            You’re seeing the help library directory, but the full prompt + AI guidance is available to paid learners.
+            You're seeing the help library directory, but the full prompt + AI guidance is available to paid learners.
             Upgrade to unlock all help prompts and run-with-AI support.
           </div>
           <div class="locked-actions">
@@ -747,16 +720,14 @@
       </div>
     </section>
 
-    <!-- MAIN HELP UI (shown when paid) -->
     <section id="help-main-wrap">
       <div class="container">
         <div class="help-layout">
 
-          <!-- LEFT: Current prompt + output -->
           <article class="help-card">
             <div class="help-card-top">
               <div class="pill-row">
-                <span id="pill-category" class="pill">Category: …</span>
+                <span id="pill-category" class="pill">Category: ...</span>
                 <span class="pill topic">Study help · Constant Acceleration</span>
               </div>
 
@@ -765,18 +736,16 @@
               </div>
             </div>
 
-            <h2 id="help-title" class="help-title">Loading help topic…</h2>
+            <h2 id="help-title" class="help-title">Loading help topic...</h2>
             <p id="help-lead" class="help-lead">Please wait while the help prompt loads.</p>
 
             <div class="help-body-grid">
               <div class="prompt-box">
                 <div class="prompt-box-header">Prompt (edit before running)</div>
-                <textarea id="prompt-edit" class="prompt-edit" spellcheck="false">Loading prompt…</textarea>
+                <textarea id="prompt-edit" class="prompt-edit" spellcheck="false">Loading prompt...</textarea>
               </div>
 
-              <div id="ai-output" class="ai-box">
-                Run with AI to see a guided explanation here.
-              </div>
+              <div id="ai-output" class="ai-box">Run with AI to see a guided explanation here.</div>
             </div>
 
             <div class="actions-row">
@@ -791,14 +760,12 @@
             </div>
           </article>
 
-          <!-- RIGHT: Directory (scales to many prompts) -->
           <aside class="dir-card">
             <div class="dir-title">Help library</div>
             <p class="dir-desc">
               Pick a help topic. You can add new ones later by adding new IDs in the library + links here.
             </p>
 
-            <!-- Confusions -->
             <div class="dir-cat">
               <button class="dir-cat-toggle" data-target="cat-CL" type="button">
                 <span class="dir-cat-label">Confusions & look-alikes</span>
@@ -806,13 +773,12 @@
               </button>
               <div class="dir-cat-body" id="cat-CL">
                 <ul class="dir-list">
-                  <li><a class="dir-link" href="help-constant-acceleration.html?id=CL01">Slope vs value: what the v–t graph is really telling you</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=CL01">Slope vs value: what the v-t graph is really telling you</a></li>
                   <li><a class="dir-link" href="help-constant-acceleration.html?id=CL02">Average vs instantaneous acceleration (and why constant-a makes them match)</a></li>
                 </ul>
               </div>
             </div>
 
-            <!-- Exam traps -->
             <div class="dir-cat">
               <button class="dir-cat-toggle" data-target="cat-ET" type="button">
                 <span class="dir-cat-label">Tricky areas & exam traps</span>
@@ -826,7 +792,6 @@
               </div>
             </div>
 
-            <!-- Common mistakes -->
             <div class="dir-cat">
               <button class="dir-cat-toggle" data-target="cat-CM" type="button">
                 <span class="dir-cat-label">Common mistakes</span>
@@ -834,13 +799,12 @@
               </button>
               <div class="dir-cat-body" id="cat-CM">
                 <ul class="dir-list">
-                  <li><a class="dir-link" href="help-constant-acceleration.html?id=CM01">Mixing up “acceleration is constant” with “velocity is constant”</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=CM01">Mixing up "acceleration is constant" with "velocity is constant"</a></li>
                   <li><a class="dir-link" href="help-constant-acceleration.html?id=CM02">Using the wrong kinematics equation for the knowns you have</a></li>
                 </ul>
               </div>
             </div>
 
-            <!-- Stuck -->
             <div class="dir-cat">
               <button class="dir-cat-toggle" data-target="cat-ST" type="button">
                 <span class="dir-cat-label">When you feel stuck</span>
@@ -854,7 +818,6 @@
               </div>
             </div>
 
-            <!-- Bridges -->
             <div class="dir-cat">
               <button class="dir-cat-toggle" data-target="cat-BR" type="button">
                 <span class="dir-cat-label">Concept bridges</span>
@@ -862,8 +825,8 @@
               </button>
               <div class="dir-cat-body" id="cat-BR">
                 <ul class="dir-list">
-                  <li><a class="dir-link" href="help-constant-acceleration.html?id=BR01">How constant-a leads into Newton’s laws (forces cause acceleration)</a></li>
-                  <li><a class="dir-link" href="help-constant-acceleration.html?id=BR02">How derivatives/integrals connect to \( v = \\frac{dx}{dt} \) and \( a = \\frac{dv}{dt} \)</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=BR01">How constant-a leads into Newton's laws (forces cause acceleration)</a></li>
+                  <li><a class="dir-link" href="help-constant-acceleration.html?id=BR02">How derivatives/integrals connect to v = dx/dt and a = dv/dt</a></li>
                 </ul>
               </div>
             </div>
@@ -882,12 +845,10 @@
   <footer>© 2025 PromptSchola. All rights reserved.</footer>
 </div>
 
-<!-- Supabase + shared auth helpers -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/auth.js"></script>
 
 <script>
-  // Post-auth redirect helper (matches your nano page behavior)
   function PS_setPostAuthRedirect() {
     try {
       const path = window.location.pathname + window.location.search + window.location.hash;
@@ -896,56 +857,56 @@
   }
   window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
 
-  // ---- Help prompt library (extend any time) ----
+  // ---- ASCII-only Help prompt library ----
   const HELP = {
     CL01: {
       id: 'CL01',
       category: 'Confusions & look-alikes',
-      title: 'Slope vs value: what the v–t graph is really telling you',
-      lead: 'Use this when you confuse “the value of velocity” with “the slope of the velocity–time graph.”',
+      title: 'Slope vs value: what the v-t graph is really telling you',
+      lead: 'Use this when you confuse "the value of velocity" with "the slope of the velocity-time graph."',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
 Topic: Constant acceleration in 1D.
 
-A student is confused about the velocity–time (v–t) graph.
+A student is confused about the velocity-time (v-t) graph.
 
 Explain clearly:
-• What the value of v at a time means
-• What the slope of the v–t graph means
-• Why a straight-line v–t graph implies constant acceleration
-• How to read acceleration from the v–t graph in 2–3 steps
-• One short example with numbers (no heavy math)
+- What the value of v at a time means
+- What the slope of the v-t graph means
+- Why a straight-line v-t graph implies constant acceleration
+- How to read acceleration from the v-t graph in 2-3 steps
+- One short example with numbers (no heavy math)
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math, one per line:
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- If you include equations, use LaTeX display math, one per line:
   \\[ a = \\frac{\\Delta v}{\\Delta t} \\]
-• Do NOT use markdown headings like # or ###.`
+- Do NOT use markdown headings like # or ###.`
     },
 
     CL02: {
       id: 'CL02',
       category: 'Confusions & look-alikes',
       title: 'Average vs instantaneous acceleration (and why constant-a makes them match)',
-      lead: 'Use this when “average acceleration” and “instantaneous acceleration” feel like different concepts.',
+      lead: 'Use this when "average acceleration" and "instantaneous acceleration" feel like different concepts.',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
 Topic: Constant acceleration in 1D.
 
 Explain:
-• What average acceleration means (over an interval)
-• What instantaneous acceleration means (at a moment)
-• Why, when acceleration is constant, the average acceleration over any interval equals the instantaneous acceleration
-• How this shows up on an a–t graph and a v–t graph
+- What average acceleration means (over an interval)
+- What instantaneous acceleration means (at a moment)
+- Why, when acceleration is constant, the average acceleration over any interval equals the instantaneous acceleration
+- How this shows up on an a-t graph and a v-t graph
 
 Include one quick numerical example.
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- If you include equations, use LaTeX display math one per line
+- Do NOT use markdown headings like # or ###.`
     },
 
     ET01: {
@@ -958,18 +919,18 @@ Formatting rules:
 Topic: A ball thrown straight up (1D motion), ignoring air resistance.
 
 Explain clearly:
-• Why the velocity is zero at the top
-• Why the acceleration is NOT zero at the top
-• What the v–t and a–t graphs look like (describe in words)
-• How to answer exam questions that try to trick students here
+- Why the velocity is zero at the top
+- Why the acceleration is NOT zero at the top
+- What the v-t and a-t graphs look like (describe in words)
+- How to answer exam questions that try to trick students here
 
-Include a short “common wrong thought → correct thought” pair.
+Include a short "common wrong thought -> correct thought" pair.
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- If you include equations, use LaTeX display math one per line
+- Do NOT use markdown headings like # or ###.`
     },
 
     ET02: {
@@ -984,82 +945,82 @@ Topic: Sign conventions in 1D constant-acceleration motion.
 Teach a student how to choose a positive direction and stay consistent.
 
 Do ALL:
-• Show the two common choices: +upward and +downward
-• For each choice, state the sign of acceleration in free-fall
-• Show how the SAME physical situation produces the same final answer even if the signs differ
-• Give a 6-item “sign convention checklist” they can follow every problem
+- Show the two common choices: +upward and +downward
+- For each choice, state the sign of acceleration in free-fall
+- Show how the SAME physical situation produces the same final answer even if the signs differ
+- Give a 6-item "sign convention checklist" they can follow every problem
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- If you include equations, use LaTeX display math one per line
+- Do NOT use markdown headings like # or ###.`
     },
 
     CM01: {
       id: 'CM01',
       category: 'Common mistakes',
-      title: 'Mixing up “acceleration is constant” with “velocity is constant”',
-      lead: 'Use this when you hear “constant” and assume velocity must be constant too.',
+      title: 'Mixing up "acceleration is constant" with "velocity is constant"',
+      lead: 'Use this when you hear "constant" and assume velocity must be constant too.',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
 Topic: Constant acceleration vs constant velocity.
 
 Explain:
-• What “constant acceleration” means and what it does to velocity
-• What “constant velocity” means and what it implies about acceleration
-• How to tell the difference using v–t and a–t graphs
-• Two quick real-life examples: one constant velocity, one constant acceleration
+- What "constant acceleration" means and what it does to velocity
+- What "constant velocity" means and what it implies about acceleration
+- How to tell the difference using v-t and a-t graphs
+- Two quick real-life examples: one constant velocity, one constant acceleration
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- If you include equations, use LaTeX display math one per line
+- Do NOT use markdown headings like # or ###.`
     },
 
     CM02: {
       id: 'CM02',
       category: 'Common mistakes',
-      title: 'Using the wrong kinematic equation for the knowns you have',
-      lead: 'Use this when you can’t decide which equation fits the information given.',
+      title: 'Using the wrong kinematics equation for the knowns you have',
+      lead: "Use this when you can't decide which equation fits the information given.",
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
 Topic: Choosing the right constant-acceleration equation in 1D.
 
 Teach a simple method:
-• List the 5 variables (u, v, a, t, s)
-• Given a set of knowns, show how to choose an equation that avoids the unknown you don't have
-• Include 3 mini-scenarios and show which equation you'd pick and why (no long solving)
+- List the 5 variables (u, v, a, t, s)
+- Given a set of knowns, show how to choose an equation that avoids the unknown you don't have
+- Include 3 mini-scenarios and show which equation you'd pick and why (no long solving)
 
 Include at least one scenario where time is not given (suggest using \\( v^2 = u^2 + 2as \\)).
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- If you include equations, use LaTeX display math one per line
+- Do NOT use markdown headings like # or ###.`
     },
 
     ST01: {
       id: 'ST01',
       category: 'When you feel stuck',
       title: 'How to draw a quick motion diagram and decide signs',
-      lead: 'Use this when the word problem feels messy and you don’t know where to begin.',
+      lead: "Use this when the word problem feels messy and you don't know where to begin.",
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
 Topic: Getting unstuck in 1D constant-acceleration problems.
 
 Teach a reliable routine:
-• Read → choose a positive direction → sketch a motion diagram → write knowns/unknowns → pick equation
-• Show one worked example: “a car slows down from 20 m/s to rest over 4 s” (brief)
-• Explain how the diagram helps prevent sign mistakes
+- Read -> choose a positive direction -> sketch a motion diagram -> write knowns/unknowns -> pick equation
+- Show one worked example: "a car slows down from 20 m/s to rest over 4 s" (brief)
+- Explain how the diagram helps prevent sign mistakes
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- If you include equations, use LaTeX display math one per line
+- Do NOT use markdown headings like # or ###.`
     },
 
     ST02: {
@@ -1072,38 +1033,38 @@ Formatting rules:
 Topic: Fast equation choice for constant-acceleration motion.
 
 Give a 10-second method:
-• Identify which of u, v, a, t, s are given
-• Identify which is asked
-• Choose an equation that contains only those plus one missing you can eliminate
-• Provide 4 rapid-fire examples and your chosen equation each time (no long solutions)
+- Identify which of u, v, a, t, s are given
+- Identify which is asked
+- Choose an equation that contains only those plus one missing you can eliminate
+- Provide 4 rapid-fire examples and your chosen equation each time (no long solutions)
 
 Formatting rules:
-• Bullets + numbering
-• Bold key terms sparingly
-• Equations in LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+- Bullets + numbering
+- Bold key terms sparingly
+- Equations in LaTeX display math one per line
+- Do NOT use markdown headings like # or ###.`
     },
 
     BR01: {
       id: 'BR01',
       category: 'Concept bridges',
-      title: 'How constant-a leads into Newton’s laws (forces cause acceleration)',
+      title: "How constant-a leads into Newton's laws (forces cause acceleration)",
       lead: 'Connect kinematics (describing motion) to dynamics (why motion changes).',
       prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-Topic: Bridge from constant-acceleration kinematics to Newton’s laws.
+Topic: Bridge from constant-acceleration kinematics to Newton's laws.
 
 Explain:
-• Kinematics tells you how motion changes; dynamics tells you why
-• In many constant-a problems, the reason a is constant is that the net force is constant
-• Give 2 examples (e.g., block pulled by constant force on smooth surface; free-fall near Earth)
-• Mention how \\( F=ma \\) connects to constant acceleration in these cases
+- Kinematics tells you how motion changes; dynamics tells you why
+- In many constant-a problems, the reason a is constant is that the net force is constant
+- Give 2 examples (e.g., block pulled by constant force on smooth surface; free-fall near Earth)
+- Mention how \\( F=ma \\) connects to constant acceleration in these cases
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• Equations in LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- Equations in LaTeX display math one per line
+- Do NOT use markdown headings like # or ###.`
     },
 
     BR02: {
@@ -1116,27 +1077,26 @@ Formatting rules:
 Topic: Calculus meaning of constant acceleration in 1D.
 
 Explain:
-• Why velocity is the derivative of position
-• Why acceleration is the derivative of velocity
-• Why constant acceleration implies velocity changes linearly with time
-• How areas under graphs relate to integrals (area under a–t gives change in v; area under v–t gives displacement)
+- Why velocity is the derivative of position
+- Why acceleration is the derivative of velocity
+- Why constant acceleration implies velocity changes linearly with time
+- How areas under graphs relate to integrals (area under a-t gives change in v; area under v-t gives displacement)
 
 Include a short example using words + one simple equation per line.
 
 Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• Equations in LaTeX display math one per line:
+- Short paragraphs + bullets
+- Bold key terms sparingly
+- Equations in LaTeX display math one per line:
   \\[ v = \\frac{dx}{dt} \\]
   \\[ a = \\frac{dv}{dt} \\]
-• Do NOT use markdown headings like # or ###.`
+- Do NOT use markdown headings like # or ###.`
     }
   };
 
   let currentId = null;
   let lastAiAnswer = '';
 
-  // Canonical PromptSchola formatOutput (HTML escaping + LaTeX normalization)
   function formatOutput(text) {
     if (!text) return '';
     let safe = text
@@ -1159,19 +1119,17 @@ Formatting rules:
     return '<p>' + safe + '</p>';
   }
 
-  // ✅ KEY FIX: sanitize prompt for strict backend validation (ASCII-safe)
-  function PS_sanitizePromptForApi(input) {
-    if (!input) return '';
-    return String(input)
+  // STRICT ASCII prompt sanitizer for backend validation
+  function PS_sanitizePromptStrict(input) {
+    return String(input || '')
       .replace(/\r\n/g, '\n')
-      .replace(/\u2022/g, '- ')        // •
-      .replace(/\u2013/g, '-')         // –
-      .replace(/\u2014/g, '-')         // —
-      .replace(/\u2018|\u2019/g, "'")  // ‘ ’
-      .replace(/\u201C|\u201D/g, '"')  // “ ”
-      .replace(/\u2192/g, '->')        // →
-      .replace(/\u00A0/g, ' ')         // nbsp
-      .replace(/[^\x09\x0A\x0D\x20-\x7E]/g, '')
+      .replace(/\u2022/g, '- ')
+      .replace(/\u2013|\u2014/g, '-')
+      .replace(/\u2018|\u2019/g, "'")
+      .replace(/\u201C|\u201D/g, '"')
+      .replace(/\u2192/g, '->')
+      .replace(/\u00A0/g, ' ')
+      .replace(/[^\x09\x0A\x0D\x20-\x7E]/g, '') // strip non-ASCII
       .trim();
   }
 
@@ -1195,7 +1153,6 @@ Formatting rules:
     if (ai) ai.textContent = 'Run with AI to see a guided explanation here.';
 
     lastAiAnswer = '';
-
     if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
   }
 
@@ -1213,26 +1170,17 @@ Formatting rules:
     navigator.clipboard.writeText(lastAiAnswer).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
   }
 
-  // ✅ Mimic nano behavior: button grays out + says "Running…"
+  // Nano-like running state
   function setRunBtnRunning(running) {
     const btn = document.getElementById('run-btn');
     if (!btn) return;
-
     if (running) {
       btn.dataset.prevText = btn.textContent || 'Run with AI';
       btn.textContent = 'Running…';
       btn.disabled = true;
-
-      // extra “nano-feel”
-      btn.style.filter = 'grayscale(0.25)';
-      btn.style.opacity = '0.72';
-      btn.style.transform = 'none';
     } else {
       btn.disabled = false;
       btn.textContent = btn.dataset.prevText || 'Run with AI';
-      btn.style.filter = '';
-      btn.style.opacity = '';
-      btn.style.transform = '';
     }
   }
 
@@ -1241,24 +1189,17 @@ Formatting rules:
     const promptEdit = document.getElementById('prompt-edit');
     if (!aiOutputEl || !promptEdit) return;
 
-    if (!currentId || !HELP[currentId]) {
-      aiOutputEl.textContent = 'No help topic selected yet.';
-      return;
-    }
-
     const rawPrompt = (promptEdit.value || '').trim();
-    if (!rawPrompt) {
-      aiOutputEl.textContent = 'Prompt is empty.';
+    const prompt = PS_sanitizePromptStrict(rawPrompt);
+
+    if (!prompt) {
+      aiOutputEl.textContent = 'Prompt is empty (or stripped by validation).';
       return;
     }
 
-    // ✅ sanitize to avoid "Prompt failed validation"
-    const prompt = PS_sanitizePromptForApi(rawPrompt);
-
-    // Require login (same behavior as nano pages)
     if (typeof ensureLoggedInOrRedirect === 'function') {
       const user = await ensureLoggedInOrRedirect();
-      if (!user) return; // redirected
+      if (!user) return;
     } else {
       aiOutputEl.textContent = 'Auth helper missing. Please sign in again.';
       return;
@@ -1281,30 +1222,27 @@ Formatting rules:
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        // ✅ Help is paid-only → use a paid step (4)
-        body: JSON.stringify({ prompt, step: 4 })
+        body: JSON.stringify({
+          prompt,
+          step: 4,                  // paid boundary (help is paid)
+          mode: 'help',             // harmless extra metadata if your backend ignores unknown fields
+          help_id: currentId || ''   // harmless extra metadata
+        })
       });
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        let msg =
-          (data && (data.error || data.message)) ||
-          'There was an error contacting the AI. Please try again later.';
-
-        // Optional: map your known codes if present
-        if (data?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
-        if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
-        if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
-
-        aiOutputEl.textContent = msg;
+        // Show details if backend provides them (very useful for debugging)
+        const details = data?.details ? `\n\nDetails: ${JSON.stringify(data.details)}` : '';
+        aiOutputEl.textContent = (data?.error || data?.message || 'Request failed.') + details;
         return;
       }
 
       const raw = data.content || 'No response received from AI.';
       lastAiAnswer = raw;
-
       aiOutputEl.innerHTML = formatOutput(raw);
+
       if (window.MathJax?.typesetPromise) MathJax.typesetPromise([aiOutputEl]).catch(()=>{});
     } catch (err) {
       console.error(err);
@@ -1330,7 +1268,6 @@ Formatting rules:
   }
 
   async function configureAccess() {
-    // Default assumptions
     let loggedIn = false;
     let tier = 'anon';
 
@@ -1378,25 +1315,14 @@ Formatting rules:
       if (hint) hint.textContent = 'Tip: Edit the prompt before running if you want a more specific answer.';
     }
 
-    // Update nav
     if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
   }
 
-  // Build a tiny alias so HELP[id] works, while keeping your existing variable names
-  const HELP_ALIAS = HELP;
-  // (we used HELP in loadFromUrl; keep it consistent)
-  // If you prefer, remove HELP_ALIAS.
-
   document.addEventListener('DOMContentLoaded', async () => {
     initDirectoryToggles();
-
-    // Small compatibility: your code expects HELP; make sure it exists
-    window.HELP = HELP;
-
     loadFromUrl();
     await configureAccess();
 
-    // Sign out button wiring
     const signOutBtn = document.getElementById('nav-signout-btn');
     if (signOutBtn && typeof signOutUser === 'function') {
       signOutBtn.addEventListener('click', signOutUser);
