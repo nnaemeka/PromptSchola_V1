@@ -33,8 +33,8 @@ function looksLikeMissingEntitlementsTable(err) {
 
 // ---------------------------------------------------------------------
 // ✅ PromptSchola Prompt Validator (v1)
-// - Validates prompt CONTENT against your canonical authoring rules
-// - Does NOT change your gating or auth rules
+// - Validates prompt CONTENT against your canonical authoring rules (nano)
+// - Help mode bypasses step-template validation
 // ---------------------------------------------------------------------
 
 function normalizeText(s) {
@@ -47,7 +47,6 @@ function includesAny(haystack, needles) {
 }
 
 function findDisallowedLatex(prompt) {
-  // Avoid environments that frequently break or bloat MathJax output consistency
   const disallowed = [
     '\\begin{align}', '\\end{align}',
     '\\begin{aligned}', '\\end{aligned}',
@@ -59,7 +58,6 @@ function findDisallowedLatex(prompt) {
 }
 
 function findToneFlags(prompt) {
-  // Soft warnings (not hard errors) — you can tune this list anytime
   const flags = [
     'obviously',
     'clearly',
@@ -86,12 +84,10 @@ function validatePromptContent({ prompt, stepNum }) {
   // 1) Audience phrase (required)
   const audiencePhrase = 'final-year high school and first-year university students';
   if (!p.toLowerCase().includes(audiencePhrase)) {
-    errors.push(
-      `Missing required audience phrase. Include exactly: "${audiencePhrase}".`
-    );
+    errors.push(`Missing required audience phrase. Include exactly: "${audiencePhrase}".`);
   }
 
-  // 2) Length sanity (separate from your 12000 hard cap)
+  // 2) Length sanity
   if (p.length < 80) errors.push('Prompt is too short to be useful (min ~80 characters).');
 
   // 3) LaTeX constraints
@@ -111,7 +107,7 @@ function validatePromptContent({ prompt, stepNum }) {
   }
 
   // 5) Step-specific canonical requirements
-  // Step 2 must include a worked anchor instruction
+  // Step 2: "worked anchor" is helpful, but should not hard-fail (too brittle).
   if (stepNum === 2) {
     const hasWorkedAnchor = includesAny(p, [
       'worked anchor',
@@ -122,13 +118,13 @@ function validatePromptContent({ prompt, stepNum }) {
       'worked-out example'
     ]);
     if (!hasWorkedAnchor) {
-      errors.push(
-        'Step 2 must explicitly request a worked anchor (e.g., "include ONE worked anchor example" or "one worked example").'
+      warnings.push(
+        'Step 2 suggestion: include ONE worked anchor example (optional but recommended).'
       );
     }
   }
 
-  // Step 4 must include "Check Your Understanding"
+  // Step 4 must include "Check Your Understanding" (nano-only)
   if (stepNum === 4) {
     const hasCYU = includesAny(p, [
       'check your understanding',
@@ -137,9 +133,7 @@ function validatePromptContent({ prompt, stepNum }) {
       'part a: check your understanding'
     ]);
     if (!hasCYU) {
-      errors.push(
-        'Step 4 must include a "Check Your Understanding" diagnostic section (Part A).'
-      );
+      errors.push('Step 4 must include a "Check Your Understanding" diagnostic section (Part A).');
     }
   }
 
@@ -147,13 +141,20 @@ function validatePromptContent({ prompt, stepNum }) {
   if (stepNum === 6) {
     const assessmentWords = ['quiz', 'test', 'graded', 'exam', 'score', 'marking scheme'];
     if (includesAny(p, assessmentWords)) {
-      warnings.push(
-        'Step 6 should remain exploratory. Consider removing quiz/test/exam language.'
-      );
+      warnings.push('Step 6 should remain exploratory. Consider removing quiz/test/exam language.');
     }
   }
 
   return { ok: errors.length === 0, errors, warnings };
+}
+
+// Normalize/validate mode without breaking existing callers
+function normalizeMode(mode) {
+  const m = String(mode || '').toLowerCase().trim();
+  if (!m) return 'nano';
+  if (m === 'help') return 'help';
+  if (m === 'nano') return 'nano';
+  return 'nano';
 }
 
 // ---------------------------------------------------------------------
@@ -166,7 +167,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { prompt, step } = req.body || {};
+    const { prompt, step, mode } = req.body || {};
+    const reqMode = normalizeMode(mode);
 
     // ---- Validate inputs ----
     if (!prompt || typeof prompt !== 'string') {
@@ -182,13 +184,17 @@ export default async function handler(req, res) {
       return jsonError(res, 413, 'PROMPT_TOO_LARGE', 'Prompt is too long');
     }
 
-    // ✅ NEW: Validate prompt CONTENT against PromptSchola rules
-    const v = validatePromptContent({ prompt, stepNum });
-    if (!v.ok) {
-      return jsonError(res, 400, 'PROMPT_INVALID', 'Prompt failed validation', {
-        details: v.errors,
-        warnings: v.warnings
-      });
+    // ✅ Validate prompt content ONLY for nano mode.
+    // Help prompts should not be forced into step-template structure.
+    let v = { ok: true, errors: [], warnings: [] };
+    if (reqMode !== 'help') {
+      v = validatePromptContent({ prompt, stepNum });
+      if (!v.ok) {
+        return jsonError(res, 400, 'PROMPT_INVALID', 'Prompt failed validation', {
+          details: v.errors,
+          warnings: v.warnings
+        });
+      }
     }
 
     // ---- Env ----
@@ -260,6 +266,7 @@ export default async function handler(req, res) {
     // ---- Access rule enforcement ----
     // signed-in free users: Run with AI only for steps 1–2
     // paid users: Run with AI for steps 1–6
+    // Help pages will call with step=4 so this stays paid-gated.
     if (!isPaid && stepNum > 2) {
       return jsonError(res, 402, 'PAYWALL', 'This step requires Mastery (paid) access.', {
         required: 'paid',
@@ -309,9 +316,10 @@ export default async function handler(req, res) {
       content,
       meta: {
         step: stepNum,
+        mode: reqMode,
         tier,
         isPaid,
-        // ✅ NEW: surface validator warnings so you can debug prompt quality
+        // For help mode we still return warnings array (empty) so callers can rely on it
         promptWarnings: v.warnings || []
       }
     });
