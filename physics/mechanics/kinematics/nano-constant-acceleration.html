@@ -478,6 +478,42 @@
     .ai-response strong { font-weight: 800; color: inherit; }
     .ai-response em { font-style: italic; }
 
+    /* Step 4 answer toggles */
+    .ai-response details.answer-toggle {
+      margin: 0.55rem 0 0.75rem;
+      border: 1px solid rgba(209, 213, 219, 0.85);
+      background: #f9fafb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .ai-response details.answer-toggle summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.55rem 0.75rem;
+      font-weight: 800;
+      color: #4c1d95;
+      background: linear-gradient(to bottom, rgba(126, 34, 206, 0.06), rgba(129, 140, 248, 0.06));
+      border-bottom: 1px solid rgba(209, 213, 219, 0.7);
+      font-size: 0.9rem;
+    }
+    .ai-response details.answer-toggle summary::-webkit-details-marker { display:none; }
+    .ai-response .answer-body {
+      padding: 0.75rem 0.85rem 0.85rem;
+      color: #111827;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .ai-response .answer-body .mini-note {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 12px;
+      border: 1px solid rgba(129, 140, 248, 0.32);
+      background: rgba(129, 140, 248, 0.08);
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
     .copy-row {
       margin-top: 0.55rem;
       display: flex;
@@ -545,7 +581,7 @@
       color: #4c1d95;
       background: rgba(126, 34, 206, 0.06);
       font-size: 0.8rem;
-      font-weight: 800;
+      font-weight: 900;
       font-family: var(--font-body);
     }
 
@@ -559,6 +595,8 @@
       padding: 0.9rem 0.95rem;
       font-size: 0.82rem;
       font-family: var(--font-body);
+      position: relative;
+      overflow: hidden;
     }
 
     .help-panel-body p { color: var(--text-muted); line-height: 1.65; }
@@ -580,7 +618,7 @@
       font-size: 0.72rem;
       color: var(--accent-strong);
       font-family: var(--font-body);
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
@@ -609,6 +647,62 @@
       font-family: var(--font-body);
     }
     .help-prompt-btn:hover { background: rgba(76, 29, 149, 0.07); color: #4c1d95; text-decoration: underline; }
+
+    /* Variant A teaser (visible but disabled) */
+    .help-teaser-wrap { position: relative; }
+    .help-teaser-disabled {
+      opacity: 0.62;
+      filter: grayscale(0.15);
+      pointer-events: none; /* make unclickable */
+      user-select: none;
+    }
+    .help-teaser-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 1.1rem;
+      background: linear-gradient(to bottom, rgba(249,250,251,0.55), rgba(249,250,251,0.84));
+      border: 1px dashed rgba(99, 102, 241, 0.55);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0.8rem 0.85rem;
+      z-index: 2;
+    }
+    .help-teaser-overlay .teaser-card {
+      width: 100%;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.92);
+      color: #f8fafc;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      padding: 0.85rem 0.9rem;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.22);
+    }
+    .teaser-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 900;
+      color: #c7d2fe;
+      margin-bottom: 0.35rem;
+    }
+    .teaser-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      line-height: 1.2;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .teaser-desc {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 0.7rem;
+    }
+    .teaser-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
 
     footer {
       margin-top: auto;
@@ -877,7 +971,7 @@
                 <div class="step-header">
                   <div class="step-header-left">
                     <div class="step-index">STEP 4</div>
-                    <div class="step-title">Check your understanding: mini-quiz (with feedback)</div>
+                    <div class="step-title">Check your understanding: mini-quiz (answers hidden until you reveal)</div>
                   </div>
                   <div class="step-header-right">
                     <span class="step-access-pill mastery">Paid</span>
@@ -888,8 +982,8 @@
                 <div class="step-content" id="step-content-4">
                   <div class="step-unlocked" id="step-unlocked-4">
                     <div class="step-body">
-                      Use short conceptual and graph questions to reveal misunderstandings early
-                      (sign errors, slope/area confusion, “acceleration at the top” myths).
+                      Try each question first. Answers + feedback appear only when you click <strong>Reveal answer</strong>.
+                      This prevents accidental spoilers and builds real exam readiness.
                     </div>
 
                     <div class="prompt-preview" id="preview-step4">Prompt preview will appear here.</div>
@@ -905,7 +999,7 @@
                         <button class="btn-ghost" onclick="showPrompt(4)">Show prompt</button>
                         <button class="btn-primary" id="run-btn-4" type="button">Run with AI</button>
                       </div>
-                      <span>Goal: catch misconceptions before you start heavier problem solving.</span>
+                      <span>Goal: attempt first → then reveal and learn from your mistakes.</span>
                     </div>
                   </div>
 
@@ -1019,29 +1113,18 @@
             </div>
           </div>
 
-          <!-- RIGHT: Help Panel (PAID ONLY) -->
+          <!-- RIGHT: Help Panel -->
           <aside class="help-panel">
             <div class="help-panel-inner">
 
-              <div id="help-locked" class="locked-panel" style="display:none;">
-                <div class="locked-title">Help prompts (Paid)</div>
-                <div class="locked-desc">
-                  This guided help panel is available to paid learners. It includes exam traps, common confusions,
-                  and deeper prompt paths for constant-acceleration problems.
-                </div>
-                <div class="locked-actions">
-                  <a class="btn-primary" href="/pricing.html">Unlock Help</a>
-                  <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
-                </div>
-              </div>
+              <button class="help-panel-toggle" id="help-panel-toggle" type="button">
+                <span class="nano-help-title">Deepen your understanding</span>
+                <span class="help-panel-toggle-icon">▾</span>
+              </button>
 
-              <div id="help-paid">
-                <button class="help-panel-toggle" id="help-panel-toggle" type="button">
-                  <span class="nano-help-title">Deepen your understanding</span>
-                  <span class="help-panel-toggle-icon">▾</span>
-                </button>
-
+              <div class="help-teaser-wrap">
                 <div class="help-panel-body" id="help-panel-body">
+
                   <p>
                     Use these prompt clusters when you feel stuck, when graphs feel confusing, or when answers
                     don’t match your intuition.
@@ -1076,7 +1159,7 @@
                     </div>
                     <ul class="help-prompts-bulleted">
                       <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM01">Mixing up “acceleration is constant” with “velocity is constant”</a></li>
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM02">Using the wrong kinematic equation for the knowns you have</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM02">Using the wrong kinematics equation for the knowns you have</a></li>
                     </ul>
                   </div>
 
@@ -1087,7 +1170,7 @@
                     </div>
                     <ul class="help-prompts-bulleted">
                       <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST01">How to draw a quick motion diagram and decide signs</a></li>
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST02">Given 3 variables, pick the right equation in 10 seconds</a></li>
+                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST02">Given 3 variables, how to pick the right equation in 10 seconds</a></li>
                     </ul>
                   </div>
 
@@ -1103,6 +1186,23 @@
                   </div>
 
                 </div>
+
+                <!-- Overlay shown only when not paid -->
+                <div class="help-teaser-overlay" id="help-teaser-overlay" aria-hidden="true">
+                  <div class="teaser-card">
+                    <div class="teaser-kicker">Mastery feature</div>
+                    <div class="teaser-title">Unlock guided help paths</div>
+                    <div class="teaser-desc">
+                      Get the full Help Library for this lesson—exam traps, graph confusions, and deeper prompt paths.
+                      Upgrade to Mastery to open these links and run help prompts with AI.
+                    </div>
+                    <div class="teaser-actions">
+                      <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                    </div>
+                  </div>
+                </div>
+
               </div>
 
             </div>
@@ -1151,9 +1251,9 @@
   // Prompts (final-year high school + first-year university)
   const prompts = {
     1: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 1 (Orient/Definition): Explain clearly what “constant acceleration” means. Include:\n• A one-sentence definition\n• What it implies about how velocity changes with time\n• A quick note about choosing a positive direction and using sign conventions\n• 2 everyday examples (car speeding up steadily, free-fall near Earth)\n\nFormatting rules:\n• Short paragraphs + bullet points\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math, one per line:\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]\n  \\\\[ v = u + at \\\\]\n• Do NOT use markdown headings like # or ###.`,
-    2: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 2 (Conceptual grounding): Build intuition using:\n• A car accelerating at a steady rate\n• A ball dropped from rest (free-fall)\n• A ball thrown upward then coming down (address the myth “acceleration is zero at the top”)\n\nFor each, describe what the v–t, a–t, and x–t graphs should look like (qualitatively). Emphasize:\n• Slope of v–t is acceleration\n• Area under a–t gives change in velocity\n• Area under v–t gives displacement\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key concepts sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
+    2: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 2 (Conceptual grounding): Build intuition using:\n• A car accelerating at a steady rate\n• A ball dropped from rest (free-fall)\n• A ball thrown upward then coming down (address the myth “acceleration is zero at the top”)\n\nFor each, describe what the v–t, a–t, and x–t graphs should look like (qualitatively). Emphasize:\n• Slope of v–t is acceleration\n• Area under a–t gives change in velocity\n• Area under v–t gives displacement\n\nInclude ONE worked anchor example with numbers (brief): choose simple values and show how you’d read slope/area to get a result.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key concepts sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
     3: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 3 (Real-world connection): Explain when constant acceleration is a good approximation and when it breaks.\nInclude:\n• Free-fall near Earth (when air resistance is negligible)\n• A car braking (roughly constant a over a short interval)\n• Why air resistance makes acceleration change\n• The difference between average acceleration and instantaneous acceleration, and why constant-a makes them match\n\nAdd 3 “modeling questions” students should ask before using constant-a equations.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
-    4: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 4 (Check your understanding – mini-quiz): Create 7 questions total:\n• 4 multiple-choice (A–D)\n• 2 short-answer\n• 1 graph reasoning question (describe the graph in words; no images)\n\nCoverage must include:\n• Sign conventions\n• “Top of motion” concept (v=0 but a≠0)\n• Interpreting slope/area on v–t / a–t\n• Choosing the right kinematics equation based on knowns\n\nAfter each question, provide:\n• Correct answer\n• A 1–2 sentence explanation\n\nFormatting rules:\n• Clear spacing\n• Bullets and numbering\n• No markdown headings like # or ###.`,
+    4: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 4 (Check your understanding – mini-quiz): Create 7 questions total:\n• 4 multiple-choice (A–D)\n• 2 short-answer\n• 1 graph reasoning question (describe the graph in words; no images)\n\nCoverage must include:\n• Sign conventions\n• “Top of motion” concept (v=0 but a≠0)\n• Interpreting slope/area on v–t / a–t\n• Choosing the right kinematics equation based on knowns\n\nCRITICAL OUTPUT FORMAT (so the site can hide answers):\nFor each question, write the question first, then put the answer+explanation inside these exact markers on their own lines:\n[[[ANSWER]]]\n...answer + 1–2 sentence explanation...\n[[[/ANSWER]]]\n\nExample structure:\n1) ...question text...\n[[[ANSWER]]]\nCorrect answer: B\nExplanation: ...\n[[[/ANSWER]]]\n\nFormatting rules:\n• Clear spacing\n• Bullets and numbering\n• No markdown headings like # or ###.`,
     5: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 5 (Practice): Create 4 problems with increasing difficulty:\n1) Start from rest, constant a, find v and displacement after t\n2) Non-zero initial velocity, constant a, find time to reach a velocity\n3) Free-fall (choose + upward OR + downward, but be consistent), include sign convention explicitly\n4) Mixed: find displacement using v^2 = u^2 + 2as (or equivalent) with careful reasoning\n\nFor each problem:\n• State the problem clearly\n• Then provide a step-by-step solution with brief reasoning\n• Show equations as LaTeX display math, one per line\n\nFormatting rules:\n• Numbered problems\n• Bold “Solution” for each\n• No markdown headings like # or ###.`,
     6: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 6 (Summary & reflection + Exploration/Simulation prompts):\nPART A — Summary & reflection:\n• Give a tight summary of the core ideas (definition, graphs, sign conventions)\n• Provide a “reflection checklist” with 6 yes/no items students can self-check\n\nPART B — Exploration:\nProvide 5 “what if” experiments students can do on paper:\n• Change u, a, or t and predict how v–t and x–t graphs change\n• Include at least 1 scenario where acceleration changes (air resistance) and ask them to compare to the constant-a model\n\nFormatting rules:\n• Short paragraphs + bullet lists\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`
   };
@@ -1182,6 +1282,82 @@
     safe = safe.replace(/\n\n+/g, '</p><p>');
     safe = safe.replace(/\n/g, '<br>');
     return '<p>' + safe + '</p>';
+  }
+
+  function formatAnswerBody(innerText) {
+    // innerText is already HTML-escaped by upstream; just apply light formatting
+    let t = innerText;
+    t = t.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+    t = t.replace(/^\s*[-*]\s+/gm, '• ');
+    t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    t = t.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    t = t.replace(/\n\n+/g, '</p><p>');
+    t = t.replace(/\n/g, '<br>');
+    return '<p>' + t + '</p>';
+  }
+
+  function formatQuizWithToggles(raw) {
+    if (!raw) return '';
+
+    // escape first
+    let safe = raw
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // normalize latex slashes (same as canonical)
+    safe = safe
+      .replace(/\\\\\[/g, '\\[')
+      .replace(/\\\\\]/g, '\\]')
+      .replace(/\\\\\(/g, '\\(')
+      .replace(/\\\\\)/g, '\\)');
+
+    // Convert each answer block to a <details>
+    // Markers are: [[[ANSWER]]] and [[[/ANSWER]]]
+    const answerOpen = '[[[ANSWER]]]';
+    const answerClose = '[[[/ANSWER]]]';
+
+    let out = '';
+    let idx = 0;
+
+    while (true) {
+      const start = safe.indexOf(answerOpen, idx);
+      if (start === -1) {
+        out += safe.slice(idx);
+        break;
+      }
+      const end = safe.indexOf(answerClose, start + answerOpen.length);
+      if (end === -1) {
+        // If malformed, just append the rest
+        out += safe.slice(idx);
+        break;
+      }
+
+      // Append the question text before the answer block
+      out += safe.slice(idx, start);
+
+      // Extract answer inner content
+      const inner = safe.slice(start + answerOpen.length, end).trim();
+
+      out += `\n\n<details class="answer-toggle"><summary>Reveal answer</summary><div class="answer-body">${formatAnswerBody(inner)}</div></details>\n\n`;
+
+      idx = end + answerClose.length;
+    }
+
+    // Finally apply general formatting to the non-answer parts too
+    // But we must avoid wrapping the <details> in escaped formatting.
+    // So we do paragraph/line formatting on the whole out, but preserve details blocks as raw HTML.
+    // Strategy: split around <details ...> blocks.
+    const parts = out.split(/(<details class="answer-toggle">[\s\S]*?<\/details>)/g);
+
+    const formatted = parts.map(part => {
+      if (part.startsWith('<details class="answer-toggle">')) return part;
+      // format plain text chunks
+      return formatOutput(part);
+    }).join('');
+
+    // formatOutput wraps chunks in <p>...</p>; multiple chunks will create multiple <p>.
+    return formatted;
   }
 
   function loadCollapseState() {
@@ -1230,7 +1406,7 @@
   }
 
   function redirectToSignupForRunAI() {
-    const redirectTarget = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+    const redirectTarget = encodeURIComponent(window.location.href);
     window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
   }
 
@@ -1296,6 +1472,9 @@
           if (err?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
           if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
           if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+          if (err?.code === 'PROMPT_INVALID') {
+            msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(err?.details || []);
+          }
         } catch (_) {}
         output.textContent = msg;
         return;
@@ -1305,7 +1484,13 @@
       const raw = data.content || 'No response received from AI.';
       lastAiResponses[step] = raw;
 
-      output.innerHTML = formatOutput(raw);
+      // Step 4: render with per-question answer toggles
+      if (step === 4) {
+        output.innerHTML = formatQuizWithToggles(raw);
+      } else {
+        output.innerHTML = formatOutput(raw);
+      }
+
       if (window.MathJax?.typesetPromise) MathJax.typesetPromise([output]).catch(()=>{});
 
       // Show copy answer only after success
@@ -1316,6 +1501,22 @@
       output.textContent = 'Unexpected error. Please try again.';
     } finally {
       setRunBtnRunning(step, false);
+    }
+  }
+
+  function configureHelpTeaser({ loggedIn, tier }) {
+    const isPaid = tier === 'paid';
+    const body = document.getElementById('help-panel-body');
+    const overlay = document.getElementById('help-teaser-overlay');
+
+    if (!body || !overlay) return;
+
+    if (isPaid) {
+      body.classList.remove('help-teaser-disabled');
+      overlay.style.display = 'none';
+    } else {
+      body.classList.add('help-teaser-disabled');
+      overlay.style.display = 'flex';
     }
   }
 
@@ -1336,13 +1537,8 @@
       locked.style.display = lock ? 'block' : 'none';
     }
 
-    // Help panel paid-only
-    const helpPaid = document.getElementById('help-paid');
-    const helpLocked = document.getElementById('help-locked');
-    if (helpPaid && helpLocked) {
-      helpPaid.style.display = isPaid ? 'block' : 'none';
-      helpLocked.style.display = isPaid ? 'none' : 'block';
-    }
+    // Help panel teaser logic (Variant A)
+    configureHelpTeaser({ loggedIn, tier });
 
     // Step 1–2:
     [1,2].forEach((step) => {
@@ -1402,7 +1598,7 @@
 
     if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
 
-    // Help panel toggle (only visible for paid)
+    // Help panel toggle (always present)
     const toggleBtn = document.getElementById('help-panel-toggle');
     const body = document.getElementById('help-panel-body');
     const icon = document.querySelector('.help-panel-toggle-icon');
@@ -1413,7 +1609,7 @@
       toggleBtn.addEventListener('click', (e) => { e.preventDefault(); open = !open; updatePanel(); });
     }
 
-    // Update nav based on auth state
+    // Update nav user display (auth.js)
     if (typeof updateNavUserDisplay === 'function') {
       updateNavUserDisplay();
     }
@@ -1434,16 +1630,6 @@
     if (loggedIn && (tier === 'anon')) tier = 'free';
 
     configureUI({ loggedIn, tier });
-
-    // ✅ OPTIONAL: append context to help links (future-proof for "back" chip / analytics)
-    document.querySelectorAll('a.help-prompt-btn[href^="help-constant-acceleration.html?id="]')
-      .forEach(a => {
-        try {
-          const url = new URL(a.getAttribute('href'), window.location.href);
-          url.searchParams.set('from', 'nano');
-          a.setAttribute('href', url.pathname + url.search);
-        } catch (e) {}
-      });
   });
 </script>
 
