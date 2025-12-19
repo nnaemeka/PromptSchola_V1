@@ -449,7 +449,8 @@
       font-family: var(--font-body);
     }
 
-    .prompt-edit {
+    /* READ-ONLY prompt display (not editable) */
+    .prompt-preview {
       width: 100%;
       min-height: 170px;
       border: none;
@@ -459,7 +460,8 @@
       font-size: 0.9rem;
       line-height: 1.7;
       color: var(--text-main);
-      resize: vertical;
+      white-space: pre-wrap;
+      user-select: text;
     }
 
     .ai-box {
@@ -766,8 +768,8 @@
 
             <div class="help-body-grid">
               <div class="prompt-box">
-                <div class="prompt-box-header">Prompt (edit before running)</div>
-                <textarea id="prompt-edit" class="prompt-edit" spellcheck="false">Loading prompt…</textarea>
+                <div class="prompt-box-header">Prompt</div>
+                <div id="prompt-preview" class="prompt-preview">Loading prompt…</div>
               </div>
 
               <div id="ai-output" class="ai-box">
@@ -782,7 +784,7 @@
                 <button class="btn-primary" id="run-btn" type="button" onclick="runCurrentPromptWithAI()">Run with AI</button>
               </div>
               <div class="actions-right">
-                <span id="hint-text">Tip: You can also copy this prompt into another AI chat.</span>
+                <span id="hint-text">Tip: Browse the library—use Run with AI when you’re ready for guided help.</span>
               </div>
             </div>
           </article>
@@ -1123,6 +1125,7 @@ Formatting rules:
 
   let currentId = null;
   let lastAiAnswer = '';
+  let currentPrompt = '';
 
   // Canonical PromptSchola formatOutput (HTML escaping + LaTeX normalization)
   function formatOutput(text) {
@@ -1153,17 +1156,18 @@ Formatting rules:
     const entry = HELP[id] || HELP['CL01'];
 
     currentId = entry.id;
+    currentPrompt = entry.prompt || '';
 
     const cat = document.getElementById('pill-category');
     const title = document.getElementById('help-title');
     const lead = document.getElementById('help-lead');
-    const promptEdit = document.getElementById('prompt-edit');
+    const promptPreview = document.getElementById('prompt-preview');
     const ai = document.getElementById('ai-output');
 
     if (cat) cat.textContent = 'Category: ' + (entry.category || 'Study help');
     if (title) title.textContent = entry.title || 'Study help';
     if (lead) lead.textContent = entry.lead || '';
-    if (promptEdit) promptEdit.value = entry.prompt || '';
+    if (promptPreview) promptPreview.textContent = currentPrompt || '';
     if (ai) ai.textContent = 'Run with AI to see a guided explanation here.';
 
     lastAiAnswer = '';
@@ -1172,8 +1176,7 @@ Formatting rules:
   }
 
   function copyCurrentPrompt() {
-    const promptEdit = document.getElementById('prompt-edit');
-    const prompt = promptEdit ? promptEdit.value : '';
+    const prompt = (currentPrompt || '').trim();
     if (!prompt) return alert('No prompt to copy.');
     if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
     navigator.clipboard.writeText(prompt).then(() => alert('Prompt copied.')).catch(() => alert('Could not copy prompt.'));
@@ -1206,13 +1209,12 @@ Formatting rules:
   }
 
   async function runCurrentPromptWithAI() {
-    const promptEdit = document.getElementById('prompt-edit');
     const aiOutputEl = document.getElementById('ai-output');
-    if (!promptEdit || !aiOutputEl) return;
+    if (!aiOutputEl) return;
 
-    const prompt = (promptEdit.value || '').trim();
+    const prompt = (currentPrompt || '').trim();
     if (!prompt) {
-      aiOutputEl.textContent = 'Prompt is empty. Please write or select a help prompt.';
+      aiOutputEl.textContent = 'Prompt is empty. Please select a help topic.';
       return;
     }
 
@@ -1242,7 +1244,7 @@ Formatting rules:
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        // ✅ Help mode bypasses nano step validation server-side
+        // Help mode bypasses nano step validation server-side
         body: JSON.stringify({ prompt, step: 4, mode: 'help' })
       });
 
@@ -1256,9 +1258,7 @@ Formatting rules:
           if (err?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
           if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
           if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
-          if (err?.code === 'PROMPT_INVALID') {
-            details = err?.details || null;
-          }
+          if (err?.code === 'PROMPT_INVALID') details = err?.details || null;
         } catch (_) {}
 
         if (details && Array.isArray(details) && details.length) {
@@ -1321,8 +1321,8 @@ Formatting rules:
 
     const lockedWrap = document.getElementById('help-locked-wrap');
     const runBtn = document.getElementById('run-btn');
-    const promptEdit = document.getElementById('prompt-edit');
     const hint = document.getElementById('hint-text');
+    const ai = document.getElementById('ai-output');
 
     if (!isPaid) {
       if (lockedWrap) lockedWrap.style.display = 'block';
@@ -1336,8 +1336,8 @@ Formatting rules:
         };
       }
 
-      if (promptEdit) promptEdit.setAttribute('readonly', 'readonly');
       if (hint) hint.textContent = 'Tip: You can browse titles. Upgrade to run help prompts with AI.';
+      if (ai) ai.textContent = 'Upgrade to Mastery to run help prompts with AI.';
     } else {
       if (lockedWrap) lockedWrap.style.display = 'none';
 
@@ -1346,8 +1346,7 @@ Formatting rules:
         runBtn.onclick = runCurrentPromptWithAI;
       }
 
-      if (promptEdit) promptEdit.removeAttribute('readonly');
-      if (hint) hint.textContent = 'Tip: Edit the prompt before running if you want a more specific answer.';
+      if (hint) hint.textContent = 'Tip: Copy the prompt and try it after you attempt the concept on your own.';
     }
 
     if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
