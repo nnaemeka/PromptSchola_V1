@@ -601,6 +601,46 @@
 
     .help-panel-body p { color: var(--text-muted); line-height: 1.65; }
 
+    /* UPDATED: CTA banner instead of disabling all links */
+    .help-cta {
+      margin-top: 0.65rem;
+      padding: 0.7rem 0.75rem;
+      border-radius: 14px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.88));
+      color: #f8fafc;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.18);
+      display: none;
+    }
+    .help-cta .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 900;
+      color: #c7d2fe;
+      margin-bottom: 0.35rem;
+      font-family: var(--font-body);
+    }
+    .help-cta .title {
+      font-family: var(--font-heading);
+      font-size: 1.02rem;
+      line-height: 1.2;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .help-cta .desc {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 0.65rem;
+      font-family: var(--font-body);
+    }
+    .help-cta .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+
     .help-category {
       padding-top: 0.65rem;
       border-top: 1px solid rgba(209, 213, 219, 0.7);
@@ -648,61 +688,9 @@
     }
     .help-prompt-btn:hover { background: rgba(76, 29, 149, 0.07); color: #4c1d95; text-decoration: underline; }
 
-    /* Variant A teaser (visible but disabled) */
-    .help-teaser-wrap { position: relative; }
-    .help-teaser-disabled {
-      opacity: 0.62;
-      filter: grayscale(0.15);
-      pointer-events: none; /* make unclickable */
-      user-select: none;
-    }
-    .help-teaser-overlay {
-      position: absolute;
-      inset: 0;
-      border-radius: 1.1rem;
-      background: linear-gradient(to bottom, rgba(249,250,251,0.55), rgba(249,250,251,0.84));
-      border: 1px dashed rgba(99, 102, 241, 0.55);
-      display: none;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 0.8rem 0.85rem;
-      z-index: 2;
-    }
-    .help-teaser-overlay .teaser-card {
-      width: 100%;
-      border-radius: 14px;
-      background: rgba(15, 23, 42, 0.92);
-      color: #f8fafc;
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      padding: 0.85rem 0.9rem;
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.22);
-    }
-    .teaser-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 900;
-      color: #c7d2fe;
-      margin-bottom: 0.35rem;
-    }
-    .teaser-title {
-      font-family: var(--font-heading);
-      font-size: 1.05rem;
-      line-height: 1.2;
-      margin-bottom: 0.25rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .teaser-desc {
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      line-height: 1.55;
-      margin-bottom: 0.7rem;
-    }
-    .teaser-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    /* UPDATED: optional subtle dim (but still clickable) */
+    .help-dim { opacity: 0.92; }
+    .help-dim .help-category-desc { color: #94a3b8; }
 
     footer {
       margin-top: auto;
@@ -1122,85 +1110,78 @@
                 <span class="help-panel-toggle-icon">▾</span>
               </button>
 
-              <div class="help-teaser-wrap">
-                <div class="help-panel-body" id="help-panel-body">
+              <div class="help-panel-body" id="help-panel-body">
+                <p>
+                  Use these help topics when you feel stuck, when graphs feel confusing, or when answers
+                  don’t match your intuition.
+                </p>
 
-                  <p>
-                    Use these prompt clusters when you feel stuck, when graphs feel confusing, or when answers
-                    don’t match your intuition.
-                  </p>
-
-                  <div class="help-category">
-                    <div>
-                      <span class="help-category-label">Confusions &amp; look-alikes</span>
-                      <p class="help-category-desc">Separate velocity, acceleration, slope, and area ideas.</p>
-                    </div>
-                    <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CL01">Slope vs value: what the v–t graph is really telling you</a></li>
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CL02">Average vs instantaneous acceleration (and why constant-a makes them match)</a></li>
-                    </ul>
+                <!-- UPDATED: visible only when NOT paid, but links stay clickable -->
+                <div class="help-cta" id="help-cta" aria-hidden="true">
+                  <div class="kicker">Mastery feature</div>
+                  <div class="title">Run Help prompts with AI</div>
+                  <div class="desc">
+                    You can browse all help topics for free. Running the AI guidance inside the Help page is a Mastery (paid) feature.
                   </div>
-
-                  <div class="help-category">
-                    <div>
-                      <span class="help-category-label">Tricky areas &amp; exam traps</span>
-                      <p class="help-category-desc">Avoid the classic sign and “top of motion” traps.</p>
-                    </div>
-                    <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ET01">At the top of the throw: velocity is zero, acceleration is not</a></li>
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ET02">Sign conventions: choosing + upward vs + downward without confusion</a></li>
-                    </ul>
+                  <div class="actions">
+                    <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+                    <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
                   </div>
-
-                  <div class="help-category">
-                    <div>
-                      <span class="help-category-label">Common mistakes</span>
-                      <p class="help-category-desc">Fix the errors that cause most wrong answers.</p>
-                    </div>
-                    <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM01">Mixing up “acceleration is constant” with “velocity is constant”</a></li>
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM02">Using the wrong kinematics equation for the knowns you have</a></li>
-                    </ul>
-                  </div>
-
-                  <div class="help-category">
-                    <div>
-                      <span class="help-category-label">When you feel stuck</span>
-                      <p class="help-category-desc">Get unstuck with a reliable problem-solving routine.</p>
-                    </div>
-                    <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST01">How to draw a quick motion diagram and decide signs</a></li>
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST02">Given 3 variables, how to pick the right equation in 10 seconds</a></li>
-                    </ul>
-                  </div>
-
-                  <div class="help-category">
-                    <div>
-                      <span class="help-category-label">Concept bridges</span>
-                      <p class="help-category-desc">Connect constant-a kinematics to dynamics and calculus.</p>
-                    </div>
-                    <ul class="help-prompts-bulleted">
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=BR01">How constant-a leads into Newton’s laws (forces cause acceleration)</a></li>
-                      <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=BR02">How derivatives/integrals connect to v = dx/dt and a = dv/dt</a></li>
-                    </ul>
-                  </div>
-
                 </div>
 
-                <!-- Overlay shown only when not paid -->
-                <div class="help-teaser-overlay" id="help-teaser-overlay" aria-hidden="true">
-                  <div class="teaser-card">
-                    <div class="teaser-kicker">Mastery feature</div>
-                    <div class="teaser-title">Unlock guided help paths</div>
-                    <div class="teaser-desc">
-                      Get the full Help Library for this lesson—exam traps, graph confusions, and deeper prompt paths.
-                      Upgrade to Mastery to open these links and run help prompts with AI.
-                    </div>
-                    <div class="teaser-actions">
-                      <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
-                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
-                    </div>
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Confusions &amp; look-alikes</span>
+                    <p class="help-category-desc">Separate velocity, acceleration, slope, and area ideas.</p>
                   </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CL01">Slope vs value: what the v–t graph is really telling you</a></li>
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CL02">Average vs instantaneous acceleration (and why constant-a makes them match)</a></li>
+                  </ul>
+                </div>
+
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Tricky areas &amp; exam traps</span>
+                    <p class="help-category-desc">Avoid the classic sign and “top of motion” traps.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ET01">At the top of the throw: velocity is zero, acceleration is not</a></li>
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ET02">Sign conventions: choosing + upward vs + downward without confusion</a></li>
+                  </ul>
+                </div>
+
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Common mistakes</span>
+                    <p class="help-category-desc">Fix the errors that cause most wrong answers.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM01">Mixing up “acceleration is constant” with “velocity is constant”</a></li>
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=CM02">Using the wrong kinematics equation for the knowns you have</a></li>
+                  </ul>
+                </div>
+
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">When you feel stuck</span>
+                    <p class="help-category-desc">Get unstuck with a reliable problem-solving routine.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST01">How to draw a quick motion diagram and decide signs</a></li>
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=ST02">Given 3 variables, how to pick the right equation in 10 seconds</a></li>
+                  </ul>
+                </div>
+
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Concept bridges</span>
+                    <p class="help-category-desc">Connect constant-a kinematics to dynamics and calculus.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=BR01">How constant-a leads into Newton’s laws (forces cause acceleration)</a></li>
+                    <li><a class="help-prompt-btn" href="help-constant-acceleration.html?id=BR02">How derivatives/integrals connect to v = dx/dt and a = dv/dt</a></li>
+                  </ul>
                 </div>
 
               </div>
@@ -1285,7 +1266,6 @@
   }
 
   function formatAnswerBody(innerText) {
-    // innerText is already HTML-escaped by upstream; just apply light formatting
     let t = innerText;
     t = t.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
     t = t.replace(/^\s*[-*]\s+/gm, '• ');
@@ -1299,21 +1279,17 @@
   function formatQuizWithToggles(raw) {
     if (!raw) return '';
 
-    // escape first
     let safe = raw
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
 
-    // normalize latex slashes (same as canonical)
     safe = safe
       .replace(/\\\\\[/g, '\\[')
       .replace(/\\\\\]/g, '\\]')
       .replace(/\\\\\(/g, '\\(')
       .replace(/\\\\\)/g, '\\)');
 
-    // Convert each answer block to a <details>
-    // Markers are: [[[ANSWER]]] and [[[/ANSWER]]]
     const answerOpen = '[[[ANSWER]]]';
     const answerClose = '[[[/ANSWER]]]';
 
@@ -1322,41 +1298,25 @@
 
     while (true) {
       const start = safe.indexOf(answerOpen, idx);
-      if (start === -1) {
-        out += safe.slice(idx);
-        break;
-      }
+      if (start === -1) { out += safe.slice(idx); break; }
       const end = safe.indexOf(answerClose, start + answerOpen.length);
-      if (end === -1) {
-        // If malformed, just append the rest
-        out += safe.slice(idx);
-        break;
-      }
+      if (end === -1) { out += safe.slice(idx); break; }
 
-      // Append the question text before the answer block
       out += safe.slice(idx, start);
 
-      // Extract answer inner content
       const inner = safe.slice(start + answerOpen.length, end).trim();
-
       out += `\n\n<details class="answer-toggle"><summary>Reveal answer</summary><div class="answer-body">${formatAnswerBody(inner)}</div></details>\n\n`;
 
       idx = end + answerClose.length;
     }
 
-    // Finally apply general formatting to the non-answer parts too
-    // But we must avoid wrapping the <details> in escaped formatting.
-    // So we do paragraph/line formatting on the whole out, but preserve details blocks as raw HTML.
-    // Strategy: split around <details ...> blocks.
     const parts = out.split(/(<details class="answer-toggle">[\s\S]*?<\/details>)/g);
 
     const formatted = parts.map(part => {
       if (part.startsWith('<details class="answer-toggle">')) return part;
-      // format plain text chunks
       return formatOutput(part);
     }).join('');
 
-    // formatOutput wraps chunks in <p>...</p>; multiple chunks will create multiple <p>.
     return formatted;
   }
 
@@ -1379,6 +1339,7 @@
     content.style.display = isHidden ? 'block' : 'none';
     btn.textContent = isHidden ? '−' : '+';
 
+    // Store "false" when collapsed, "true" when open (matches your existing behavior)
     collapseState[step] = isHidden;
     saveCollapseState();
   }
@@ -1484,16 +1445,11 @@
       const raw = data.content || 'No response received from AI.';
       lastAiResponses[step] = raw;
 
-      // Step 4: render with per-question answer toggles
-      if (step === 4) {
-        output.innerHTML = formatQuizWithToggles(raw);
-      } else {
-        output.innerHTML = formatOutput(raw);
-      }
+      if (step === 4) output.innerHTML = formatQuizWithToggles(raw);
+      else output.innerHTML = formatOutput(raw);
 
       if (window.MathJax?.typesetPromise) MathJax.typesetPromise([output]).catch(()=>{});
 
-      // Show copy answer only after success
       const copyAnswerBtn = document.getElementById(`copy-answer-${step}`);
       if (copyAnswerBtn) copyAnswerBtn.style.display = 'inline-flex';
     } catch (err) {
@@ -1504,19 +1460,21 @@
     }
   }
 
-  function configureHelpTeaser({ loggedIn, tier }) {
+  // UPDATED: Help CTA logic (links always work; CTA shows when not paid)
+  function configureHelpAccess({ loggedIn, tier }) {
     const isPaid = tier === 'paid';
+    const cta = document.getElementById('help-cta');
     const body = document.getElementById('help-panel-body');
-    const overlay = document.getElementById('help-teaser-overlay');
-
-    if (!body || !overlay) return;
+    if (!cta || !body) return;
 
     if (isPaid) {
-      body.classList.remove('help-teaser-disabled');
-      overlay.style.display = 'none';
+      cta.style.display = 'none';
+      body.classList.remove('help-dim');
+      cta.setAttribute('aria-hidden', 'true');
     } else {
-      body.classList.add('help-teaser-disabled');
-      overlay.style.display = 'flex';
+      cta.style.display = 'block';
+      body.classList.add('help-dim');
+      cta.setAttribute('aria-hidden', 'false');
     }
   }
 
@@ -1537,8 +1495,8 @@
       locked.style.display = lock ? 'block' : 'none';
     }
 
-    // Help panel teaser logic (Variant A)
-    configureHelpTeaser({ loggedIn, tier });
+    // UPDATED: Help panel is always clickable; show CTA when not paid
+    configureHelpAccess({ loggedIn, tier });
 
     // Step 1–2:
     [1,2].forEach((step) => {
@@ -1591,7 +1549,7 @@
       const btn = document.getElementById(`toggle-btn-${step}`);
       if (!content || !btn) continue;
 
-      const isCollapsed = collapseState[step] === false; // stored false => collapsed
+      const isCollapsed = collapseState[step] === false; // stored false => collapsed (your current convention)
       if (isCollapsed) { content.style.display = 'none'; btn.textContent = '+'; }
       else { content.style.display = 'block'; btn.textContent = '−'; }
     }
