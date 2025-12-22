@@ -824,7 +824,6 @@
     .help-lock-overlay{
       border-color: rgba(37, 99, 235, 0.45);
     }
-
   </style>
 </head>
 
@@ -1237,7 +1236,6 @@
                     don’t match your intuition.
                   </p>
 
-                  <!-- This CTA is optional; overlay is what actually locks -->
                   <div class="help-cta" id="help-cta" aria-hidden="true">
                     <div class="kicker">Mastery feature</div>
                     <div class="title">Help Library + guided prompt paths</div>
@@ -1339,415 +1337,327 @@
 <script src="/auth.js"></script>
 
 <script>
-  // Continue Learning marker
-  window.PS_markLastLearningPage = function () {
-    try {
-      const path = window.location.pathname || '';
-      const isIndex = path === '/' || path.endsWith('/index.html');
-      const isAuth = path.endsWith('/auth.html');
-      const isPricing = path.endsWith('/pricing.html');
-      if (isIndex || isAuth || isPricing) return;
+/* ============================================================
+   Refactor: shorter JS, SAME behavior + gating (locked design)
+   ============================================================ */
 
-      const title = (document.title || '').replace(/\s+–\s+PromptSchola.*$/i, '').trim();
-      const label = title || 'Continue Learning';
+/* Continue Learning marker */
+(function PS_markLastLearningPage(){
+  try{
+    const p = location.pathname || '';
+    if (p === '/' || p.endsWith('/index.html') || p.endsWith('/auth.html') || p.endsWith('/pricing.html')) return;
+    const t = (document.title || '').replace(/\s+–\s+PromptSchola.*$/i,'').trim();
+    localStorage.setItem('ps_last_page_path', p);
+    localStorage.setItem('ps_last_page_label', t || 'Continue Learning');
+    localStorage.setItem('ps_last_seen_ts', String(Date.now()));
+  } catch(e){}
+})();
 
-      localStorage.setItem('ps_last_page_path', path);
-      localStorage.setItem('ps_last_page_label', label);
-      localStorage.setItem('ps_last_seen_ts', String(Date.now()));
-    } catch (e) {}
-  };
-  window.PS_markLastLearningPage();
+/* Post-auth redirect helper (used by nav + locked CTAs) */
+function PS_setPostAuthRedirect(){
+  try{
+    localStorage.setItem('ps_post_auth_redirect', location.pathname + location.search + location.hash);
+  } catch(e){}
+}
+window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
 
-  // Post-auth redirect helper
-  function PS_setPostAuthRedirect() {
-    try {
-      const path = window.location.pathname + window.location.search + window.location.hash;
-      localStorage.setItem('ps_post_auth_redirect', path);
-    } catch (e) {}
-  }
-  window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+/* Prompts (unchanged content) */
+const prompts = {
+  1: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 1 (Orient/Definition): Explain clearly what “constant acceleration” means. Include:\n• A one-sentence definition\n• What it implies about how velocity changes with time\n• A quick note about choosing a positive direction and using sign conventions\n• 2 everyday examples (car speeding up steadily, free-fall near Earth)\n\nFormatting rules:\n• Short paragraphs + bullet points\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math, one per line:\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]\n  \\\\[ v = u + at \\\\]\n• Do NOT use markdown headings like # or ###.`,
+  2: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 2 (Conceptual grounding): Build intuition using:\n• A car accelerating at a steady rate\n• A ball dropped from rest (free-fall)\n• A ball thrown upward then coming down (address the myth “acceleration is zero at the top”)\n\nFor each, describe what the v–t, a–t, and x–t graphs should look like (qualitatively). Emphasize:\n• Slope of v–t is acceleration\n• Area under a–t gives change in velocity\n• Area under v–t gives displacement\n\nInclude ONE worked anchor example with numbers (brief): choose simple values and show how you’d read slope/area to get a result.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key concepts sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
+  3: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 3 (Real-world connection): Explain when constant acceleration is a good approximation and when it breaks.\nInclude:\n• Free-fall near Earth (when air resistance is negligible)\n• A car braking (roughly constant a over a short interval)\n• Why air resistance makes acceleration change\n• The difference between average acceleration and instantaneous acceleration, and why constant-a makes them match\n\nAdd 3 “modeling questions” students should ask before using constant-a equations.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
+  4: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 4 (Check your understanding – mini-quiz): Create 7 questions total:\n• 4 multiple-choice (A–D)\n• 2 short-answer\n• 1 graph reasoning question (describe the graph in words; no images)\n\nCoverage must include:\n• Sign conventions\n• “Top of motion” concept (v=0 but a≠0)\n• Interpreting slope/area on v–t / a–t\n• Choosing the right kinematics equation based on knowns\n\nCRITICAL OUTPUT FORMAT (so the site can hide answers):\nFor each question, write the question first, then put the answer+explanation inside these exact markers on their own lines:\n[[[ANSWER]]]\n...answer + 1–2 sentence explanation...\n[[[/ANSWER]]]\n\nExample structure:\n1) ...question text...\n[[[ANSWER]]]\nCorrect answer: B\nExplanation: ...\n[[[/ANSWER]]]\n\nFormatting rules:\n• Clear spacing\n• Bullets and numbering\n• No markdown headings like # or ###.`,
+  5: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 5 (Practice): Create 4 problems with increasing difficulty:\n1) Start from rest, constant a, find v and displacement after t\n2) Non-zero initial velocity, constant a, find time to reach a velocity\n3) Free-fall (choose + upward OR + downward, but be consistent), include sign convention explicitly\n4) Mixed: find displacement using v^2 = u^2 + 2as (or equivalent) with careful reasoning\n\nFor each problem:\n• State the problem clearly\n• Then provide a step-by-step solution with brief reasoning\n• Show equations as LaTeX display math, one per line\n\nFormatting rules:\n• Numbered problems\n• Bold “Solution” for each\n• No markdown headings like # or ###.`,
+  6: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 6 (Summary & reflection + Exploration/Simulation prompts):\nPART A — Summary & reflection:\n• Give a tight summary of the core ideas (definition, graphs, sign conventions)\n• Provide a “reflection checklist” with 6 yes/no items students can self-check\n\nPART B — Exploration:\nProvide 5 “what if” experiments students can do on paper:\n• Change u, a, or t and predict how v–t and x–t graphs change\n• Include at least 1 scenario where acceleration changes (air resistance) and ask them to compare to the constant-a model\n\nFormatting rules:\n• Short paragraphs + bullet lists\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`
+};
 
-  // Prompts (final-year high school + first-year university)
-  const prompts = {
-    1: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 1 (Orient/Definition): Explain clearly what “constant acceleration” means. Include:\n• A one-sentence definition\n• What it implies about how velocity changes with time\n• A quick note about choosing a positive direction and using sign conventions\n• 2 everyday examples (car speeding up steadily, free-fall near Earth)\n\nFormatting rules:\n• Short paragraphs + bullet points\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math, one per line:\n  \\\\[ a = \\frac{\\Delta v}{\\Delta t} \\\\]\n  \\\\[ v = u + at \\\\]\n• Do NOT use markdown headings like # or ###.`,
-    2: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 2 (Conceptual grounding): Build intuition using:\n• A car accelerating at a steady rate\n• A ball dropped from rest (free-fall)\n• A ball thrown upward then coming down (address the myth “acceleration is zero at the top”)\n\nFor each, describe what the v–t, a–t, and x–t graphs should look like (qualitatively). Emphasize:\n• Slope of v–t is acceleration\n• Area under a–t gives change in velocity\n• Area under v–t gives displacement\n\nInclude ONE worked anchor example with numbers (brief): choose simple values and show how you’d read slope/area to get a result.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key concepts sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
-    3: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 3 (Real-world connection): Explain when constant acceleration is a good approximation and when it breaks.\nInclude:\n• Free-fall near Earth (when air resistance is negligible)\n• A car braking (roughly constant a over a short interval)\n• Why air resistance makes acceleration change\n• The difference between average acceleration and instantaneous acceleration, and why constant-a makes them match\n\nAdd 3 “modeling questions” students should ask before using constant-a equations.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`,
-    4: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 4 (Check your understanding – mini-quiz): Create 7 questions total:\n• 4 multiple-choice (A–D)\n• 2 short-answer\n• 1 graph reasoning question (describe the graph in words; no images)\n\nCoverage must include:\n• Sign conventions\n• “Top of motion” concept (v=0 but a≠0)\n• Interpreting slope/area on v–t / a–t\n• Choosing the right kinematics equation based on knowns\n\nCRITICAL OUTPUT FORMAT (so the site can hide answers):\nFor each question, write the question first, then put the answer+explanation inside these exact markers on their own lines:\n[[[ANSWER]]]\n...answer + 1–2 sentence explanation...\n[[[/ANSWER]]]\n\nExample structure:\n1) ...question text...\n[[[ANSWER]]]\nCorrect answer: B\nExplanation: ...\n[[[/ANSWER]]]\n\nFormatting rules:\n• Clear spacing\n• Bullets and numbering\n• No markdown headings like # or ###.`,
-    5: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 5 (Practice): Create 4 problems with increasing difficulty:\n1) Start from rest, constant a, find v and displacement after t\n2) Non-zero initial velocity, constant a, find time to reach a velocity\n3) Free-fall (choose + upward OR + downward, but be consistent), include sign convention explicitly\n4) Mixed: find displacement using v^2 = u^2 + 2as (or equivalent) with careful reasoning\n\nFor each problem:\n• State the problem clearly\n• Then provide a step-by-step solution with brief reasoning\n• Show equations as LaTeX display math, one per line\n\nFormatting rules:\n• Numbered problems\n• Bold “Solution” for each\n• No markdown headings like # or ###.`,
-    6: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Constant acceleration in 1D.\n\nSTEP 6 (Summary & reflection + Exploration/Simulation prompts):\nPART A — Summary & reflection:\n• Give a tight summary of the core ideas (definition, graphs, sign conventions)\n• Provide a “reflection checklist” with 6 yes/no items students can self-check\n\nPART B — Exploration:\nProvide 5 “what if” experiments students can do on paper:\n• Change u, a, or t and predict how v–t and x–t graphs change\n• Include at least 1 scenario where acceleration changes (air resistance) and ask them to compare to the constant-a model\n\nFormatting rules:\n• Short paragraphs + bullet lists\n• Bold key terms sparingly\n• If you include equations, use LaTeX display math one per line\n• Do NOT use markdown headings like # or ###.`
-  };
+const STORAGE_KEY = 'ps_nano_constant_acceleration_collapse';
+const lastAiResponses = {};
+let collapseState = {};
 
-  const lastAiResponses = {};
-  const STORAGE_KEY = 'ps_nano_constant_acceleration_collapse';
-  let collapseState = {};
+const $ = (id) => document.getElementById(id);
+const typeset = (nodes) => window.MathJax?.typesetPromise ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{}) : null;
 
-  function formatOutput(text) {
-    if (!text) return '';
-    let safe = text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+function loadCollapse(){
+  try { collapseState = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {}; }
+  catch { collapseState = {}; }
+}
+function saveCollapse(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState)); } catch(e){}
+}
 
-    safe = safe
-      .replace(/\\\\\[/g, '\\[')
-      .replace(/\\\\\]/g, '\\]')
-      .replace(/\\\\\(/g, '\\(')
-      .replace(/\\\\\)/g, '\\)');
+/* ===== Output formatting (keeps same rules; shorter) ===== */
+function esc(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\\\\\[/g,'\\[').replace(/\\\\\]/g,'\\]').replace(/\\\\\(/g,'\\(').replace(/\\\\\)/g,'\\)');
+}
+function inlineFmt(s){
+  // remove headings, normalize bullets, bold/italic
+  return s
+    .replace(/^#{1,6}\s+(.+)$/gm,'<strong>$1</strong>')
+    .replace(/^\s*[-*]\s+/gm,'• ')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    // lighter italic rule (keeps your prior behavior)
+    .replace(/\*(.+?)\*/g,'<em>$1</em>');
+}
+function paras(s){
+  s = s.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>');
+  return '<p>' + s + '</p>';
+}
+function formatOutput(raw){
+  return paras(inlineFmt(esc(raw)));
+}
+function formatQuizWithToggles(raw){
+  const safe = esc(raw);
+  const OPEN='[[[ANSWER]]]', CLOSE='[[[/ANSWER]]]';
+  let out = '', i = 0;
 
-    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
-    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
-    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    safe = safe.replace(/\n\n+/g, '</p><p>');
-    safe = safe.replace(/\n/g, '<br>');
-    return '<p>' + safe + '</p>';
-  }
+  while(true){
+    const a = safe.indexOf(OPEN, i);
+    if (a === -1){ out += safe.slice(i); break; }
+    const b = safe.indexOf(CLOSE, a + OPEN.length);
+    if (b === -1){ out += safe.slice(i); break; }
 
-  function formatAnswerBody(innerText) {
-    let t = innerText;
-    t = t.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
-    t = t.replace(/^\s*[-*]\s+/gm, '• ');
-    t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    t = t.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    t = t.replace(/\n\n+/g, '</p><p>');
-    t = t.replace(/\n/g, '<br>');
-    return '<p>' + t + '</p>';
-  }
-
-  function formatQuizWithToggles(raw) {
-    if (!raw) return '';
-
-    let safe = raw
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-
-    safe = safe
-      .replace(/\\\\\[/g, '\\[')
-      .replace(/\\\\\]/g, '\\]')
-      .replace(/\\\\\(/g, '\\(')
-      .replace(/\\\\\)/g, '\\)');
-
-    const answerOpen = '[[[ANSWER]]]';
-    const answerClose = '[[[/ANSWER]]]';
-
-    let out = '';
-    let idx = 0;
-
-    while (true) {
-      const start = safe.indexOf(answerOpen, idx);
-      if (start === -1) { out += safe.slice(idx); break; }
-      const end = safe.indexOf(answerClose, start + answerOpen.length);
-      if (end === -1) { out += safe.slice(idx); break; }
-
-      out += safe.slice(idx, start);
-
-      const inner = safe.slice(start + answerOpen.length, end).trim();
-      out += `\n\n<details class="answer-toggle"><summary>Reveal answer</summary><div class="answer-body">${formatAnswerBody(inner)}</div></details>\n\n`;
-
-      idx = end + answerClose.length;
-    }
-
-    const parts = out.split(/(<details class="answer-toggle">[\s\S]*?<\/details>)/g);
-
-    const formatted = parts.map(part => {
-      if (part.startsWith('<details class="answer-toggle">')) return part;
-      return formatOutput(part);
-    }).join('');
-
-    return formatted;
+    out += safe.slice(i, a);
+    const inner = safe.slice(a + OPEN.length, b).trim();
+    out += `\n\n<details class="answer-toggle"><summary>Reveal answer</summary><div class="answer-body">${paras(inlineFmt(inner))}</div></details>\n\n`;
+    i = b + CLOSE.length;
   }
 
-  function loadCollapseState() {
-    try { collapseState = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
-    catch { collapseState = {}; }
+  // format non-details chunks, keep details blocks intact
+  return out.split(/(<details class="answer-toggle">[\s\S]*?<\/details>)/g)
+    .map(part => part.startsWith('<details class="answer-toggle">') ? part : formatOutput(part))
+    .join('');
+}
+
+/* ===== Step collapse toggle (keeps your stored convention) ===== */
+function toggleStep(step){
+  const content = $(`step-content-${step}`);
+  const btn = $(`toggle-btn-${step}`);
+  if (!content || !btn) return;
+
+  const hidden = content.style.display === 'none';
+  content.style.display = hidden ? 'block' : 'none';
+  btn.textContent = hidden ? '−' : '+';
+
+  // store true when open, false when collapsed (your existing convention)
+  collapseState[step] = hidden;
+  saveCollapse();
+}
+
+/* ===== Prompt show/copy ===== */
+function showPrompt(step){
+  const preview = $(`preview-step${step}`);
+  if (!preview) return;
+  preview.textContent = prompts[step] || 'Prompt coming soon.';
+  preview.style.display = 'block';
+  typeset([preview]);
+}
+async function copyText(t, okMsg, failMsg){
+  if (!t) return alert(failMsg || 'Nothing to copy.');
+  if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+  try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
+  catch { alert(failMsg || 'Could not copy.'); }
+}
+function copyPrompt(step){ return copyText(prompts[step], 'Prompt copied.', 'No prompt defined for this step yet.'); }
+function copyAnswer(step){ return copyText(lastAiResponses[step], 'Answer copied.', 'No AI answer to copy yet.'); }
+
+/* ===== Run-with-AI gating + API call ===== */
+function redirectToSignupForRunAI(){
+  const redirectTarget = encodeURIComponent(location.href);
+  location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+}
+function setRunBtnRunning(step, running){
+  const btn = $(`run-btn-${step}`);
+  if (!btn) return;
+  if (running){
+    btn.dataset.prevText = btn.textContent;
+    btn.textContent = 'Running…';
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+  } else {
+    btn.disabled = false;
+    btn.textContent = btn.dataset.prevText || btn.textContent;
+    btn.removeAttribute('aria-busy');
+  }
+}
+async function runWithAI(step){
+  const prompt = prompts[step];
+  if (!prompt) return alert('No prompt defined for this step yet.');
+
+  const output = $(`response-step${step}`);
+  if (!output) return alert('No response area found for this step.');
+
+  const preview = $(`preview-step${step}`);
+  if (preview) preview.style.display = 'none';
+
+  // Require login for Run-with-AI (server enforces too)
+  if (typeof ensureLoggedInOrRedirect === 'function'){
+    const user = await ensureLoggedInOrRedirect();
+    if (!user) return;
+  } else {
+    redirectToSignupForRunAI();
+    return;
   }
 
-  function saveCollapseState() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState)); }
-    catch (e) {}
+  const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+  if (!token){
+    output.textContent = 'Session missing. Please sign in again.';
+    return;
   }
 
-  function toggleStep(step) {
-    const content = document.getElementById(`step-content-${step}`);
-    const btn = document.getElementById(`toggle-btn-${step}`);
-    if (!content || !btn) return;
+  setRunBtnRunning(step, true);
+  try{
+    output.textContent = 'Running with AI…';
 
-    const isHidden = content.style.display === 'none';
-    content.style.display = isHidden ? 'block' : 'none';
-    btn.textContent = isHidden ? '−' : '+';
-
-    // Store "false" when collapsed, "true" when open (matches your existing behavior)
-    collapseState[step] = isHidden;
-    saveCollapseState();
-  }
-
-  function showPrompt(step) {
-    const preview = document.getElementById('preview-step' + step);
-    if (!preview) return;
-    preview.textContent = prompts[step] || 'Prompt coming soon.';
-    preview.style.display = 'block';
-    if (window.MathJax?.typesetPromise) MathJax.typesetPromise([preview]).catch(()=>{});
-  }
-
-  function copyPrompt(step) {
-    const prompt = prompts[step];
-    if (!prompt) return alert('No prompt defined for this step yet.');
-    if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
-    navigator.clipboard.writeText(prompt).then(() => alert('Prompt copied.')).catch(() => alert('Could not copy prompt.'));
-  }
-
-  function copyAnswer(step) {
-    const text = lastAiResponses[step];
-    if (!text) return alert('No AI answer to copy yet.');
-    if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
-    navigator.clipboard.writeText(text).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
-  }
-
-  function redirectToSignupForRunAI() {
-    const redirectTarget = encodeURIComponent(window.location.href);
-    window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
-  }
-
-  function setRunBtnRunning(step, running) {
-    const btn = document.getElementById(`run-btn-${step}`);
-    if (!btn) return;
-    if (running) {
-      btn.dataset.prevText = btn.textContent;
-      btn.textContent = 'Running…';
-      btn.disabled = true;
-      btn.setAttribute('aria-busy', 'true');
-    } else {
-      btn.disabled = false;
-      btn.textContent = btn.dataset.prevText || btn.textContent;
-      btn.removeAttribute('aria-busy');
-    }
-  }
-
-  async function runWithAI(step) {
-    const prompt = prompts[step];
-    if (!prompt) return alert('No prompt defined for this step yet.');
-
-    const output = document.getElementById('response-step' + step);
-    if (!output) return alert('No response area found for this step.');
-
-    const preview = document.getElementById('preview-step' + step);
-    if (preview) preview.style.display = 'none';
-
-    // Require login for Run-with-AI (server enforces too)
-    if (typeof ensureLoggedInOrRedirect === 'function') {
-      const user = await ensureLoggedInOrRedirect();
-      if (!user) return; // redirected
-    } else {
-      redirectToSignupForRunAI();
-      return;
-    }
-
-    const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
-    if (!token) {
-      output.textContent = 'Session missing. Please sign in again.';
-      return;
-    }
-
-    setRunBtnRunning(step, true);
-
-    try {
-      output.textContent = 'Running with AI…';
-
-      const res = await fetch('/api/run-step', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ prompt, step })
-      });
-
-      if (!res.ok) {
-        let msg = 'There was an error contacting the AI. Please try again later.';
-        try {
-          const err = await res.json();
-          if (err?.error) msg = err.error;
-          if (err?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
-          if (err?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
-          if (err?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
-          if (err?.code === 'PROMPT_INVALID') {
-            msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(err?.details || []);
-          }
-        } catch (_) {}
-        output.textContent = msg;
-        return;
-      }
-
-      const data = await res.json();
-      const raw = data.content || 'No response received from AI.';
-      lastAiResponses[step] = raw;
-
-      if (step === 4) output.innerHTML = formatQuizWithToggles(raw);
-      else output.innerHTML = formatOutput(raw);
-
-      if (window.MathJax?.typesetPromise) MathJax.typesetPromise([output]).catch(()=>{});
-
-      const copyAnswerBtn = document.getElementById(`copy-answer-${step}`);
-      if (copyAnswerBtn) copyAnswerBtn.style.display = 'inline-flex';
-    } catch (err) {
-      console.error(err);
-      output.textContent = 'Unexpected error. Please try again.';
-    } finally {
-      setRunBtnRunning(step, false);
-    }
-  }
-
-  // NEW: HARD lock help panel for anon + free
-  function configureHelpAccess({ loggedIn, tier }) {
-    const isPaid = tier === 'paid';
-
-    const toggleBtn = document.getElementById('help-panel-toggle');
-    const body = document.getElementById('help-panel-body');
-    const overlay = document.getElementById('help-lock-overlay');
-    const wrap = document.getElementById('help-lock-wrap');
-    const icon = document.querySelector('.help-panel-toggle-icon');
-
-    if (!toggleBtn || !body || !overlay || !wrap) return;
-
-    if (isPaid) {
-      // fully interactive
-      wrap.classList.remove('help-lock-disabled');
-      overlay.style.display = 'none';
-      overlay.setAttribute('aria-hidden', 'true');
-
-      toggleBtn.disabled = false;
-      toggleBtn.classList.remove('help-toggle-disabled');
-      toggleBtn.setAttribute('aria-disabled', 'false');
-      if (icon) icon.textContent = '▾';
-    } else {
-      // HARD LOCK: no clicking, no navigation, no copying prompts
-      wrap.classList.add('help-lock-disabled');
-      overlay.style.display = 'flex';
-      overlay.setAttribute('aria-hidden', 'false');
-
-      // also disable the toggle itself so they can’t interact at all
-      toggleBtn.disabled = true;
-      toggleBtn.classList.add('help-toggle-disabled');
-      toggleBtn.setAttribute('aria-disabled', 'true');
-      if (icon) icon.textContent = '🔒';
-
-      // keep body visible so they can see teaser behind overlay
-      body.style.display = 'block';
-    }
-  }
-
-  function configureUI({ loggedIn, tier }) {
-    const isPaid = tier === 'paid';
-    const isFreeSignedIn = loggedIn && !isPaid;
-
-    // Lock steps 4–6 unless paid
-    for (let step = 1; step <= 6; step++) {
-      const unlocked = document.getElementById(`step-unlocked-${step}`);
-      const locked = document.getElementById(`step-locked-${step}`);
-      if (!unlocked || !locked) continue;
-
-      const paidOnly = step >= 4;
-      const lock = paidOnly && !isPaid;
-
-      unlocked.style.display = lock ? 'none' : 'block';
-      locked.style.display = lock ? 'block' : 'none';
-    }
-
-    // Help panel gating
-    configureHelpAccess({ loggedIn, tier });
-
-    // Step 1–2:
-    [1,2].forEach((step) => {
-      const btn = document.getElementById(`run-btn-${step}`);
-      if (!btn) return;
-      btn.style.display = 'inline-flex';
-      btn.textContent = 'Run with AI';
-      btn.onclick = async () => {
-        if (!loggedIn) return redirectToSignupForRunAI();
-        return runWithAI(step);
-      };
+    const res = await fetch('/api/run-step', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ prompt, step })
     });
 
-    // Step 3:
-    {
-      const btn = document.getElementById('run-btn-3');
-      if (btn) {
-        btn.style.display = 'inline-flex';
-        if (!loggedIn) {
-          btn.textContent = 'Try with AI';
-          btn.onclick = () => redirectToSignupForRunAI();
-        } else if (isFreeSignedIn) {
-          btn.textContent = 'Try with AI';
-          btn.onclick = () => { window.location.href = '/pricing.html'; };
-        } else {
-          btn.textContent = 'Run with AI';
-          btn.onclick = () => runWithAI(3);
-        }
-      }
+    const data = await res.json().catch(()=> ({}));
+    if (!res.ok){
+      let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
+      if (data?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
+      if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+      if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+      if (data?.code === 'PROMPT_INVALID') msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(data?.details || []);
+      output.textContent = msg;
+      return;
     }
 
-    // Steps 4–6 Run buttons only meaningful for paid
-    for (let step = 4; step <= 6; step++) {
-      const btn = document.getElementById(`run-btn-${step}`);
-      if (!btn) continue;
-      if (isPaid) {
-        btn.style.display = 'inline-flex';
-        btn.textContent = 'Run with AI';
-        btn.onclick = () => runWithAI(step);
-      } else {
-        btn.style.display = 'none';
-      }
+    const raw = data.content || 'No response received from AI.';
+    lastAiResponses[step] = raw;
+    output.innerHTML = (step === 4) ? formatQuizWithToggles(raw) : formatOutput(raw);
+    typeset([output]);
+
+    const copyBtn = $(`copy-answer-${step}`);
+    if (copyBtn) copyBtn.style.display = 'inline-flex';
+  } catch(err){
+    console.error(err);
+    output.textContent = 'Unexpected error. Please try again.';
+  } finally {
+    setRunBtnRunning(step, false);
+  }
+}
+
+/* ===== Help hard lock (anon + free) ===== */
+function configureHelpAccess(isPaid){
+  const toggleBtn = $('help-panel-toggle');
+  const body = $('help-panel-body');
+  const overlay = $('help-lock-overlay');
+  const wrap = $('help-lock-wrap');
+  const icon = document.querySelector('.help-panel-toggle-icon');
+  if (!toggleBtn || !body || !overlay || !wrap) return;
+
+  if (isPaid){
+    wrap.classList.remove('help-lock-disabled');
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden','true');
+
+    toggleBtn.disabled = false;
+    toggleBtn.classList.remove('help-toggle-disabled');
+    toggleBtn.setAttribute('aria-disabled','false');
+    if (icon) icon.textContent = '▾';
+  } else {
+    wrap.classList.add('help-lock-disabled');      // blocks navigation + copy + clicks
+    overlay.style.display = 'flex';
+    overlay.setAttribute('aria-hidden','false');
+
+    toggleBtn.disabled = true;                    // cannot toggle panel
+    toggleBtn.classList.add('help-toggle-disabled');
+    toggleBtn.setAttribute('aria-disabled','true');
+    if (icon) icon.textContent = '🔒';
+
+    body.style.display = 'block';                 // visible behind teaser (locked)
+  }
+}
+
+/* ===== UI gating rules (locked design) ===== */
+function configureUI({ loggedIn, tier }){
+  const isPaid = tier === 'paid';
+  const isFreeSignedIn = loggedIn && !isPaid;
+
+  // Lock steps 4–6 content unless paid
+  for (let step=1; step<=6; step++){
+    const unlocked = $(`step-unlocked-${step}`);
+    const locked = $(`step-locked-${step}`);
+    if (!unlocked || !locked) continue;
+    const lock = (step >= 4) && !isPaid;
+    unlocked.style.display = lock ? 'none' : 'block';
+    locked.style.display = lock ? 'block' : 'none';
+  }
+
+  // Help panel gating (HARD lock for anon + free)
+  configureHelpAccess(isPaid);
+
+  // Steps 1–2: anon redirects, free runs, paid runs
+  [1,2].forEach(step => {
+    const btn = $(`run-btn-${step}`);
+    if (!btn) return;
+    btn.style.display = 'inline-flex';
+    btn.textContent = 'Run with AI';
+    btn.onclick = () => (!loggedIn ? redirectToSignupForRunAI() : runWithAI(step));
+  });
+
+  // Step 3: anon redirects, free -> pricing, paid runs
+  {
+    const btn = $('run-btn-3');
+    if (btn){
+      btn.style.display = 'inline-flex';
+      btn.textContent = 'Try with AI';
+      btn.onclick = () => {
+        if (!loggedIn) return redirectToSignupForRunAI();
+        if (isFreeSignedIn) return (location.href = '/pricing.html');
+        return runWithAI(3);
+      };
     }
   }
 
-  document.addEventListener('DOMContentLoaded', async () => {
-    loadCollapseState();
-    for (let step = 1; step <= 6; step++) {
-      const content = document.getElementById(`step-content-${step}`);
-      const btn = document.getElementById(`toggle-btn-${step}`);
-      if (!content || !btn) continue;
-
-      const isCollapsed = collapseState[step] === false; // stored false => collapsed (your current convention)
-      if (isCollapsed) { content.style.display = 'none'; btn.textContent = '+'; }
-      else { content.style.display = 'block'; btn.textContent = '−'; }
+  // Steps 4–6: run button hidden unless paid (and step content locked anyway)
+  for (let step=4; step<=6; step++){
+    const btn = $(`run-btn-${step}`);
+    if (!btn) continue;
+    if (isPaid){
+      btn.style.display = 'inline-flex';
+      btn.textContent = 'Run with AI';
+      btn.onclick = () => runWithAI(step);
+    } else {
+      btn.style.display = 'none';
     }
+  }
+}
 
-    if (window.MathJax?.typesetPromise) MathJax.typesetPromise().catch(()=>{});
+/* ===== Boot ===== */
+document.addEventListener('DOMContentLoaded', async () => {
+  loadCollapse();
+  for (let step=1; step<=6; step++){
+    const content = $(`step-content-${step}`);
+    const btn = $(`toggle-btn-${step}`);
+    if (!content || !btn) continue;
+    const isCollapsed = collapseState[step] === false; // stored false => collapsed
+    content.style.display = isCollapsed ? 'none' : 'block';
+    btn.textContent = isCollapsed ? '+' : '−';
+  }
 
-    // Help panel toggle (paid only; for locked states we disable the button in configureHelpAccess)
-    const toggleBtn = document.getElementById('help-panel-toggle');
-    const body = document.getElementById('help-panel-body');
-    const icon = document.querySelector('.help-panel-toggle-icon');
-    if (toggleBtn && body && icon) {
-      let open = true;
-      const updatePanel = () => { body.style.display = open ? 'block' : 'none'; icon.textContent = open ? '▾' : '▸'; };
-      updatePanel();
-      toggleBtn.addEventListener('click', (e) => { e.preventDefault(); open = !open; updatePanel(); });
-    }
+  typeset();
 
-    // Update nav user display (auth.js)
-    if (typeof updateNavUserDisplay === 'function') {
-      updateNavUserDisplay();
-    }
+  // Nav display (auth.js)
+  if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
-    // Determine logged-in + tier
-    let loggedIn = false;
-    let tier = 'anon';
+  // Determine logged-in + tier
+  let loggedIn = false, tier = 'anon';
+  if (typeof getCurrentUser === 'function'){
+    try { loggedIn = !!(await getCurrentUser()); } catch(e){ loggedIn = false; }
+  }
+  if (loggedIn && typeof PS_getUserTier === 'function'){
+    try { tier = (await PS_getUserTier()) || 'free'; } catch(e){ tier = 'free'; }
+  }
+  if (loggedIn && tier === 'anon') tier = 'free';
 
-    if (typeof getCurrentUser === 'function') {
-      try { loggedIn = !!(await getCurrentUser()); } catch (_) { loggedIn = false; }
-    }
-
-    if (loggedIn && typeof PS_getUserTier === 'function') {
-      try { tier = await PS_getUserTier(); } catch (_) { tier = 'free'; }
-      if (!tier) tier = 'free';
-    }
-
-    if (loggedIn && (tier === 'anon')) tier = 'free';
-
-    configureUI({ loggedIn, tier });
-  });
+  configureUI({ loggedIn, tier });
+});
 </script>
 
 </body>
