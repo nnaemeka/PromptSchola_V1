@@ -285,9 +285,24 @@
       color: var(--text-subtle);
       font-family: var(--font-body);
     }
-    /* Breadcrumb hierarchy: path vs current context */
+    /* Breadcrumb hierarchy: informational links */
 .hero-breadcrumbs a{
-  color: #64748b;            /* slate-500: calm path */
+  color: #64748b;                 /* slate-500 */
+  text-decoration: none;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.hero-breadcrumbs a:hover{
+  color: #1e40af;                 /* deep indigo on intent */
+  text-decoration: underline;
+}
+
+/* Current context */
+.hero-breadcrumbs span{
+  color: #1e40af;                 /* deep indigo */
+  font-weight: 600;
+}
+
 }
 
 .hero-breadcrumbs span{
