@@ -285,7 +285,16 @@
       color: var(--text-subtle);
       font-family: var(--font-body);
     }
-    .hero-breadcrumbs a { color: var(--accent-strong); }
+    /* Breadcrumb hierarchy: path vs current context */
+.hero-breadcrumbs a{
+  color: #64748b;            /* slate-500: calm path */
+}
+
+.hero-breadcrumbs span{
+  color: #1e40af;            /* deep indigo: current mode */
+  font-weight: 600;
+}
+
 
     /* Access band */
     .access-band {
