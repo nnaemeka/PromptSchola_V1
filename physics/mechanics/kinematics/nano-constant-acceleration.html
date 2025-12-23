@@ -650,7 +650,8 @@
       margin-top: 0.65rem;
     }
     .help-category:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
-
+	
+	
     .help-category-label {
       display: inline-flex;
       align-items: center;
@@ -772,57 +773,63 @@
       cursor: not-allowed;
     }
 
-    /* =========================================================
-       ROYAL BLUE HELP PANEL THEME (scoped override)
-       ========================================================= */
-    :root{
-      --help-blue: #2563eb;
-      --help-blue-strong: #1d4ed8;
-      --help-blue-soft: rgba(37, 99, 235, 0.10);
-      --help-blue-soft2: rgba(59, 130, 246, 0.14);
-      --help-blue-ink: #0b1220;
-    }
+   /* =========================================================
+   HELP PANEL THEME — A) Deep Indigo (scoped override)
+   Replace the entire Royal Blue block with this
+   ========================================================= */
+:root{
+  --help-blue: #1e3a8a;
+  --help-blue-strong: #1e40af;
+  --help-blue-soft: rgba(30, 58, 138, 0.10);
+  --help-blue-soft2: rgba(30, 64, 175, 0.14);
+  --help-blue-ink: #0b1220;
+}
 
-    .help-panel-toggle{
-      border: 1px solid rgba(37, 99, 235, 0.28);
-      background: radial-gradient(circle at 0 0, #f9fafb, rgba(37, 99, 235, 0.10));
-      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.12);
-    }
+.help-panel-toggle{
+  border: 1px solid rgba(30, 58, 138, 0.28);
+  background: radial-gradient(circle at 0 0, #f9fafb, rgba(30, 58, 138, 0.10));
+  box-shadow: 0 6px 16px rgba(30, 58, 138, 0.12);
+}
 
-    .nano-help-title{
-      border: 1px solid rgba(37, 99, 235, 0.32);
-      color: var(--help-blue-strong);
-      background: rgba(37, 99, 235, 0.06);
-    }
+.nano-help-title{
+  border: 1px solid rgba(30, 58, 138, 0.32);
+  color: var(--help-blue-strong);
+  background: rgba(30, 58, 138, 0.06);
+}
 
-    .help-panel-body{
-      border: 1px solid rgba(37, 99, 235, 0.22);
-      background: radial-gradient(circle at 0 0, #ffffff, rgba(37, 99, 235, 0.08));
-      box-shadow: 0 16px 35px rgba(37, 99, 235, 0.10);
-    }
+.help-panel-body{
+  border: 1px solid rgba(30, 58, 138, 0.22);
+  background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
+  box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
+}
 
-    .help-category-label{
-      border: 1px solid rgba(37, 99, 235, 0.35);
-      background: rgba(37, 99, 235, 0.10);
-      color: var(--help-blue-strong);
-    }
+.help-category-label{
+  border: 1px solid rgba(30, 58, 138, 0.35);
+  background: rgba(30, 58, 138, 0.10);
+  color: var(--help-blue-strong);
+}
 
-    .help-prompts-bulleted li::marker{
-      color: var(--help-blue-strong);
-    }
+.help-prompts-bulleted li::marker{
+  color: var(--help-blue-strong);
+}
 
-    .help-prompt-btn{
-      color: var(--help-blue-strong);
-    }
-    .help-prompt-btn:hover{
-      background: rgba(37, 99, 235, 0.08);
-      color: #0b1220;
-      text-decoration: underline;
-    }
+.help-prompt-btn{
+  color: var(--help-blue-strong);
+}
+.help-prompt-btn:hover{
+  background: rgba(30, 58, 138, 0.08);
+  color: var(--help-blue-ink);
+  text-decoration: underline;
+}
+
+.help-lock-overlay{
+  border-color: rgba(30, 58, 138, 0.45);
+}
 
     .help-lock-overlay{
       border-color: rgba(37, 99, 235, 0.45);
     }
+
   </style>
 </head>
 
