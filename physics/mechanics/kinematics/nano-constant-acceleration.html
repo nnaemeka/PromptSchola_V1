@@ -225,17 +225,35 @@
     }
 
     .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent-strong);
-      font-weight: 700;
-      margin-bottom: 1.05rem;
-      font-family: var(--font-body);
-    }
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-bottom: 1.05rem;
+  font-family: var(--font-body);
+}
+
+/* Keep the label strong + branded */
+.hero-kicker span.label {
+  padding: 0.18rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid rgba(129, 140, 248, 0.22);
+  background: var(--accent-soft2);
+  color: var(--accent-strong);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* Make the trail muted + readable (consistent with Help breadcrumb tone) */
+.hero-kicker span:not(.label) {
+  color: var(--text-subtle);      /* <- this is the key consistency */
+  font-weight: 700;
+  text-transform: none;           /* <- avoid shouting */
+  letter-spacing: 0.02em;
+}
+
 
     .hero-kicker span.label {
       padding: 0.18rem 0.7rem;
