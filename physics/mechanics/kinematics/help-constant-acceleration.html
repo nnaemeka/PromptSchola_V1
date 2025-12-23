@@ -28,9 +28,7 @@
       --bg-surface: #f9fafb;
       --bg-card: #ffffff;
 
-      /* ✅ Help / utility links (Deep Indigo) */
---link-help: #1e40af;
---link-help-hover: #1d4ed8;
+      
 
 
       --accent: #7e22ce;
@@ -574,45 +572,94 @@
     .dir-cat-chev { font-size: 0.95rem; color: #4c1d95; opacity: 0.9; }
 
     .dir-cat-body { margin-top: 0.45rem; }
+    /* =========================================================
+   Help page panel — match nano-lesson Help panel (Deep Indigo)
+   Canonical, locked
+   ========================================================= */
 
-    .dir-list {
-      margin-top: 0.45rem;
-      padding-left: 1.35rem;
-      list-style-type: disc;
-      list-style-position: outside;
-    }
-    .dir-list li { margin-bottom: 0.35rem; }
-    .dir-list li::marker { font-size: 1.15em; color: #4c1d95; }
+/* Panel title (matches .nano-help-title) */
+.dir-title{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(30, 58, 138, 0.32);
+  color: #1e40af;
+  background: rgba(30, 58, 138, 0.06);
+  font-size: 0.8rem;
+  font-weight: 900;
+  font-family: var(--font-body);
+  margin-bottom: 0.55rem;
+}
 
-    /* ✅ Help directory links: royal blue + disable visited styling */
-    .dir-link,
-    .dir-link:visited {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 0.35rem 0.15rem;
-      border-radius: 10px;
-      background: transparent;
-      color: var(--link-help);
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-family: var(--font-body);
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
-    }
+/* Panel description (matches nano help body tone) */
+.dir-desc{
+  margin: 0.3rem 0 0.7rem;
+  font-size: 0.78rem;
+  color: var(--text-subtle);
+  font-family: var(--font-body);
+  line-height: 1.65;
+}
 
-    .dir-link:hover,
-    .dir-link:focus {
-      background: rgba(30, 64, 175, 0.08);
-      color: var(--link-help-hover);
-      text-decoration: underline;
-    }
+/* Category pill (matches .help-category-label) */
+.dir-cat-label{
+  display: inline-flex;
+  align-items: center;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(30, 58, 138, 0.35);
+  background: rgba(30, 58, 138, 0.10);
+  font-size: 0.72rem;
+  color: #1e40af;
+  font-family: var(--font-body);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
 
-    .dir-link:visited {
-      color: var(--link-help);
-    }
+/* Bullet list (matches nano lesson help bullets) */
+.dir-list{
+  list-style-type: "▶  ";
+  padding-left: 1.5rem;
+  margin-top: 0.45rem;
+}
+.dir-list li{
+  margin-bottom: 0.35rem;
+}
+.dir-list li::marker{
+  font-size: 1.1em;
+  color: #1e40af;
+}
+
+/* Help links (matches .help-prompt-btn) */
+.dir-link{
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.4rem 0.2rem;
+  font-size: 0.84rem;
+  border-radius: 10px;
+  background: transparent;
+  color: #1e40af;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dir-link:hover,
+.dir-link:focus{
+  background: rgba(30, 58, 138, 0.08);
+  color: #0b1220;
+  text-decoration: underline;
+}
+
+.dir-link:visited{
+  color: #1e40af;
+}
 
     .locked-panel {
       border-radius: 16px;
