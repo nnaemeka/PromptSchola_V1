@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About PromptSchola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="About PromptSchola — a prompt-guided STEM learning platform built to help students master concepts step by step with clarity, structure, and purpose."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      /* Utility / help links (royal blue) */
+      --link-help: #1d4ed8;
+      --link-help-hover: #1e40af;
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      color: var(--text-strong);
+      line-height: 1.15;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* NAV */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      gap: 1rem;
+    }
+
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+    }
+
+    .logo-text span:first-child {
+      display: block; font-weight: 700; font-size: 1.02rem;
+      letter-spacing: 0.02em; color: var(--text-strong);
+      font-family: var(--font-body); line-height: 1.1;
+    }
+
+    .logo-text span:last-child {
+      display: block; font-size: 0.76rem; color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 1.3rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.9;
+      transition: opacity var(--transition-fast), color var(--transition-fast);
+      font-family: var(--font-body);
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.9rem; font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 0.95rem;
+      font-size: 0.86rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: none;
+      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+    }
+
+    /* HERO */
+    main { padding-bottom: 2.6rem; }
+    section { padding: 1.4rem 0; }
+
+    .hero {
+      padding: 3.6rem 0 1.6rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
+        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-strong);
+      font-weight: 800;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+    }
+
+    .hero-kicker .label {
+      padding: 0.18rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid rgba(129, 140, 248, 0.22);
+      background: var(--accent-soft2);
+      color: var(--accent-strong);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      font-family: var(--font-body);
+    }
+
+    .hero-title {
+      font-size: clamp(2.15rem, 4vw, 2.9rem);
+      line-height: 1.12;
+      font-weight: 700;
+      margin: 0 auto 0.85rem;
+      max-width: 60rem;
+      color: var(--text-strong);
+    }
+
+    .hero-subtitle {
+      font-size: 1.06rem;
+      max-width: 54rem;
+      color: var(--text-muted);
+      margin: 0 auto;
+      line-height: 1.6;
+      font-family: var(--font-body);
+    }
+
+    /* CONTENT GRID */
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+      margin-top: 0.6rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 1.05rem 1.15rem 1.1rem;
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      font-family: var(--font-body);
+    }
+
+    .callout {
+      border-radius: 16px;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      background: linear-gradient(to bottom, rgba(129, 140, 248, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.95rem 1rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .callout-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: var(--text-strong);
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+    }
+
+    .bullets {
+      margin-top: 0.55rem;
+      padding-left: 1.2rem;
+      color: var(--text-muted);
+    }
+    .bullets li { margin-bottom: 0.42rem; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 900;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #f9fafb;
+      color: var(--text-subtle);
+    }
+
+    /* LINKS (royal blue, no visited purple) */
+    .link,
+    .link:visited {
+      color: var(--link-help);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .link:hover,
+    .link:focus {
+      color: var(--link-help-hover);
+      text-decoration: underline;
+      text-decoration-color: rgba(29, 78, 216, 0.35);
+    }
+
+    .cta-row {
+      margin-top: 0.9rem;
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0 2.1rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+    footer a, footer a:visited { color: var(--link-help); }
+    footer a:hover { color: var(--link-help-hover); text-decoration: underline; }
+
+    @media (max-width: 980px) {
+      .about-layout { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+            Sign In
+          </a>
+
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+            Register for Free
+          </a>
+
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+            onclick="signOutUser && signOutUser()"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">
+          <span class="label">About</span>
+          <span>What PromptSchola is building</span>
+        </div>
+
+        <h1 class="hero-title">Prompt-guided STEM mastery, step by step.</h1>
+
+        <p class="hero-subtitle">
+          PromptSchola turns STEM topics into a structured learning flow so students always know what to ask, what to practice,
+          and how to move from “I kinda get it” to real mastery.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="about-layout">
+
+          <!-- Main -->
+          <article class="card">
+            <h2>Why PromptSchola exists</h2>
+            <p>
+              Students often have access to AI, notes, and videos — but still feel stuck because they don’t know the
+              <strong>right next question</strong> to ask, or how to build confidence across tricky variations.
+              PromptSchola solves that with a guided, repeatable learning system.
+            </p>
+
+            <h2>How it works</h2>
+            <p>
+              Each topic is broken into nano-lessons with a consistent flow: you build intuition, practice intentionally,
+              and learn how to avoid common mistakes — with AI support when appropriate.
+            </p>
+
+            <ul class="bullets">
+              <li><strong>Clarity first:</strong> short explanations, clean examples, no fluff.</li>
+              <li><strong>Practice with purpose:</strong> questions are designed to surface common misconceptions.</li>
+              <li><strong>AI as a coach:</strong> guided prompts help students reason, not just copy answers.</li>
+              <li><strong>Exam readiness:</strong> common traps, sign errors, graph misreads, and “top of motion” moments.</li>
+            </ul>
+
+            <div class="tag-row" aria-label="Focus tags">
+              <span class="tag">Physics-first</span>
+              <span class="tag">Nano-lessons</span>
+              <span class="tag">6-step flow</span>
+              <span class="tag">Prompt literacy</span>
+              <span class="tag">MathJax</span>
+              <span class="tag">Real mastery</span>
+            </div>
+
+            <div class="cta-row">
+              <a class="btn-primary" href="/physics/physics.html">Explore Physics</a>
+              <a class="btn-pill" href="/pricing.html">See Mastery access</a>
+              <a class="btn-pill" href="/auth.html?mode=signup" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Create free account</a>
+            </div>
+
+            <p style="margin-top:0.9rem;">
+              Want to see what this looks like in practice? Try a nano-lesson and then open its Study Help library.
+            </p>
+            <p>
+              Example: <a class="link" href="/physics/nano-constant-acceleration.html">Constant Acceleration</a> ·
+              <a class="link" href="/physics/help-constant-acceleration.html">Study Help</a>
+            </p>
+          </article>
+
+          <!-- Sidebar -->
+          <aside class="callout">
+            <div class="callout-title">What we’re focusing on (v1)</div>
+            <p style="color:var(--text-muted); margin-bottom:0.65rem;">
+              PromptSchola is building Physics first — and expanding to more STEM subjects over time.
+            </p>
+
+            <ul class="bullets">
+              <li><strong>Physics hub</strong> with MIT-style topic structure</li>
+              <li><strong>Nano-lessons</strong> that follow a consistent learning flow</li>
+              <li><strong>Study Help</strong> libraries for the exact places students get stuck</li>
+              <li><strong>Interactive thinking</strong> (AI prompts + guided outputs)</li>
+            </ul>
+
+            <div class="tag-row" style="margin-top:0.85rem;">
+              <span class="tag">Mechanics</span>
+              <span class="tag">E&amp;M</span>
+              <span class="tag">Waves</span>
+              <span class="tag">Thermal</span>
+              <span class="tag">Modern</span>
+            </div>
+
+            <p style="margin-top:0.9rem; color:var(--text-muted);">
+              For support, go to <a class="link" href="/pricing.html">Pricing</a> for plan details or
+              <a class="link" href="/auth.html">Sign In</a> to continue learning.
+            </p>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola ·
+    <a href="/index.html">Home</a> ·
+    <a href="/physics/physics.html">Physics</a> ·
+    <a href="/pricing.html">Pricing</a>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
+
+<script>
+  function PS_setPostAuthRedirect() {
+    try {
+      const path = window.location.pathname + window.location.search + window.location.hash;
+      localStorage.setItem('ps_post_auth_redirect', path);
+    } catch (e) {}
+  }
+  window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+    const signOutBtn = document.getElementById('nav-signout-btn');
+    if (signOutBtn && typeof signOutUser === 'function') {
+      signOutBtn.addEventListener('click', signOutUser);
+    }
+  });
+</script>
+
+</body>
+</html>
