@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simulation Lab: Constant Acceleration – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Interactive simulation lab for constant acceleration in 1D. Adjust parameters, see graphs update, and explore what-if scenarios."
+  />
+
+  <!-- Inter font (matches PromptSchola) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Chart.js (simple, lightweight) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root{
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --bg-surface: #f9fafb;
+
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      /* lab / exploration accent (indigo) */
+      --lab: #4f46e5;
+      --lab-strong: #3730a3;
+      --lab-soft: rgba(79, 70, 229, 0.10);
+      --lab-soft2: rgba(79, 70, 229, 0.16);
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.6);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+      --transition-fast: 0.25s ease-out;
+
+      --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    a{ text-decoration:none; color:inherit; }
+
+    body{
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+      font-size: 16.5px;
+      overflow-x:hidden;
+    }
+
+    .page{ min-height:100vh; display:flex; flex-direction:column; }
+    .container{ width:100%; max-width:1120px; margin:0 auto; padding:0 1.4rem; }
+
+    /* NAV — canonical */
+    header{
+      position: sticky; top:0; z-index:40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+    .nav{
+      display:flex; justify-content:space-between; align-items:center;
+      padding: 0.75rem 0;
+      gap:1rem;
+    }
+    .nav-left{ display:flex; align-items:center; gap:0.75rem; }
+    .logo-mark{
+      width:34px; height:34px; border-radius:40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size:1rem; color:#fff;
+    }
+    .logo-text span:first-child{
+      display:block; font-weight:700; font-size:1.02rem; color:var(--text-strong);
+      letter-spacing:0.02em; line-height:1.1;
+    }
+    .logo-text span:last-child{
+      display:block; font-size:0.76rem; color:var(--text-subtle);
+    }
+    .nav-links{ display:flex; gap:1.3rem; font-size:0.95rem; align-items:center; }
+    .nav-links a{ opacity:0.9; color:var(--text-muted); transition:opacity var(--transition-fast), color var(--transition-fast); }
+    .nav-links a:hover{ opacity:1; color:var(--accent-strong); }
+
+    .nav-right{ display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; flex-wrap:wrap; justify-content:flex-end; }
+
+    .btn-pill{
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 0.95rem;
+      border: 1px solid rgba(209,213,219,0.9);
+      background:#fff;
+      cursor:pointer;
+      font-size:0.86rem;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      display:inline-flex; align-items:center; justify-content:center;
+      white-space:nowrap;
+    }
+    .btn-pill:hover{
+      background:#f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+    }
+
+    .btn-primary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border:none;
+      cursor:pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color:#fff;
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      white-space:nowrap;
+    }
+    .btn-primary:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+    }
+
+    /* HERO — "Lab" vibe */
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding: 3.1rem 0 2.2rem;
+      text-align:center;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-80px;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(79,70,229,0.40), transparent 60%),
+        radial-gradient(circle at 88% 40%, rgba(168,85,247,0.28), transparent 55%),
+        radial-gradient(circle at 50% 95%, rgba(79,70,229,0.12), transparent 55%);
+      opacity:0.95;
+      z-index:-1;
+    }
+
+    .hero-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:0.55rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 0.95rem;
+      color: var(--text-subtle);
+    }
+    .hero-kicker .tag{
+      padding: 0.20rem 0.7rem;
+      border-radius: 10px;
+      border: 1px solid rgba(79,70,229,0.28);
+      background: var(--lab-soft);
+      color: var(--lab);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+    .hero-title{
+      font-size: clamp(2.15rem, 3.2vw, 2.75rem);
+      font-weight: 800;
+      color: var(--text-strong);
+      max-width: 52rem;
+      margin: 0 auto 0.55rem;
+      line-height: 1.12;
+    }
+    .hero-subtitle{
+      max-width: 52rem;
+      margin: 0 auto;
+      color: var(--text-muted);
+      font-size: 1.06rem;
+    }
+
+    .hero-meta{
+      margin-top: 1.05rem;
+      display:flex;
+      gap:0.55rem;
+      justify-content:center;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .meta-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:0.45rem;
+      padding: 0.28rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(79,70,229,0.22);
+      background: rgba(255,255,255,0.85);
+      color: var(--lab-strong);
+      font-weight: 800;
+      font-size: 0.78rem;
+      box-shadow: 0 10px 22px rgba(79,70,229,0.10);
+    }
+    .meta-chip span{
+      color: var(--text-muted);
+      font-weight:700;
+    }
+
+    /* Layout */
+    main{ padding-bottom: 2.6rem; }
+    section{ padding: 1.15rem 0; }
+
+    .lab-layout{
+      display:grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+      gap: 1.2rem;
+      align-items:start;
+    }
+
+    .card{
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+    }
+
+    .card-pad{ padding: 1.05rem 1.1rem 1.1rem; }
+
+    .card-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:0.8rem;
+      margin-bottom: 0.55rem;
+    }
+    .card-title h2{
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--text-strong);
+      letter-spacing: -0.01em;
+    }
+    .pill-lab{
+      display:inline-flex;
+      align-items:center;
+      gap:0.45rem;
+      border-radius: 999px;
+      padding: 0.22rem 0.65rem;
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      border: 1px solid rgba(79,70,229,0.28);
+      background: var(--lab-soft);
+      color: var(--lab);
+      white-space:nowrap;
+    }
+
+    /* Controls */
+    .controls-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem 0.9rem;
+      margin-top: 0.6rem;
+    }
+    .control{
+      border-radius: 14px;
+      border: 1px solid rgba(209,213,219,0.85);
+      background: var(--bg-surface);
+      padding: 0.75rem 0.8rem;
+    }
+    .control label{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:0.6rem;
+      font-weight: 800;
+      font-size: 0.86rem;
+      color: var(--text-strong);
+      margin-bottom: 0.35rem;
+    }
+    .control label .val{
+      font-weight: 900;
+      color: var(--lab-strong);
+      background: rgba(79,70,229,0.08);
+      border: 1px solid rgba(79,70,229,0.18);
+      border-radius: 999px;
+      padding: 0.14rem 0.55rem;
+      font-size: 0.82rem;
+    }
+    .control input[type="range"]{
+      width:100%;
+      accent-color: var(--lab);
+      cursor:pointer;
+    }
+    .control .hint{
+      margin-top: 0.25rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .row-actions{
+      display:flex;
+      gap:0.55rem;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 0.95rem;
+    }
+    .btn-lab{
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 0.95rem;
+      border: 1px solid rgba(79,70,229,0.32);
+      background: rgba(79,70,229,0.08);
+      color: var(--lab-strong);
+      font-weight: 800;
+      cursor:pointer;
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:0.4rem;
+      white-space:nowrap;
+    }
+    .btn-lab:hover{
+      transform: translateY(-1px);
+      background: rgba(79,70,229,0.12);
+      box-shadow: 0 12px 26px rgba(79,70,229,0.12);
+    }
+
+    .btn-neutral{
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 0.95rem;
+      border: 1px solid rgba(209,213,219,0.9);
+      background: #fff;
+      color: var(--text-main);
+      font-weight: 800;
+      cursor:pointer;
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:0.4rem;
+      white-space:nowrap;
+    }
+    .btn-neutral:hover{
+      transform: translateY(-1px);
+      background:#f3f4f6;
+      box-shadow: 0 10px 22px rgba(148,163,184,0.28);
+    }
+
+    /* Graph area */
+    .chart-wrap{
+      border-radius: 16px;
+      border: 1px solid rgba(79,70,229,0.18);
+      background: linear-gradient(to bottom, rgba(79,70,229,0.05), rgba(255,255,255,0.95));
+      padding: 0.8rem;
+      margin-top: 0.75rem;
+    }
+    .chart-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    .mini-legend{
+      display:flex;
+      gap:0.6rem;
+      flex-wrap:wrap;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      align-items:center;
+    }
+    .dot{
+      width:10px; height:10px;
+      border-radius:999px;
+      display:inline-block;
+      background: var(--lab);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+      margin-right: 0.35rem;
+    }
+
+    /* Readouts */
+    .readouts{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.8rem;
+    }
+    .readout{
+      border-radius: 14px;
+      border: 1px solid rgba(209,213,219,0.85);
+      background: var(--bg-surface);
+      padding: 0.7rem 0.75rem;
+    }
+    .readout .k{
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 900;
+      color: var(--text-subtle);
+      margin-bottom: 0.15rem;
+    }
+    .readout .v{
+      font-size: 1.12rem;
+      font-weight: 900;
+      color: var(--text-strong);
+    }
+    .readout .u{
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
+    /* Right column: "Try this" & Notes */
+    .try-list{
+      margin-top: 0.45rem;
+      padding-left: 1.1rem;
+      color: var(--text-main);
+    }
+    .try-list li{
+      margin-bottom: 0.35rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .try-list strong{ color: var(--text-strong); }
+
+    .lab-note{
+      margin-top: 0.75rem;
+      border-radius: 14px;
+      border: 1px solid rgba(79,70,229,0.18);
+      background: rgba(79,70,229,0.06);
+      padding: 0.85rem 0.85rem;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .lab-note strong{ color: var(--text-strong); }
+
+    /* Small print disclaimer */
+    .disclaimer{
+      margin-top: 0.65rem;
+      font-size: 0.85rem;
+      color: var(--text-subtle);
+      line-height: 1.55;
+    }
+
+    footer{
+      margin-top:auto;
+      padding: 1.9rem 0;
+      text-align:center;
+      font-size:0.86rem;
+      color: var(--text-subtle);
+    }
+
+    @media (max-width: 980px){
+      .lab-layout{ grid-template-columns: 1fr; }
+      .readouts{ grid-template-columns: 1fr; }
+      .controls-grid{ grid-template-columns: 1fr; }
+      .nav-links{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">P</div>
+          <div class="logo-text">
+            <span>PromptSchola</span>
+            <span>Prompt-based STEM subjects mastery</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+
+          <!-- Optional: keep your sim pill here too if you want consistency (already on sim page so redundant) -->
+          <a href="/physics/nano-constant-acceleration.html"
+             class="btn-pill"
+             style="border-color: rgba(129,140,248,0.45); color:#4f46e5; font-weight:800;">
+            ← Back to nano-lesson
+          </a>
+
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+            onclick="signOutUser && signOutUser()">
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-kicker">
+          <span class="tag">Lab</span>
+          <span>Explore • tweak parameters • watch graphs respond</span>
+        </div>
+
+        <h1 class="hero-title">Simulation Lab: Constant Acceleration (1D)</h1>
+        <p class="hero-subtitle">
+          This is not a step-by-step lesson. It’s a playground: change \(u\), \(a\), and time, then see how
+          motion and graphs behave instantly.
+        </p>
+
+        <div class="hero-meta">
+          <div class="meta-chip">Mode: <span>Parameter sweep</span></div>
+          <div class="meta-chip">Graphs: <span>x(t), v(t)</span></div>
+          <div class="meta-chip">Goal: <span>build intuition</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="lab-layout">
+
+          <!-- LEFT: Controls + Graphs -->
+          <div class="card">
+            <div class="card-pad">
+              <div class="card-title">
+                <h2>Control panel</h2>
+                <span class="pill-lab">Live update</span>
+              </div>
+
+              <div style="color:var(--text-muted); font-size:0.95rem;">
+                Pick a starting velocity \(u\), acceleration \(a\), and total time. Then press Play to animate
+                the motion. Pause anytime and read values at the current time.
+              </div>
+
+              <div class="controls-grid">
+
+                <div class="control">
+                  <label>
+                    Initial velocity \(u\)
+                    <span class="val" id="uVal">10.0</span>
+                  </label>
+                  <input id="u" type="range" min="-30" max="30" value="10" step="0.5">
+                  <div class="hint">Try negative \(u\) (moving “left” first).</div>
+                </div>
+
+                <div class="control">
+                  <label>
+                    Acceleration \(a\)
+                    <span class="val" id="aVal">2.0</span>
+                  </label>
+                  <input id="a" type="range" min="-20" max="20" value="2" step="0.5">
+                  <div class="hint">Try \(a=-9.8\) for gravity (up is +).</div>
+                </div>
+
+                <div class="control">
+                  <label>
+                    Total time \(T\)
+                    <span class="val" id="tVal">5.0</span>
+                  </label>
+                  <input id="T" type="range" min="1" max="12" value="5" step="0.5">
+                  <div class="hint">Longer time reveals curvature in \(x(t)\).</div>
+                </div>
+
+                <div class="control">
+                  <label>
+                    Initial position \(x_0\)
+                    <span class="val" id="x0Val">0.0</span>
+                  </label>
+                  <input id="x0" type="range" min="-50" max="50" value="0" step="1">
+                  <div class="hint">Offsets move \(x(t)\) up/down.</div>
+                </div>
+
+              </div>
+
+              <div class="row-actions">
+                <button class="btn-lab" id="playBtn" type="button">▶ Play</button>
+                <button class="btn-neutral" id="resetBtn" type="button">↺ Reset time</button>
+                <button class="btn-neutral" id="snapGravityBtn" type="button">⤓ Set \(a=-9.8\)</button>
+                <button class="btn-neutral" id="snapZeroBtn" type="button">⟂ Set \(a=0\)</button>
+              </div>
+
+              <div class="readouts">
+                <div class="readout">
+                  <div class="k">Current time</div>
+                  <div class="v" id="curT">0.0</div>
+                  <div class="u">seconds</div>
+                </div>
+                <div class="readout">
+                  <div class="k">Velocity v(t)</div>
+                  <div class="v" id="curV">10.0</div>
+                  <div class="u">m/s</div>
+                </div>
+                <div class="readout">
+                  <div class="k">Position x(t)</div>
+                  <div class="v" id="curX">0.0</div>
+                  <div class="u">m</div>
+                </div>
+              </div>
+
+              <div class="chart-wrap">
+                <div class="mini-legend">
+                  <span><span class="dot"></span>Live graphs</span>
+                  <span>• \(v(t)=u+at\)</span>
+                  <span>• \(x(t)=x_0+ut+\tfrac{1}{2}at^2\)</span>
+                </div>
+
+                <div class="chart-grid">
+                  <canvas id="vChart" height="140"></canvas>
+                  <canvas id="xChart" height="140"></canvas>
+                </div>
+              </div>
+
+              <div class="disclaimer">
+                Tip: you’re “doing physics” when you <strong>predict</strong> the graph shape first, then verify it here.
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RIGHT: "Try this" / Explorations -->
+          <aside class="card">
+            <div class="card-pad">
+              <div class="card-title">
+                <h2>What to try</h2>
+                <span class="pill-lab">Exploration</span>
+              </div>
+
+              <div style="color:var(--text-muted); font-size:0.95rem;">
+                Use these mini-experiments like a lab notebook. Don’t rush—change one parameter at a time.
+              </div>
+
+              <ul class="try-list">
+                <li><strong>Zero acceleration:</strong> set \(a=0\). What happens to \(v(t)\)? What does \(x(t)\) look like?</li>
+                <li><strong>Reverse direction:</strong> set \(u&gt;0\) and \(a&lt;0\). Does the object stop? When does \(v=0\)?</li>
+                <li><strong>Gravity feel:</strong> set \(a=-9.8\). If \(u&gt;0\), what’s the “top of motion” time?</li>
+                <li><strong>Curvature test:</strong> increase \(T\). How does the bend of \(x(t)\) change with bigger \(|a|\)?</li>
+                <li><strong>Same final velocity:</strong> try different pairs \((u,a)\) that give the same \(v\) at the same \(t\). What changes?</li>
+              </ul>
+
+              <div class="lab-note">
+                <strong>Lab mindset:</strong> This page is meant to feel like tinkering, not “reading”.
+                If you want guided prompts, jump back to the nano-lesson Step 6 exploration prompts.
+              </div>
+
+              <div style="margin-top:0.85rem; display:flex; gap:0.55rem; flex-wrap:wrap;">
+                <a class="btn-lab" href="/physics/nano-constant-acceleration.html">← Back to nano-lesson</a>
+                <a class="btn-neutral" href="/physics/kinematics-in-one-dimension.html">More kinematics topics</a>
+              </div>
+
+              <div class="disclaimer">
+                Units here are generic (m, s). You can interpret them for any 1D motion context.
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 PromptSchola. All rights reserved.
+  </footer>
+</div>
+
+<!-- Supabase + auth helpers (optional; keeps nav behavior consistent) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
+
+<script>
+  /* ---------------------------
+     Nav display (auth.js)
+     --------------------------- */
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const registerBtn = document.getElementById('nav-register-btn');
+    const signOutBtn = document.getElementById('nav-signout-btn');
+
+    if (typeof getCurrentUser === 'function') {
+      const user = await getCurrentUser();
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (signOutBtn) signOutBtn.style.display = 'inline-flex';
+      } else {
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (signOutBtn) signOutBtn.style.display = 'none';
+      }
+    }
+  });
+
+  /* ---------------------------
+     Simple constant-a sim
+     x(t)=x0+ut+0.5at^2
+     v(t)=u+at
+     --------------------------- */
+  const uEl  = document.getElementById('u');
+  const aEl  = document.getElementById('a');
+  const tEl  = document.getElementById('T');
+  const x0El = document.getElementById('x0');
+
+  const uVal  = document.getElementById('uVal');
+  const aVal  = document.getElementById('aVal');
+  const tVal  = document.getElementById('tVal');
+  const x0Val = document.getElementById('x0Val');
+
+  const curT = document.getElementById('curT');
+  const curV = document.getElementById('curV');
+  const curX = document.getElementById('curX');
+
+  const playBtn = document.getElementById('playBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const snapGravityBtn = document.getElementById('snapGravityBtn');
+  const snapZeroBtn = document.getElementById('snapZeroBtn');
+
+  let playing = false;
+  let tNow = 0;
+  let raf = null;
+
+  function round1(x){ return (Math.round(x * 10) / 10).toFixed(1); }
+
+  function computeSeries(){
+    const u = parseFloat(uEl.value);
+    const a = parseFloat(aEl.value);
+    const T = parseFloat(tEl.value);
+    const x0 = parseFloat(x0El.value);
+
+    const N = 80;
+    const dt = T / N;
+    const ts = [];
+    const vs = [];
+    const xs = [];
+
+    for (let i=0; i<=N; i++){
+      const t = i * dt;
+      const v = u + a*t;
+      const x = x0 + u*t + 0.5*a*t*t;
+      ts.push(t);
+      vs.push(v);
+      xs.push(x);
+    }
+    return {u,a,T,x0,ts,vs,xs};
+  }
+
+  function updateReadouts(u,a,x0){
+    const v = u + a*tNow;
+    const x = x0 + u*tNow + 0.5*a*tNow*tNow;
+    curT.textContent = round1(tNow);
+    curV.textContent = round1(v);
+    curX.textContent = round1(x);
+  }
+
+  /* Charts */
+  const vCtx = document.getElementById('vChart');
+  const xCtx = document.getElementById('xChart');
+
+  const vChart = new Chart(vCtx, {
+    type: 'line',
+    data: { labels: [], datasets: [{ label: 'v(t)', data: [], tension: 0.15, pointRadius: 0 }] },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { title: { display: true, text: 'time (s)' } },
+        y: { title: { display: true, text: 'velocity (m/s)' } }
+      }
+    }
+  });
+
+  const xChart = new Chart(xCtx, {
+    type: 'line',
+    data: { labels: [], datasets: [{ label: 'x(t)', data: [], tension: 0.15, pointRadius: 0 }] },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { title: { display: true, text: 'time (s)' } },
+        y: { title: { display: true, text: 'position (m)' } }
+      }
+    }
+  });
+
+  function redraw(){
+    const {u,a,T,x0,ts,vs,xs} = computeSeries();
+
+    uVal.textContent = round1(u);
+    aVal.textContent = round1(a);
+    tVal.textContent = round1(T);
+    x0Val.textContent = round1(x0);
+
+    vChart.data.labels = ts.map(t => round1(t));
+    vChart.data.datasets[0].data = vs;
+    vChart.update();
+
+    xChart.data.labels = ts.map(t => round1(t));
+    xChart.data.datasets[0].data = xs;
+    xChart.update();
+
+    // clamp time if needed
+    if (tNow > T) tNow = T;
+    updateReadouts(u,a,x0);
+  }
+
+  function tick(){
+    const T = parseFloat(tEl.value);
+    const u = parseFloat(uEl.value);
+    const a = parseFloat(aEl.value);
+    const x0 = parseFloat(x0El.value);
+
+    // gentle speed: 1x real-time (scaled a bit)
+    tNow += 0.04;
+    if (tNow >= T){
+      tNow = T;
+      playing = false;
+      playBtn.textContent = '▶ Play';
+      cancelAnimationFrame(raf);
+      raf = null;
+    }
+
+    updateReadouts(u,a,x0);
+    raf = requestAnimationFrame(tick);
+  }
+
+  function togglePlay(){
+    playing = !playing;
+    if (playing){
+      playBtn.textContent = '⏸ Pause';
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(tick);
+    } else {
+      playBtn.textContent = '▶ Play';
+      if (raf) cancelAnimationFrame(raf);
+      raf = null;
+    }
+  }
+
+  function resetTime(){
+    tNow = 0;
+    const u = parseFloat(uEl.value);
+    const a = parseFloat(aEl.value);
+    const x0 = parseFloat(x0El.value);
+    updateReadouts(u,a,x0);
+  }
+
+  function setA(val){
+    aEl.value = String(val);
+    redraw();
+  }
+
+  // Events
+  [uEl, aEl, tEl, x0El].forEach(el => el.addEventListener('input', () => {
+    redraw();
+  }));
+
+  playBtn.addEventListener('click', togglePlay);
+  resetBtn.addEventListener('click', () => { resetTime(); });
+  snapGravityBtn.addEventListener('click', () => { setA(-9.8); });
+  snapZeroBtn.addEventListener('click', () => { setA(0); });
+
+  // Initial
+  redraw();
+  resetTime();
+</script>
+
+</body>
+</html>
