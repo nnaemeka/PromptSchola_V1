@@ -245,8 +245,11 @@
       font-weight: 700;
       margin-bottom: 1.05rem;
       font-family: var(--font-body);
-    }
-
+      }
+       /* Keep the "Help" label strong, but make the metadata calm */
+      .hero-kicker span:not(.label){
+       color: #64748b; /* slate-500 (best for metadata) */
+       }
     .hero-kicker span.label {
       padding: 0.18rem 0.7rem;
       border-radius: 8px;
