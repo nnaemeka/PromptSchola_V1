@@ -667,13 +667,27 @@
 
     .help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
 
-    .help-prompts-bulleted{
-  list-style-type: "\25B6  "; /* ▶ */
-  padding-left: 1.5rem;
+   /* ▶ Bullet (consistent sizing across browsers) */
+.help-prompts-bulleted{
+  list-style: none;
+  padding-left: 1.2rem;
 }
 
-    .help-prompts-bulleted li { margin-bottom: 0.35rem; }
-    .help-prompts-bulleted li::marker { font-size: 0.7em; color: #4c1d95; }
+.help-prompts-bulleted li{
+  position: relative;
+  margin-bottom: 0.35rem;
+}
+
+.help-prompts-bulleted li::before{
+  content: "▶";
+  position: absolute;
+  left: -1.1rem;
+  top: 0.18rem;
+  transform: scale(0.7);           /* ✅ triangle size */
+  transform-origin: left top;
+  color: var(--help-blue-strong);  /* matches your indigo theme */
+}
+
 
     .help-prompt-btn {
       display: block;
