@@ -577,21 +577,27 @@
    Canonical, locked
    ========================================================= */
 
-/* Panel title (matches .nano-help-title) */
+/* Emphasized Help Library button */
 .dir-title{
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.12rem 0.6rem;
+  padding: 0.28rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid rgba(30, 58, 138, 0.32);
+  border: 1px solid rgba(30, 64, 175, 0.45);
+  background: rgba(30, 64, 175, 0.10);
   color: #1e40af;
-  background: rgba(30, 58, 138, 0.06);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 900;
   font-family: var(--font-body);
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.65rem;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.12);
 }
+
+.dir-title:hover{
+  background: rgba(30, 64, 175, 0.18);
+}
+
 
 /* Panel description (matches nano help body tone) */
 .dir-desc{
