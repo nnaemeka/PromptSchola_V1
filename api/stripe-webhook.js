@@ -1,5 +1,6 @@
 // /api/stripe-webhook.js
 import Stripe from "stripe";
+import { createClient } from "@supabase/supabase-js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2024-06-20",
@@ -13,6 +14,48 @@ function readRawBody(req) {
     req.on("end", () => resolve(Buffer.concat(chunks)));
     req.on("error", reject);
   });
+}
+
+function getSupabaseAdmin() {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url) throw new Error("Missing SUPABASE_URL");
+  if (!key) throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY");
+
+  return createClient(url, key, { auth: { persistSession: false } });
+}
+
+// Try a full upsert (with optional columns). If it fails due to schema mismatch,
+// retry with minimal columns that should exist.
+async function upsertEntitlementPaid(sb, payload) {
+  const first = await sb
+    .from("entitlements")
+    .upsert(payload, { onConflict: "user_id" });
+
+  if (!first.error) return;
+
+  console.error(
+    "❌ Entitlement upsert failed (full payload). Retrying minimal.",
+    first.error?.message || first.error
+  );
+
+  const minimal = {
+    user_id: payload.user_id,
+    tier: payload.tier,
+  };
+
+  const second = await sb
+    .from("entitlements")
+    .upsert(minimal, { onConflict: "user_id" });
+
+  if (second.error) {
+    console.error(
+      "❌ Entitlement upsert failed (minimal payload).",
+      second.error?.message || second.error
+    );
+    throw second.error;
+  }
 }
 
 export default async function handler(req, res) {
@@ -52,19 +95,42 @@ export default async function handler(req, res) {
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
+    // ✅ Always-on debug logs (so you can see the handler is running)
+    console.log("✅ Webhook received:", event.type);
+    console.log("✅ Event id:", event.id);
+    console.log("✅ Livemode:", event.livemode);
+
     // 🔔 Handle Stripe events
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object;
-        console.log("✅ checkout.session.completed", {
-          id: session.id,
-          customer: session.customer,
-          subscription: session.subscription,
-        });
 
-        // TODO:
-        // - Look up Supabase user by session.metadata.user_id
-        // - Mark entitlement as paid
+        console.log("✅ Session:", session.id);
+        console.log("✅ Metadata:", session.metadata);
+
+        const userId = session?.metadata?.supabase_user_id; // MUST match Stripe metadata key
+        const plan = session?.metadata?.plan || null;
+
+        if (!userId) {
+          console.error("❌ Missing metadata.supabase_user_id; cannot grant access.");
+          break;
+        }
+
+        const sb = getSupabaseAdmin();
+
+        // Full payload (will retry minimal if your entitlements table lacks these columns)
+        const payload = {
+          user_id: userId,
+          tier: "paid",
+          plan: plan, // optional if you created it
+          stripe_customer_id: session.customer || null, // optional
+          stripe_subscription_id: session.subscription || null, // optional
+          updated_at: new Date().toISOString(), // optional
+        };
+
+        await upsertEntitlementPaid(sb, payload);
+
+        console.log("✅ Entitlement set to paid for user:", userId, "plan:", plan);
         break;
       }
 
@@ -75,6 +141,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ received: true });
   } catch (err) {
     console.error("❌ Webhook crashed:", err);
-    return res.status(500).json({ error: "Webhook crashed" });
+    return res.status(500).json({ error: "Webhook crashed", detail: String(err?.message || err) });
   }
 }
