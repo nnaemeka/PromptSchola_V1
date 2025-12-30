@@ -122,6 +122,7 @@ export default async function handler(req, res) {
         const payload = {
           user_id: userId,
           tier: "paid",
+          is_paid: true,
           plan: plan, // optional if you created it
           stripe_customer_id: session.customer || null, // optional
           stripe_subscription_id: session.subscription || null, // optional
