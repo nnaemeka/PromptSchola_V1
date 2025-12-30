@@ -26,9 +26,16 @@ function getSupabaseAdmin() {
   return createClient(url, key, { auth: { persistSession: false } });
 }
 
-// Try a full upsert (with optional columns). If it fails due to schema mismatch,
-// retry with minimal columns that should exist.
-async function upsertEntitlementPaid(sb, payload) {
+function isoFromUnixSeconds(sec) {
+  if (!sec || typeof sec !== "number") return null;
+  return new Date(sec * 1000).toISOString();
+}
+
+/**
+ * Upsert entitlement row. If optional columns are missing (schema mismatch),
+ * retry with minimal, safe columns that should exist.
+ */
+async function upsertEntitlement(sb, payload) {
   const first = await sb
     .from("entitlements")
     .upsert(payload, { onConflict: "user_id" });
@@ -36,14 +43,14 @@ async function upsertEntitlementPaid(sb, payload) {
   if (!first.error) return;
 
   console.error(
-    "❌ Entitlement upsert failed (full payload). Retrying minimal.",
+    "Entitlement upsert failed (full payload). Retrying minimal.",
     first.error?.message || first.error
   );
 
   const minimal = {
     user_id: payload.user_id,
     tier: payload.tier,
-    is_paid: true,
+    is_paid: payload.is_paid === true,
     updated_at: new Date().toISOString(),
   };
 
@@ -53,39 +60,74 @@ async function upsertEntitlementPaid(sb, payload) {
 
   if (second.error) {
     console.error(
-      "❌ Entitlement upsert failed (minimal payload).",
+      "Entitlement upsert failed (minimal payload).",
       second.error?.message || second.error
     );
     throw second.error;
   }
 }
 
+async function setPaidFromSubscription(sb, userId, customerId, subscriptionId) {
+  // Fetch subscription to get authoritative status + period end
+  const sub = subscriptionId
+    ? await stripe.subscriptions.retrieve(subscriptionId)
+    : null;
+
+  const status = sub?.status || "active";
+  const currentPeriodEnd = isoFromUnixSeconds(sub?.current_period_end);
+
+  const isActive =
+    status === "active" || status === "trialing"; // treat trialing as paid access
+
+  const payload = {
+    user_id: userId,
+    tier: isActive ? "paid" : "free",
+    is_paid: isActive,
+    stripe_customer_id: customerId || null,
+    stripe_subscription_id: subscriptionId || null,
+    stripe_status: status || null,
+    current_period_end: currentPeriodEnd,
+    updated_at: new Date().toISOString(),
+  };
+
+  await upsertEntitlement(sb, payload);
+}
+
+async function setStatusFromSubscriptionObject(sb, userId, subscription) {
+  const status = subscription?.status || null;
+  const currentPeriodEnd = isoFromUnixSeconds(subscription?.current_period_end);
+
+  const isActive =
+    status === "active" || status === "trialing";
+
+  const payload = {
+    user_id: userId,
+    tier: isActive ? "paid" : "free",
+    is_paid: isActive,
+    stripe_customer_id: subscription?.customer || null,
+    stripe_subscription_id: subscription?.id || null,
+    stripe_status: status,
+    current_period_end: currentPeriodEnd,
+    updated_at: new Date().toISOString(),
+  };
+
+  await upsertEntitlement(sb, payload);
+}
+
 export default async function handler(req, res) {
   try {
-    // ✅ Allow GET so browser checks don’t crash
-    if (req.method === "GET") {
-      return res.status(200).send("stripe-webhook alive");
-    }
+    // Keep GET for quick health checks
+    if (req.method === "GET") return res.status(200).send("stripe-webhook alive");
+    if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Method not allowed" });
-    }
-
-    // Env checks
     const secretKey = process.env.STRIPE_SECRET_KEY;
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-    if (!secretKey) {
-      return res.status(500).json({ error: "Missing STRIPE_SECRET_KEY" });
-    }
-    if (!webhookSecret) {
-      return res.status(500).json({ error: "Missing STRIPE_WEBHOOK_SECRET" });
-    }
+    if (!secretKey) return res.status(500).json({ error: "Missing STRIPE_SECRET_KEY" });
+    if (!webhookSecret) return res.status(500).json({ error: "Missing STRIPE_WEBHOOK_SECRET" });
 
     const signature = req.headers["stripe-signature"];
-    if (!signature) {
-      return res.status(400).json({ error: "Missing stripe-signature header" });
-    }
+    if (!signature) return res.status(400).json({ error: "Missing stripe-signature header" });
 
     const rawBody = await readRawBody(req);
 
@@ -93,70 +135,64 @@ export default async function handler(req, res) {
     try {
       event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
     } catch (err) {
-      console.error("❌ Stripe signature verification failed:", err.message);
+      console.error("Stripe signature verification failed:", err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    // ✅ Always-on debug logs (so you can see the handler is running)
-    console.log("✅ Webhook received:", event.type);
-    console.log("✅ Event id:", event.id);
-    console.log("✅ Livemode:", event.livemode);
+    const sb = getSupabaseAdmin();
 
-    // 🔔 Handle Stripe events
+    // Minimal production logging (avoid dumping metadata/session objects)
+    console.log(`[stripe-webhook] ${event.type} id=${event.id} livemode=${event.livemode}`);
+
     switch (event.type) {
+      // ✅ Checkout completed: grant access based on subscription status/period end
       case "checkout.session.completed": {
         const session = event.data.object;
-
-        console.log("✅ Session:", session.id);
-        console.log("✅ Metadata:", session.metadata);
-
-        const userId = session?.metadata?.supabase_user_id; // MUST match Stripe metadata key
-        const plan = session?.metadata?.plan || null;
+        const userId = session?.metadata?.supabase_user_id;
 
         if (!userId) {
-          console.error("❌ Missing metadata.supabase_user_id; cannot grant access.");
+          console.error("Missing session.metadata.supabase_user_id; cannot grant access.");
           break;
         }
 
-        const sb = getSupabaseAdmin();
+        await setPaidFromSubscription(
+          sb,
+          userId,
+          session.customer,
+          session.subscription
+        );
 
-        // Full payload (will retry minimal if your entitlements table lacks these columns)
-       const payload = {
-              user_id: userId,
-              tier: "paid",
-              is_paid: true,
-              stripe_customer_id: session.customer || null,
-              stripe_subscription_id: session.subscription || null,
-              stripe_status: "active",                 // optional but matches your column
-              current_period_end: null,                // we'll fill this properly below (optional)
-              updated_at: new Date().toISOString(),
-            };
+        break;
+      }
 
-        let currentPeriodEnd = null;
-        if (session.subscription) {
-          const sub = await stripe.subscriptions.retrieve(session.subscription);
-          currentPeriodEnd = sub?.current_period_end
-            ? new Date(sub.current_period_end * 1000).toISOString()
-            : null;
-        
-          payload.stripe_status = sub?.status || "active";
+      // ✅ Keep entitlements synced over time (cancel, payment failure, etc.)
+      case "customer.subscription.updated":
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object;
+
+        // We need to map subscription -> user_id.
+        // Best practice: store user_id in subscription metadata when creating checkout session.
+        const userId = subscription?.metadata?.supabase_user_id;
+
+        if (!userId) {
+          // If you don’t store userId in subscription metadata yet, you can fall back to
+          // mapping via stripe_customer_id in your entitlements table, but that's slower.
+          console.error("Missing subscription.metadata.supabase_user_id; cannot sync entitlement.");
+          break;
         }
-        
-        payload.current_period_end = currentPeriodEnd;
 
-        await upsertEntitlementPaid(sb, payload);
-
-        console.log("✅ Entitlement set to paid for user:", userId, "plan:", plan);
+        await setStatusFromSubscriptionObject(sb, userId, subscription);
         break;
       }
 
       default:
-        console.log(`ℹ️ Unhandled event type: ${event.type}`);
+        // Keep quiet in prod; Stripe sends many event types depending on enabled methods.
+        break;
     }
 
     return res.status(200).json({ received: true });
   } catch (err) {
-    console.error("❌ Webhook crashed:", err);
+    console.error("Webhook crashed:", err);
     return res.status(500).json({ error: "Webhook crashed", detail: String(err?.message || err) });
   }
 }
