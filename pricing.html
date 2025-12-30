@@ -22,726 +22,1028 @@
       --accent-strong: #6d28d9;
       --accent-soft: rgba(126, 34, 206, 0.09);
       --accent-soft2: rgba(129, 140, 248, 0.12);
+
       --text-main: #111827;
       --text-muted: #4b5563;
-      --border: rgba(17, 24, 39, 0.10);
-      --shadow: 0 14px 36px rgba(17, 24, 39, 0.10);
-      --radius: 18px;
-      --radius-sm: 14px;
-      --max: 1120px;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      /* ✅ Two-font system */
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --transition-fast: 0.25s ease-out;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(1100px 520px at 10% -10%, rgba(126, 34, 206, 0.18), transparent 55%),
-        radial-gradient(900px 460px at 100% 0%, rgba(129, 140, 248, 0.18), transparent 55%),
-        var(--bg-body);
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
       color: var(--text-main);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+    }
+
+    /* ✅ Headings use Lora */
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      color: var(--text-strong);
+      line-height: 1.15;
     }
 
     a { color: inherit; text-decoration: none; }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 22px 18px 64px; }
 
-    /* Nav */
-    .nav {
-      position: sticky; top: 0; z-index: 20;
-      backdrop-filter: blur(10px);
-      background: rgba(243, 244, 246, 0.72);
-      border-bottom: 1px solid rgba(17, 24, 39, 0.07);
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .nav-inner {
-      max-width: var(--max);
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 14px 18px;
+      padding: 0 1.4rem;
+    }
+
+    /* Header / Nav (matches index.html) */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      padding: 0.75rem 0;
     }
-    .brand {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .logo {
-      width: 34px; height: 34px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-      box-shadow: 0 12px 22px rgba(126, 34, 206, 0.18);
-      position: relative;
-    }
-    .logo:after{
-      content:"P";
-      position:absolute; inset:0;
-      display:flex; align-items:center; justify-content:center;
-      color:#fff; font-weight:900; font-size: 16px;
-    }
-    .nav-links { display:flex; gap: 10px; align-items:center; flex-wrap:wrap; }
-    .pill {
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(17, 24, 39, 0.10);
-      background: rgba(255,255,255,0.65);
-      color: var(--text-main);
-      font-weight: 600;
-      font-size: 13px;
-    }
-    .pill:hover { background: #fff; }
 
-    .cta {
-      display:flex; gap: 10px; align-items:center;
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
-    .btn {
-      border: 1px solid rgba(17, 24, 39, 0.12);
-      background: #fff;
-      color: var(--text-main);
-      border-radius: 999px;
-      padding: 10px 14px;
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #f9fafb;
+      font-family: var(--font-body);
+    }
+
+    .logo-text span:first-child {
+      display: block;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 1.02rem;
+      letter-spacing: 0.02em;
+      color: var(--text-strong);
+      font-family: var(--font-body);
+    }
+
+    .logo-text span:last-child {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.3rem;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      opacity: 0.9;
+      transition: opacity var(--transition-fast), color var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      color: var(--accent-strong);
+    }
+
+    .nav-links a[aria-current="page"] {
+      color: var(--accent-strong);
+      opacity: 1;
+      font-weight: 700;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.45rem 0.95rem;
+      font-size: 0.86rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-main);
       cursor: pointer;
-      transition: transform .08s ease, box-shadow .08s ease, background .12s ease;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      white-space: nowrap;
     }
-    .btn:hover { background: rgba(255,255,255,0.95); }
-    .btn:active { transform: translateY(1px); }
+
+    .btn-pill:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: rgba(156, 163, 175, 0.9);
+      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+    }
+
     .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.6rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
       border: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-      color: #fff;
-      box-shadow: 0 14px 28px rgba(126, 34, 206, 0.22);
+      cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: none;
+      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      white-space: nowrap;
     }
-    .btn-primary:hover { filter: brightness(1.02); }
-    .btn-ghost {
-      background: rgba(255,255,255,0.65);
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
     }
-    .btn[disabled] {
-      opacity: .55;
+
+    .btn-primary[disabled],
+    .btn-pill[disabled] {
+      opacity: 0.6;
       cursor: not-allowed;
       transform: none !important;
+      box-shadow: none !important;
     }
 
-    /* Hero */
-    .hero {
-      padding: 34px 0 18px;
+    /* Pricing hero (page-specific, but matches site aesthetic) */
+    .pricing-hero {
+      padding: 3.2rem 0 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-hero::before {
+      content: "";
+      position: absolute;
+      inset: -90px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
+        radial-gradient(circle at 88% 35%, rgba(168, 85, 247, 0.35), transparent 55%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .pricing-grid-top {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: 1rem;
       align-items: stretch;
     }
+
     @media (max-width: 920px) {
-      .hero { grid-template-columns: 1fr; }
+      .pricing-grid-top { grid-template-columns: minmax(0, 1fr); }
     }
+
     .hero-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.76));
-      border: 1px solid rgba(17, 24, 39, 0.10);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 22px 22px 18px;
-      overflow: hidden;
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1.25rem 1.3rem;
+      box-shadow: var(--shadow-card);
       position: relative;
+      overflow: hidden;
     }
-    .hero-card:before{
+
+    .hero-card::after {
       content:"";
-      position:absolute; inset:-40px -60px auto auto;
-      width: 220px; height: 220px;
-      background: radial-gradient(circle at 30% 30%, rgba(126,34,206,.22), transparent 65%);
-      filter: blur(2px);
+      position:absolute;
+      inset: -120px -140px auto auto;
+      width: 260px;
+      height: 260px;
       pointer-events:none;
-    }
-    h1 {
-      margin: 0 0 10px;
-      font-size: 34px;
-      line-height: 1.08;
-      letter-spacing: -0.04em;
-    }
-    .subtitle {
-      margin: 0 0 14px;
-      color: var(--text-muted);
-      font-size: 15.5px;
-      line-height: 1.55;
-      max-width: 68ch;
-    }
-    .tagrow {
-      display:flex; flex-wrap:wrap; gap: 8px;
-      margin-top: 12px;
-    }
-    .tag {
-      font-size: 12.5px;
-      font-weight: 700;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(126, 34, 206, 0.09);
-      border: 1px solid rgba(126, 34, 206, 0.18);
-      color: #3b0764;
+      background: radial-gradient(circle at 30% 30%, rgba(126,34,206,.18), transparent 65%);
+      filter: blur(6px);
+      opacity: 0.95;
     }
 
-    /* Status */
-    .status-card {
-      background: rgba(255,255,255,0.75);
-      border: 1px solid rgba(17, 24, 39, 0.10);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px;
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-strong);
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      font-family: var(--font-body);
     }
-    .status-title {
-      margin: 0 0 8px;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-    }
-    .status-line { margin: 0; color: var(--text-muted); font-size: 14px; line-height: 1.55; }
-    .status-badge {
-      display:inline-flex; align-items:center; gap: 8px;
-      margin-top: 10px;
+
+    .hero-kicker .label {
+      padding: 0.18rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid rgba(129, 140, 248, 0.22);
+      background: var(--accent-soft2);
+      color: var(--accent-strong);
       font-weight: 800;
-      font-size: 12.5px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(17, 24, 39, 0.12);
-      background: rgba(255,255,255,0.75);
-    }
-    .dot { width: 9px; height: 9px; border-radius: 999px; background: rgba(17,24,39,.25); }
-    .dot.ok { background: rgba(16, 185, 129, 0.75); }
-    .dot.warn { background: rgba(245, 158, 11, 0.75); }
-
-    /* Pricing grid */
-    .grid {
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 14px;
-    }
-    @media (max-width: 980px) {
-      .grid { grid-template-columns: 1fr; }
+      letter-spacing: 0.14em;
     }
 
-    .card {
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(17, 24, 39, 0.10);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-    }
-    .card.popular {
-      border-color: rgba(126, 34, 206, 0.28);
-      box-shadow: 0 18px 44px rgba(126, 34, 206, 0.18);
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78));
-    }
-    .ribbon {
-      position:absolute; top: 14px; right: 14px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-      color: #3b0764;
-      background: rgba(126, 34, 206, 0.10);
-      border: 1px solid rgba(126, 34, 206, 0.20);
-    }
-
-    .plan {
-      display:flex; align-items: baseline; justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .plan h2 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-    .price {
-      font-weight: 900;
-      font-size: 26px;
-      letter-spacing: -0.03em;
-    }
-    .per {
+    .hero-title {
+      font-size: clamp(2.1rem, 4.2vw, 2.85rem);
+      line-height: 1.12;
       font-weight: 700;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-left: 6px;
-    }
-    .desc {
-      margin: 8px 0 14px;
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-    ul {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--text-main);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-    li { margin: 6px 0; }
-    .muted { color: var(--text-muted); }
-
-    .card-actions {
-      display:flex; gap: 10px; flex-wrap:wrap;
-      margin-top: 16px;
-    }
-    .fine {
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.45;
+      margin: 0 0 0.8rem;
+      color: var(--text-strong);
     }
 
-    /* Compare */
-    .section-title {
-      margin: 28px 0 10px;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-      font-weight: 900;
+    .hero-subtitle {
+      font-size: 1.06rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-family: var(--font-body);
+      max-width: 56ch;
     }
-    .compare {
-      border: 1px solid rgba(17, 24, 39, 0.10);
-      background: rgba(255,255,255,0.70);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
+
+    .tagrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1rem;
+      position: relative;
+      z-index: 1;
     }
-    .row {
-      display:grid;
-      grid-template-columns: 1.6fr 1fr 1fr;
-      gap: 0;
-      border-top: 1px solid rgba(17, 24, 39, 0.08);
+
+    .tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.35rem 0.7rem;
+      border-radius: 10px;
+      border: 1px solid rgba(129, 140, 248, 0.20);
+      background: var(--accent-soft2);
+      color: var(--accent-strong);
+      font-family: var(--font-body);
     }
-    .row:first-child { border-top: none; }
-    .cell {
-      padding: 12px 14px;
-      font-size: 14px;
-    }
-    .head {
-      background: rgba(249,250,251,0.85);
-      font-weight: 900;
-    }
-    .check { font-weight: 900; color: #065f46; }
-    .no { font-weight: 900; color: #7f1d1d; }
 
     /* Toast */
     .toast {
-      margin-top: 10px;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(17, 24, 39, 0.10);
-      background: rgba(255,255,255,0.72);
-      padding: 12px 12px;
-      display:none;
+      margin-top: 0.9rem;
+      border-radius: 14px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: rgba(255,255,255,0.9);
+      padding: 0.75rem 0.85rem;
+      display: none;
       color: var(--text-main);
-      font-size: 13.5px;
-      line-height: 1.45;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      font-family: var(--font-body);
+      position: relative;
+      z-index: 1;
     }
-    .toast.show { display:block; }
+    .toast.show { display: block; }
     .toast.success { border-color: rgba(16,185,129,0.35); }
     .toast.warn { border-color: rgba(245,158,11,0.35); }
 
-    /* Footer */
-    footer {
-      margin-top: 34px;
+    /* Status card */
+    .status-card {
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1.1rem 1.1rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .status-title {
+      font-size: 1.28rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .status-line {
       color: var(--text-muted);
-      font-size: 12.5px;
+      font-size: 0.98rem;
       line-height: 1.6;
+      font-family: var(--font-body);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      font-family: var(--font-body);
+      color: var(--text-main);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(17,24,39,.25);
+    }
+    .dot.ok { background: rgba(16, 185, 129, 0.75); }
+    .dot.warn { background: rgba(245, 158, 11, 0.75); }
+
+    .card-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      margin-top: 0.95rem;
+    }
+
+    .fine {
+      margin-top: 0.75rem;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      line-height: 1.6;
+      font-family: var(--font-body);
+    }
+
+    /* Plans grid */
+    .plans {
+      padding: 0.6rem 0 2.6rem;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.95rem;
+      margin-top: 0.8rem;
+    }
+
+    @media (max-width: 980px) {
+      .plans-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .plan-card {
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1.05rem 1.05rem 1rem;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-card.popular {
+      border-color: rgba(126, 34, 206, 0.24);
+      box-shadow: 0 18px 44px rgba(126, 34, 206, 0.16);
+    }
+
+    .ribbon {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.22);
+      background: var(--accent-soft2);
+      color: var(--accent-strong);
+      font-family: var(--font-body);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .plan-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .plan-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .price {
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: var(--text-strong);
+      white-space: nowrap;
+    }
+
+    .per {
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      margin-left: 0.25rem;
+      font-weight: 700;
+      font-family: var(--font-body);
+    }
+
+    .desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.65;
+      margin-bottom: 0.7rem;
+      font-family: var(--font-body);
+    }
+
+    .list {
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+      margin-top: 0.55rem;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+    }
+
+    .list li {
+      padding-left: 1.35rem;
+      position: relative;
+      color: var(--text-muted);
+    }
+
+    .list li::before {
+      content: "•";
+      position: absolute;
+      left: 0.2rem;
+      color: var(--accent-strong);
+      font-weight: 900;
+    }
+
+    .list li strong { color: var(--text-strong); }
+
+    .muted { color: var(--text-subtle); }
+
+    /* Compare section */
+    .section {
+      padding: 0 0 2.6rem;
+    }
+
+    .section-header {
       text-align: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-subtle);
+      margin-bottom: 0.4rem;
+      font-family: var(--font-body);
+      font-weight: 700;
+    }
+
+    .section-title {
+      font-size: 2.05rem;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      max-width: 42rem;
+      margin: 0 auto;
+      font-family: var(--font-body);
+    }
+
+    .compare {
+      margin-top: 1rem;
+      background: rgba(255,255,255,0.92);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+      border-top: 1px solid rgba(229, 231, 235, 0.9);
+    }
+    .row:first-child { border-top: none; }
+
+    .cell {
+      padding: 0.85rem 0.9rem;
+      font-size: 0.98rem;
+      font-family: var(--font-body);
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .head {
+      background: rgba(249,250,251,0.9);
+      font-weight: 900;
+      color: var(--text-strong);
+      font-family: var(--font-body);
+    }
+
+    .check { font-weight: 900; color: #166534; }
+    .no { font-weight: 900; color: #7f1d1d; }
+
+    /* Footer (matches index) */
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0 2.1rem;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.9rem;
+      align-items: center;
+      border-top: 1px solid rgba(209, 213, 219, 0.9);
+      padding-top: 0.95rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.9rem;
+      font-family: var(--font-body);
+    }
+
+    .footer-links a { color: var(--text-subtle); }
+    .footer-links a:hover { color: var(--text-main); }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+    }
+    @media (max-width: 520px) {
+      .pricing-hero { padding: 2.6rem 0 1.2rem; }
+      .hero-title { font-size: 2.15rem; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Sticky Nav -->
-  <div class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="/index.html" aria-label="PromptSchola Home">
-        <span class="logo" aria-hidden="true"></span>
-        <span>PromptSchola</span>
-      </a>
+<div class="page">
+  <!-- ✅ Nav copied from index.html (IDs preserved for auth.js) -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="nav-left">
+          <a href="/index.html" aria-label="PromptSchola Home" style="display:flex;align-items:center;gap:0.75rem;">
+            <div class="logo-mark">P</div>
+            <div class="logo-text">
+              <span>PromptSchola</span>
+              <span>Prompt-based STEM subjects mastery</span>
+            </div>
+          </a>
+        </div>
 
-      <div class="nav-links">
-        <a class="pill" href="/physics/physics.html">Physics</a>
-        <a class="pill" href="/pricing.html" aria-current="page">Pricing</a>
-        <a class="pill" href="/auth.html" id="navAuthLink">Sign in</a>
-      </div>
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/math/math.html">Math</a>
+          <a href="/chemistry/chemistry.html">Chemistry</a>
+          <a href="/biology/biology.html">Biology</a>
+          <a href="/pricing.html" aria-current="page">Pricing</a>
+        </nav>
 
-      <div class="cta">
-        <button class="btn btn-ghost" id="btnGoToApp" type="button">Go to Physics</button>
-        <button class="btn btn-primary" id="btnUpgradeTop" type="button">Upgrade</button>
+        <div class="nav-right">
+          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
+          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
+
+          <button
+            id="nav-signout-btn"
+            type="button"
+            class="btn-pill"
+            style="display:none;"
+            onclick="signOutUser && signOutUser()"
+          >
+            Sign out
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+  </header>
 
-  <main class="wrap">
+  <main>
     <!-- Hero -->
-    <section class="hero" aria-label="Pricing hero">
-      <div class="hero-card">
-        <h1>Upgrade to Mastery</h1>
-        <p class="subtitle">
-          PromptSchola Mastery unlocks the full 6-step nano-lesson flow:
-          <strong>Steps 1–6</strong>, <strong>Help</strong>, <strong>Run AI</strong> across the lesson,
-          and the <strong>Simulation Lab</strong>. Free users keep the guided starting steps.
-        </p>
+    <section class="pricing-hero" aria-label="Pricing hero">
+      <div class="container">
+        <div class="pricing-grid-top">
+          <div class="hero-card">
+            <div class="hero-kicker">
+              <span class="label">Mastery</span>
+              <span>Upgrade when you’re ready</span>
+            </div>
 
-        <div class="tagrow" aria-label="Mastery highlights">
-          <span class="tag">Steps 1–6 unlocked</span>
-          <span class="tag">Help panel access</span>
-          <span class="tag">Run AI beyond Step 2</span>
-          <span class="tag">Simulation Lab</span>
+            <h1 class="hero-title">Unlock the full 6-step flow.</h1>
+
+            <p class="hero-subtitle">
+              PromptSchola Mastery unlocks <strong>Steps 1–6</strong>, the <strong>Help panel</strong>,
+              <strong>Run AI</strong> across the lesson, and the <strong>Simulation Lab</strong>.
+              Free users keep the guided starting steps.
+            </p>
+
+            <div class="tagrow" aria-label="Mastery highlights">
+              <span class="tag">Steps 1–6 unlocked</span>
+              <span class="tag">Help unlocked</span>
+              <span class="tag">Run AI beyond Step 2</span>
+              <span class="tag">Simulation Lab</span>
+            </div>
+
+            <div id="toast" class="toast" role="status" aria-live="polite"></div>
+          </div>
+
+          <aside class="status-card" aria-label="Account status">
+            <h3 class="status-title">Your status</h3>
+            <p class="status-line" id="statusLine">Checking sign-in…</p>
+
+            <div class="status-badge">
+              <span class="dot" id="statusDot"></span>
+              <span id="statusBadgeText">—</span>
+            </div>
+
+            <div class="card-actions">
+              <button class="btn-pill" id="btnManage" type="button" disabled title="Optional: add Stripe Customer Portal later">
+                Manage billing
+              </button>
+              <button class="btn-primary" id="btnUpgradeSide" type="button">
+                Upgrade now
+              </button>
+            </div>
+
+            <p class="fine">
+              Billing upgrades happen securely via Stripe Checkout. Access is granted automatically when Stripe confirms payment.
+            </p>
+          </aside>
         </div>
-
-        <div id="toast" class="toast" role="status" aria-live="polite"></div>
       </div>
-
-      <aside class="status-card" aria-label="Account status">
-        <h3 class="status-title">Your status</h3>
-        <p class="status-line" id="statusLine">
-          Checking sign-in…
-        </p>
-        <div class="status-badge" id="statusBadge">
-          <span class="dot" id="statusDot"></span>
-          <span id="statusBadgeText">—</span>
-        </div>
-
-        <div class="card-actions" style="margin-top:14px;">
-          <button class="btn" id="btnManage" type="button" disabled title="Optional: add Stripe Customer Portal later">
-            Manage billing
-          </button>
-          <button class="btn btn-primary" id="btnUpgradeSide" type="button">
-            Upgrade now
-          </button>
-        </div>
-
-        <p class="fine">
-          Billing upgrades happen securely via Stripe Checkout. Access is granted automatically when Stripe confirms payment.
-        </p>
-      </aside>
     </section>
 
     <!-- Plans -->
-    <section class="grid" aria-label="Pricing plans">
-      <article class="card" aria-label="Free plan">
-        <div class="plan">
-          <h2>Free</h2>
-          <div>
-            <span class="price">$0</span><span class="per">forever</span>
-          </div>
-        </div>
-        <p class="desc">
-          Start learning with guided prompts and foundational structure. Great for trying the system.
-        </p>
-        <ul>
-          <li><strong>Prompts visible</strong> for Steps 1–3</li>
-          <li><strong>Run AI</strong> for Steps 1–2 (signed-in free users)</li>
-          <li class="muted"><strong>Help panel locked</strong> (anon + free)</li>
-          <li class="muted"><strong>Steps 4–6 locked</strong></li>
-        </ul>
+    <section class="plans" aria-label="Pricing plans">
+      <div class="container">
+        <div class="plans-grid">
+          <article class="plan-card" aria-label="Free plan">
+            <div class="plan-head">
+              <h2 class="plan-name">Free</h2>
+              <div class="price">$0 <span class="per">forever</span></div>
+            </div>
 
-        <div class="card-actions">
-          <a class="btn" href="/auth.html">Sign in / Register</a>
-          <a class="btn btn-ghost" href="/physics/physics.html">Browse Physics</a>
-        </div>
-        <p class="fine">Free is intentionally limited so mastery features stay sustainable with AI costs.</p>
-      </article>
+            <p class="desc">
+              Start learning with guided prompts and foundational structure. Great for trying the system.
+            </p>
 
-      <article class="card popular" aria-label="Mastery monthly plan">
-        <div class="ribbon">Most flexible</div>
-        <div class="plan">
-          <h2>Mastery (Monthly)</h2>
-          <div>
-            <span class="price">$…</span><span class="per">/ month</span>
-          </div>
-        </div>
-        <p class="desc">
-          Full access to PromptSchola’s mastery flow. Best if you want to try Mastery month-to-month.
-        </p>
-        <ul>
-          <li><strong>Steps 1–6</strong> unlocked</li>
-          <li><strong>Help</strong> unlocked</li>
-          <li><strong>Run AI</strong> across the lesson</li>
-          <li><strong>Simulation Lab</strong> unlocked</li>
-        </ul>
+            <ul class="list">
+              <li><strong>Prompts visible</strong> for Steps 1–3</li>
+              <li><strong>Run AI</strong> for Steps 1–2 <span class="muted">(signed-in free users)</span></li>
+              <li><strong>Help panel locked</strong> <span class="muted">(anon + free)</span></li>
+              <li><strong>Steps 4–6 locked</strong></li>
+            </ul>
 
-        <div class="card-actions">
-          <button class="btn btn-primary" id="btnMonthly" type="button">Upgrade Monthly</button>
-          <button class="btn" id="btnMonthlyAlt" type="button">Choose Monthly</button>
-        </div>
-        <p class="fine">Cancel anytime. Access stays active through the current billing period.</p>
-      </article>
+            <div class="card-actions">
+              <a class="btn-pill" href="/auth.html">Sign in</a>
+              <a class="btn-primary" href="/auth.html?mode=signup">Register</a>
+            </div>
 
-      <article class="card" aria-label="Mastery yearly plan">
-        <div class="plan">
-          <h2>Mastery (Yearly)</h2>
-          <div>
-            <span class="price">$…</span><span class="per">/ year</span>
-          </div>
-        </div>
-        <p class="desc">
-          Same Mastery access with fewer renewals. Best value for consistent learning.
-        </p>
-        <ul>
-          <li><strong>Steps 1–6</strong> unlocked</li>
-          <li><strong>Help</strong> unlocked</li>
-          <li><strong>Run AI</strong> across the lesson</li>
-          <li><strong>Simulation Lab</strong> unlocked</li>
-        </ul>
+            <p class="fine">Free is intentionally limited so mastery features stay sustainable with AI costs.</p>
+          </article>
 
-        <div class="card-actions">
-          <button class="btn btn-primary" id="btnYearly" type="button">Upgrade Yearly</button>
-          <button class="btn" id="btnYearlyAlt" type="button">Choose Yearly</button>
+          <article class="plan-card popular" aria-label="Mastery monthly plan">
+            <div class="ribbon">Most flexible</div>
+
+            <div class="plan-head">
+              <h2 class="plan-name">Mastery (Monthly)</h2>
+              <div class="price">$… <span class="per">/ month</span></div>
+            </div>
+
+            <p class="desc">
+              Full access to PromptSchola’s mastery flow. Best if you want to try Mastery month-to-month.
+            </p>
+
+            <ul class="list">
+              <li><strong>Steps 1–6</strong> unlocked</li>
+              <li><strong>Help</strong> unlocked</li>
+              <li><strong>Run AI</strong> across the lesson</li>
+              <li><strong>Simulation Lab</strong> unlocked</li>
+            </ul>
+
+            <div class="card-actions">
+              <button class="btn-primary" id="btnMonthly" type="button">Upgrade Monthly</button>
+              <button class="btn-pill" id="btnMonthlyAlt" type="button">Choose Monthly</button>
+            </div>
+
+            <p class="fine">Cancel anytime. Access stays active through the current billing period.</p>
+          </article>
+
+          <article class="plan-card" aria-label="Mastery yearly plan">
+            <div class="plan-head">
+              <h2 class="plan-name">Mastery (Yearly)</h2>
+              <div class="price">$… <span class="per">/ year</span></div>
+            </div>
+
+            <p class="desc">
+              Same Mastery access with fewer renewals. Best value for consistent learning.
+            </p>
+
+            <ul class="list">
+              <li><strong>Steps 1–6</strong> unlocked</li>
+              <li><strong>Help</strong> unlocked</li>
+              <li><strong>Run AI</strong> across the lesson</li>
+              <li><strong>Simulation Lab</strong> unlocked</li>
+            </ul>
+
+            <div class="card-actions">
+              <button class="btn-primary" id="btnYearly" type="button">Upgrade Yearly</button>
+              <button class="btn-pill" id="btnYearlyAlt" type="button">Choose Yearly</button>
+            </div>
+
+            <p class="fine">Yearly plan is ideal if you’re building long-term mastery habits.</p>
+          </article>
         </div>
-        <p class="fine">Yearly plan is ideal if you’re building long-term mastery habits.</p>
-      </article>
+      </div>
     </section>
 
     <!-- Compare -->
-    <h3 class="section-title">What changes when you upgrade</h3>
-    <section class="compare" aria-label="Plan comparison">
-      <div class="row">
-        <div class="cell head">Feature</div>
-        <div class="cell head">Free</div>
-        <div class="cell head">Mastery</div>
-      </div>
+    <section class="section" aria-label="Plan comparison">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">Comparison</div>
+          <h2 class="section-title">What changes when you upgrade</h2>
+          <p class="section-subtitle">
+            Free gets you started. Mastery unlocks the full learning sequence across nano-lessons.
+          </p>
+        </div>
 
-      <div class="row">
-        <div class="cell">Steps 1–3 prompts visible/copy</div>
-        <div class="cell"><span class="check">Yes</span></div>
-        <div class="cell"><span class="check">Yes</span></div>
-      </div>
+        <div class="compare" role="table" aria-label="Comparison table">
+          <div class="row" role="row">
+            <div class="cell head" role="columnheader">Feature</div>
+            <div class="cell head" role="columnheader">Free</div>
+            <div class="cell head" role="columnheader">Mastery</div>
+          </div>
 
-      <div class="row">
-        <div class="cell">Run AI on Steps 1–2</div>
-        <div class="cell"><span class="check">Yes</span> <span class="muted">(signed in)</span></div>
-        <div class="cell"><span class="check">Yes</span></div>
-      </div>
+          <div class="row" role="row">
+            <div class="cell" role="cell">Steps 1–3 prompts visible/copy</div>
+            <div class="cell" role="cell"><span class="check">Yes</span></div>
+            <div class="cell" role="cell"><span class="check">Yes</span></div>
+          </div>
 
-      <div class="row">
-        <div class="cell">Run AI on Steps 3–6</div>
-        <div class="cell"><span class="no">No</span></div>
-        <div class="cell"><span class="check">Yes</span></div>
-      </div>
+          <div class="row" role="row">
+            <div class="cell" role="cell">Run AI on Steps 1–2</div>
+            <div class="cell" role="cell"><span class="check">Yes</span> <span class="muted">(signed in)</span></div>
+            <div class="cell" role="cell"><span class="check">Yes</span></div>
+          </div>
 
-      <div class="row">
-        <div class="cell">Help panel access + help pages</div>
-        <div class="cell"><span class="no">No</span></div>
-        <div class="cell"><span class="check">Yes</span></div>
-      </div>
+          <div class="row" role="row">
+            <div class="cell" role="cell">Run AI on Steps 3–6</div>
+            <div class="cell" role="cell"><span class="no">No</span></div>
+            <div class="cell" role="cell"><span class="check">Yes</span></div>
+          </div>
 
-      <div class="row">
-        <div class="cell">Simulation Lab</div>
-        <div class="cell"><span class="no">No</span></div>
-        <div class="cell"><span class="check">Yes</span></div>
-      </div>
+          <div class="row" role="row">
+            <div class="cell" role="cell">Help panel access + help pages</div>
+            <div class="cell" role="cell"><span class="no">No</span></div>
+            <div class="cell" role="cell"><span class="check">Yes</span></div>
+          </div>
 
-      <div class="row">
-        <div class="cell">Everything in Physics nano-lessons</div>
-        <div class="cell"><span class="muted">Limited</span></div>
-        <div class="cell"><span class="check">Full</span></div>
+          <div class="row" role="row">
+            <div class="cell" role="cell">Simulation Lab</div>
+            <div class="cell" role="cell"><span class="no">No</span></div>
+            <div class="cell" role="cell"><span class="check">Yes</span></div>
+          </div>
+
+          <div class="row" role="row">
+            <div class="cell" role="cell">Everything in Physics nano-lessons</div>
+            <div class="cell" role="cell"><span class="muted">Limited</span></div>
+            <div class="cell" role="cell"><span class="check">Full</span></div>
+          </div>
+        </div>
       </div>
     </section>
-
-    <!-- FAQ -->
-    <h3 class="section-title">FAQ</h3>
-    <section class="grid" aria-label="FAQ">
-      <article class="card">
-        <div class="plan"><h2 style="margin:0;">Do I get instant access?</h2></div>
-        <p class="desc">
-          Yes. After Stripe confirms your checkout, your account is upgraded automatically (via webhook),
-          and full mastery unlocks.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="plan"><h2 style="margin:0;">Can I cancel anytime?</h2></div>
-        <p class="desc">
-          Yes. You can cancel and keep access through the end of your current billing period.
-          (Optional: we can add the Stripe Customer Portal button next.)
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="plan"><h2 style="margin:0;">Why is Help locked on free?</h2></div>
-        <p class="desc">
-          Help + AI calls have real API costs. Locking Help and advanced steps keeps PromptSchola sustainable,
-          while still letting free users learn the system and start strong.
-        </p>
-      </article>
-    </section>
-
-    <footer>
-      PromptSchola • Physics-first • Prompt-based mastery • Secure checkout by Stripe
-    </footer>
   </main>
 
-  <!--
-    IMPORTANT (Supabase RLS note):
-    You do NOT need browser-table access for this page, because we use /api/get-tier
-    via PS_getUserTier() (preferred). Keep RLS strict if you want.
-  -->
+  <!-- Footer copied from index.html -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span>&copy; 2025 PromptSchola. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="/index.html">Home</a>
+          <a href="/physics/physics.html">Physics</a>
+          <a href="/pricing.html">Pricing</a>
+          <a href="/auth.html">Account</a>
+          <a href="/about.html">About</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
 
-  <!-- Required by auth.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/auth.js"></script>
+<!-- Required by auth.js -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
 
-  <!-- Page logic (NON-module; matches your auth.js global style) -->
-  <script>
-    const el = (id) => document.getElementById(id);
+<!-- Page logic (NON-module; matches your auth.js global style) -->
+<script>
+  const el = (id) => document.getElementById(id);
 
-    const toast = el("toast");
-    const statusLine = el("statusLine");
-    const statusBadgeText = el("statusBadgeText");
-    const statusDot = el("statusDot");
-    const navAuthLink = el("navAuthLink");
+  const toast = el("toast");
+  const statusLine = el("statusLine");
+  const statusBadgeText = el("statusBadgeText");
+  const statusDot = el("statusDot");
 
-    const btnMonthly = el("btnMonthly");
-    const btnYearly  = el("btnYearly");
-    const btnMonthlyAlt = el("btnMonthlyAlt");
-    const btnYearlyAlt  = el("btnYearlyAlt");
-    const btnUpgradeTop = el("btnUpgradeTop");
-    const btnUpgradeSide = el("btnUpgradeSide");
-    const btnGoToApp = el("btnGoToApp");
-    const btnManage = el("btnManage");
+  const btnMonthly = el("btnMonthly");
+  const btnYearly  = el("btnYearly");
+  const btnMonthlyAlt = el("btnMonthlyAlt");
+  const btnYearlyAlt  = el("btnYearlyAlt");
+  const btnUpgradeSide = el("btnUpgradeSide");
+  const btnManage = el("btnManage");
 
-    function showToast(kind, msg) {
-      if (!toast) return;
-      toast.className = "toast show " + (kind || "");
-      toast.textContent = msg;
+  function showToast(kind, msg) {
+    if (!toast) return;
+    toast.className = "toast show " + (kind || "");
+    toast.textContent = msg;
+  }
+
+  function setButtonsDisabled(disabled) {
+    [btnMonthly, btnYearly, btnMonthlyAlt, btnYearlyAlt, btnUpgradeSide].forEach(b => {
+      if (b) b.disabled = !!disabled;
+    });
+  }
+
+  function setStatus({ signedIn, tier, email }) {
+    if (!statusLine || !statusBadgeText || !statusDot) return;
+
+    if (!signedIn) {
+      statusLine.textContent = "You’re not signed in. Sign in to upgrade and unlock full mastery.";
+      statusBadgeText.textContent = "Signed out";
+      statusDot.className = "dot warn";
+      if (btnManage) btnManage.disabled = true;
+      return;
     }
 
-    function setButtonsDisabled(disabled) {
-      [btnMonthly, btnYearly, btnMonthlyAlt, btnYearlyAlt, btnUpgradeTop, btnUpgradeSide].forEach(b => {
-        if (b) b.disabled = !!disabled;
+    if (tier === "paid") {
+      statusLine.textContent = `Signed in as ${email}. You’re on Mastery — full access is unlocked.`;
+      statusBadgeText.textContent = "Mastery (Paid)";
+      statusDot.className = "dot ok";
+      if (btnManage) btnManage.disabled = true; // enable later with Customer Portal
+    } else if (tier === "free") {
+      statusLine.textContent = `Signed in as ${email}. You’re on Free — upgrade to unlock full mastery.`;
+      statusBadgeText.textContent = "Free";
+      statusDot.className = "dot warn";
+      if (btnManage) btnManage.disabled = true;
+    } else {
+      statusLine.textContent = `Signed in as ${email}. Status unknown.`;
+      statusBadgeText.textContent = "Signed in";
+      statusDot.className = "dot warn";
+      if (btnManage) btnManage.disabled = true;
+    }
+  }
+
+  function readQueryToasts() {
+    const qs = new URLSearchParams(window.location.search);
+    if (qs.get("success") === "1") {
+      // Force tier refresh after success so users see upgrades quickly
+      if (typeof window.PS_clearTierCache === "function") window.PS_clearTierCache();
+      showToast("success", "Payment received. Your access should unlock shortly. If it hasn’t updated yet, refresh in a few seconds — webhooks may still be processing.");
+    } else if (qs.get("canceled") === "1") {
+      showToast("warn", "Checkout canceled. You can upgrade anytime.");
+    }
+  }
+
+  async function startCheckout(plan) {
+    // Require sign-in using your existing helper style
+    const user = await window.getCurrentUser?.();
+    if (!user) {
+      const safePath = window.location.pathname + window.location.search + window.location.hash;
+      window.location.href = `/auth.html?mode=signup&reason=upgrade&redirect=${encodeURIComponent(safePath)}`;
+      return;
+    }
+
+    const token = await window.PS_getAccessToken?.();
+    if (!token) {
+      showToast("warn", "Could not get session token. Please sign in again.");
+      window.location.href = "/auth.html";
+      return;
+    }
+
+    setButtonsDisabled(true);
+
+    try {
+      const resp = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ plan: plan === "yearly" ? "yearly" : "monthly" }),
       });
-    }
 
-    function setStatus({ signedIn, tier, email }) {
-      if (!statusLine || !statusBadgeText || !statusDot) return;
-
-      if (!signedIn) {
-        statusLine.textContent = "You’re not signed in. Sign in to upgrade and unlock full mastery.";
-        statusBadgeText.textContent = "Signed out";
-        statusDot.className = "dot warn";
-        if (navAuthLink) {
-          navAuthLink.textContent = "Sign in";
-          navAuthLink.href = "/auth.html";
-        }
-        if (btnManage) btnManage.disabled = true;
+      const data = await resp.json();
+      if (!resp.ok) {
+        showToast("warn", data.error || "Unable to start checkout. Please try again.");
         return;
       }
 
-      if (navAuthLink) {
-        navAuthLink.textContent = "Account";
-        navAuthLink.href = "/auth.html";
-      }
+      window.location.href = data.url;
+    } catch (err) {
+      console.error(err);
+      showToast("warn", "Network error starting checkout. Please try again.");
+    } finally {
+      setButtonsDisabled(false);
+    }
+  }
 
-      if (tier === "paid") {
-        statusLine.textContent = `Signed in as ${email}. You’re on Mastery — full access is unlocked.`;
-        statusBadgeText.textContent = "Mastery (Paid)";
-        statusDot.className = "dot ok";
-        if (btnManage) btnManage.disabled = true; // enable later with Customer Portal
-      } else if (tier === "free") {
-        statusLine.textContent = `Signed in as ${email}. You’re on Free — upgrade to unlock full mastery.`;
-        statusBadgeText.textContent = "Free";
-        statusDot.className = "dot warn";
-        if (btnManage) btnManage.disabled = true;
-      } else {
-        statusLine.textContent = `Signed in as ${email}. Status unknown.`;
-        statusBadgeText.textContent = "Signed in";
-        statusDot.className = "dot warn";
-        if (btnManage) btnManage.disabled = true;
-      }
+  async function init() {
+    // Keep nav consistent with index (auth.js handles showing/hiding)
+    if (typeof updateNavUserDisplay === "function") updateNavUserDisplay();
+
+    readQueryToasts();
+
+    if (btnMonthly) btnMonthly.addEventListener("click", () => startCheckout("monthly"));
+    if (btnMonthlyAlt) btnMonthlyAlt.addEventListener("click", () => startCheckout("monthly"));
+    if (btnYearly) btnYearly.addEventListener("click", () => startCheckout("yearly"));
+    if (btnYearlyAlt) btnYearlyAlt.addEventListener("click", () => startCheckout("yearly"));
+
+    // Default side upgrade: monthly
+    if (btnUpgradeSide) btnUpgradeSide.addEventListener("click", () => startCheckout("monthly"));
+
+    // Status area
+    const user = await window.getCurrentUser?.();
+    if (!user) {
+      setStatus({ signedIn: false });
+      return;
     }
 
-    function readQueryToasts() {
-      const qs = new URLSearchParams(window.location.search);
-      if (qs.get("success") === "1") {
-        // Force tier refresh after success so users see upgrades quickly
-        if (typeof window.PS_clearTierCache === "function") window.PS_clearTierCache();
-        showToast("success", "Payment received. Your access should unlock shortly. If it hasn’t updated yet, refresh in a few seconds — webhooks may still be processing.");
-      } else if (qs.get("canceled") === "1") {
-        showToast("warn", "Checkout canceled. You can upgrade anytime.");
-      }
+    // Preferred tier fetch: /api/get-tier (via auth.js helper)
+    let tier = "free";
+    try {
+      tier = await window.PS_getUserTier?.({ forceRefresh: true }) || "free";
+    } catch (e) {
+      tier = "free";
     }
 
-    async function startCheckout(plan) {
-      // Require sign-in using your existing helper style
-      const user = await window.getCurrentUser?.();
-      if (!user) {
-        const safePath = window.location.pathname + window.location.search + window.location.hash;
-        window.location.href = `/auth.html?mode=signup&reason=upgrade&redirect=${encodeURIComponent(safePath)}`;
-        return;
-      }
+    setStatus({
+      signedIn: true,
+      tier,
+      email: user.email || "your account",
+    });
+  }
 
-      const token = await window.PS_getAccessToken?.();
-      if (!token) {
-        showToast("warn", "Could not get session token. Please sign in again.");
-        window.location.href = "/auth.html";
-        return;
-      }
-
-      setButtonsDisabled(true);
-
-      try {
-        const resp = await fetch("/api/create-checkout-session", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ plan: plan === "yearly" ? "yearly" : "monthly" }),
-        });
-
-        const data = await resp.json();
-        if (!resp.ok) {
-          showToast("warn", data.error || "Unable to start checkout. Please try again.");
-          return;
-        }
-
-        window.location.href = data.url;
-      } catch (err) {
-        console.error(err);
-        showToast("warn", "Network error starting checkout. Please try again.");
-      } finally {
-        setButtonsDisabled(false);
-      }
-    }
-
-    async function init() {
-      readQueryToasts();
-
-      if (btnGoToApp) btnGoToApp.addEventListener("click", () => (window.location.href = "/physics/physics.html"));
-
-      if (btnMonthly) btnMonthly.addEventListener("click", () => startCheckout("monthly"));
-      if (btnMonthlyAlt) btnMonthlyAlt.addEventListener("click", () => startCheckout("monthly"));
-      if (btnYearly) btnYearly.addEventListener("click", () => startCheckout("yearly"));
-      if (btnYearlyAlt) btnYearlyAlt.addEventListener("click", () => startCheckout("yearly"));
-
-      // Default Upgrade buttons: monthly
-      if (btnUpgradeTop) btnUpgradeTop.addEventListener("click", () => startCheckout("monthly"));
-      if (btnUpgradeSide) btnUpgradeSide.addEventListener("click", () => startCheckout("monthly"));
-
-      // Status area
-      const user = await window.getCurrentUser?.();
-      if (!user) {
-        setStatus({ signedIn: false });
-        return;
-      }
-
-      // Preferred tier fetch: /api/get-tier (via auth.js helper)
-      let tier = "free";
-      try {
-        tier = await window.PS_getUserTier?.({ forceRefresh: true }) || "free";
-      } catch (e) {
-        tier = "free";
-      }
-
-      setStatus({
-        signedIn: true,
-        tier,
-        email: user.email || "your account",
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", init);
-  </script>
+  document.addEventListener("DOMContentLoaded", init);
+</script>
 </body>
 </html>
