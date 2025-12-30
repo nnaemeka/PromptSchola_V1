@@ -31,25 +31,24 @@ function isoFromUnixSeconds(sec) {
   return new Date(sec * 1000).toISOString();
 }
 
-/**
- * Upsert entitlement row. If optional columns are missing (schema mismatch),
- * retry with minimal, safe columns that should exist.
- */
-function isoFromUnixSeconds(sec) {
-  if (!sec || typeof sec !== "number") return null;
-  return new Date(sec * 1000).toISOString();
-}
-
 function isPaidStatus(status) {
   return status === "active" || status === "trialing";
 }
 
+/**
+ * Upsert entitlement row with a safe fallback.
+ */
 async function upsertEntitlement(sb, payload) {
-  // reuse your existing upsertEntitlementPaid approach but generalized
-  const first = await sb.from("entitlements").upsert(payload, { onConflict: "user_id" });
+  const first = await sb
+    .from("entitlements")
+    .upsert(payload, { onConflict: "user_id" });
+
   if (!first.error) return;
 
-  console.error("❌ Entitlement upsert failed (full payload). Retrying minimal.", first.error?.message || first.error);
+  console.error(
+    "Entitlement upsert failed (full payload). Retrying minimal.",
+    first.error?.message || first.error
+  );
 
   const minimal = {
     user_id: payload.user_id,
@@ -58,51 +57,105 @@ async function upsertEntitlement(sb, payload) {
     updated_at: new Date().toISOString(),
   };
 
-  const second = await sb.from("entitlements").upsert(minimal, { onConflict: "user_id" });
-  if (second.error) throw second.error;
+  const second = await sb
+    .from("entitlements")
+    .upsert(minimal, { onConflict: "user_id" });
+
+  if (second.error) {
+    console.error(
+      "Entitlement upsert failed (minimal payload).",
+      second.error?.message || second.error
+    );
+    throw second.error;
+  }
 }
 
-async function setPaidFromSubscription(sb, userId, customerId, subscriptionId) {
-  // Fetch subscription to get authoritative status + period end
+/**
+ * Map a Stripe subscription/customer back to a Supabase user_id.
+ * Works even if subscription metadata is missing (older subs).
+ */
+async function resolveUserId(sb, subscriptionObj) {
+  // 1) Best: subscription metadata (new subs created after you added subscription_data.metadata)
+  const metaUserId = subscriptionObj?.metadata?.supabase_user_id;
+  if (metaUserId) return metaUserId;
+
+  // 2) Next: match by stripe_subscription_id
+  if (subscriptionObj?.id) {
+    const { data, error } = await sb
+      .from("entitlements")
+      .select("user_id")
+      .eq("stripe_subscription_id", subscriptionObj.id)
+      .maybeSingle();
+    if (!error && data?.user_id) return data.user_id;
+  }
+
+  // 3) Next: match by stripe_customer_id
+  if (subscriptionObj?.customer) {
+    const { data, error } = await sb
+      .from("entitlements")
+      .select("user_id")
+      .eq("stripe_customer_id", subscriptionObj.customer)
+      .maybeSingle();
+    if (!error && data?.user_id) return data.user_id;
+  }
+
+  return null;
+}
+
+/**
+ * Update entitlements from a subscription id (authoritative fetch).
+ * Used for checkout.session.completed.
+ */
+async function setPaidFromSubscriptionId(sb, userId, customerId, subscriptionId) {
   const sub = subscriptionId
     ? await stripe.subscriptions.retrieve(subscriptionId)
     : null;
 
   const status = sub?.status || "active";
-  const currentPeriodEnd = isoFromUnixSeconds(sub?.current_period_end);
-
-  const isActive =
-    status === "active" || status === "trialing"; // treat trialing as paid access
+  const periodEnd = isoFromUnixSeconds(sub?.current_period_end);
+  const paid = isPaidStatus(status);
 
   const payload = {
     user_id: userId,
-    tier: isActive ? "paid" : "free",
-    is_paid: isActive,
-    stripe_customer_id: customerId || null,
-    stripe_subscription_id: subscriptionId || null,
+    tier: paid ? "paid" : "free",
+    is_paid: paid,
+    stripe_customer_id: customerId || sub?.customer || null,
+    stripe_subscription_id: subscriptionId || sub?.id || null,
     stripe_status: status || null,
-    current_period_end: currentPeriodEnd,
+    current_period_end: periodEnd,
     updated_at: new Date().toISOString(),
   };
 
   await upsertEntitlement(sb, payload);
 }
 
-async function setStatusFromSubscriptionObject(sb, userId, subscription) {
-  const status = subscription?.status || null;
-  const currentPeriodEnd = isoFromUnixSeconds(subscription?.current_period_end);
+/**
+ * Update entitlements directly from a subscription object (from Stripe event).
+ */
+async function setFromSubscriptionObject(sb, subscriptionObj) {
+  const userId = await resolveUserId(sb, subscriptionObj);
+  if (!userId) {
+    console.error("Cannot map subscription to user_id", {
+      sub_id: subscriptionObj?.id,
+      customer: subscriptionObj?.customer,
+      status: subscriptionObj?.status,
+    });
+    return;
+  }
 
-  const isActive =
-    status === "active" || status === "trialing";
+  const status = subscriptionObj?.status || "unknown";
+  const periodEnd = isoFromUnixSeconds(subscriptionObj?.current_period_end);
+
+  const paid = isPaidStatus(status);
 
   const payload = {
     user_id: userId,
-    tier: isActive ? "paid" : "free",
-    is_paid: isActive,
-    stripe_customer_id: subscription?.customer || null,
-    stripe_subscription_id: subscription?.id || null,
+    tier: paid ? "paid" : "free",
+    is_paid: paid,
+    stripe_customer_id: subscriptionObj?.customer || null,
+    stripe_subscription_id: subscriptionObj?.id || null,
     stripe_status: status,
-    current_period_end: currentPeriodEnd,
+    current_period_end: periodEnd,
     updated_at: new Date().toISOString(),
   };
 
@@ -111,7 +164,6 @@ async function setStatusFromSubscriptionObject(sb, userId, subscription) {
 
 export default async function handler(req, res) {
   try {
-    // Keep GET for quick health checks
     if (req.method === "GET") return res.status(200).send("stripe-webhook alive");
     if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
@@ -135,12 +187,9 @@ export default async function handler(req, res) {
     }
 
     const sb = getSupabaseAdmin();
-
-    // Minimal production logging (avoid dumping metadata/session objects)
     console.log(`[stripe-webhook] ${event.type} id=${event.id} livemode=${event.livemode}`);
 
     switch (event.type) {
-      // ✅ Checkout completed: grant access based on subscription status/period end
       case "checkout.session.completed": {
         const session = event.data.object;
         const userId = session?.metadata?.supabase_user_id;
@@ -150,75 +199,18 @@ export default async function handler(req, res) {
           break;
         }
 
-        await setPaidFromSubscription(
-          sb,
-          userId,
-          session.customer,
-          session.subscription
-        );
-
+        await setPaidFromSubscriptionId(sb, userId, session.customer, session.subscription);
         break;
       }
-        case "customer.subscription.updated":
-        case "customer.subscription.deleted": {
-          const sub = event.data.object;
-        
-          // ✅ Requires that create-checkout-session sets subscription_data.metadata.supabase_user_id
-          const userId = sub?.metadata?.supabase_user_id;
-          if (!userId) {
-            console.error("❌ Missing subscription.metadata.supabase_user_id; cannot sync entitlement.");
-            break;
-          }
-        
-          const status = sub?.status || "unknown";
-          const periodEnd = isoFromUnixSeconds(sub?.current_period_end);
-        
-          // If the subscription is canceled but still within the paid period, keep paid until period end.
-          // Stripe uses cancel_at_period_end + status usually still 'active' until it ends.
-          const paid = isPaidStatus(status);
-        
-          const sb = getSupabaseAdmin();
-        
-          const payload = {
-            user_id: userId,
-            tier: paid ? "paid" : "free",
-            is_paid: paid,
-            stripe_customer_id: sub?.customer || null,
-            stripe_subscription_id: sub?.id || null,
-            stripe_status: status,
-            current_period_end: periodEnd,
-            updated_at: new Date().toISOString(),
-          };
-        
-          await upsertEntitlement(sb, payload);
-        
-          console.log("✅ Synced entitlement from subscription:", userId, status, periodEnd);
-          break;
-        }
 
-
-      // ✅ Keep entitlements synced over time (cancel, payment failure, etc.)
       case "customer.subscription.updated":
       case "customer.subscription.deleted": {
-        const subscription = event.data.object;
-
-        // We need to map subscription -> user_id.
-        // Best practice: store user_id in subscription metadata when creating checkout session.
-        const userId = subscription?.metadata?.supabase_user_id;
-
-        if (!userId) {
-          // If you don’t store userId in subscription metadata yet, you can fall back to
-          // mapping via stripe_customer_id in your entitlements table, but that's slower.
-          console.error("Missing subscription.metadata.supabase_user_id; cannot sync entitlement.");
-          break;
-        }
-
-        await setStatusFromSubscriptionObject(sb, userId, subscription);
+        const subscriptionObj = event.data.object;
+        await setFromSubscriptionObject(sb, subscriptionObj);
         break;
       }
 
       default:
-        // Keep quiet in prod; Stripe sends many event types depending on enabled methods.
         break;
     }
 
