@@ -43,6 +43,8 @@ async function upsertEntitlementPaid(sb, payload) {
   const minimal = {
     user_id: payload.user_id,
     tier: payload.tier,
+    is_paid: true,
+    updated_at: new Date().toISOString(),
   };
 
   const second = await sb
@@ -119,15 +121,28 @@ export default async function handler(req, res) {
         const sb = getSupabaseAdmin();
 
         // Full payload (will retry minimal if your entitlements table lacks these columns)
-        const payload = {
-          user_id: userId,
-          tier: "paid",
-          is_paid: TRUE,
-          plan: plan, // optional if you created it
-          stripe_customer_id: session.customer || null, // optional
-          stripe_subscription_id: session.subscription || null, // optional
-          updated_at: new Date().toISOString(), // optional
-        };
+       const payload = {
+              user_id: userId,
+              tier: "paid",
+              is_paid: true,
+              stripe_customer_id: session.customer || null,
+              stripe_subscription_id: session.subscription || null,
+              stripe_status: "active",                 // optional but matches your column
+              current_period_end: null,                // we'll fill this properly below (optional)
+              updated_at: new Date().toISOString(),
+            };
+
+        let currentPeriodEnd = null;
+        if (session.subscription) {
+          const sub = await stripe.subscriptions.retrieve(session.subscription);
+          currentPeriodEnd = sub?.current_period_end
+            ? new Date(sub.current_period_end * 1000).toISOString()
+            : null;
+        
+          payload.stripe_status = sub?.status || "active";
+        }
+        
+        payload.current_period_end = currentPeriodEnd;
 
         await upsertEntitlementPaid(sb, payload);
 
