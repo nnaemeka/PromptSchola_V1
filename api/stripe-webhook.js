@@ -1,120 +1,110 @@
-// /api/stripe-webhook.js
 import Stripe from "stripe";
+import { buffer } from "micro";
 import { createClient } from "@supabase/supabase-js";
 
 export const config = {
-  api: {
-    bodyParser: false, // IMPORTANT: we need the raw body for signature verification
-  },
+  api: { bodyParser: false },
 };
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2024-06-20",
-});
-
-async function readRawBody(req) {
-  const chunks = [];
-  for await (const chunk of req) chunks.push(Buffer.from(chunk));
-  return Buffer.concat(chunks);
-}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
-
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  if (!webhookSecret) return res.status(500).send("Missing STRIPE_WEBHOOK_SECRET");
+  if (req.method !== "POST") return res.status(405).send("Method not allowed");
 
   const sig = req.headers["stripe-signature"];
-  if (!sig) return res.status(400).send("Missing stripe-signature header");
-
-  const rawBody = await readRawBody(req);
-
   let event;
+
   try {
-    // Stripe webhook signature verification per docs. :contentReference[oaicite:7]{index=7}
-    event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
+    const rawBody = await buffer(req);
+    event = stripe.webhooks.constructEvent(
+      rawBody,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
   } catch (err) {
-    console.error("Webhook signature verification failed:", err?.message);
-    return res.status(400).send("Webhook Error");
+    console.error("Webhook signature verification failed:", err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  );
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
   try {
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object;
 
-        // For subscriptions, session.subscription is set
-        const customerId = session.customer;
+        const userId =
+          session.client_reference_id ||
+          session.metadata?.supabase_user_id;
+
+        if (!userId) break;
+
         const subscriptionId = session.subscription;
-        const userId = session.metadata?.supabase_user_id || session.client_reference_id;
+        const customerId = session.customer;
 
-        if (customerId && subscriptionId && userId) {
-          // Fetch subscription to get period end + status
-          const sub = await stripe.subscriptions.retrieve(subscriptionId);
+        // Optional: record chosen plan (monthly/yearly)
+        const chosenPlan = session.metadata?.plan || null;
 
-          const isActive =
-            sub.status === "active" || sub.status === "trialing";
+        await supabase
+          .from("entitlements")
+          .upsert(
+            {
+              user_id: userId,
+              tier: "paid",
+              is_paid: true,
+              stripe_customer_id: customerId,
+              stripe_subscription_id: subscriptionId,
+              stripe_status: "active",
+              // optional column if you add it later:
+              // billing_plan: chosenPlan,
+            },
+            { onConflict: "user_id" }
+          );
 
-          await supabase.from("entitlements").upsert({
-            user_id: userId,
-            tier: isActive ? "paid" : "free",
-            stripe_customer_id: customerId,
-            stripe_subscription_id: subscriptionId,
-            current_period_end: sub.current_period_end
-              ? new Date(sub.current_period_end * 1000).toISOString()
-              : null,
-            updated_at: new Date().toISOString(),
-          });
-        }
         break;
       }
 
-      case "customer.subscription.updated":
       case "customer.subscription.created":
+      case "customer.subscription.updated":
       case "customer.subscription.deleted": {
         const sub = event.data.object;
-        const customerId = sub.customer;
-        const subscriptionId = sub.id;
 
-        const isActive =
-          sub.status === "active" || sub.status === "trialing";
-
-        // Find the entitlement row by stripe_customer_id
-        const { data: row } = await supabase
+        const { data: rows, error: lookupErr } = await supabase
           .from("entitlements")
           .select("user_id")
-          .eq("stripe_customer_id", customerId)
-          .maybeSingle();
+          .eq("stripe_subscription_id", sub.id)
+          .limit(1);
 
-        if (row?.user_id) {
-          await supabase.from("entitlements").upsert({
-            user_id: row.user_id,
+        if (lookupErr) throw lookupErr;
+
+        const userId = rows?.[0]?.user_id;
+        if (!userId) break;
+
+        const isActive = sub.status === "active" || sub.status === "trialing";
+        const periodEnd = sub.current_period_end
+          ? new Date(sub.current_period_end * 1000).toISOString()
+          : null;
+
+        await supabase
+          .from("entitlements")
+          .update({
             tier: isActive ? "paid" : "free",
-            stripe_customer_id: customerId,
-            stripe_subscription_id: subscriptionId,
-            current_period_end: sub.current_period_end
-              ? new Date(sub.current_period_end * 1000).toISOString()
-              : null,
-            updated_at: new Date().toISOString(),
-          });
-        }
+            is_paid: isActive,
+            stripe_status: sub.status,
+            current_period_end: periodEnd,
+          })
+          .eq("user_id", userId);
+
         break;
       }
 
       default:
-        // Keep quiet; you can log during dev
         break;
     }
 
-    return res.status(200).json({ received: true });
-  } catch (err) {
-    console.error("Webhook handler failed:", err);
+    return res.json({ received: true });
+  } catch (e) {
+    console.error("stripe-webhook handler error:", e);
     return res.status(500).send("Webhook handler failed");
   }
 }
-
