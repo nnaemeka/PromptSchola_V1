@@ -35,17 +35,21 @@ function isoFromUnixSeconds(sec) {
  * Upsert entitlement row. If optional columns are missing (schema mismatch),
  * retry with minimal, safe columns that should exist.
  */
-async function upsertEntitlement(sb, payload) {
-  const first = await sb
-    .from("entitlements")
-    .upsert(payload, { onConflict: "user_id" });
+function isoFromUnixSeconds(sec) {
+  if (!sec || typeof sec !== "number") return null;
+  return new Date(sec * 1000).toISOString();
+}
 
+function isPaidStatus(status) {
+  return status === "active" || status === "trialing";
+}
+
+async function upsertEntitlement(sb, payload) {
+  // reuse your existing upsertEntitlementPaid approach but generalized
+  const first = await sb.from("entitlements").upsert(payload, { onConflict: "user_id" });
   if (!first.error) return;
 
-  console.error(
-    "Entitlement upsert failed (full payload). Retrying minimal.",
-    first.error?.message || first.error
-  );
+  console.error("❌ Entitlement upsert failed (full payload). Retrying minimal.", first.error?.message || first.error);
 
   const minimal = {
     user_id: payload.user_id,
@@ -54,17 +58,8 @@ async function upsertEntitlement(sb, payload) {
     updated_at: new Date().toISOString(),
   };
 
-  const second = await sb
-    .from("entitlements")
-    .upsert(minimal, { onConflict: "user_id" });
-
-  if (second.error) {
-    console.error(
-      "Entitlement upsert failed (minimal payload).",
-      second.error?.message || second.error
-    );
-    throw second.error;
-  }
+  const second = await sb.from("entitlements").upsert(minimal, { onConflict: "user_id" });
+  if (second.error) throw second.error;
 }
 
 async function setPaidFromSubscription(sb, userId, customerId, subscriptionId) {
@@ -164,6 +159,43 @@ export default async function handler(req, res) {
 
         break;
       }
+        case "customer.subscription.updated":
+        case "customer.subscription.deleted": {
+          const sub = event.data.object;
+        
+          // ✅ Requires that create-checkout-session sets subscription_data.metadata.supabase_user_id
+          const userId = sub?.metadata?.supabase_user_id;
+          if (!userId) {
+            console.error("❌ Missing subscription.metadata.supabase_user_id; cannot sync entitlement.");
+            break;
+          }
+        
+          const status = sub?.status || "unknown";
+          const periodEnd = isoFromUnixSeconds(sub?.current_period_end);
+        
+          // If the subscription is canceled but still within the paid period, keep paid until period end.
+          // Stripe uses cancel_at_period_end + status usually still 'active' until it ends.
+          const paid = isPaidStatus(status);
+        
+          const sb = getSupabaseAdmin();
+        
+          const payload = {
+            user_id: userId,
+            tier: paid ? "paid" : "free",
+            is_paid: paid,
+            stripe_customer_id: sub?.customer || null,
+            stripe_subscription_id: sub?.id || null,
+            stripe_status: status,
+            current_period_end: periodEnd,
+            updated_at: new Date().toISOString(),
+          };
+        
+          await upsertEntitlement(sb, payload);
+        
+          console.log("✅ Synced entitlement from subscription:", userId, status, periodEnd);
+          break;
+        }
+
 
       // ✅ Keep entitlements synced over time (cancel, payment failure, etc.)
       case "customer.subscription.updated":
