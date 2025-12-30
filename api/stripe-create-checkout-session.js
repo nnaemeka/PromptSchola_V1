@@ -1,81 +1,62 @@
-// /api/stripe-create-checkout-session.js
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2024-06-20", // ok to keep stable; Stripe will accept the version you set in your account too
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 function getBearerToken(req) {
   const auth = req.headers.authorization || req.headers.Authorization || "";
-  const m = typeof auth === "string" ? auth.match(/^Bearer\s+(.+)$/i) : null;
+  const m = String(auth).match(/^Bearer\s+(.+)$/i);
   return m ? m[1].trim() : null;
 }
 
-function jsonError(res, status, code, message, extra = {}) {
-  return res.status(status).json({ error: message, code, ...extra });
-}
-
 export default async function handler(req, res) {
-  if (req.method !== "POST") return jsonError(res, 405, "METHOD_NOT_ALLOWED", "Use POST");
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const token = getBearerToken(req);
-  if (!token) return jsonError(res, 401, "AUTH_REQUIRED", "Sign in required");
+  try {
+    const token = getBearerToken(req);
+    if (!token) return res.status(401).json({ error: "Missing auth token" });
 
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY // IMPORTANT: service role only on server
-  );
+    // Verify logged-in user from JWT
+    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+    const { data: { user }, error: userErr } = await supabase.auth.getUser(token);
+    if (userErr || !user) return res.status(401).json({ error: "Invalid session" });
 
-  // Validate Supabase session
-  const { data: userData, error: userErr } = await supabase.auth.getUser(token);
-  if (userErr || !userData?.user) return jsonError(res, 401, "INVALID_SESSION", "Session expired. Sign in again.");
+    // Plan selection (default monthly)
+    const { plan } = req.body || {};
+    const normalizedPlan = plan === "yearly" ? "yearly" : "monthly";
 
-  const user = userData.user;
-  const email = user.email || undefined;
+    const priceId =
+      normalizedPlan === "yearly"
+        ? process.env.STRIPE_PRICE_ID_YEARLY
+        : process.env.STRIPE_PRICE_ID_MONTHLY;
 
-  // Find or create Stripe customer (store mapping in entitlements)
-  const { data: entRow } = await supabase
-    .from("entitlements")
-    .select("stripe_customer_id,tier")
-    .eq("user_id", user.id)
-    .maybeSingle();
+    if (!priceId) {
+      return res.status(500).json({
+        error: `Missing Stripe price id env var for ${normalizedPlan}`,
+      });
+    }
 
-  let customerId = entRow?.stripe_customer_id || null;
+    // Create Stripe Checkout Session (subscription)
+    const session = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      line_items: [{ price: priceId, quantity: 1 }],
 
-  if (!customerId) {
-    const customer = await stripe.customers.create({
-      email,
-      metadata: { supabase_user_id: user.id },
+      success_url: "https://www.promptschola.com/pricing.html?success=1",
+      cancel_url: "https://www.promptschola.com/pricing.html?canceled=1",
+
+      // Link back to Supabase user
+      client_reference_id: user.id,
+      customer_email: user.email,
+
+      metadata: {
+        supabase_user_id: user.id,
+        plan: normalizedPlan,
+      },
     });
-    customerId = customer.id;
 
-    await supabase.from("entitlements").upsert({
-      user_id: user.id,
-      tier: "free",
-      stripe_customer_id: customerId,
-      updated_at: new Date().toISOString(),
-    });
+    return res.status(200).json({ url: session.url });
+  } catch (e) {
+    console.error("create-checkout-session error:", e);
+    return res.status(500).json({ error: "Failed to create checkout session" });
   }
-
-  const priceId = process.env.STRIPE_PRICE_MASTERY_MONTHLY;
-  if (!priceId) return jsonError(res, 500, "CONFIG_MISSING", "Missing STRIPE_PRICE_MASTERY_MONTHLY");
-
-  const baseUrl = process.env.PUBLIC_BASE_URL || "http://localhost:3000";
-
-  // Create Checkout Session (subscription)
-  // Checkout session creation parameters are per Stripe API reference. :contentReference[oaicite:5]{index=5}
-  const session = await stripe.checkout.sessions.create({
-    mode: "subscription",
-    customer: customerId,
-    line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${baseUrl}/pricing.html?status=success&session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}/pricing.html?status=cancel`,
-    allow_promotion_codes: true,
-    client_reference_id: user.id,
-    metadata: { supabase_user_id: user.id },
-  });
-
-  return res.status(200).json({ url: session.url });
 }
-
