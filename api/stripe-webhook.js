@@ -70,7 +70,7 @@ async function upsertEntitlement(sb, payload) {
  * Works even if subscription metadata is missing (older subs).
  */
 async function resolveUserIdFromSubscriptionOrEntitlements(sb, subscriptionObj) {
-  // 1) Best: subscription metadata (new subs created after you added subscription_data.metadata)
+  // 1) Best: subscription metadata
   const metaUserId = subscriptionObj?.metadata?.supabase_user_id;
   if (metaUserId) return metaUserId;
 
@@ -99,7 +99,7 @@ async function resolveUserIdFromSubscriptionOrEntitlements(sb, subscriptionObj) 
 
 /**
  * Authoritative update from a subscription id (fetch Stripe subscription).
- * Used for checkout.session.completed and invoice events.
+ * Used for checkout.session.completed and invoice.paid.
  */
 async function setFromSubscriptionId(sb, userId, customerId, subscriptionId) {
   const sub = subscriptionId ? await stripe.subscriptions.retrieve(subscriptionId) : null;
@@ -124,7 +124,7 @@ async function setFromSubscriptionId(sb, userId, customerId, subscriptionId) {
 
 /**
  * Update entitlements directly from a subscription object (from Stripe event).
- * If mapping fails, we log and no-op (won’t crash the webhook).
+ * Uses status to determine paid/free (strict: only active/trialing).
  */
 async function setFromSubscriptionObject(sb, subscriptionObj) {
   const userId = await resolveUserIdFromSubscriptionOrEntitlements(sb, subscriptionObj);
@@ -156,6 +156,24 @@ async function setFromSubscriptionObject(sb, subscriptionObj) {
 }
 
 /**
+ * STRICT downgrade helper: immediately set user to free.
+ */
+async function strictDowngrade(sb, { userId, customerId, subscriptionId, stripeStatus }) {
+  const payload = {
+    user_id: userId,
+    tier: "free",
+    is_paid: false,
+    stripe_customer_id: customerId || null,
+    stripe_subscription_id: subscriptionId || null,
+    stripe_status: stripeStatus || "canceled",
+    current_period_end: null,
+    updated_at: new Date().toISOString(),
+  };
+
+  await upsertEntitlement(sb, payload);
+}
+
+/**
  * Resolve userId from an invoice (renewals + failures).
  * - Best: retrieve subscription and read metadata
  * - Fallback: entitlements lookup by subscription_id or customer_id
@@ -165,7 +183,6 @@ async function resolveUserIdFromInvoice(sb, invoice) {
   const customerId = invoice?.customer || null;
 
   if (subscriptionId) {
-    // Try the subscription’s metadata first (best)
     try {
       const sub = await stripe.subscriptions.retrieve(subscriptionId);
       const userId = await resolveUserIdFromSubscriptionOrEntitlements(sb, sub);
@@ -175,7 +192,6 @@ async function resolveUserIdFromInvoice(sb, invoice) {
     }
   }
 
-  // Fallback: direct entitlements lookup
   if (subscriptionId) {
     const { data, error } = await sb
       .from("entitlements")
@@ -240,10 +256,33 @@ export default async function handler(req, res) {
       }
 
       // ✅ Subscription lifecycle changes
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
+      case "customer.subscription.updated": {
         const subscriptionObj = event.data.object;
         await setFromSubscriptionObject(sb, subscriptionObj);
+        break;
+      }
+
+      // ✅ STRICT: deleted means downgrade immediately (do NOT rely on status)
+      case "customer.subscription.deleted": {
+        const subscriptionObj = event.data.object;
+        const userId = await resolveUserIdFromSubscriptionOrEntitlements(sb, subscriptionObj);
+
+        if (!userId) {
+          console.error("Cannot map deleted subscription to user_id", {
+            sub_id: subscriptionObj?.id,
+            customer: subscriptionObj?.customer,
+          });
+          break;
+        }
+
+        await strictDowngrade(sb, {
+          userId,
+          customerId: subscriptionObj?.customer || null,
+          subscriptionId: subscriptionObj?.id || null,
+          stripeStatus: subscriptionObj?.status || "canceled",
+        });
+
+        console.log("✅ Strict downgrade (subscription deleted):", userId);
         break;
       }
 
@@ -257,11 +296,12 @@ export default async function handler(req, res) {
           break;
         }
 
-        // Paid invoice generally implies subscription should be active; fetch subscription to be sure.
+        // Fetch subscription to confirm status + period end
         await setFromSubscriptionId(sb, userId, customerId, subscriptionId);
         break;
       }
 
+      // ✅ STRICT: payment failed => downgrade immediately (no grace, no fetch)
       case "invoice.payment_failed": {
         const invoice = event.data.object;
 
@@ -271,8 +311,14 @@ export default async function handler(req, res) {
           break;
         }
 
-        // Fetch subscription to see if it's now past_due/unpaid and update entitlements accordingly
-        await setFromSubscriptionId(sb, userId, customerId, subscriptionId);
+        await strictDowngrade(sb, {
+          userId,
+          customerId: customerId || null,
+          subscriptionId: subscriptionId || null,
+          stripeStatus: "past_due",
+        });
+
+        console.log("✅ Strict downgrade (invoice payment failed):", userId);
         break;
       }
 
