@@ -223,7 +223,7 @@
       box-shadow: none !important;
     }
 
-    /* Pricing hero (page-specific, but matches site aesthetic) */
+    /* Pricing hero */
     .pricing-hero {
       padding: 3.2rem 0 1.6rem;
       position: relative;
@@ -919,9 +919,29 @@
   }
 
   function setButtonsDisabled(disabled) {
-    [btnMonthly, btnYearly, btnMonthlyAlt, btnYearlyAlt, btnUpgradeSide].forEach(b => {
+    [btnMonthly, btnYearly, btnMonthlyAlt, btnYearlyAlt, btnUpgradeSide, btnManage].forEach(b => {
       if (b) b.disabled = !!disabled;
     });
+  }
+
+  function setManageButtonState({ signedIn, tier }) {
+    if (!btnManage) return;
+
+    // We ONLY allow portal for signed-in paid users
+    if (!signedIn) {
+      btnManage.disabled = true;
+      btnManage.title = "Sign in to manage billing.";
+      return;
+    }
+
+    if (tier === "paid") {
+      btnManage.disabled = false;
+      btnManage.title = "Open Stripe Customer Portal to manage your subscription.";
+      return;
+    }
+
+    btnManage.disabled = true;
+    btnManage.title = "Upgrade to Mastery to manage billing in the portal.";
   }
 
   function setStatus({ signedIn, tier, email }) {
@@ -931,7 +951,7 @@
       statusLine.textContent = "You’re not signed in. Sign in to upgrade and unlock full mastery.";
       statusBadgeText.textContent = "Signed out";
       statusDot.className = "dot warn";
-      if (btnManage) btnManage.disabled = true;
+      setManageButtonState({ signedIn: false, tier: "free" });
       return;
     }
 
@@ -939,33 +959,39 @@
       statusLine.textContent = `Signed in as ${email}. You’re on Mastery — full access is unlocked.`;
       statusBadgeText.textContent = "Mastery (Paid)";
       statusDot.className = "dot ok";
-      if (btnManage) btnManage.disabled = true; // enable later with Customer Portal
+      setManageButtonState({ signedIn: true, tier: "paid" });
     } else if (tier === "free") {
       statusLine.textContent = `Signed in as ${email}. You’re on Free — upgrade to unlock full mastery.`;
       statusBadgeText.textContent = "Free";
       statusDot.className = "dot warn";
-      if (btnManage) btnManage.disabled = true;
+      setManageButtonState({ signedIn: true, tier: "free" });
     } else {
       statusLine.textContent = `Signed in as ${email}. Status unknown.`;
       statusBadgeText.textContent = "Signed in";
       statusDot.className = "dot warn";
-      if (btnManage) btnManage.disabled = true;
+      setManageButtonState({ signedIn: true, tier: "free" });
     }
   }
 
   function readQueryToasts() {
     const qs = new URLSearchParams(window.location.search);
+
+    // Checkout
     if (qs.get("success") === "1") {
-      // Force tier refresh after success so users see upgrades quickly
       if (typeof window.PS_clearTierCache === "function") window.PS_clearTierCache();
       showToast("success", "Payment received. Your access should unlock shortly. If it hasn’t updated yet, refresh in a few seconds — webhooks may still be processing.");
     } else if (qs.get("canceled") === "1") {
       showToast("warn", "Checkout canceled. You can upgrade anytime.");
     }
+
+    // Portal return messaging (optional but helps clarity)
+    if (qs.get("portal") === "return") {
+      if (typeof window.PS_clearTierCache === "function") window.PS_clearTierCache();
+      showToast("success", "Welcome back — if you made changes in the billing portal, your status will update shortly. Refresh if needed.");
+    }
   }
 
   async function startCheckout(plan) {
-    // Require sign-in using your existing helper style
     const user = await window.getCurrentUser?.();
     if (!user) {
       const safePath = window.location.pathname + window.location.search + window.location.hash;
@@ -1007,10 +1033,51 @@
     }
   }
 
-  async function init() {
-    // Keep nav consistent with index (auth.js handles showing/hiding)
-    if (typeof updateNavUserDisplay === "function") updateNavUserDisplay();
+  async function openCustomerPortal() {
+    const user = await window.getCurrentUser?.();
+    if (!user) {
+      const safePath = window.location.pathname + window.location.search + window.location.hash;
+      window.location.href = `/auth.html?mode=signin&reason=portal&redirect=${encodeURIComponent(safePath)}`;
+      return;
+    }
 
+    const token = await window.PS_getAccessToken?.();
+    if (!token) {
+      showToast("warn", "Could not get session token. Please sign in again.");
+      window.location.href = "/auth.html";
+      return;
+    }
+
+    setButtonsDisabled(true);
+
+    try {
+      const resp = await fetch("/api/create-portal-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({}),
+      });
+
+      const data = await resp.json();
+      if (!resp.ok) {
+        showToast("warn", data.error || "Unable to open billing portal. Please try again.");
+        return;
+      }
+
+      // Redirect to Stripe Billing Portal
+      window.location.href = data.url;
+    } catch (err) {
+      console.error(err);
+      showToast("warn", "Network error opening billing portal. Please try again.");
+    } finally {
+      setButtonsDisabled(false);
+    }
+  }
+
+  async function init() {
+    if (typeof updateNavUserDisplay === "function") updateNavUserDisplay();
     readQueryToasts();
 
     if (btnMonthly) btnMonthly.addEventListener("click", () => startCheckout("monthly"));
@@ -1018,17 +1085,15 @@
     if (btnYearly) btnYearly.addEventListener("click", () => startCheckout("yearly"));
     if (btnYearlyAlt) btnYearlyAlt.addEventListener("click", () => startCheckout("yearly"));
 
-    // Default side upgrade: monthly
     if (btnUpgradeSide) btnUpgradeSide.addEventListener("click", () => startCheckout("monthly"));
+    if (btnManage) btnManage.addEventListener("click", openCustomerPortal);
 
-    // Status area
     const user = await window.getCurrentUser?.();
     if (!user) {
       setStatus({ signedIn: false });
       return;
     }
 
-    // Preferred tier fetch: /api/get-tier (via auth.js helper)
     let tier = "free";
     try {
       tier = await window.PS_getUserTier?.({ forceRefresh: true }) || "free";
