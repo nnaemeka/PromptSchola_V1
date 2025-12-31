@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FAQ – PromptSchola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Frequently asked questions about PromptSchola, pricing, access, and how the 6-step nano-lessons work." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-body:#f3f4f6;
+      --bg-surface:#f9fafb;
+      --bg-card:#ffffff;
+      --accent:#7e22ce;
+      --accent-strong:#6d28d9;
+      --accent-soft:rgba(126,34,206,.09);
+      --text-main:#111827;
+      --text-muted:#4b5563;
+      --shadow:0 10px 30px rgba(17,24,39,.08);
+      --radius:18px;
+      --max:1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text-main);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(126,34,206,.12), transparent 60%),
+        radial-gradient(900px 600px at 85% 20%, rgba(109,40,217,.10), transparent 55%),
+        radial-gradient(900px 600px at 50% 95%, rgba(99,102,241,.10), transparent 60%),
+        var(--bg-body);
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .nav{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter:saturate(140%) blur(10px);
+      background:rgba(243,244,246,.75);
+      border-bottom:1px solid rgba(17,24,39,.08);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+      gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none;
+      font-weight:800; letter-spacing:-.02em;
+    }
+    .mark{
+      width:34px; height:34px; border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),#8b5cf6);
+      box-shadow:0 10px 22px rgba(126,34,206,.25);
+    }
+    .nav-links{display:flex; gap:14px; flex-wrap:wrap}
+    .nav-links a{
+      text-decoration:none; font-weight:600; color:var(--text-muted);
+      padding:8px 10px; border-radius:12px;
+    }
+    .nav-links a:hover{background:rgba(17,24,39,.05); color:var(--text-main)}
+    .nav-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(17,24,39,.12);
+      background:rgba(255,255,255,.6);
+      padding:8px 10px; border-radius:999px;
+      box-shadow:0 10px 26px rgba(17,24,39,.05);
+      font-weight:600;
+    }
+    .btn{
+      border:none; cursor:pointer;
+      padding:10px 12px; border-radius:12px;
+      font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+      color:white;
+      box-shadow:0 14px 30px rgba(126,34,206,.22);
+    }
+    .btn.secondary{
+      background:rgba(17,24,39,.06);
+      color:var(--text-main);
+      box-shadow:none;
+      border:1px solid rgba(17,24,39,.10);
+    }
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+    h1,h2{font-family:Lora,Georgia,serif; margin:0}
+    .hero{padding:34px 0 18px}
+    .hero-card{
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(17,24,39,.10);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--accent-soft);
+      color:var(--accent-strong);
+      font-weight:800;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(126,34,206,.18);
+    }
+    .sub{color:var(--text-muted); margin:10px 0 0; line-height:1.6}
+    .grid{display:grid; gap:14px; padding:14px 0 28px}
+    .card{
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(17,24,39,.10);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    details{
+      border:1px solid rgba(17,24,39,.10);
+      border-radius:14px;
+      padding:12px 14px;
+      background:rgba(255,255,255,.6);
+    }
+    summary{
+      cursor:pointer; font-weight:800;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    .ans{color:var(--text-muted); margin-top:10px; line-height:1.65}
+    footer{
+      border-top:1px solid rgba(17,24,39,.08);
+      background:rgba(243,244,246,.55);
+      padding:18px 0;
+      color:var(--text-muted);
+    }
+    .foot{
+      display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+      font-weight:600;
+    }
+    .foot a{color:var(--text-muted); text-decoration:none; margin-right:12px}
+    .foot a:hover{color:var(--text-main)}
+  </style>
+</head>
+
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/index.html" aria-label="PromptSchola home">
+        <span class="mark" aria-hidden="true"></span>
+        <span>PromptSchola</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/physics/physics.html">Physics</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/faq.html" aria-current="page">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <span id="nav-user" class="pill" title="Account status">Not signed in</span>
+        <button id="nav-login-btn" class="btn secondary" type="button" onclick="window.location.href='/auth.html'">Login</button>
+        <button id="nav-register-btn" class="btn secondary" type="button" onclick="window.location.href='/auth.html#register'">Register</button>
+        <button id="nav-signout-btn" class="btn secondary" type="button" onclick="signOutUser()">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <span class="kicker">FAQ</span>
+        <h1 style="margin-top:10px;">Answers that keep you moving.</h1>
+        <p class="sub">PromptSchola is built for <strong>final-year high school and first-year university students</strong> who want a guided way to learn with AI—without guessing what to ask next.</p>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Frequently asked questions">
+      <details class="card">
+        <summary>What is PromptSchola?</summary>
+        <div class="ans">A STEM learning site that turns each topic into a guided 6-step nano-lesson (Orient → Understand → Apply → Work Through It → Review &amp; Practice → Simulation Lab).</div>
+      </details>
+
+      <details class="card">
+        <summary>What do I get for free?</summary>
+        <div class="ans">Everyone can view and copy Steps 1–3 prompts. Signed-in free users can run AI for Steps 1–2, with a daily limit.</div>
+      </details>
+
+      <details class="card">
+        <summary>What does Mastery unlock?</summary>
+        <div class="ans">Run AI for Steps 1–6 and full Help access (including help pages). Also removes daily usage limits.</div>
+      </details>
+
+      <details class="card">
+        <summary>Why is Help locked on free?</summary>
+        <div class="ans">Help includes prompt scaffolds and deeper guidance. Locking it keeps the free tier usable while protecting the system’s “guided mastery” value.</div>
+      </details>
+
+      <details class="card">
+        <summary>How do I manage or cancel my subscription?</summary>
+        <div class="ans">Use the “Manage billing” button on Pricing to open the Stripe Customer Portal. If you cancel, access downgrades immediately.</div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>© <span id="yr"></span> PromptSchola</div>
+      <div>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/physics/physics.html">Physics</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/auth.js"></script>
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    updateNavUserDisplay();
+  </script>
+</body>
+</html>
