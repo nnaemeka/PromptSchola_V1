@@ -1,0 +1,75 @@
+Act as my Stripe+Supabase+Vercel incident responder for PromptSchola billing. Context:
+
+Stack:
+- Static HTML site on Vercel (no Next/Vite). API routes under /api/*.js running as Vercel Serverless Functions (Node).
+- Supabase Auth + Postgres. Server functions use SUPABASE_SERVICE_ROLE_KEY.
+- Stripe subscriptions via Checkout + Webhook + Customer Portal.
+
+Database:
+- entitlements table columns:
+  user_id (uuid PK or unique),
+  tier (text),
+  stripe_customer_id (text),
+  stripe_subscription_id (text),
+  current_period_end (timestamptz),
+  updated_at (timestamptz),
+  is_paid (bool),
+  stripe_status (text)
+
+Business rules:
+- Paid access means tier='paid' and is_paid=true.
+- Strict downgrade: if subscription is canceled/deleted, immediately set tier='free', is_paid=false (no grace period).
+
+Required Stripe events to subscribe on the webhook endpoint:
+- checkout.session.completed
+- customer.subscription.updated
+- customer.subscription.deleted
+- invoice.paid
+- invoice.payment_failed
+(Optional: checkout.session.expired)
+
+Serverless endpoints:
+1) POST /api/create-checkout-session
+- Requires Authorization: Bearer <Supabase access token>.
+- Validates token via supabase.auth.getUser(token) using SUPABASE_SERVICE_ROLE_KEY.
+- Uses STRIPE_SECRET_KEY and STRIPE_PRICE_ID_MONTHLY/STRIPE_PRICE_ID_YEARLY env vars.
+- Creates Stripe Checkout Session (mode=subscription) with:
+  - client_reference_id = user.id
+  - customer_email = user.email (optional)
+  - metadata.supabase_user_id = user.id
+  - metadata.plan = monthly/yearly
+  - IMPORTANT: also ensure subscription metadata includes supabase_user_id (so subscription.updated/deleted can map to user).
+- Returns { url: session.url }
+
+2) POST /api/stripe-webhook
+- Verifies Stripe signature using raw request body (must not JSON parse before verification).
+- Uses STRIPE_WEBHOOK_SECRET env var.
+- Updates entitlements row based on:
+  - checkout.session.completed -> retrieve subscription, set entitlements paid if status active/trialing.
+  - customer.subscription.updated/deleted -> set entitlements paid/free based on subscription status; for strict downgrade, deleted => free immediately.
+  - invoice.paid / invoice.payment_failed -> retrieve subscription and sync entitlements accordingly.
+- Must map Stripe events back to user_id:
+  - Prefer subscription.metadata.supabase_user_id
+  - Fallback: entitlements lookup by stripe_subscription_id or stripe_customer_id
+
+3) POST /api/create-portal-session
+- Requires Authorization: Bearer <Supabase access token>.
+- Looks up stripe_customer_id from entitlements for user_id.
+- Creates Stripe Billing Portal session:
+  - return_url = https://www.promptschola.com/pricing.html
+- Returns { url: portalSession.url }
+
+Known Vercel pitfalls:
+- If Vercel says “No Output Directory named public”, the project is being treated as a framework build. Ensure the project is configured as a static output with correct settings/vercel.json (do not require /public). API routes should still deploy.
+- If a serverless function fails due to missing dependency, it must be in package.json dependencies.
+- Stripe webhook signature errors mean raw body is not preserved.
+
+What I want from you:
+- Ask for the exact failing symptom (e.g., Stripe shows payment succeeded but entitlements not updated; portal 401; webhook 400 signature; etc).
+- Then provide the most likely root causes and exact code-level fixes for Vercel serverless functions + Stripe + Supabase.
+- Provide a minimal reproducible test plan:
+  - How to confirm create-checkout-session returns a URL
+  - How to confirm webhook delivery succeeded
+  - How to confirm entitlements row updated
+  - How to confirm portal session redirects to Stripe portal
+- Provide the precise Stripe dashboard settings to check: webhook event types, endpoint URL, test/live mode toggle, portal enabled in correct mode, price IDs, and secrets.
