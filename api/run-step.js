@@ -33,8 +33,6 @@ function looksLikeMissingEntitlementsTable(err) {
 
 // ---------------------------------------------------------------------
 // ✅ PromptSchola Prompt Validator (v1)
-// - Validates prompt CONTENT against your canonical authoring rules (nano)
-// - Help mode bypasses step-template validation
 // ---------------------------------------------------------------------
 
 function normalizeText(s) {
@@ -107,7 +105,6 @@ function validatePromptContent({ prompt, stepNum }) {
   }
 
   // 5) Step-specific canonical requirements
-  // Step 2: "worked anchor" is helpful, but should not hard-fail (too brittle).
   if (stepNum === 2) {
     const hasWorkedAnchor = includesAny(p, [
       'worked anchor',
@@ -118,13 +115,10 @@ function validatePromptContent({ prompt, stepNum }) {
       'worked-out example'
     ]);
     if (!hasWorkedAnchor) {
-      warnings.push(
-        'Step 2 suggestion: include ONE worked anchor example (optional but recommended).'
-      );
+      warnings.push('Step 2 suggestion: include ONE worked anchor example (optional but recommended).');
     }
   }
 
-  // Step 4 must include "Check Your Understanding" (nano-only)
   if (stepNum === 4) {
     const hasCYU = includesAny(p, [
       'check your understanding',
@@ -137,7 +131,6 @@ function validatePromptContent({ prompt, stepNum }) {
     }
   }
 
-  // Step 6 should stay exploratory (warning only)
   if (stepNum === 6) {
     const assessmentWords = ['quiz', 'test', 'graded', 'exam', 'score', 'marking scheme'];
     if (includesAny(p, assessmentWords)) {
@@ -148,13 +141,113 @@ function validatePromptContent({ prompt, stepNum }) {
   return { ok: errors.length === 0, errors, warnings };
 }
 
-// Normalize/validate mode without breaking existing callers
 function normalizeMode(mode) {
   const m = String(mode || '').toLowerCase().trim();
   if (!m) return 'nano';
   if (m === 'help') return 'help';
   if (m === 'nano') return 'nano';
   return 'nano';
+}
+
+// ---------------------------------------------------------------------
+// ✅ Usage metering helpers (Free users)
+// ---------------------------------------------------------------------
+
+const USAGE_TIMEZONE = 'America/New_York';
+
+// YYYY-MM-DD in America/New_York
+function getNYDateString(d = new Date()) {
+  // en-CA gives YYYY-MM-DD formatting
+  return new Intl.DateTimeFormat('en-CA', { timeZone: USAGE_TIMEZONE }).format(d);
+}
+
+// next midnight in America/New_York as ISO (best-effort)
+function getNextNYMidnightISO() {
+  try {
+    const now = new Date();
+    // We construct “tomorrow 00:00” in NY by using the NY date string + add 1 day,
+    // then interpret as local UTC ISO fallback. Good enough for UI hints.
+    const todayNY = getNYDateString(now); // YYYY-MM-DD
+    const [yy, mm, dd] = todayNY.split('-').map(Number);
+    const approxNYMidnightUTC = new Date(Date.UTC(yy, mm - 1, dd, 5, 0, 0)); // ~ midnight NY (UTC-5). DST shifts, but this is only a hint.
+    const next = new Date(approxNYMidnightUTC.getTime() + 24 * 60 * 60 * 1000);
+    return next.toISOString();
+  } catch {
+    return null;
+  }
+}
+
+function getFreeDailyLimit() {
+  const raw = process.env.FREE_AI_DAILY_LIMIT;
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? Math.floor(n) : 5;
+}
+
+function looksLikeMissingUsageTable(err) {
+  const msg = String(err?.message || err || '').toLowerCase();
+  return (
+    (msg.includes('relation') && msg.includes('ai_usage') && msg.includes('does not exist')) ||
+    (msg.includes('relation') && msg.includes('aiusage') && msg.includes('does not exist')) ||
+    msg.includes('could not find the table') ||
+    msg.includes('not found')
+  );
+}
+
+/**
+ * Enforce and increment daily AI usage for FREE users.
+ * Table expected:
+ *   ai_usage(user_id uuid, date date, run_count int, primary key (user_id,date))
+ */
+async function enforceAndIncrementFreeUsage(sb, userId) {
+  const limit = getFreeDailyLimit();
+  const dateNY = getNYDateString(new Date());
+
+  // Read current
+  const { data: row, error: selErr } = await sb
+    .from('ai_usage')
+    .select('run_count')
+    .eq('user_id', userId)
+    .eq('date', dateNY)
+    .maybeSingle();
+
+  if (selErr) {
+    // In production, you can choose fail-closed. For now we fail-open but warn loudly.
+    console.warn('[usage] ai_usage select warning (fail-open):', selErr?.message || selErr);
+    if (looksLikeMissingUsageTable(selErr)) {
+      console.warn('[usage] Hint: ai_usage table may be missing.');
+    }
+    return { ok: true, used: null, limit, dateNY, metered: false };
+  }
+
+  const used = row?.run_count || 0;
+
+  if (used >= limit) {
+    return {
+      ok: false,
+      used,
+      limit,
+      dateNY,
+      resetsAt: getNextNYMidnightISO(),
+      metered: true
+    };
+  }
+
+  const nextCount = used + 1;
+
+  // Upsert new count
+  const { error: upErr } = await sb
+    .from('ai_usage')
+    .upsert({ user_id: userId, date: dateNY, run_count: nextCount }, { onConflict: 'user_id,date' });
+
+  if (upErr) {
+    console.warn('[usage] ai_usage upsert warning (fail-open):', upErr?.message || upErr);
+    if (looksLikeMissingUsageTable(upErr)) {
+      console.warn('[usage] Hint: ai_usage table may be missing.');
+    }
+    return { ok: true, used, limit, dateNY, metered: false };
+  }
+
+  return { ok: true, used: nextCount, limit, dateNY, metered: true };
 }
 
 // ---------------------------------------------------------------------
@@ -185,7 +278,6 @@ export default async function handler(req, res) {
     }
 
     // ✅ Validate prompt content ONLY for nano mode.
-    // Help prompts should not be forced into step-template structure.
     let v = { ok: true, errors: [], warnings: [] };
     if (reqMode !== 'help') {
       v = validatePromptContent({ prompt, stepNum });
@@ -236,9 +328,8 @@ export default async function handler(req, res) {
       );
     }
 
-    // ---- Entitlements: determine tier (FAIL-OPEN) ----
+    // ---- Entitlements: determine tier (FAIL-OPEN to FREE) ----
     let tier = 'free';
-    let isPaid = false;
 
     try {
       const { data: ent, error: entErr } = await supabaseAdmin
@@ -261,18 +352,44 @@ export default async function handler(req, res) {
       tier = 'free';
     }
 
-    isPaid = tier === 'paid';
+    const isPaid = tier === 'paid';
 
     // ---- Access rule enforcement ----
     // signed-in free users: Run with AI only for steps 1–2
     // paid users: Run with AI for steps 1–6
-    // Help pages will call with step=4 so this stays paid-gated.
     if (!isPaid && stepNum > 2) {
       return jsonError(res, 402, 'PAYWALL', 'This step requires Mastery (paid) access.', {
         required: 'paid',
         current: tier,
         step: stepNum
       });
+    }
+
+    // ---- ✅ Usage metering (FREE users only) ----
+    // Count only when we are actually about to call the AI.
+    // (Paid users are unlimited.)
+    let usageMeta = null;
+
+    if (!isPaid) {
+      const usage = await enforceAndIncrementFreeUsage(supabaseAdmin, user.id);
+      usageMeta = usage;
+
+      if (!usage.ok) {
+        return jsonError(
+          res,
+          402,
+          'DAILY_LIMIT_REACHED',
+          `Daily free AI limit reached (${usage.limit}/day). Upgrade for unlimited access.`,
+          {
+            tier,
+            limit: usage.limit,
+            used: usage.used,
+            date: usage.dateNY,
+            timezone: USAGE_TIMEZONE,
+            resetsAt: usage.resetsAt || null
+          }
+        );
+      }
     }
 
     // ---- Call DeepSeek chat completions ----
@@ -319,8 +436,8 @@ export default async function handler(req, res) {
         mode: reqMode,
         tier,
         isPaid,
-        // For help mode we still return warnings array (empty) so callers can rely on it
-        promptWarnings: v.warnings || []
+        promptWarnings: v.warnings || [],
+        usage: usageMeta // includes used/limit/dateNY for free users (or null for paid)
       }
     });
   } catch (err) {
