@@ -225,45 +225,33 @@
     }
 
     .hero-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.78rem;
-  font-weight: 800;
-  margin-bottom: 1.05rem;
-  font-family: var(--font-body);
-}
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+    }
 
-/* Keep the label strong + branded */
-.hero-kicker span.label {
-  padding: 0.18rem 0.7rem;
-  border-radius: 8px;
-  border: 1px solid rgba(129, 140, 248, 0.22);
-  background: var(--accent-soft2);
-  color: var(--accent-strong);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-}
-
-/* Make the trail muted + readable (consistent with Help breadcrumb tone) */
-.hero-kicker span:not(.label) {
-  color: var(--text-subtle);      /* <- this is the key consistency */
-  font-weight: 700;
-  text-transform: none;           /* <- avoid shouting */
-  letter-spacing: 0.02em;
-}
-
-
+    /* Keep the label strong + branded */
     .hero-kicker span.label {
       padding: 0.18rem 0.7rem;
       border-radius: 8px;
       border: 1px solid rgba(129, 140, 248, 0.22);
       background: var(--accent-soft2);
       color: var(--accent-strong);
-      font-weight: 800;
+      font-weight: 900;
+      text-transform: uppercase;
       letter-spacing: 0.14em;
-      font-family: var(--font-body);
+    }
+
+    /* Make the trail muted + readable (consistent with Help breadcrumb tone) */
+    .hero-kicker span:not(.label) {
+      color: var(--text-subtle);
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: 0.02em;
     }
 
     .hero-title {
@@ -668,8 +656,7 @@
       margin-top: 0.65rem;
     }
     .help-category:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
-	
-	
+
     .help-category-label {
       display: inline-flex;
       align-items: center;
@@ -685,27 +672,26 @@
 
     .help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
 
-   /* ▶ Bullet (consistent sizing across browsers) */
-.help-prompts-bulleted{
-  list-style: none;
-  padding-left: 1.2rem;
-}
+    /* ▶ Bullet (consistent sizing across browsers) */
+    .help-prompts-bulleted{
+      list-style: none;
+      padding-left: 1.2rem;
+    }
 
-.help-prompts-bulleted li{
-  position: relative;
-  margin-bottom: 0.35rem;
-}
+    .help-prompts-bulleted li{
+      position: relative;
+      margin-bottom: 0.35rem;
+    }
 
-.help-prompts-bulleted li::before{
-  content: "▶";
-  position: absolute;
-  left: -1.1rem;
-  top: 0.18rem;
-  transform: scale(0.9);           /* ✅ triangle size */
-  transform-origin: left top;
-  color: var(--help-blue-strong);  /* matches your indigo theme */
-}
-
+    .help-prompts-bulleted li::before{
+      content: "▶";
+      position: absolute;
+      left: -1.1rem;
+      top: 0.18rem;
+      transform: scale(0.9);
+      transform-origin: left top;
+      color: var(--help-blue-strong);
+    }
 
     .help-prompt-btn {
       display: block;
@@ -743,7 +729,7 @@
        NEW: HARD LOCK FOR HELP PANEL (anon + free)
        ========================================================= */
     .help-lock-disabled {
-      pointer-events: none; /* block ALL clicks inside wrapper */
+      pointer-events: none;
       user-select: none;
       opacity: 0.92;
       filter: grayscale(0.08);
@@ -755,7 +741,7 @@
       border-radius: 1.1rem;
       background: linear-gradient(to bottom, rgba(249,250,251,0.55), rgba(249,250,251,0.88));
       border: 1px dashed rgba(99, 102, 241, 0.55);
-      display: none; /* shown via JS when locked */
+      display: none;
       align-items: flex-start;
       justify-content: center;
       padding: 0.85rem 0.85rem;
@@ -805,63 +791,61 @@
       cursor: not-allowed;
     }
 
-   /* =========================================================
-   HELP PANEL THEME — A) Deep Indigo (scoped override)
-   Replace the entire Royal Blue block with this
-   ========================================================= */
-:root{
-  --help-blue: #1e3a8a;
-  --help-blue-strong: #1e40af;
-  --help-blue-soft: rgba(30, 58, 138, 0.10);
-  --help-blue-soft2: rgba(30, 64, 175, 0.14);
-  --help-blue-ink: #0b1220;
-}
+    /* =========================================================
+       HELP PANEL THEME — A) Deep Indigo (scoped override)
+       ========================================================= */
+    :root{
+      --help-blue: #1e3a8a;
+      --help-blue-strong: #1e40af;
+      --help-blue-soft: rgba(30, 58, 138, 0.10);
+      --help-blue-soft2: rgba(30, 64, 175, 0.14);
+      --help-blue-ink: #0b1220;
+    }
 
-.help-panel-toggle{
-  border: 1px solid rgba(30, 58, 138, 0.28);
-  background: radial-gradient(circle at 0 0, #f9fafb, rgba(30, 58, 138, 0.10));
-  box-shadow: 0 6px 16px rgba(30, 58, 138, 0.12);
-}
+    .help-panel-toggle{
+      border: 1px solid rgba(30, 58, 138, 0.28);
+      background: radial-gradient(circle at 0 0, #f9fafb, rgba(30, 58, 138, 0.10));
+      box-shadow: 0 6px 16px rgba(30, 58, 138, 0.12);
+    }
 
-.nano-help-title{
-  border: 1px solid rgba(30, 58, 138, 0.32);
-  color: var(--help-blue-strong);
-  background: rgba(30, 58, 138, 0.06);
-}
+    .nano-help-title{
+      border: 1px solid rgba(30, 58, 138, 0.32);
+      color: var(--help-blue-strong);
+      background: rgba(30, 58, 138, 0.06);
+    }
 
-.help-panel-body{
-  border: 1px solid rgba(30, 58, 138, 0.22);
-  background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
-  box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
-}
+    .help-panel-body{
+      border: 1px solid rgba(30, 58, 138, 0.22);
+      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
+      box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
+    }
 
-.help-category-label{
-  border: 1px solid rgba(30, 58, 138, 0.35);
-  background: rgba(30, 58, 138, 0.10);
-  color: var(--help-blue-strong);
-}
+    .help-category-label{
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      background: rgba(30, 58, 138, 0.10);
+      color: var(--help-blue-strong);
+    }
 
-.help-prompts-bulleted li::marker{
-  color: var(--help-blue-strong);
-}
+    .help-prompts-bulleted li::marker{
+      color: var(--help-blue-strong);
+    }
 
-.help-prompt-btn{
-  color: var(--help-blue-strong);
-}
-.help-prompt-btn:hover{
-  background: rgba(30, 58, 138, 0.08);
-  color: var(--help-blue-ink);
-  text-decoration: underline;
-}
+    .help-prompt-btn{
+      color: var(--help-blue-strong);
+    }
+    .help-prompt-btn:hover{
+      background: rgba(30, 58, 138, 0.08);
+      color: var(--help-blue-ink);
+      text-decoration: underline;
+    }
 
-.help-lock-overlay{
-  border-color: rgba(30, 58, 138, 0.45);
-}
+    .help-lock-overlay{
+      border-color: rgba(30, 58, 138, 0.45);
+    }
 
     .help-lock-overlay{
       border-color: rgba(37, 99, 235, 0.45);
     }
-
   </style>
 </head>
 
@@ -1249,12 +1233,12 @@
                     <div class="locked-actions">
                       <a class="btn-primary" href="/pricing.html">Unlock full access</a>
                       <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
-					  <!-- Simulation link (always accessible) -->
-					  <a class="btn-pill"
-						 href="/physics/simulations/constant-acceleration.html"
-						 style="border-color: rgba(129,140,248,0.45); color:#4f46e5; font-weight:700;">
-						▶ Explore interactive simulation
-					  </a>
+                      <!-- Simulation link (always accessible) -->
+                      <a class="btn-pill"
+                         href="/physics/simulations/constant-acceleration.html"
+                         style="border-color: rgba(129,140,248,0.45); color:#4f46e5; font-weight:700;">
+                        ▶ Explore interactive simulation
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -1376,7 +1360,7 @@
   </main>
 
   <footer>
-  <a href="/about.html">About.  </a>
+    <a href="/about.html">About.  </a>
     © 2025 PromptSchola. All rights reserved.
   </footer>
 </div>
@@ -1387,6 +1371,7 @@
 <script>
 /* ============================================================
    Refactor: shorter JS, SAME behavior + gating (locked design)
+   + NEW: DAILY_LIMIT_REACHED UI handling (no layout break)
    ============================================================ */
 
 /* Continue Learning marker */
@@ -1529,6 +1514,64 @@ function setRunBtnRunning(step, running){
     btn.removeAttribute('aria-busy');
   }
 }
+
+/* ============================================================
+   NEW: DAILY LIMIT UI (PromptSchola style)
+   ============================================================ */
+function PS_buildDailyLimitPanel({ limit, used, resetsAt, timezone }) {
+  const when = resetsAt ? `Resets ${resetsAt} (${timezone || 'local time'}).` : 'Resets tomorrow.';
+  const usedText = (typeof used === 'number' && typeof limit === 'number')
+    ? `You used ${used}/${limit} free AI runs today.`
+    : `You reached today’s free AI limit.`;
+
+  return `
+    <div class="locked-panel" style="border-color: rgba(245,158,11,0.35); background: linear-gradient(to bottom, rgba(245,158,11,0.10), rgba(126, 34, 206, 0.06));">
+      <div class="locked-title" style="color:#92400e;">Daily AI limit reached</div>
+      <div class="locked-desc">
+        ${usedText} ${when}
+        <br><span style="color: var(--text-subtle); font-size: 0.88rem;">
+          Upgrade to Mastery for full access (Steps 1–6 + Help + AI).
+        </span>
+      </div>
+      <div class="locked-actions">
+        <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Account</a>
+      </div>
+    </div>
+  `;
+}
+
+function PS_disableRunAIButtons(reasonText) {
+  for (let step = 1; step <= 6; step++) {
+    const btn = document.getElementById(`run-btn-${step}`);
+    if (!btn) continue;
+    btn.disabled = true;
+    btn.dataset.psDisabledReason = reasonText || 'Daily AI limit reached';
+    btn.title = btn.dataset.psDisabledReason;
+  }
+}
+
+function PS_showDailyLimitCTA(step, payload) {
+  const content = document.getElementById(`step-content-${step}`);
+  if (!content) return;
+
+  const existing = content.querySelector('[data-ps-daily-limit="1"]');
+  const html = `<div data-ps-daily-limit="1">${PS_buildDailyLimitPanel(payload || {})}</div>`;
+
+  if (existing) {
+    existing.outerHTML = html;
+    return;
+  }
+
+  // Insert right under the response area (best visibility)
+  const resp = document.getElementById(`response-step${step}`);
+  if (resp) {
+    resp.insertAdjacentHTML('afterend', html);
+  } else {
+    content.insertAdjacentHTML('beforeend', html);
+  }
+}
+
 async function runWithAI(step){
   const prompt = prompts[step];
   if (!prompt) return alert('No prompt defined for this step yet.');
@@ -1565,8 +1608,23 @@ async function runWithAI(step){
     });
 
     const data = await res.json().catch(()=> ({}));
+
     if (!res.ok){
       let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
+
+      // ✅ NEW: Daily limit reached (disable buttons + Upgrade CTA)
+      if (data?.code === 'DAILY_LIMIT_REACHED') {
+        PS_disableRunAIButtons('Daily AI limit reached');
+        PS_showDailyLimitCTA(step, {
+          limit: data?.limit,
+          used: data?.used,
+          resetsAt: data?.resetsAt,
+          timezone: data?.timezone
+        });
+        output.textContent = data?.error || 'Daily AI limit reached. Upgrade to continue.';
+        return;
+      }
+
       if (data?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
       if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
       if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
@@ -1609,16 +1667,16 @@ function configureHelpAccess(isPaid){
     toggleBtn.setAttribute('aria-disabled','false');
     if (icon) icon.textContent = '▾';
   } else {
-    wrap.classList.add('help-lock-disabled');      // blocks navigation + copy + clicks
+    wrap.classList.add('help-lock-disabled');
     overlay.style.display = 'flex';
     overlay.setAttribute('aria-hidden','false');
 
-    toggleBtn.disabled = true;                    // cannot toggle panel
+    toggleBtn.disabled = true;
     toggleBtn.classList.add('help-toggle-disabled');
     toggleBtn.setAttribute('aria-disabled','true');
     if (icon) icon.textContent = '🔒';
 
-    body.style.display = 'block';                 // visible behind teaser (locked)
+    body.style.display = 'block';
   }
 }
 
@@ -1684,7 +1742,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const content = $(`step-content-${step}`);
     const btn = $(`toggle-btn-${step}`);
     if (!content || !btn) continue;
-    const isCollapsed = collapseState[step] === false; // stored false => collapsed
+    const isCollapsed = collapseState[step] === false;
     content.style.display = isCollapsed ? 'none' : 'block';
     btn.textContent = isCollapsed ? '+' : '−';
   }
