@@ -165,11 +165,9 @@ function getNYDateString(d = new Date()) {
 function getNextNYMidnightISO() {
   try {
     const now = new Date();
-    // We construct “tomorrow 00:00” in NY by using the NY date string + add 1 day,
-    // then interpret as local UTC ISO fallback. Good enough for UI hints.
     const todayNY = getNYDateString(now); // YYYY-MM-DD
     const [yy, mm, dd] = todayNY.split('-').map(Number);
-    const approxNYMidnightUTC = new Date(Date.UTC(yy, mm - 1, dd, 5, 0, 0)); // ~ midnight NY (UTC-5). DST shifts, but this is only a hint.
+    const approxNYMidnightUTC = new Date(Date.UTC(yy, mm - 1, dd, 5, 0, 0)); // ~ midnight NY (UTC-5)
     const next = new Date(approxNYMidnightUTC.getTime() + 24 * 60 * 60 * 1000);
     return next.toISOString();
   } catch {
@@ -202,7 +200,6 @@ async function enforceAndIncrementFreeUsage(sb, userId) {
   const limit = getFreeDailyLimit();
   const dateNY = getNYDateString(new Date());
 
-  // Read current
   const { data: row, error: selErr } = await sb
     .from('ai_usage')
     .select('run_count')
@@ -211,11 +208,8 @@ async function enforceAndIncrementFreeUsage(sb, userId) {
     .maybeSingle();
 
   if (selErr) {
-    // In production, you can choose fail-closed. For now we fail-open but warn loudly.
     console.warn('[usage] ai_usage select warning (fail-open):', selErr?.message || selErr);
-    if (looksLikeMissingUsageTable(selErr)) {
-      console.warn('[usage] Hint: ai_usage table may be missing.');
-    }
+    if (looksLikeMissingUsageTable(selErr)) console.warn('[usage] Hint: ai_usage table may be missing.');
     return { ok: true, used: null, limit, dateNY, metered: false };
   }
 
@@ -234,16 +228,13 @@ async function enforceAndIncrementFreeUsage(sb, userId) {
 
   const nextCount = used + 1;
 
-  // Upsert new count
   const { error: upErr } = await sb
     .from('ai_usage')
     .upsert({ user_id: userId, date: dateNY, run_count: nextCount }, { onConflict: 'user_id,date' });
 
   if (upErr) {
     console.warn('[usage] ai_usage upsert warning (fail-open):', upErr?.message || upErr);
-    if (looksLikeMissingUsageTable(upErr)) {
-      console.warn('[usage] Hint: ai_usage table may be missing.');
-    }
+    if (looksLikeMissingUsageTable(upErr)) console.warn('[usage] Hint: ai_usage table may be missing.');
     return { ok: true, used, limit, dateNY, metered: false };
   }
 
@@ -257,7 +248,6 @@ async function enforceAndIncrementFreeUsage(sb, userId) {
 
 function normalizeNanoSlug(s) {
   const v = String(s || '').trim();
-  // keep it conservative; empty => null (skip nano table)
   return v ? v : null;
 }
 
@@ -267,7 +257,6 @@ async function ensureRowExists(sb, table, row, onConflict) {
 }
 
 async function incrementRow(sb, table, whereEq, increments, selectCols) {
-  // Ensure base row exists first (upsert w/ keys already done by caller)
   const { data, error: selErr } = await sb
     .from(table)
     .select(selectCols)
@@ -288,8 +277,6 @@ async function incrementRow(sb, table, whereEq, increments, selectCols) {
 
 async function incrementDailyMetrics(sb, dateNY, increments) {
   if (!dateNY) return;
-
-  // Create row if missing
   await ensureRowExists(sb, 'daily_metrics', { date: dateNY }, 'date');
 
   const cols = Object.keys(increments).join(',');
@@ -301,7 +288,6 @@ async function incrementDailyMetrics(sb, dateNY, increments) {
 async function incrementDailyNanoMetrics(sb, dateNY, nanoSlug, increments, stepNumForStepRuns) {
   if (!dateNY || !nanoSlug) return;
 
-  // Create row if missing
   await ensureRowExists(
     sb,
     'daily_nano_metrics',
@@ -309,14 +295,11 @@ async function incrementDailyNanoMetrics(sb, dateNY, nanoSlug, increments, stepN
     'date,nano_slug'
   );
 
-  // We may need step_runs too
   const needStepRuns = Number.isFinite(stepNumForStepRuns);
   const baseCols = Object.keys(increments);
   const cols = needStepRuns ? [...new Set([...baseCols, 'step_runs'])] : baseCols;
   const selectCols = cols.join(',');
-  if (!selectCols) {
-    if (!needStepRuns) return;
-  }
+  if (!selectCols && !needStepRuns) return;
 
   const { data, error: selErr } = await sb
     .from('daily_nano_metrics')
@@ -329,13 +312,11 @@ async function incrementDailyNanoMetrics(sb, dateNY, nanoSlug, increments, stepN
 
   const next = {};
 
-  // Apply numeric increments
   for (const [k, delta] of Object.entries(increments)) {
     const cur = Number(data?.[k] ?? 0);
     next[k] = cur + Number(delta);
   }
 
-  // Update step_runs map
   if (needStepRuns) {
     const sr = (data?.step_runs && typeof data.step_runs === 'object') ? { ...data.step_runs } : {};
     const key = String(stepNumForStepRuns);
@@ -355,7 +336,6 @@ async function incrementDailyNanoMetrics(sb, dateNY, nanoSlug, increments, stepN
 
 async function safeTrackRollup(sb, { event, dateNY, nanoSlug, stepNum, isPaid }) {
   try {
-    // daily_metrics increments (always)
     if (event === 'BLOCK_STEP_GATE_FREE') {
       await incrementDailyMetrics(sb, dateNY, { step_blocked_free: 1 });
       await incrementDailyNanoMetrics(
@@ -381,7 +361,6 @@ async function safeTrackRollup(sb, { event, dateNY, nanoSlug, stepNum, isPaid })
     }
 
     if (event === 'AI_RUN_ATTEMPT') {
-      // Count attempts when we're about to call the AI (after gating + metering passed)
       await incrementDailyMetrics(sb, dateNY, isPaid ? { ai_runs_paid: 1 } : { ai_runs_free: 1 });
       await incrementDailyNanoMetrics(
         sb,
@@ -397,6 +376,80 @@ async function safeTrackRollup(sb, { event, dateNY, nanoSlug, stepNum, isPaid })
     }
   } catch (e) {
     console.warn('[analytics] rollup write warning (fail-open):', e?.message || e);
+  }
+}
+
+// ---------------------------------------------------------------------
+// ✅ Lesson progress (writes to public.lesson_progress)
+// Fail-open: never block AI response if progress write fails.
+// Table:
+//   lesson_progress(user_id uuid, nano_slug text, max_step_completed smallint,
+//                  ai_runs_count int, last_ai_run_step smallint, updated_at timestamptz)
+//   primary key (user_id, nano_slug)
+// ---------------------------------------------------------------------
+
+function looksLikeMissingLessonProgressTable(err) {
+  const msg = String(err?.message || err || '').toLowerCase();
+  return (
+    (msg.includes('relation') && msg.includes('lesson_progress') && msg.includes('does not exist')) ||
+    msg.includes('could not find the table') ||
+    msg.includes('not found')
+  );
+}
+
+async function safeUpdateLessonProgress(sb, { userId, nanoSlug, stepNum }) {
+  try {
+    if (!userId || !nanoSlug) return null;
+    if (!Number.isFinite(stepNum) || stepNum < 1 || stepNum > 6) return null;
+
+    const { data: row, error: selErr } = await sb
+      .from('lesson_progress')
+      .select('max_step_completed, ai_runs_count')
+      .eq('user_id', userId)
+      .eq('nano_slug', nanoSlug)
+      .maybeSingle();
+
+    if (selErr) {
+      console.warn('[progress] lesson_progress select warning (fail-open):', selErr?.message || selErr);
+      if (looksLikeMissingLessonProgressTable(selErr)) {
+        console.warn('[progress] Hint: lesson_progress table may be missing.');
+      }
+      return null;
+    }
+
+    const curMax = Number(row?.max_step_completed ?? 0);
+    const curRuns = Number(row?.ai_runs_count ?? 0);
+
+    const next = {
+      user_id: userId,
+      nano_slug: nanoSlug,
+      max_step_completed: Math.max(curMax, stepNum),
+      ai_runs_count: curRuns + 1,
+      last_ai_run_step: stepNum,
+      updated_at: new Date().toISOString()
+    };
+
+    const { error: upErr } = await sb
+      .from('lesson_progress')
+      .upsert(next, { onConflict: 'user_id,nano_slug' });
+
+    if (upErr) {
+      console.warn('[progress] lesson_progress upsert warning (fail-open):', upErr?.message || upErr);
+      if (looksLikeMissingLessonProgressTable(upErr)) {
+        console.warn('[progress] Hint: lesson_progress table may be missing.');
+      }
+      return null;
+    }
+
+    return {
+      nano_slug: nanoSlug,
+      max_step_completed: next.max_step_completed,
+      ai_runs_count: next.ai_runs_count,
+      last_ai_run_step: next.last_ai_run_step
+    };
+  } catch (e) {
+    console.warn('[progress] lesson_progress exception (fail-open):', e?.message || e);
+    return null;
   }
 }
 
@@ -509,10 +562,7 @@ export default async function handler(req, res) {
     const dateNY = getNYDateString(new Date());
 
     // ---- Access rule enforcement ----
-    // signed-in free users: Run with AI only for steps 1–2
-    // paid users: Run with AI for steps 1–6
     if (!isPaid && stepNum > 2) {
-      // ✅ Rollup analytics (fail-open): step gate friction
       await safeTrackRollup(supabaseAdmin, {
         event: 'BLOCK_STEP_GATE_FREE',
         dateNY,
@@ -529,8 +579,6 @@ export default async function handler(req, res) {
     }
 
     // ---- ✅ Usage metering (FREE users only) ----
-    // Count only when we are actually about to call the AI.
-    // (Paid users are unlimited.)
     let usageMeta = null;
 
     if (!isPaid) {
@@ -538,7 +586,6 @@ export default async function handler(req, res) {
       usageMeta = usage;
 
       if (!usage.ok) {
-        // ✅ Rollup analytics (fail-open): daily limit friction
         await safeTrackRollup(supabaseAdmin, {
           event: 'BLOCK_DAILY_LIMIT',
           dateNY,
@@ -564,7 +611,7 @@ export default async function handler(req, res) {
       }
     }
 
-    // ✅ Rollup analytics (fail-open): record an AI run attempt (after all gating passed)
+    // ✅ Rollup analytics: record an AI run attempt (after all gating passed)
     await safeTrackRollup(supabaseAdmin, {
       event: 'AI_RUN_ATTEMPT',
       dateNY,
@@ -610,6 +657,16 @@ export default async function handler(req, res) {
     const data = await dsRes.json();
     const content = data.choices?.[0]?.message?.content || '';
 
+    // ✅ NEW: write lesson progress ONLY for nano mode and when nano_slug is present
+    let progress = null;
+    if (reqMode !== 'help' && nanoSlug) {
+      progress = await safeUpdateLessonProgress(supabaseAdmin, {
+        userId: user.id,
+        nanoSlug,
+        stepNum
+      });
+    }
+
     return res.status(200).json({
       content,
       meta: {
@@ -618,7 +675,8 @@ export default async function handler(req, res) {
         tier,
         isPaid,
         promptWarnings: v.warnings || [],
-        usage: usageMeta // includes used/limit/dateNY for free users (or null for paid)
+        usage: usageMeta, // includes used/limit/dateNY for free users (or null for paid)
+        progress // ✅ NEW (may be null if write failed or nanoSlug missing)
       }
     });
   } catch (err) {
