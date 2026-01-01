@@ -12,15 +12,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
- /* ✅ Version A done,/
+
   <style>
     :root {
       --bg-body: #f3f4f6;
       --bg-surface: #f9fafb;
       --bg-card: #ffffff;
+
+      /* ✅ Navy foundation (Coursera hero) */
+      --navy: #00255D;
+      --navy-strong: #001c47;
+      --navy-deep: #001833;
+      --navy-soft: rgba(0, 37, 93, 0.10);
+      --navy-soft2: rgba(0, 37, 93, 0.06);
+      --navy-border: rgba(0, 37, 93, 0.22);
+
+      /* ✅ PromptSchola identity */
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
-      --accent-soft: rgba(126, 34, 206, 0.09);
+      --accent-soft: rgba(126, 34, 206, 0.10);
       --accent-soft2: rgba(129, 140, 248, 0.12);
 
       --text-main: #111827;
@@ -31,14 +41,15 @@
       --border-subtle: rgba(209, 213, 219, 0.55);
       --radius-card: 18px;
       --radius-pill: 999px;
+
       --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
 
-      /* ✅ Two-font system */
       --font-heading: 'Lora', serif;
       --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
       --transition-fast: 0.25s ease-out;
+      --transition-slow: 0.42s ease-out;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,14 +58,13 @@
       font-family: var(--font-body);
       background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
       color: var(--text-main);
-      line-height: 1.7;
+      line-height: 1.72;
       -webkit-font-smoothing: antialiased;
       font-size: 16.5px;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.012em;
       overflow-x: hidden;
     }
 
-    /* ✅ Headings use Lora */
     h1, h2, h3 {
       font-family: var(--font-heading);
       color: var(--text-strong);
@@ -62,6 +72,12 @@
     }
 
     a { color: inherit; text-decoration: none; }
+
+    :focus-visible {
+      outline: 3px solid rgba(129, 140, 248, 0.45);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
 
     .page {
       min-height: 100vh;
@@ -86,7 +102,7 @@
         to bottom,
         rgba(249, 250, 251, 0.96),
         rgba(249, 250, 251, 0.94),
-        rgba(249, 250, 251, 0.9)
+        rgba(249, 250, 251, 0.90)
       );
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
@@ -104,23 +120,29 @@
       gap: 0.75rem;
     }
 
+    /* ✅ Navy + subtle purple highlight */
     .logo-mark {
       width: 34px;
       height: 34px;
       border-radius: 40%;
-      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      background:
+        radial-gradient(circle at 70% 0%, rgba(168, 85, 247, 0.26), transparent 60%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 1rem;
       color: #f9fafb;
       font-family: var(--font-body);
+      box-shadow: 0 12px 30px rgba(0, 37, 93, 0.20);
+      transform: translateZ(0);
     }
 
     .logo-text span:first-child {
       display: block;
-      font-weight: 700;
+      font-weight: 750;
       font-size: 1.02rem;
       letter-spacing: 0.02em;
       color: var(--text-strong);
@@ -143,13 +165,15 @@
 
     .nav-links a {
       color: var(--text-muted);
-      opacity: 0.9;
-      transition: opacity var(--transition-fast), color var(--transition-fast);
+      opacity: 0.92;
+      transition: opacity var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      padding: 0.25rem 0.1rem;
     }
 
     .nav-links a:hover {
       opacity: 1;
       color: var(--accent-strong);
+      transform: translateY(-1px);
     }
 
     .nav-right {
@@ -160,132 +184,165 @@
       font-family: var(--font-body);
     }
 
+    /* ✅ Secondary pills: navy */
     .btn-pill {
       border-radius: var(--radius-pill);
-      padding: 0.45rem 0.95rem;
+      padding: 0.48rem 0.98rem;
       font-size: 0.86rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
+      border: 1px solid var(--navy-border);
       background: #ffffff;
-      color: var(--text-main);
+      color: var(--navy);
       cursor: pointer;
       transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
       font-family: var(--font-body);
     }
 
     .btn-pill:hover {
-      background: #f3f4f6;
+      background: rgba(0, 37, 93, 0.06);
       transform: translateY(-1px);
-      border-color: rgba(156, 163, 175, 0.9);
-      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+      border-color: rgba(0, 37, 93, 0.34);
+      box-shadow: 0 10px 22px rgba(0, 37, 93, 0.12);
     }
 
+    /* ✅ Primary CTA: purple spark */
     .btn-primary {
       border-radius: var(--radius-pill);
-      padding: 0.6rem 1.3rem;
+      padding: 0.62rem 1.32rem;
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 700;
       border: none;
       cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color: #f9fafb;
-      box-shadow: none;
-      transition: transform var(--transition-fast), filter var(--transition-fast), background var(--transition-fast);
+      box-shadow: 0 12px 26px rgba(79, 70, 229, 0.22);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
       font-family: var(--font-body);
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      filter: brightness(1.03);
-      background: radial-gradient(circle at 30% 0%, #c084fc, #7e22ce, #4c1d95);
+      filter: brightness(1.04);
+      box-shadow: 0 16px 34px rgba(79, 70, 229, 0.28);
     }
 
     /* Hero */
     .hero {
-      padding: 4.5rem 0 3rem;
+      padding: 5.2rem 0 3.8rem;
       position: relative;
       overflow: hidden;
       text-align: center;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.10), transparent 55%),
+        radial-gradient(circle at 82% 22%, rgba(168, 85, 247, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 78%, var(--navy-deep) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
     }
 
     .hero::before {
       content: "";
       position: absolute;
-      inset: -80px;
+      inset: -160px;
       pointer-events: none;
       background:
-        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.40), transparent 60%),
-        radial-gradient(circle at 90% 40%, rgba(168, 85, 247, 0.35), transparent 55%);
-      opacity: 0.9;
-      z-index: -1;
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.22), transparent 62%),
+        radial-gradient(circle at 92% 30%, rgba(168, 85, 247, 0.18), transparent 58%),
+        radial-gradient(circle at 50% 110%, rgba(255,255,255,0.10), transparent 62%);
+      opacity: 0.95;
+      filter: blur(12px);
+      z-index: 0;
     }
 
     .hero-heading {
       text-align: center;
       max-width: 920px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-kicker {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.55rem;
       font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent-strong);
-      font-weight: 700;
-      margin-bottom: 1.2rem;
+      letter-spacing: 0.16em;
+      color: rgba(226, 232, 240, 0.92);
+      font-weight: 850;
+      margin-bottom: 1.25rem;
       font-family: var(--font-body);
     }
 
     .hero-kicker span.label {
-      padding: 0.18rem 0.7rem;
-      border-radius: 8px;
-      border: 1px solid rgba(129, 140, 248, 0.22);
-      background: var(--accent-soft2);
-      color: var(--accent-strong);
-      font-weight: 800;
+      padding: 0.18rem 0.72rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.09);
+      color: #ffffff;
+      font-weight: 900;
       letter-spacing: 0.14em;
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 5vw, 3.4rem);
-      line-height: 1.12;
-      font-weight: 700;
-      margin: 0 auto 1.2rem;
+      font-size: clamp(2.6rem, 5vw, 3.65rem);
+      line-height: 1.08;
+      font-weight: 720;
+      margin: 0 auto 1.1rem;
       max-width: 56rem;
-      color: var(--text-strong);
+      color: #ffffff;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      letter-spacing: -0.02em;
     }
 
     .hero-subtitle {
-      font-size: 1.22rem;
+      font-size: 1.16rem;
       max-width: 42rem;
-      color: var(--text-muted);
       margin: 0 auto;
-      line-height: 1.6;
+      line-height: 1.7;
       font-family: var(--font-body);
+      color: rgba(226, 232, 240, 0.92);
+    }
+
+    /* softer divider under hero content */
+    .hero-heading::after {
+      content: "";
+      display: block;
+      width: min(540px, 88%);
+      height: 1px;
+      margin: 2.25rem auto 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.18),
+        rgba(168, 85, 247, 0.28),
+        rgba(129, 140, 248, 0.24),
+        rgba(255,255,255,0.14),
+        transparent
+      );
+      opacity: 0.95;
+      border-radius: 999px;
     }
 
     /* STEM Thought band */
     .stem-thought-band { padding: 0 0 2.6rem; }
 
     .stem-thought {
-      max-width: 900px;
-      margin: 0 auto;
-      background: var(--accent-soft2);
-      border: 1px solid rgba(129, 140, 248, 0.18);
-      border-left: 4px solid var(--accent);
+      max-width: 920px;
+      margin: -1.25rem auto 0; /* ✅ slight overlap into hero for cohesion */
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.98));
+      border: 1px solid rgba(0, 37, 93, 0.12);
+      border-left: 4px solid var(--navy);
       border-radius: 16px;
       padding: 1.25rem 1.4rem;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
     }
 
     .stem-thought-label {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--accent);
-      font-weight: 800;
+      color: var(--navy);
+      font-weight: 900;
       margin-bottom: 0.45rem;
       font-family: var(--font-body);
     }
@@ -293,7 +350,7 @@
     .stem-thought-text {
       font-size: 1.18rem;
       color: var(--text-strong);
-      font-weight: 600;
+      font-weight: 650;
       line-height: 1.45;
       font-family: var(--font-heading);
     }
@@ -313,13 +370,14 @@
       color: var(--text-subtle);
       margin-bottom: 0.4rem;
       font-family: var(--font-body);
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .section-title {
-      font-size: 2.05rem;
-      font-weight: 700;
+      font-size: 2.08rem;
+      font-weight: 720;
       margin-bottom: 0.45rem;
+      letter-spacing: -0.01em;
     }
 
     .section-subtitle {
@@ -328,6 +386,7 @@
       max-width: 34rem;
       margin: 0 auto;
       font-family: var(--font-body);
+      line-height: 1.7;
     }
 
     /* How it works */
@@ -347,11 +406,18 @@
       font-size: 0.92rem;
       position: relative;
       min-height: 150px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .step-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 37, 93, 0.16);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
     }
 
     .step-card .step-label {
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 650;
       color: var(--text-subtle);
       margin-bottom: 0.3rem;
       font-family: var(--font-body);
@@ -359,7 +425,7 @@
 
     .step-card h3 {
       font-size: 1.35rem;
-      font-weight: 700;
+      font-weight: 720;
       margin-bottom: 0.35rem;
     }
 
@@ -376,8 +442,8 @@
       top: 0.7rem;
       right: 0.75rem;
       font-size: 0.82rem;
-      font-weight: 600;
-      padding: 0.1rem 0.6rem;
+      font-weight: 700;
+      padding: 0.12rem 0.62rem;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(209, 213, 219, 0.9);
       background: #eef2ff;
@@ -394,7 +460,7 @@
     .steps-note {
       font-size: 0.82rem;
       color: var(--text-subtle);
-      margin-top: 0.9rem;
+      margin-top: 0.95rem;
       text-align: center;
       font-family: var(--font-body);
     }
@@ -418,11 +484,18 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 0.4rem;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .subject-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(126, 34, 206, 0.18);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
     }
 
     .subject-title {
       font-size: 1.35rem;
-      font-weight: 700;
+      font-weight: 720;
       margin-bottom: 0.25rem;
     }
 
@@ -431,6 +504,7 @@
       color: var(--text-subtle);
       margin-bottom: 0.6rem;
       font-family: var(--font-body);
+      line-height: 1.6;
     }
 
     .subject-list {
@@ -452,19 +526,20 @@
       gap: 0.5rem;
     }
 
+    /* ✅ Subject CTA stays purple (spark) with more polish */
     .btn-subject-primary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.45rem 0.9rem;
+      padding: 0.48rem 0.95rem;
       border-radius: var(--radius-pill);
       font-size: 0.86rem;
-      font-weight: 600;
+      font-weight: 700;
       border: none;
       cursor: pointer;
       background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
       color: #f9fafb;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      box-shadow: 0 12px 26px rgba(79, 70, 229, 0.22);
       transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
       white-space: nowrap;
       font-family: var(--font-body);
@@ -472,8 +547,8 @@
 
     .btn-subject-primary:hover {
       transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+      filter: brightness(1.04);
+      box-shadow: 0 16px 34px rgba(79, 70, 229, 0.28);
     }
 
     /* Why section */
@@ -492,11 +567,18 @@
       padding: 1rem 1.05rem;
       font-size: 0.92rem;
       min-height: 150px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .why-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 37, 93, 0.14);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
     }
 
     .why-card h3 {
       font-size: 1.35rem;
-      font-weight: 700;
+      font-weight: 720;
       margin-bottom: 0.4rem;
     }
 
@@ -504,9 +586,10 @@
       color: var(--text-muted);
       font-size: 1rem;
       font-family: var(--font-body);
+      line-height: 1.75;
     }
 
-    /* ✅ Dark Access Band */
+    /* Dark Access Band */
     .access-band {
       background: #0f172a;
       color: #f8fafc;
@@ -543,7 +626,7 @@
       font-size: 2.1rem;
       margin-bottom: 0.65rem;
       color: #ffffff;
-      font-weight: 700;
+      font-weight: 720;
       font-family: var(--font-heading);
       line-height: 1.15;
     }
@@ -551,7 +634,7 @@
     .access-lede {
       color: #cbd5e1;
       font-size: 1.08rem;
-      line-height: 1.65;
+      line-height: 1.7;
       max-width: 42rem;
       font-family: var(--font-body);
     }
@@ -569,7 +652,7 @@
     .chip {
       display: inline-flex;
       align-items: center;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -592,7 +675,7 @@
     .btn-primary.large {
       padding: 0.95rem 1.35rem;
       font-size: 0.95rem;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .btn-pill.dark-outline {
@@ -600,7 +683,7 @@
       color: #ffffff;
       border-color: rgba(148, 163, 184, 0.55);
       padding: 0.95rem 1.2rem;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .btn-pill.dark-outline:hover {
@@ -642,6 +725,7 @@
     @media (max-width: 900px) {
       .access-inner { grid-template-columns: minmax(0, 1fr); }
       .access-ctas { justify-content: flex-start; }
+      .stem-thought { margin-top: -1rem; }
     }
 
     @media (max-width: 800px) {
@@ -649,11 +733,14 @@
       .why-grid { grid-template-columns: minmax(0, 1fr); }
       .steps-grid { grid-template-columns: minmax(0, 1fr); }
       .nav-links { display: none; }
+      .hero { padding: 4.6rem 0 3.3rem; }
     }
 
     @media (max-width: 520px) {
-      .hero-title { font-size: 2.2rem; }
+      .hero-title { font-size: 2.15rem; }
+      .hero-subtitle { font-size: 1.05rem; }
       .access-band { padding: 2rem 1.35rem; border-radius: 26px; }
+      .stem-thought { padding: 1.1rem 1.1rem; }
     }
   </style>
 </head>
@@ -892,7 +979,7 @@
       </div>
     </section>
 
-    <!-- ✅ Access band (auth-aware + continue learning) -->
+    <!-- Access band -->
     <section id="access">
       <div class="container">
         <div class="access-band">
@@ -910,7 +997,6 @@
             </div>
 
             <div class="access-ctas">
-              <!-- Logged OUT -->
               <a id="access-register-btn" href="/auth.html?mode=signup" class="btn-primary large">
                 Create Free Account
               </a>
@@ -918,7 +1004,6 @@
                 View Full Access Tiers
               </a>
 
-              <!-- Logged IN (dynamic) -->
               <a id="access-continue-btn" href="/physics/physics.html" class="btn-primary large" style="display:none;">
                 Continue Learning
               </a>
@@ -958,7 +1043,6 @@
    * Recommended: include this snippet on OTHER pages too (physics hub, topics, nano-lessons):
    *   window.PS_markLastLearningPage();
    */
-
   window.PS_markLastLearningPage = function () {
     try {
       const path = window.location.pathname || '';
@@ -966,19 +1050,15 @@
       const isAuth = path.endsWith('/auth.html');
       const isPricing = path.endsWith('/pricing.html');
 
-      // Only record "learning" pages (skip index/auth/pricing)
       if (isIndex || isAuth || isPricing) return;
 
-      // Use a friendly label if you have <title>, otherwise fallback to path.
       const title = (document.title || '').replace(/\s+–\s+PromptSchola.*$/i, '').trim();
       const label = title || 'Continue Learning';
 
       localStorage.setItem('ps_last_page_path', path);
       localStorage.setItem('ps_last_page_label', label);
       localStorage.setItem('ps_last_seen_ts', String(Date.now()));
-    } catch (e) {
-      // no-op
-    }
+    } catch (e) {}
   };
 
   function PS_getContinueTarget() {
@@ -986,7 +1066,6 @@
       const path = localStorage.getItem('ps_last_page_path');
       const label = localStorage.getItem('ps_last_page_label');
 
-      // Basic safety: only allow internal paths.
       const safePath = (path && path.startsWith('/')) ? path : null;
 
       return {
@@ -1007,7 +1086,6 @@
     const loginBtn = document.getElementById('nav-login-btn');
     const registerBtn = document.getElementById('nav-register-btn');
 
-    // Access band buttons
     const accessRegisterBtn = document.getElementById('access-register-btn');
     const accessPricingBtn = document.getElementById('access-pricing-btn');
     const accessContinueBtn = document.getElementById('access-continue-btn');
@@ -1016,30 +1094,23 @@
       const user = await getCurrentUser();
 
       if (user) {
-        // Nav
         if (signoutBtn) signoutBtn.style.display = 'inline-flex';
         if (loginBtn) loginBtn.style.display = 'none';
         if (registerBtn) registerBtn.style.display = 'none';
 
-        // Access band (logged in)
         if (accessRegisterBtn) accessRegisterBtn.style.display = 'none';
         if (accessPricingBtn) accessPricingBtn.style.display = 'none';
         if (accessContinueBtn) {
           const target = PS_getContinueTarget();
           accessContinueBtn.href = target.href;
-
-          // If we have a specific lesson/page label, show it as a "resume" style text.
-          // Example: "Continue: Constant Acceleration"
           accessContinueBtn.textContent = target.label ? `Continue: ${target.label}` : 'Continue Learning';
           accessContinueBtn.style.display = 'inline-flex';
         }
       } else {
-        // Nav
         if (signoutBtn) signoutBtn.style.display = 'none';
         if (loginBtn) loginBtn.style.display = 'inline-flex';
         if (registerBtn) registerBtn.style.display = 'inline-flex';
 
-        // Access band (logged out)
         if (accessRegisterBtn) accessRegisterBtn.style.display = 'inline-flex';
         if (accessPricingBtn) accessPricingBtn.style.display = 'inline-flex';
         if (accessContinueBtn) accessContinueBtn.style.display = 'none';
