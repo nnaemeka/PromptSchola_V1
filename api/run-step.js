@@ -251,6 +251,156 @@ async function enforceAndIncrementFreeUsage(sb, userId) {
 }
 
 // ---------------------------------------------------------------------
+// ✅ Rollup analytics helpers (Option 2: no raw events)
+// Fail-open: never block the request if analytics write fails.
+// ---------------------------------------------------------------------
+
+function normalizeNanoSlug(s) {
+  const v = String(s || '').trim();
+  // keep it conservative; empty => null (skip nano table)
+  return v ? v : null;
+}
+
+async function ensureRowExists(sb, table, row, onConflict) {
+  const { error } = await sb.from(table).upsert(row, { onConflict });
+  if (error) throw error;
+}
+
+async function incrementRow(sb, table, whereEq, increments, selectCols) {
+  // Ensure base row exists first (upsert w/ keys already done by caller)
+  const { data, error: selErr } = await sb
+    .from(table)
+    .select(selectCols)
+    .match(whereEq)
+    .maybeSingle();
+
+  if (selErr) throw selErr;
+
+  const next = {};
+  for (const [k, delta] of Object.entries(increments)) {
+    const cur = Number(data?.[k] ?? 0);
+    next[k] = cur + Number(delta);
+  }
+
+  const { error: upErr } = await sb.from(table).update(next).match(whereEq);
+  if (upErr) throw upErr;
+}
+
+async function incrementDailyMetrics(sb, dateNY, increments) {
+  if (!dateNY) return;
+
+  // Create row if missing
+  await ensureRowExists(sb, 'daily_metrics', { date: dateNY }, 'date');
+
+  const cols = Object.keys(increments).join(',');
+  if (!cols) return;
+
+  await incrementRow(sb, 'daily_metrics', { date: dateNY }, increments, cols);
+}
+
+async function incrementDailyNanoMetrics(sb, dateNY, nanoSlug, increments, stepNumForStepRuns) {
+  if (!dateNY || !nanoSlug) return;
+
+  // Create row if missing
+  await ensureRowExists(
+    sb,
+    'daily_nano_metrics',
+    { date: dateNY, nano_slug: nanoSlug },
+    'date,nano_slug'
+  );
+
+  // We may need step_runs too
+  const needStepRuns = Number.isFinite(stepNumForStepRuns);
+  const baseCols = Object.keys(increments);
+  const cols = needStepRuns ? [...new Set([...baseCols, 'step_runs'])] : baseCols;
+  const selectCols = cols.join(',');
+  if (!selectCols) {
+    if (!needStepRuns) return;
+  }
+
+  const { data, error: selErr } = await sb
+    .from('daily_nano_metrics')
+    .select(selectCols || 'step_runs')
+    .eq('date', dateNY)
+    .eq('nano_slug', nanoSlug)
+    .maybeSingle();
+
+  if (selErr) throw selErr;
+
+  const next = {};
+
+  // Apply numeric increments
+  for (const [k, delta] of Object.entries(increments)) {
+    const cur = Number(data?.[k] ?? 0);
+    next[k] = cur + Number(delta);
+  }
+
+  // Update step_runs map
+  if (needStepRuns) {
+    const sr = (data?.step_runs && typeof data.step_runs === 'object') ? { ...data.step_runs } : {};
+    const key = String(stepNumForStepRuns);
+    const cur = Number(sr[key] ?? 0);
+    sr[key] = cur + 1;
+    next.step_runs = sr;
+  }
+
+  const { error: upErr } = await sb
+    .from('daily_nano_metrics')
+    .update(next)
+    .eq('date', dateNY)
+    .eq('nano_slug', nanoSlug);
+
+  if (upErr) throw upErr;
+}
+
+async function safeTrackRollup(sb, { event, dateNY, nanoSlug, stepNum, isPaid }) {
+  try {
+    // daily_metrics increments (always)
+    if (event === 'BLOCK_STEP_GATE_FREE') {
+      await incrementDailyMetrics(sb, dateNY, { step_blocked_free: 1 });
+      await incrementDailyNanoMetrics(
+        sb,
+        dateNY,
+        nanoSlug,
+        { blocked_total: 1, blocked_step_gate: 1 },
+        null
+      );
+      return;
+    }
+
+    if (event === 'BLOCK_DAILY_LIMIT') {
+      await incrementDailyMetrics(sb, dateNY, { daily_limit_blocked: 1 });
+      await incrementDailyNanoMetrics(
+        sb,
+        dateNY,
+        nanoSlug,
+        { blocked_total: 1, blocked_daily_limit: 1 },
+        null
+      );
+      return;
+    }
+
+    if (event === 'AI_RUN_ATTEMPT') {
+      // Count attempts when we're about to call the AI (after gating + metering passed)
+      await incrementDailyMetrics(sb, dateNY, isPaid ? { ai_runs_paid: 1 } : { ai_runs_free: 1 });
+      await incrementDailyNanoMetrics(
+        sb,
+        dateNY,
+        nanoSlug,
+        {
+          ai_runs_total: 1,
+          ...(isPaid ? { ai_runs_paid: 1 } : { ai_runs_free: 1 })
+        },
+        stepNum
+      );
+      return;
+    }
+  } catch (e) {
+    console.warn('[analytics] rollup write warning (fail-open):', e?.message || e);
+  }
+}
+
+// ---------------------------------------------------------------------
 // Handler
 // ---------------------------------------------------------------------
 
@@ -262,6 +412,9 @@ export default async function handler(req, res) {
   try {
     const { prompt, step, mode } = req.body || {};
     const reqMode = normalizeMode(mode);
+
+    // OPTIONAL (for rollups): pass nano_slug from client to attribute per-nano metrics.
+    const nanoSlug = normalizeNanoSlug(req.body?.nano_slug || req.body?.nanoSlug || null);
 
     // ---- Validate inputs ----
     if (!prompt || typeof prompt !== 'string') {
@@ -353,11 +506,21 @@ export default async function handler(req, res) {
     }
 
     const isPaid = tier === 'paid';
+    const dateNY = getNYDateString(new Date());
 
     // ---- Access rule enforcement ----
     // signed-in free users: Run with AI only for steps 1–2
     // paid users: Run with AI for steps 1–6
     if (!isPaid && stepNum > 2) {
+      // ✅ Rollup analytics (fail-open): step gate friction
+      await safeTrackRollup(supabaseAdmin, {
+        event: 'BLOCK_STEP_GATE_FREE',
+        dateNY,
+        nanoSlug,
+        stepNum,
+        isPaid
+      });
+
       return jsonError(res, 402, 'PAYWALL', 'This step requires Mastery (paid) access.', {
         required: 'paid',
         current: tier,
@@ -375,6 +538,15 @@ export default async function handler(req, res) {
       usageMeta = usage;
 
       if (!usage.ok) {
+        // ✅ Rollup analytics (fail-open): daily limit friction
+        await safeTrackRollup(supabaseAdmin, {
+          event: 'BLOCK_DAILY_LIMIT',
+          dateNY,
+          nanoSlug,
+          stepNum,
+          isPaid
+        });
+
         return jsonError(
           res,
           402,
@@ -391,6 +563,15 @@ export default async function handler(req, res) {
         );
       }
     }
+
+    // ✅ Rollup analytics (fail-open): record an AI run attempt (after all gating passed)
+    await safeTrackRollup(supabaseAdmin, {
+      event: 'AI_RUN_ATTEMPT',
+      dateNY,
+      nanoSlug,
+      stepNum,
+      isPaid
+    });
 
     // ---- Call DeepSeek chat completions ----
     const dsRes = await fetch('https://api.deepseek.com/chat/completions', {
