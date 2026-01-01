@@ -372,6 +372,21 @@
       padding: 1rem 1.15rem 1.05rem;
     }
 
+    /* =========================================================
+       NEW: Lesson progress styling
+       ========================================================= */
+    .step-card.is-completed {
+      border-left-color: rgba(16, 185, 129, 0.9);
+    }
+    .step-card.is-completed .step-index {
+      background: #dcfce7;
+      color: #065f46;
+    }
+    .step-card.is-current {
+      outline: 2px solid rgba(99, 102, 241, 0.32);
+      outline-offset: 2px;
+    }
+
     .step-header {
       display: flex;
       justify-content: space-between;
@@ -906,6 +921,17 @@
             <div class="access-chips">
               <span class="chip free">Steps 1–3 Free</span>
               <span class="chip mastery">Steps 4–6 Paid</span>
+
+              <!-- NEW: progress -->
+              <span class="chip" id="ps-progress-chip"
+                    style="background: rgba(255,255,255,0.12); border: 1px solid rgba(148,163,184,0.32); color:#ffffff;">
+                Progress: —
+              </span>
+
+              <button id="ps-resume-btn" type="button" class="btn-pill"
+                      style="background: rgba(255,255,255,0.10); border-color: rgba(148,163,184,0.32); color:#ffffff;">
+                Resume
+              </button>
             </div>
           </div>
         </div>
@@ -1340,6 +1366,7 @@
 /* ============================================================
    Refactor: shorter JS, SAME behavior + gating (locked design)
    + UPDATED: ANON ANALYTICS via /api/track (strict allowlist)
+   + NEW: lesson_progress UI (Progress chip + Resume)
    ============================================================ */
 
 /* Continue Learning marker */
@@ -1402,6 +1429,158 @@ async function PS_trackAnon(event) {
       body: JSON.stringify(body)
     }).catch(()=>{});
   } catch(e) {}
+}
+
+/* ============================================================
+   NEW: Lesson progress wiring (public.lesson_progress)
+   - Works even before you update auth.js (page has fallback)
+   - Requires RLS SELECT own row on lesson_progress for browser read
+   ============================================================ */
+let PS_PROGRESS = null;
+
+const PS_PROGRESS_CACHE_PREFIX = 'ps_lp_v1:';       // per nano
+const PS_PROGRESS_CACHE_TTL_MS = 60 * 1000;         // 60s (lightweight)
+
+function PS_lpCacheKey(nanoSlug){ return PS_PROGRESS_CACHE_PREFIX + String(nanoSlug || '').trim(); }
+
+function PS_readProgressCache(nanoSlug){
+  try{
+    const txt = localStorage.getItem(PS_lpCacheKey(nanoSlug));
+    if (!txt) return null;
+    const obj = JSON.parse(txt);
+    if (!obj || typeof obj.ts !== 'number') return null;
+    if (Date.now() - obj.ts > PS_PROGRESS_CACHE_TTL_MS) return null;
+    return obj.data || null;
+  } catch { return null; }
+}
+
+function PS_writeProgressCache(nanoSlug, data){
+  try{
+    localStorage.setItem(PS_lpCacheKey(nanoSlug), JSON.stringify({ ts: Date.now(), data: data || null }));
+  } catch {}
+}
+
+function PS_clearProgressCache(nanoSlug){
+  try{ localStorage.removeItem(PS_lpCacheKey(nanoSlug)); } catch {}
+}
+
+/* If auth.js later defines PS_getLessonProgress, we’ll use it. Otherwise fallback here. */
+async function PS_getLessonProgressFallback(nanoSlug, opts = {}){
+  const { forceRefresh = false } = opts;
+
+  if (!PS_CTX.loggedIn) return null;
+  const slug = String(nanoSlug || '').trim();
+  if (!slug) return null;
+
+  if (!forceRefresh) {
+    const cached = PS_readProgressCache(slug);
+    if (cached) return cached;
+  }
+
+  // Need supabaseClient from auth.js
+  if (!window.supabaseClient) return null;
+
+  try{
+    const { data, error } = await window.supabaseClient
+      .from('lesson_progress')
+      .select('nano_slug,max_step_completed,ai_runs_count,last_ai_run_step,updated_at')
+      .eq('nano_slug', slug)
+      .maybeSingle();
+
+    if (error) {
+      console.warn('lesson_progress select error:', error);
+      return null;
+    }
+
+    const row = data || {
+      nano_slug: slug,
+      max_step_completed: 0,
+      ai_runs_count: 0,
+      last_ai_run_step: null,
+      updated_at: null
+    };
+
+    PS_writeProgressCache(slug, row);
+    return row;
+  } catch(e){
+    console.warn('lesson_progress exception:', e);
+    return null;
+  }
+}
+
+function PS_scrollToStep(step) {
+  const card = document.querySelector(`.step-card[data-step="${step}"]`);
+  if (!card) return;
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  card.classList.add('is-current');
+  setTimeout(() => card.classList.remove('is-current'), 1800);
+}
+
+function PS_applyProgressToCards(progress) {
+  const max = Number(progress?.max_step_completed ?? 0);
+  document.querySelectorAll('.step-card[data-step]').forEach(card => {
+    const s = Number(card.getAttribute('data-step') || 0);
+    card.classList.toggle('is-completed', s > 0 && s <= max);
+  });
+}
+
+function PS_updateProgressChip(progress) {
+  const chip = document.getElementById('ps-progress-chip');
+  if (!chip) return;
+
+  if (!PS_CTX.loggedIn) {
+    chip.textContent = 'Progress: sign in to track';
+    return;
+  }
+
+  const max = Number(progress?.max_step_completed ?? 0);
+  chip.textContent = max > 0 ? `Progress: Step ${max}/6` : 'Progress: not started';
+}
+
+function PS_wireResumeButton(progress) {
+  const btn = document.getElementById('ps-resume-btn');
+  if (!btn) return;
+
+  if (!PS_CTX.loggedIn) {
+    btn.onclick = () => {
+      PS_trackAnon('RUN_AI_CLICK_ANON');
+      redirectToSignupForRunAI();
+    };
+    return;
+  }
+
+  const max = Number(progress?.max_step_completed ?? 0);
+  const next = Math.min(Math.max(max + 1, 1), 6);
+  btn.onclick = () => PS_scrollToStep(next);
+}
+
+async function PS_refreshProgress(forceRefresh = false) {
+  try {
+    if (!PS_CTX.loggedIn) {
+      PS_updateProgressChip(null);
+      PS_wireResumeButton(null);
+      return null;
+    }
+
+    // Prefer auth.js helper if you later add it; fallback otherwise.
+    let p = null;
+    if (typeof window.PS_getLessonProgress === 'function') {
+      p = await window.PS_getLessonProgress(NANO_SLUG, { forceRefresh });
+    } else {
+      if (forceRefresh) PS_clearProgressCache(NANO_SLUG);
+      p = await PS_getLessonProgressFallback(NANO_SLUG, { forceRefresh });
+    }
+
+    PS_PROGRESS = p;
+    PS_updateProgressChip(p);
+    PS_applyProgressToCards(p);
+    PS_wireResumeButton(p);
+
+    return p;
+  } catch (e) {
+    console.warn('PS_refreshProgress error:', e);
+    return null;
+  }
 }
 
 function loadCollapse(){
@@ -1639,6 +1818,9 @@ async function runWithAI(step){
 
     const copyBtn = $(`copy-answer-${step}`);
     if (copyBtn) copyBtn.style.display = 'inline-flex';
+
+    // NEW: refresh progress after AI run (assumes backend updated lesson_progress)
+    await PS_refreshProgress(true);
   } catch(err){
     console.error(err);
     output.textContent = 'Unexpected error. Please try again.';
@@ -1792,6 +1974,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (loggedIn && tier === 'anon') tier = 'free';
 
   configureUI({ loggedIn, tier });
+
+  // NEW: progress load (safe for anon too; will show “sign in to track”)
+  await PS_refreshProgress(false);
 
   // ✅ allowlisted
   PS_trackAnon('PAGE_VIEW');
