@@ -1405,6 +1405,7 @@ const prompts = {
 };
 
 const STORAGE_KEY = 'ps_nano_constant_acceleration_collapse';
+const NANO_SLUG = 'constant-acceleration'; /* ✅ NEW: per-nano tracking slug */
 const lastAiResponses = {};
 let collapseState = {};
 
@@ -1604,7 +1605,8 @@ async function runWithAI(step){
     const res = await fetch('/api/run-step', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-      body: JSON.stringify({ prompt, step })
+      /* ✅ UPDATED: include nano_slug + mode for metering/logging */
+      body: JSON.stringify({ prompt, step, nano_slug: NANO_SLUG, mode: 'nano' })
     });
 
     const data = await res.json().catch(()=> ({}));
