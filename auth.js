@@ -160,11 +160,170 @@ async function PS_getUserTier(opts = {}) {
 }
 
 // ---------------------------------------------------------------------
+// ✅ Lesson progress (client-side read helpers)
+// NOTE: For browser reads to work, you need an RLS SELECT policy like:
+//   USING (auth.uid() = user_id)
+// on public.lesson_progress.
+// ---------------------------------------------------------------------
+const PS_PROGRESS_CACHE_PREFIX = "ps_lesson_progress_v1:";
+const PS_PROGRESS_CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes
+
+function PS_progressCacheKey(userId, nanoSlug) {
+  return `${PS_PROGRESS_CACHE_PREFIX}${userId}:${String(nanoSlug || "").trim()}`;
+}
+
+function PS_readProgressCache(userId, nanoSlug) {
+  try {
+    const key = PS_progressCacheKey(userId, nanoSlug);
+    const txt = localStorage.getItem(key);
+    if (!txt) return null;
+    const obj = JSON.parse(txt);
+    if (!obj || !obj.ts) return null;
+    if (Date.now() - obj.ts > PS_PROGRESS_CACHE_TTL_MS) return null;
+    return obj.data || null;
+  } catch {
+    return null;
+  }
+}
+
+function PS_writeProgressCache(userId, nanoSlug, data) {
+  try {
+    const key = PS_progressCacheKey(userId, nanoSlug);
+    localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+  } catch {}
+}
+
+function PS_clearProgressCache() {
+  try {
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(PS_PROGRESS_CACHE_PREFIX)) keys.push(k);
+    }
+    keys.forEach(k => localStorage.removeItem(k));
+  } catch {}
+}
+
+function PS_normalizeProgressRow(row) {
+  if (!row) return null;
+  return {
+    nano_slug: row.nano_slug,
+    max_step_completed: Number(row.max_step_completed ?? 0),
+    ai_runs_count: Number(row.ai_runs_count ?? 0),
+    last_ai_run_step: row.last_ai_run_step == null ? null : Number(row.last_ai_run_step),
+    updated_at: row.updated_at || null
+  };
+}
+
+// ✅ Read ONE nano progress
+async function PS_getLessonProgress(nanoSlug, opts = {}) {
+  const { forceRefresh = false } = opts;
+
+  const slug = String(nanoSlug || "").trim();
+  if (!slug) return null;
+
+  const user = await getCurrentUser();
+  if (!user) return null;
+
+  if (!forceRefresh) {
+    const cached = PS_readProgressCache(user.id, slug);
+    if (cached) return cached;
+  }
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("lesson_progress")
+      .select("nano_slug,max_step_completed,ai_runs_count,last_ai_run_step,updated_at")
+      .eq("user_id", user.id)
+      .eq("nano_slug", slug)
+      .maybeSingle();
+
+    if (error) {
+      console.warn("PS_getLessonProgress error:", error);
+      return null;
+    }
+
+    const norm = PS_normalizeProgressRow(data);
+    PS_writeProgressCache(user.id, slug, norm);
+    return norm;
+  } catch (e) {
+    console.warn("PS_getLessonProgress exception:", e);
+    return null;
+  }
+}
+
+// ✅ Read MANY nano progress rows in one call (recommended for hubs/track pages)
+async function PS_getLessonProgressBatch(nanoSlugs = [], opts = {}) {
+  const { forceRefresh = false } = opts;
+
+  const user = await getCurrentUser();
+  if (!user) return {};
+
+  const slugs = Array.from(
+    new Set(
+      (nanoSlugs || [])
+        .map(s => String(s || "").trim())
+        .filter(Boolean)
+    )
+  );
+
+  if (!slugs.length) return {};
+
+  // If not forcing refresh, return cached rows where possible (but still fetch missing)
+  const out = {};
+  const missing = [];
+
+  if (!forceRefresh) {
+    for (const s of slugs) {
+      const cached = PS_readProgressCache(user.id, s);
+      if (cached) out[s] = cached;
+      else missing.push(s);
+    }
+  } else {
+    missing.push(...slugs);
+  }
+
+  if (!missing.length) return out;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("lesson_progress")
+      .select("nano_slug,max_step_completed,ai_runs_count,last_ai_run_step,updated_at")
+      .eq("user_id", user.id)
+      .in("nano_slug", missing);
+
+    if (error) {
+      console.warn("PS_getLessonProgressBatch error:", error);
+      return out;
+    }
+
+    (data || []).forEach(row => {
+      const norm = PS_normalizeProgressRow(row);
+      if (norm?.nano_slug) {
+        out[norm.nano_slug] = norm;
+        PS_writeProgressCache(user.id, norm.nano_slug, norm);
+      }
+    });
+
+    // Ensure every requested slug has an entry in the output (null if absent)
+    for (const s of missing) {
+      if (!(s in out)) out[s] = null;
+    }
+
+    return out;
+  } catch (e) {
+    console.warn("PS_getLessonProgressBatch exception:", e);
+    return out;
+  }
+}
+
+// ---------------------------------------------------------------------
 // 5) Sign-out: clear Supabase session and go back to homepage
 async function signOutUser() {
   try {
     await supabaseClient.auth.signOut();
     PS_clearTierCache();
+    PS_clearProgressCache();
 
     if (typeof logEvent === "function") {
       try { await logEvent("sign_out", {}); } catch (e) {}
@@ -202,9 +361,10 @@ async function updateNavUserDisplay() {
 
 document.addEventListener("DOMContentLoaded", updateNavUserDisplay);
 
-// Clear tier cache when auth state changes (prevents "stuck free")
+// Clear caches when auth state changes (prevents "stuck free" + stale progress)
 supabaseClient.auth.onAuthStateChange((_event, _session) => {
   PS_clearTierCache();
+  PS_clearProgressCache();
 });
 
 // ---------------------------------------------------------------------
@@ -236,3 +396,8 @@ window.signOutUser = signOutUser;
 window.PS_getAccessToken = PS_getAccessToken;
 window.PS_getUserTier = PS_getUserTier;
 window.PS_clearTierCache = PS_clearTierCache;
+
+// ✅ NEW exports
+window.PS_getLessonProgress = PS_getLessonProgress;
+window.PS_getLessonProgressBatch = PS_getLessonProgressBatch;
+window.PS_clearProgressCache = PS_clearProgressCache;
