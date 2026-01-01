@@ -234,7 +234,6 @@
       font-family: var(--font-body);
     }
 
-    /* Keep the label strong + branded */
     .hero-kicker span.label {
       padding: 0.18rem 0.7rem;
       border-radius: 8px;
@@ -246,7 +245,6 @@
       letter-spacing: 0.14em;
     }
 
-    /* Make the trail muted + readable (consistent with Help breadcrumb tone) */
     .hero-kicker span:not(.label) {
       color: var(--text-subtle);
       font-weight: 700;
@@ -484,7 +482,6 @@
     .ai-response strong { font-weight: 800; color: inherit; }
     .ai-response em { font-style: italic; }
 
-    /* Step 4 answer toggles */
     .ai-response details.answer-toggle {
       margin: 0.55rem 0 0.75rem;
       border: 1px solid rgba(209, 213, 219, 0.85);
@@ -593,7 +590,6 @@
 
     .help-panel-toggle-icon { font-size: 0.95rem; opacity: 0.85; }
 
-    /* Wrap to allow a true lock overlay without breaking layout/JS */
     .help-lock-wrap { position: relative; }
 
     .help-panel-body {
@@ -610,7 +606,6 @@
 
     .help-panel-body p { color: var(--text-muted); line-height: 1.65; }
 
-    /* CTA inside panel (still used for paid messaging if you ever want it) */
     .help-cta {
       margin-top: 0.65rem;
       padding: 0.7rem 0.75rem;
@@ -621,34 +616,6 @@
       box-shadow: 0 16px 35px rgba(15, 23, 42, 0.18);
       display: none;
     }
-    .help-cta .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 900;
-      color: #c7d2fe;
-      margin-bottom: 0.35rem;
-      font-family: var(--font-body);
-    }
-    .help-cta .title {
-      font-family: var(--font-heading);
-      font-size: 1.02rem;
-      line-height: 1.2;
-      margin-bottom: 0.25rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .help-cta .desc {
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      line-height: 1.55;
-      margin-bottom: 0.65rem;
-      font-family: var(--font-body);
-    }
-    .help-cta .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
 
     .help-category {
       padding-top: 0.65rem;
@@ -672,7 +639,6 @@
 
     .help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
 
-    /* ▶ Bullet (consistent sizing across browsers) */
     .help-prompts-bulleted{
       list-style: none;
       padding-left: 1.2rem;
@@ -726,7 +692,7 @@
     @media (max-width: 860px) { .nav-links { display: none; } }
 
     /* =========================================================
-       NEW: HARD LOCK FOR HELP PANEL (anon + free)
+       HARD LOCK FOR HELP PANEL (anon + free)
        ========================================================= */
     .help-lock-disabled {
       pointer-events: none;
@@ -785,14 +751,28 @@
     }
     .teaser-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
 
-    /* When locked, also disable the toggle button itself (visual + cursor) */
     .help-toggle-disabled {
       opacity: 0.75;
       cursor: not-allowed;
     }
 
     /* =========================================================
-       HELP PANEL THEME — A) Deep Indigo (scoped override)
+       NEW: Click-catcher for locked help (for anon analytics)
+       - sits ABOVE the help toggle + body
+       - only shown when help is locked
+       ========================================================= */
+    .help-locked-clickcatcher{
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      border-radius: 18px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    /* =========================================================
+       HELP PANEL THEME — Deep Indigo (scoped override)
        ========================================================= */
     :root{
       --help-blue: #1e3a8a;
@@ -826,10 +806,6 @@
       color: var(--help-blue-strong);
     }
 
-    .help-prompts-bulleted li::marker{
-      color: var(--help-blue-strong);
-    }
-
     .help-prompt-btn{
       color: var(--help-blue-strong);
     }
@@ -837,10 +813,6 @@
       background: rgba(30, 58, 138, 0.08);
       color: var(--help-blue-ink);
       text-decoration: underline;
-    }
-
-    .help-lock-overlay{
-      border-color: rgba(30, 58, 138, 0.45);
     }
 
     .help-lock-overlay{
@@ -1203,7 +1175,6 @@
                 </div>
 
                 <div class="step-content" id="step-content-6">
-
                   <div class="step-unlocked" id="step-unlocked-6">
                     <div class="step-body">
                       Consolidate the key takeaways, then explore “what if?” scenarios by changing parameters
@@ -1233,7 +1204,6 @@
                     <div class="locked-actions">
                       <a class="btn-primary" href="/pricing.html">Unlock full access</a>
                       <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
-                      <!-- Simulation link (always accessible) -->
                       <a class="btn-pill"
                          href="/physics/simulations/constant-acceleration.html"
                          style="border-color: rgba(129,140,248,0.45); color:#4f46e5; font-weight:700;">
@@ -1251,12 +1221,14 @@
           <aside class="help-panel">
             <div class="help-panel-inner" id="help-panel-inner">
 
+              <!-- ✅ NEW: click-catcher for locked help (analytics for anon; doesn't change lock behavior) -->
+              <div class="help-locked-clickcatcher" id="help-locked-clickcatcher" aria-hidden="true"></div>
+
               <button class="help-panel-toggle" id="help-panel-toggle" type="button">
                 <span class="nano-help-title">Deepen your understanding</span>
                 <span class="help-panel-toggle-icon">▾</span>
               </button>
 
-              <!-- Wrap body + overlay so we can HARD LOCK interactions when not paid -->
               <div class="help-lock-wrap" id="help-lock-wrap">
 
                 <div class="help-panel-body" id="help-panel-body">
@@ -1334,7 +1306,6 @@
 
                 </div>
 
-                <!-- HARD LOCK OVERLAY (shown for anon + free) -->
                 <div class="help-lock-overlay" id="help-lock-overlay" aria-hidden="true">
                   <div class="teaser-card">
                     <div class="teaser-kicker">Mastery feature</div>
@@ -1371,7 +1342,7 @@
 <script>
 /* ============================================================
    Refactor: shorter JS, SAME behavior + gating (locked design)
-   + NEW: DAILY_LIMIT_REACHED UI handling (no layout break)
+   + NEW: ANON ANALYTICS (Step 3) via /api/track-anon (fail-open)
    ============================================================ */
 
 /* Continue Learning marker */
@@ -1405,12 +1376,39 @@ const prompts = {
 };
 
 const STORAGE_KEY = 'ps_nano_constant_acceleration_collapse';
-const NANO_SLUG = 'constant-acceleration'; /* ✅ NEW: per-nano tracking slug */
+const NANO_SLUG = 'constant-acceleration';
+const TRACK_ENDPOINT = '/api/track-anon'; // ✅ NEW
 const lastAiResponses = {};
 let collapseState = {};
 
 const $ = (id) => document.getElementById(id);
 const typeset = (nodes) => window.MathJax?.typesetPromise ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{}) : null;
+
+/* ============================================================
+   ✅ NEW: ANON ANALYTICS (fail-open)
+   - Only sends when current user is anon (not logged in)
+   ============================================================ */
+const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
+
+async function PS_trackAnon(event, payload = {}) {
+  try {
+    if (PS_CTX.loggedIn) return; // anon-only
+    const body = {
+      event,
+      nano_slug: NANO_SLUG,
+      step: payload.step ?? null,
+      path: location.pathname,
+      ref: document.referrer || null,
+      meta: payload.meta || null
+    };
+    // fire-and-forget
+    fetch(TRACK_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).catch(()=>{});
+  } catch(e) {}
+}
 
 function loadCollapse(){
   try { collapseState = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {}; }
@@ -1426,12 +1424,10 @@ function esc(s){
     .replace(/\\\\\[/g,'\\[').replace(/\\\\\]/g,'\\]').replace(/\\\\\(/g,'\\(').replace(/\\\\\)/g,'\\)');
 }
 function inlineFmt(s){
-  // remove headings, normalize bullets, bold/italic
   return s
     .replace(/^#{1,6}\s+(.+)$/gm,'<strong>$1</strong>')
     .replace(/^\s*[-*]\s+/gm,'• ')
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    // lighter italic rule (keeps your prior behavior)
     .replace(/\*(.+?)\*/g,'<em>$1</em>');
 }
 function paras(s){
@@ -1458,7 +1454,6 @@ function formatQuizWithToggles(raw){
     i = b + CLOSE.length;
   }
 
-  // format non-details chunks, keep details blocks intact
   return out.split(/(<details class="answer-toggle">[\s\S]*?<\/details>)/g)
     .map(part => part.startsWith('<details class="answer-toggle">') ? part : formatOutput(part))
     .join('');
@@ -1474,9 +1469,11 @@ function toggleStep(step){
   content.style.display = hidden ? 'block' : 'none';
   btn.textContent = hidden ? '−' : '+';
 
-  // store true when open, false when collapsed (your existing convention)
   collapseState[step] = hidden;
   saveCollapse();
+
+  // ✅ NEW: anon analytics (toggle)
+  PS_trackAnon('STEP_TOGGLE', { step, meta: { open: hidden } });
 }
 
 /* ===== Prompt show/copy ===== */
@@ -1486,6 +1483,9 @@ function showPrompt(step){
   preview.textContent = prompts[step] || 'Prompt coming soon.';
   preview.style.display = 'block';
   typeset([preview]);
+
+  // ✅ NEW: anon analytics
+  PS_trackAnon('PROMPT_SHOW', { step });
 }
 async function copyText(t, okMsg, failMsg){
   if (!t) return alert(failMsg || 'Nothing to copy.');
@@ -1493,11 +1493,21 @@ async function copyText(t, okMsg, failMsg){
   try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
   catch { alert(failMsg || 'Could not copy.'); }
 }
-function copyPrompt(step){ return copyText(prompts[step], 'Prompt copied.', 'No prompt defined for this step yet.'); }
-function copyAnswer(step){ return copyText(lastAiResponses[step], 'Answer copied.', 'No AI answer to copy yet.'); }
+function copyPrompt(step){
+  PS_trackAnon('PROMPT_COPY', { step }); // ✅ NEW
+  return copyText(prompts[step], 'Prompt copied.', 'No prompt defined for this step yet.');
+}
+function copyAnswer(step){
+  // answers are not available for anon (since they can't run AI), but keep safe anyway
+  PS_trackAnon('ANSWER_COPY', { step }); // ✅ NEW
+  return copyText(lastAiResponses[step], 'Answer copied.', 'No AI answer to copy yet.');
+}
 
 /* ===== Run-with-AI gating + API call ===== */
 function redirectToSignupForRunAI(){
+  // ✅ NEW: anon analytics
+  PS_trackAnon('RUN_AI_CLICK', { meta: { action: 'redirect_signup' } });
+
   const redirectTarget = encodeURIComponent(location.href);
   location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
 }
@@ -1517,7 +1527,7 @@ function setRunBtnRunning(step, running){
 }
 
 /* ============================================================
-   NEW: DAILY LIMIT UI (PromptSchola style)
+   DAILY LIMIT UI (PromptSchola style)
    ============================================================ */
 function PS_buildDailyLimitPanel({ limit, used, resetsAt, timezone }) {
   const when = resetsAt ? `Resets ${resetsAt} (${timezone || 'local time'}).` : 'Resets tomorrow.';
@@ -1564,7 +1574,6 @@ function PS_showDailyLimitCTA(step, payload) {
     return;
   }
 
-  // Insert right under the response area (best visibility)
   const resp = document.getElementById(`response-step${step}`);
   if (resp) {
     resp.insertAdjacentHTML('afterend', html);
@@ -1583,7 +1592,6 @@ async function runWithAI(step){
   const preview = $(`preview-step${step}`);
   if (preview) preview.style.display = 'none';
 
-  // Require login for Run-with-AI (server enforces too)
   if (typeof ensureLoggedInOrRedirect === 'function'){
     const user = await ensureLoggedInOrRedirect();
     if (!user) return;
@@ -1605,7 +1613,6 @@ async function runWithAI(step){
     const res = await fetch('/api/run-step', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-      /* ✅ UPDATED: include nano_slug + mode for metering/logging */
       body: JSON.stringify({ prompt, step, nano_slug: NANO_SLUG, mode: 'nano' })
     });
 
@@ -1614,7 +1621,6 @@ async function runWithAI(step){
     if (!res.ok){
       let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
 
-      // ✅ NEW: Daily limit reached (disable buttons + Upgrade CTA)
       if (data?.code === 'DAILY_LIMIT_REACHED') {
         PS_disableRunAIButtons('Daily AI limit reached');
         PS_showDailyLimitCTA(step, {
@@ -1657,6 +1663,14 @@ function configureHelpAccess(isPaid){
   const overlay = $('help-lock-overlay');
   const wrap = $('help-lock-wrap');
   const icon = document.querySelector('.help-panel-toggle-icon');
+  const clickCatcher = $('help-locked-clickcatcher');
+  const inner = $('help-panel-inner');
+
+  if (inner) {
+    // keep absolute overlay positioned correctly
+    inner.style.position = inner.style.position || 'sticky';
+  }
+
   if (!toggleBtn || !body || !overlay || !wrap) return;
 
   if (isPaid){
@@ -1668,6 +1682,11 @@ function configureHelpAccess(isPaid){
     toggleBtn.classList.remove('help-toggle-disabled');
     toggleBtn.setAttribute('aria-disabled','false');
     if (icon) icon.textContent = '▾';
+
+    if (clickCatcher) {
+      clickCatcher.style.display = 'none';
+      clickCatcher.setAttribute('aria-hidden','true');
+    }
   } else {
     wrap.classList.add('help-lock-disabled');
     overlay.style.display = 'flex';
@@ -1679,6 +1698,19 @@ function configureHelpAccess(isPaid){
     if (icon) icon.textContent = '🔒';
 
     body.style.display = 'block';
+
+    // ✅ NEW: click-catcher ON for anon analytics (doesn't enable access)
+    if (clickCatcher) {
+      clickCatcher.style.display = 'block';
+      clickCatcher.setAttribute('aria-hidden','false');
+      clickCatcher.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        PS_trackAnon('HELP_LOCK_CLICK', { meta: { area: 'help_panel' } });
+        // optional: take anon to pricing when they try to access Help
+        location.href = '/pricing.html';
+      };
+    }
   }
 }
 
@@ -1686,6 +1718,11 @@ function configureHelpAccess(isPaid){
 function configureUI({ loggedIn, tier }){
   const isPaid = tier === 'paid';
   const isFreeSignedIn = loggedIn && !isPaid;
+
+  // update analytics context
+  PS_CTX.loggedIn = !!loggedIn;
+  PS_CTX.tier = tier || (loggedIn ? 'free' : 'anon');
+  PS_CTX.isPaid = !!isPaid;
 
   // Lock steps 4–6 content unless paid
   for (let step=1; step<=6; step++){
@@ -1697,7 +1734,6 @@ function configureUI({ loggedIn, tier }){
     locked.style.display = lock ? 'block' : 'none';
   }
 
-  // Help panel gating (HARD lock for anon + free)
   configureHelpAccess(isPaid);
 
   // Steps 1–2: anon redirects, free runs, paid runs
@@ -1706,7 +1742,13 @@ function configureUI({ loggedIn, tier }){
     if (!btn) return;
     btn.style.display = 'inline-flex';
     btn.textContent = 'Run with AI';
-    btn.onclick = () => (!loggedIn ? redirectToSignupForRunAI() : runWithAI(step));
+    btn.onclick = () => {
+      if (!loggedIn) {
+        PS_trackAnon('RUN_AI_CLICK', { step });
+        return redirectToSignupForRunAI();
+      }
+      return runWithAI(step);
+    };
   });
 
   // Step 3: anon redirects, free -> pricing, paid runs
@@ -1716,14 +1758,17 @@ function configureUI({ loggedIn, tier }){
       btn.style.display = 'inline-flex';
       btn.textContent = 'Try with AI';
       btn.onclick = () => {
-        if (!loggedIn) return redirectToSignupForRunAI();
+        if (!loggedIn) {
+          PS_trackAnon('RUN_AI_CLICK', { step: 3 });
+          return redirectToSignupForRunAI();
+        }
         if (isFreeSignedIn) return (location.href = '/pricing.html');
         return runWithAI(3);
       };
     }
   }
 
-  // Steps 4–6: run button hidden unless paid (and step content locked anyway)
+  // Steps 4–6: run button hidden unless paid
   for (let step=4; step<=6; step++){
     const btn = $(`run-btn-${step}`);
     if (!btn) continue;
@@ -1751,7 +1796,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   typeset();
 
-  // Nav display (auth.js)
   if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
   // Determine logged-in + tier
@@ -1765,6 +1809,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (loggedIn && tier === 'anon') tier = 'free';
 
   configureUI({ loggedIn, tier });
+
+  // ✅ NEW: anon page view analytics
+  PS_trackAnon('PAGE_VIEW', { meta: { title: document.title } });
+
+  // ✅ NEW: anon CTA click analytics (pricing/auth) without touching your markup
+  document.addEventListener('click', (ev) => {
+    try {
+      if (PS_CTX.loggedIn) return;
+      const a = ev.target?.closest ? ev.target.closest('a') : null;
+      if (!a) return;
+      const href = (a.getAttribute('href') || '').trim();
+      if (!href) return;
+
+      if (href.includes('/pricing.html')) {
+        PS_trackAnon('CTA_CLICK', { meta: { target: 'pricing', href } });
+      } else if (href.includes('/auth.html')) {
+        PS_trackAnon('CTA_CLICK', { meta: { target: 'auth', href } });
+      }
+    } catch(e){}
+  }, true);
 });
 </script>
 
