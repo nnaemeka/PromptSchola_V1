@@ -758,8 +758,6 @@
 
     /* =========================================================
        NEW: Click-catcher for locked help (for anon analytics)
-       - sits ABOVE the help toggle + body
-       - only shown when help is locked
        ========================================================= */
     .help-locked-clickcatcher{
       position: absolute;
@@ -1221,7 +1219,6 @@
           <aside class="help-panel">
             <div class="help-panel-inner" id="help-panel-inner">
 
-              <!-- ✅ NEW: click-catcher for locked help (analytics for anon; doesn't change lock behavior) -->
               <div class="help-locked-clickcatcher" id="help-locked-clickcatcher" aria-hidden="true"></div>
 
               <button class="help-panel-toggle" id="help-panel-toggle" type="button">
@@ -1342,7 +1339,7 @@
 <script>
 /* ============================================================
    Refactor: shorter JS, SAME behavior + gating (locked design)
-   + NEW: ANON ANALYTICS (Step 3) via /api/track-anon (fail-open)
+   + UPDATED: ANON ANALYTICS via /api/track (strict allowlist)
    ============================================================ */
 
 /* Continue Learning marker */
@@ -1377,7 +1374,7 @@ const prompts = {
 
 const STORAGE_KEY = 'ps_nano_constant_acceleration_collapse';
 const NANO_SLUG = 'constant-acceleration';
-const TRACK_ENDPOINT = '/api/track-anon'; // ✅ NEW
+const TRACK_ENDPOINT = '/api/track'; // ✅ UPDATED (single endpoint)
 const lastAiResponses = {};
 let collapseState = {};
 
@@ -1385,23 +1382,20 @@ const $ = (id) => document.getElementById(id);
 const typeset = (nodes) => window.MathJax?.typesetPromise ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{}) : null;
 
 /* ============================================================
-   ✅ NEW: ANON ANALYTICS (fail-open)
-   - Only sends when current user is anon (not logged in)
+   ✅ UPDATED: ANON ANALYTICS (fail-open)
+   - Uses /api/track allowlist events only
+   - Sends { is_anon:true } so server increments *_anon columns
    ============================================================ */
 const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
 
-async function PS_trackAnon(event, payload = {}) {
+async function PS_trackAnon(event) {
   try {
     if (PS_CTX.loggedIn) return; // anon-only
     const body = {
       event,
       nano_slug: NANO_SLUG,
-      step: payload.step ?? null,
-      path: location.pathname,
-      ref: document.referrer || null,
-      meta: payload.meta || null
+      is_anon: true
     };
-    // fire-and-forget
     fetch(TRACK_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1471,9 +1465,6 @@ function toggleStep(step){
 
   collapseState[step] = hidden;
   saveCollapse();
-
-  // ✅ NEW: anon analytics (toggle)
-  PS_trackAnon('STEP_TOGGLE', { step, meta: { open: hidden } });
 }
 
 /* ===== Prompt show/copy ===== */
@@ -1484,8 +1475,8 @@ function showPrompt(step){
   preview.style.display = 'block';
   typeset([preview]);
 
-  // ✅ NEW: anon analytics
-  PS_trackAnon('PROMPT_SHOW', { step });
+  // ✅ allowlisted
+  PS_trackAnon('PROMPT_SHOWN');
 }
 async function copyText(t, okMsg, failMsg){
   if (!t) return alert(failMsg || 'Nothing to copy.');
@@ -1494,19 +1485,19 @@ async function copyText(t, okMsg, failMsg){
   catch { alert(failMsg || 'Could not copy.'); }
 }
 function copyPrompt(step){
-  PS_trackAnon('PROMPT_COPY', { step }); // ✅ NEW
+  // ✅ allowlisted
+  PS_trackAnon('PROMPT_COPIED');
   return copyText(prompts[step], 'Prompt copied.', 'No prompt defined for this step yet.');
 }
 function copyAnswer(step){
-  // answers are not available for anon (since they can't run AI), but keep safe anyway
-  PS_trackAnon('ANSWER_COPY', { step }); // ✅ NEW
+  // (We don’t track this yet; not allowlisted)
   return copyText(lastAiResponses[step], 'Answer copied.', 'No AI answer to copy yet.');
 }
 
 /* ===== Run-with-AI gating + API call ===== */
 function redirectToSignupForRunAI(){
-  // ✅ NEW: anon analytics
-  PS_trackAnon('RUN_AI_CLICK', { meta: { action: 'redirect_signup' } });
+  // ✅ allowlisted (anon intent)
+  PS_trackAnon('RUN_AI_CLICK_ANON');
 
   const redirectTarget = encodeURIComponent(location.href);
   location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
@@ -1667,7 +1658,6 @@ function configureHelpAccess(isPaid){
   const inner = $('help-panel-inner');
 
   if (inner) {
-    // keep absolute overlay positioned correctly
     inner.style.position = inner.style.position || 'sticky';
   }
 
@@ -1699,15 +1689,14 @@ function configureHelpAccess(isPaid){
 
     body.style.display = 'block';
 
-    // ✅ NEW: click-catcher ON for anon analytics (doesn't enable access)
     if (clickCatcher) {
       clickCatcher.style.display = 'block';
       clickCatcher.setAttribute('aria-hidden','false');
       clickCatcher.onclick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        PS_trackAnon('HELP_LOCK_CLICK', { meta: { area: 'help_panel' } });
-        // optional: take anon to pricing when they try to access Help
+        // ✅ allowlisted
+        PS_trackAnon('HELP_LOCKED_ATTEMPT');
         location.href = '/pricing.html';
       };
     }
@@ -1719,12 +1708,10 @@ function configureUI({ loggedIn, tier }){
   const isPaid = tier === 'paid';
   const isFreeSignedIn = loggedIn && !isPaid;
 
-  // update analytics context
   PS_CTX.loggedIn = !!loggedIn;
   PS_CTX.tier = tier || (loggedIn ? 'free' : 'anon');
   PS_CTX.isPaid = !!isPaid;
 
-  // Lock steps 4–6 content unless paid
   for (let step=1; step<=6; step++){
     const unlocked = $(`step-unlocked-${step}`);
     const locked = $(`step-locked-${step}`);
@@ -1736,7 +1723,6 @@ function configureUI({ loggedIn, tier }){
 
   configureHelpAccess(isPaid);
 
-  // Steps 1–2: anon redirects, free runs, paid runs
   [1,2].forEach(step => {
     const btn = $(`run-btn-${step}`);
     if (!btn) return;
@@ -1744,14 +1730,13 @@ function configureUI({ loggedIn, tier }){
     btn.textContent = 'Run with AI';
     btn.onclick = () => {
       if (!loggedIn) {
-        PS_trackAnon('RUN_AI_CLICK', { step });
+        PS_trackAnon('RUN_AI_CLICK_ANON'); // ✅ allowlisted
         return redirectToSignupForRunAI();
       }
       return runWithAI(step);
     };
   });
 
-  // Step 3: anon redirects, free -> pricing, paid runs
   {
     const btn = $('run-btn-3');
     if (btn){
@@ -1759,7 +1744,7 @@ function configureUI({ loggedIn, tier }){
       btn.textContent = 'Try with AI';
       btn.onclick = () => {
         if (!loggedIn) {
-          PS_trackAnon('RUN_AI_CLICK', { step: 3 });
+          PS_trackAnon('RUN_AI_CLICK_ANON'); // ✅ allowlisted
           return redirectToSignupForRunAI();
         }
         if (isFreeSignedIn) return (location.href = '/pricing.html');
@@ -1768,7 +1753,6 @@ function configureUI({ loggedIn, tier }){
     }
   }
 
-  // Steps 4–6: run button hidden unless paid
   for (let step=4; step<=6; step++){
     const btn = $(`run-btn-${step}`);
     if (!btn) continue;
@@ -1798,7 +1782,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
-  // Determine logged-in + tier
   let loggedIn = false, tier = 'anon';
   if (typeof getCurrentUser === 'function'){
     try { loggedIn = !!(await getCurrentUser()); } catch(e){ loggedIn = false; }
@@ -1810,10 +1793,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   configureUI({ loggedIn, tier });
 
-  // ✅ NEW: anon page view analytics
-  PS_trackAnon('PAGE_VIEW', { meta: { title: document.title } });
+  // ✅ allowlisted
+  PS_trackAnon('PAGE_VIEW');
 
-  // ✅ NEW: anon CTA click analytics (pricing/auth) without touching your markup
+  // ✅ allowlisted CTA tracking: pricing vs signup/auth
   document.addEventListener('click', (ev) => {
     try {
       if (PS_CTX.loggedIn) return;
@@ -1823,9 +1806,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!href) return;
 
       if (href.includes('/pricing.html')) {
-        PS_trackAnon('CTA_CLICK', { meta: { target: 'pricing', href } });
+        PS_trackAnon('PRICING_CLICK');
       } else if (href.includes('/auth.html')) {
-        PS_trackAnon('CTA_CLICK', { meta: { target: 'auth', href } });
+        PS_trackAnon('SIGNUP_CLICK');
       }
     } catch(e){}
   }, true);
