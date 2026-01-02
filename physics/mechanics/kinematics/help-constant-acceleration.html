@@ -28,9 +28,6 @@
       --bg-surface: #f9fafb;
       --bg-card: #ffffff;
 
-      
-
-
       --accent: #7e22ce;
       --accent-strong: #6d28d9;
       --accent-soft: rgba(126, 34, 206, 0.09);
@@ -51,6 +48,14 @@
       --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
       --transition-fast: 0.25s ease-out;
+
+      /* Final V1.1: Help (Deep Indigo) tokens (match nano help panel) */
+      --help-blue: #1e3a8a;
+      --help-blue-strong: #1e40af;
+      --help-blue-soft: rgba(30, 58, 138, 0.10);
+      --help-blue-soft2: rgba(30, 64, 175, 0.14);
+      --help-blue-ink: #0b1220;
+      --meta-slate: #64748b; /* calm metadata */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -234,31 +239,30 @@
       z-index: -1;
     }
 
+    /* Match nano: kicker uses label + calm metadata */
     .hero-kicker {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent-strong);
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 1.05rem;
       font-family: var(--font-body);
-      }
-       /* Keep the "Help" label strong, but make the metadata calm */
-      .hero-kicker span:not(.label){
-       color: #64748b; /* slate-500 (best for metadata) */
-       }
+    }
     .hero-kicker span.label {
       padding: 0.18rem 0.7rem;
       border-radius: 8px;
       border: 1px solid rgba(129, 140, 248, 0.22);
       background: var(--accent-soft2);
       color: var(--accent-strong);
-      font-weight: 800;
+      font-weight: 900;
+      text-transform: uppercase;
       letter-spacing: 0.14em;
-      font-family: var(--font-body);
+    }
+    .hero-kicker span:not(.label) {
+      color: var(--meta-slate);
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
 
     .hero-title {
@@ -285,31 +289,19 @@
       color: var(--text-subtle);
       font-family: var(--font-body);
     }
-    /* Breadcrumb hierarchy: informational links */
-.hero-breadcrumbs a{
-  color: #64748b;                 /* slate-500 */
-  text-decoration: none;
-  transition: color 0.15s ease, text-decoration-color 0.15s ease;
-}
-
-.hero-breadcrumbs a:hover{
-  color: #1e40af;                 /* deep indigo on intent */
-  text-decoration: underline;
-}
-
-/* Current context */
-.hero-breadcrumbs span{
-  color: #1e40af;                 /* deep indigo */
-  font-weight: 600;
-}
-
-}
-
-.hero-breadcrumbs span{
-  color: #1e40af;            /* deep indigo: current mode */
-  font-weight: 600;
-}
-
+    .hero-breadcrumbs a{
+      color: var(--meta-slate);
+      text-decoration: none;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+    .hero-breadcrumbs a:hover{
+      color: var(--help-blue-strong);
+      text-decoration: underline;
+    }
+    .hero-breadcrumbs span{
+      color: var(--help-blue-strong);
+      font-weight: 600;
+    }
 
     /* Access band */
     .access-band {
@@ -529,36 +521,39 @@
     .actions-left { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
     .actions-right { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
 
-    /* Right: directory */
+    /* Right: directory (match nano Help panel look) */
     .dir-card {
-      background: radial-gradient(circle at 0 0, #ffffff, #eef2ff);
+      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
       border-radius: var(--radius-card);
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.16);
+      border: 1px solid rgba(30, 58, 138, 0.22);
+      box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
       padding: 0.95rem 1rem;
     }
 
-    .dir-title {
+    .dir-title{
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.12rem 0.6rem;
+      padding: 0.28rem 0.85rem;
       border-radius: 999px;
-      border: 1px solid rgba(126, 34, 206, 0.35);
-      color: #4c1d95;
-      background: rgba(126, 34, 206, 0.06);
-      font-size: 0.8rem;
+      border: 1px solid rgba(30, 64, 175, 0.45);
+      background: rgba(30, 64, 175, 0.10);
+      color: var(--help-blue-strong);
+      font-size: 0.82rem;
       font-weight: 900;
       font-family: var(--font-body);
-      margin-bottom: 0.55rem;
+      margin-bottom: 0.65rem;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.12);
+      user-select: none;
     }
+    .dir-title:hover{ background: rgba(30, 64, 175, 0.18); }
 
-    .dir-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 0.7rem;
-      line-height: 1.6;
+    .dir-desc{
+      margin: 0.3rem 0 0.7rem;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
       font-family: var(--font-body);
+      line-height: 1.65;
     }
 
     .dir-cat {
@@ -580,15 +575,15 @@
       padding: 0.15rem 0.1rem;
     }
 
-    .dir-cat-label {
+    .dir-cat-label{
       display: inline-flex;
       align-items: center;
       padding: 0.12rem 0.55rem;
       border-radius: 999px;
-      border: 1px solid rgba(129, 140, 248, 0.8);
-      background: #eef2ff;
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      background: rgba(30, 58, 138, 0.10);
       font-size: 0.72rem;
-      color: var(--accent-strong);
+      color: var(--help-blue-strong);
       font-family: var(--font-body);
       font-weight: 900;
       text-transform: uppercase;
@@ -599,100 +594,40 @@
     .dir-cat-chev { font-size: 0.95rem; color: #4c1d95; opacity: 0.9; }
 
     .dir-cat-body { margin-top: 0.45rem; }
-    /* =========================================================
-   Help page panel — match nano-lesson Help panel (Deep Indigo)
-   Canonical, locked
-   ========================================================= */
 
-/* Emphasized Help Library button */
-.dir-title{
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.28rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid rgba(30, 64, 175, 0.45);
-  background: rgba(30, 64, 175, 0.10);
-  color: #1e40af;
-  font-size: 0.82rem;
-  font-weight: 900;
-  font-family: var(--font-body);
-  margin-bottom: 0.65rem;
-  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.12);
-}
+    .dir-list{
+      list-style-type: "▶  ";
+      padding-left: 1.5rem;
+      margin-top: 0.45rem;
+    }
+    .dir-list li{ margin-bottom: 0.35rem; }
+    .dir-list li::marker{ font-size: 0.7em; color: var(--help-blue-strong); }
 
-.dir-title:hover{
-  background: rgba(30, 64, 175, 0.18);
-}
+    .dir-link{
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.2rem;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--help-blue-strong);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
 
+    .dir-link:hover,
+    .dir-link:focus{
+      background: rgba(30, 58, 138, 0.08);
+      color: var(--help-blue-ink);
+      text-decoration: underline;
+    }
 
-/* Panel description (matches nano help body tone) */
-.dir-desc{
-  margin: 0.3rem 0 0.7rem;
-  font-size: 0.78rem;
-  color: var(--text-subtle);
-  font-family: var(--font-body);
-  line-height: 1.65;
-}
-
-/* Category pill (matches .help-category-label) */
-.dir-cat-label{
-  display: inline-flex;
-  align-items: center;
-  padding: 0.12rem 0.55rem;
-  border-radius: 999px;
-  border: 1px solid rgba(30, 58, 138, 0.35);
-  background: rgba(30, 58, 138, 0.10);
-  font-size: 0.72rem;
-  color: #1e40af;
-  font-family: var(--font-body);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-/* Bullet list (matches nano lesson help bullets) */
-.dir-list{
-  list-style-type: "▶  ";
-  padding-left: 1.5rem;
-  margin-top: 0.45rem;
-}
-.dir-list li{
-  margin-bottom: 0.35rem;
-}
-.dir-list li::marker{
-  font-size: 0.7em;
-  color: #1e40af;
-}
-
-/* Help links (matches .help-prompt-btn) */
-.dir-link{
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 0.4rem 0.2rem;
-  font-size: 0.84rem;
-  border-radius: 10px;
-  background: transparent;
-  color: #1e40af;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-body);
-  font-weight: 500;
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.dir-link:hover,
-.dir-link:focus{
-  background: rgba(30, 58, 138, 0.08);
-  color: #0b1220;
-  text-decoration: underline;
-}
-
-.dir-link:visited{
-  color: #1e40af;
-}
+    .dir-link:visited{ color: var(--help-blue-strong); }
 
     .locked-panel {
       border-radius: 16px;
@@ -883,8 +818,8 @@
             </p>
 
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-CL">
-                <span class="dir-cat-label">Confusions & look-alikes</span>
+              <button class="dir-cat-toggle" data-target="cat-CL" type="button">
+                <span class="dir-cat-label">Confusions &amp; look-alikes</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
               <div class="dir-cat-body" id="cat-CL">
@@ -896,8 +831,8 @@
             </div>
 
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-ET">
-                <span class="dir-cat-label">Tricky areas & exam traps</span>
+              <button class="dir-cat-toggle" data-target="cat-ET" type="button">
+                <span class="dir-cat-label">Tricky areas &amp; exam traps</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
               <div class="dir-cat-body" id="cat-ET">
@@ -909,7 +844,7 @@
             </div>
 
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-CM">
+              <button class="dir-cat-toggle" data-target="cat-CM" type="button">
                 <span class="dir-cat-label">Common mistakes</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
@@ -922,7 +857,7 @@
             </div>
 
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-ST">
+              <button class="dir-cat-toggle" data-target="cat-ST" type="button">
                 <span class="dir-cat-label">When you feel stuck</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
@@ -935,7 +870,7 @@
             </div>
 
             <div class="dir-cat">
-              <button class="dir-cat-toggle" data-target="cat-BR">
+              <button class="dir-cat-toggle" data-target="cat-BR" type="button">
                 <span class="dir-cat-label">Concept bridges</span>
                 <span class="dir-cat-chev">▾</span>
               </button>
@@ -947,7 +882,6 @@
               </div>
             </div>
 
-            <!-- ✅ mini-note removed as requested -->
           </aside>
 
         </div>
