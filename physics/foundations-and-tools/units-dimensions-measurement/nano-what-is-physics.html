@@ -679,6 +679,18 @@
       color:#4f46e5 !important;
       font-weight: 800 !important;
     }
+
+    /* =========================================================
+       Option A: Lock icon shown only on the LOCKED simulation button
+       ========================================================= */
+    .lock-icn{
+      display: inline-flex;
+      align-items: center;
+      margin-right: 0.45rem;
+      opacity: 0.9;
+      transform: translateY(-0.5px);
+      font-size: 0.95em;
+    }
   </style>
 </head>
 
@@ -1060,8 +1072,9 @@
                         <a class="btn-primary" href="/pricing.html">Unlock full access</a>
                         <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
 
-                        <!-- ✅ Locked: still visible, click redirects to pricing via JS -->
+                        <!-- ✅ Locked: shows lock icon (Option A) -->
                         <a class="btn-pill btn-sim" id="sim-btn-6-locked" href="#">
+                          <span class="lock-icn" aria-hidden="true">🔒</span>
                           ▶ Explore interactive simulation
                         </a>
                       </div>
