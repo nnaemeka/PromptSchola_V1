@@ -166,6 +166,7 @@
       white-space: nowrap;
       font-weight: 650;
       letter-spacing: -0.005em;
+      gap: 0.35rem;
     }
     .btn-pill:hover {
       background: rgba(0, 37, 93, 0.06);
@@ -574,17 +575,6 @@
     }
     .help-panel-body p { color: var(--text-muted); line-height: 1.65; }
 
-    .help-cta {
-      margin-top: 0.65rem;
-      padding: 0.7rem 0.75rem;
-      border-radius: 14px;
-      border: 1px solid rgba(99, 102, 241, 0.35);
-      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.88));
-      color: #f8fafc;
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.18);
-      display: none;
-    }
-
     .help-category { padding-top: 0.65rem; border-top: 1px solid rgba(209, 213, 219, 0.7); margin-top: 0.65rem; }
     .help-category:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
 
@@ -684,6 +674,13 @@
     .help-locked-clickcatcher{
       position: absolute; inset: 0; z-index: 20; display: none;
       border-radius: 18px; background: transparent; cursor: pointer;
+    }
+
+    /* Simulation button subtle cue */
+    .sim-lock {
+      font-size: 0.92rem;
+      opacity: 0.95;
+      transform: translateY(-0.5px);
     }
   </style>
 </head>
@@ -1049,6 +1046,11 @@
                         <div class="left-actions">
                           <button class="btn-ghost" onclick="showPrompt(6)">Show prompt</button>
                           <button class="btn-primary" id="run-btn-6" type="button">Run with AI</button>
+
+                          <!-- ✅ Explore simulation (paid) -->
+                          <a class="btn-pill" id="sim-btn-6" href="/physics/simulations/physical-quantities-and-si-units.html">
+                            Explore simulation
+                          </a>
                         </div>
                         <span>Goal: summarize + stress-test your unit intuition with quick “what if” checks.</span>
                       </div>
@@ -1060,6 +1062,11 @@
                       <div class="locked-actions">
                         <a class="btn-primary" href="/pricing.html">Unlock full access</a>
                         <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+
+                        <!-- ✅ Explore simulation (locked teaser) -->
+                        <button class="btn-pill" type="button" disabled title="Mastery required">
+                          <span class="sim-lock">🔒</span> Explore simulation
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -1082,16 +1089,6 @@
                     <p>
                       Use these help topics when unit conversions feel slippery, when symbols blur together, or when an answer “looks right” but the unit disagrees.
                     </p>
-
-                    <div class="help-cta" id="help-cta" aria-hidden="true">
-                      <div class="kicker">Mastery feature</div>
-                      <div class="title">Help Library + guided prompt paths</div>
-                      <div class="desc">Upgrade to Mastery to unlock the Help Library for this lesson.</div>
-                      <div class="actions">
-                        <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
-                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
-                      </div>
-                    </div>
 
                     <div class="help-category">
                       <div>
@@ -1183,8 +1180,7 @@
   <script>
     /* ============================================================
        Physical Quantities & SI Units — Nano Lesson JS (Canonical)
-       - Keeps gating behavior + help hard-lock
-       - Keeps progress chip updating instantly from /api/run-step meta.progress
+       - Adds Explore simulation button (paid)
        ============================================================ */
 
     (function PS_markLastLearningPage(){
@@ -1208,6 +1204,9 @@
     const NANO_SLUG = 'physical-quantities-and-si-units';
     const STORAGE_KEY = 'ps_nano_physical_quantities_and_si_units_collapse';
     const TRACK_ENDPOINT = '/api/track';
+
+    // ✅ Simulation URL (per your convention: /physics/simulations/<nano-slug>.html)
+    const SIM_URL = '/physics/simulations/physical-quantities-and-si-units.html';
 
     const lastAiResponses = {};
     let collapseState = {};
@@ -1449,23 +1448,19 @@ Formatting rules:
         .replace(/</g,'&lt;')
         .replace(/>/g,'&gt;');
     }
-
     function inlineFmt(s){
       return s
         .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
         .replace(/\*(.+?)\*/g,'<em>$1</em>')
         .replace(/^\s*[-*]\s+/gm,'• ');
     }
-
     function paras(s){
       const x = s.replace(/\r\n/g,'\n');
       return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
     }
-
     function formatOutput(raw){
       return paras(inlineFmt(esc(raw)));
     }
-
     function formatQuizWithToggles(raw){
       const OPEN = '[[[ANSWER]]]';
       const CLOSE = '[[[/ANSWER]]]';
@@ -1744,6 +1739,28 @@ Formatting rules:
     }
 
     /* ============================================================
+       Simulation button gating (paid)
+       ============================================================ */
+    function configureSimulationAccess(isPaid){
+      const simBtn = $('sim-btn-6');
+      if (!simBtn) return;
+
+      simBtn.setAttribute('href', SIM_URL);
+
+      if (isPaid){
+        simBtn.style.display = 'inline-flex';
+        simBtn.onclick = null;
+        simBtn.removeAttribute('aria-disabled');
+        simBtn.style.pointerEvents = 'auto';
+      } else {
+        // Step 6 is hidden for non-paid anyway, but keep safe:
+        simBtn.style.display = 'inline-flex';
+        simBtn.setAttribute('aria-disabled', 'true');
+        simBtn.style.pointerEvents = 'none';
+      }
+    }
+
+    /* ============================================================
        UI gating rules
        ============================================================ */
     function configureUI({ loggedIn, tier }){
@@ -1765,6 +1782,7 @@ Formatting rules:
       }
 
       configureHelpAccess(isPaid);
+      configureSimulationAccess(isPaid);
 
       [1,2].forEach(step => {
         const btn = $(`run-btn-${step}`);
