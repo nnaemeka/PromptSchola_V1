@@ -6,11 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Targeted AI-powered study help for the nano-lesson 'What is Physics?' – clarify definitions, fix misconceptions, and connect to later topics."
+    content="Targeted AI-powered study help for the nano-lesson 'What is Physics' – clarify scope, models, measurement, and how physics connects across STEM."
   />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- MathJax configuration for LaTeX rendering -->
+  <!-- ✅ Final V1.1: Inter + Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <!-- MathJax -->
   <script>
     window.MathJax = {
       tex: {
@@ -20,259 +24,444 @@
       svg: { fontCache: 'global' }
     };
   </script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
-  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
 
   <style>
     :root {
       --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
       --bg-card: #ffffff;
+
+      /* ✅ Final V1.1 Navy foundation */
+      --navy: #00255D;
+      --navy-strong: #001c47;
+      --navy-deep: #001833;
+      --navy-soft: rgba(0, 37, 93, 0.10);
+      --navy-soft2: rgba(0, 37, 93, 0.06);
+      --navy-border: rgba(0, 37, 93, 0.22);
+
+      /* PromptSchola spark */
       --accent: #7e22ce;
-      --accent-strong: #4c1d95;
-      --accent-soft-border: rgba(129, 140, 248, 0.4);
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.10);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-subtle: #9ca3af;
       --text-strong: #020617;
-      --border-subtle: rgba(209, 213, 219, 0.7);
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
       --radius-card: 18px;
       --radius-pill: 999px;
+
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
       --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
-      --font-main: 'Inter', system-ui, sans-serif;
+
+      /* ✅ Final V1.1 typography tokens */
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --fs-micro: 0.78rem;
+      --fs-ui: 0.88rem;
+      --fs-body: 1.03rem;
+      --fs-card: 0.96rem;
+      --fs-lede: 1.14rem;
+
+      --lh-body: 1.72;
+      --lh-card: 1.62;
+      --lh-tight: 1.12;
+
       --transition-fast: 0.25s ease-out;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font-main);
-      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
     a { text-decoration: none; color: inherit; }
 
-    .page { min-height: 100vh; display: flex; flex-direction: column; }
-
-    .container {
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 0 1.3rem;
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
     }
 
-    /* NAV */
+    h1, h2 { font-family: var(--font-heading); color: var(--text-strong); line-height: var(--lh-tight); letter-spacing: -0.02em; }
+    h3 { font-family: var(--font-heading); color: var(--text-strong); line-height: 1.15; letter-spacing: -0.01em; }
+
+    :focus-visible {
+      outline: 3px solid rgba(129, 140, 248, 0.45);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* NAV — Final V1.1 */
     header {
       position: sticky; top: 0; z-index: 40;
       backdrop-filter: blur(14px);
-      background: rgba(249, 250, 251, 0.96);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
       border-bottom: 1px solid rgba(209, 213, 219, 0.9);
     }
 
-    .nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.75rem 0;
-    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; gap: 1rem; }
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
 
     .logo-mark {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-strong));
+      width: 34px; height: 34px; border-radius: 40%;
+      background:
+        radial-gradient(circle at 70% 0%, rgba(168, 85, 247, 0.26), transparent 60%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 100%);
       display: flex; align-items: center; justify-content: center;
-      font-weight: 800; color: #fff;
+      font-weight: 900; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+      box-shadow: 0 12px 30px rgba(0, 37, 93, 0.20);
     }
 
     .logo-text span:first-child {
-      font-weight: 700; font-size: 0.98rem; color: var(--text-strong);
+      display: block; font-weight: 800; font-size: 1.02rem; letter-spacing: 0.01em;
+      color: var(--text-strong); font-family: var(--font-body); line-height: 1.1;
     }
     .logo-text span:last-child {
-      font-size: 0.72rem; color: var(--text-subtle);
+      display: block; font-size: 0.76rem; color: var(--text-subtle); font-family: var(--font-body);
     }
 
-    .nav-links { display: flex; gap: 1.2rem; font-size: 0.88rem; }
-    .nav-links a { opacity: .9; }
-    .nav-links a:hover { color: var(--accent-strong); opacity: 1; }
+    .nav-links { display: flex; align-items: center; gap: 1.3rem; font-size: var(--fs-ui); font-family: var(--font-body); }
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.92;
+      transition: opacity var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      padding: 0.25rem 0.1rem;
+      letter-spacing: -0.005em;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); transform: translateY(-1px); }
 
     .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.82rem;
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: var(--fs-ui); font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
     }
 
     .btn-pill {
       border-radius: var(--radius-pill);
-      padding: 0.45rem 1rem;
+      padding: 0.48rem 0.98rem;
+      font-size: var(--fs-ui);
+      border: 1px solid var(--navy-border);
       background: #ffffff;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      font-size: 0.8rem;
-      transition: var(--transition-fast);
+      color: var(--navy);
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center;
       white-space: nowrap;
+      font-weight: 650;
+      letter-spacing: -0.005em;
     }
     .btn-pill:hover {
-      background: #f3f4f6; transform: translateY(-1px);
+      background: rgba(0, 37, 93, 0.06);
+      transform: translateY(-1px);
+      border-color: rgba(0, 37, 93, 0.34);
+      box-shadow: 0 10px 22px rgba(0, 37, 93, 0.12);
     }
 
-    @media (max-width: 860px) {
-      .nav-links { display: none; }
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.62rem 1.32rem;
+      font-size: var(--fs-ui); font-weight: 800;
+      border: none; cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: 0 12px 26px rgba(79,70,229,0.22);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow: 0 16px 34px rgba(79,70,229,0.28);
     }
 
-    main { padding-bottom: 2.5rem; }
+    .btn-primary[disabled], .btn-pill[disabled], .btn-ghost[disabled] {
+      opacity: 0.55; cursor: not-allowed;
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+    }
 
-    /* HERO */
+    .btn-ghost {
+      padding: 0.44rem 0.95rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.84rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
+      white-space: nowrap;
+      color: var(--text-main);
+    }
+    .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25); }
+    .btn-copy { font-size: 0.80rem; padding: 0.34rem 0.9rem; }
+
+    main { padding-bottom: 2.6rem; }
+    section { padding: 1.4rem 0; }
+
+    /* HERO — Final V1.1 navy hero */
     .hero {
-      padding: 2.4rem 0 1.6rem;
-      text-align: left;
+      padding: 4.6rem 0 2.7rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.10), transparent 55%),
+        radial-gradient(circle at 82% 22%, rgba(168, 85, 247, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 78%, var(--navy-deep) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
     }
+    .hero::before {
+      content: ""; position: absolute; inset: -160px; pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.22), transparent 62%),
+        radial-gradient(circle at 92% 30%, rgba(168, 85, 247, 0.18), transparent 58%),
+        radial-gradient(circle at 50% 110%, rgba(255,255,255,0.10), transparent 62%);
+      opacity: 0.95; filter: blur(12px); z-index: 0;
+    }
+    .hero .container { position: relative; z-index: 1; }
 
     .hero-kicker {
-      font-size: 0.76rem;
-      letter-spacing: 0.2em;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: var(--fs-micro);
+      font-weight: 900;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--text-subtle);
-    }
-
-    .hero-title {
-      font-size: clamp(1.6rem, 2.5vw, 2rem);
-      font-weight: 800;
-      color: var(--text-strong);
-      margin: 0.4rem 0 0.1rem;
-    }
-
-    .hero-subtitle {
-      font-size: 0.94rem;
-      color: var(--text-muted);
-      max-width: 36rem;
-    }
-
-    .hero-breadcrumbs {
-      margin-top: 0.7rem;
-      font-size: 0.82rem;
-      color: var(--text-subtle);
-    }
-    .hero-breadcrumbs a { color: var(--accent-strong); }
-
-    /* Banner */
-    .help-banner {
-      margin: 0.8rem auto 1.7rem;
-      max-width: 720px;
-      border-radius: var(--radius-pill);
-      padding: 0.6rem 0.9rem;
-      background: linear-gradient(to right, #eef2ff, #e0f2fe);
-      border: 1px solid var(--accent-soft-border);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 0.8rem;
+      color: rgba(226, 232, 240, 0.92);
+      justify-content: center;
       flex-wrap: wrap;
     }
 
-    .badge-topic {
-      padding: 0.16rem 0.7rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.74rem;
-      background: #ede9fe;
-      border: 1px solid rgba(129, 140, 248, 0.9);
-      color: #4c1d95;
-      font-weight: 600;
+    .hero-kicker span.label {
+      padding: 0.18rem 0.7rem; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.10);
+      color: rgba(226, 232, 240, 0.95);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+    .hero-kicker span:not(.label) {
+      color: rgba(226, 232, 240, 0.88);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: none;
     }
 
-    /* Help card */
+    .hero-title {
+      font-size: clamp(2.35rem, 4.0vw, 3.0rem);
+      line-height: 1.07;
+      font-weight: 720;
+      margin: 0 auto 0.95rem;
+      max-width: 56rem;
+      color: #ffffff;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: var(--fs-lede);
+      max-width: 52rem;
+      color: rgba(226, 232, 240, 0.92);
+      margin: 0 auto;
+      line-height: 1.7;
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 1.05rem;
+      font-size: 0.90rem;
+      color: rgba(226, 232, 240, 0.72);
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+    .hero-breadcrumbs a { color: rgba(199, 210, 254, 0.92); text-decoration: underline; text-decoration-color: rgba(199, 210, 254, 0.35); }
+    .hero-breadcrumbs a:hover { color: #ffffff; text-decoration-color: rgba(255,255,255,0.50); }
+
+    /* Access band — match nano */
+    .access-band {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 28px;
+      padding: 1.55rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .access-band::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.20), transparent 58%);
+      filter: blur(16px);
+      opacity: 0.9;
+    }
+    .access-band-inner { position: relative; z-index: 1; display: flex; gap: 1.2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .access-band-title { font-family: var(--font-heading); font-size: 1.40rem; color: #ffffff; margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .access-band-desc { font-family: var(--font-body); color: #cbd5e1; font-size: 0.98rem; line-height: 1.65; max-width: 52rem; }
+
+    .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 900;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+    .chip.free { background: #10b981; color: #ffffff; }
+    .chip.mastery { background: #6366f1; color: #ffffff; }
+
+    /* Layout */
+    .help-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+      margin-top: 0.9rem;
+    }
+
+    /* Left: prompt + output card */
     .help-card {
       background: var(--bg-card);
       border-radius: var(--radius-card);
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-card);
-      padding: 1.2rem 1.3rem 1.2rem;
-      font-size: 0.9rem;
+      padding: 1.05rem 1.15rem 1.1rem;
     }
 
-    .help-card-header {
+    .help-card-top {
       display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      margin-bottom: 0.65rem;
-    }
-
-    .help-chip-row {
-      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: flex-start;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .pill-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+
+    .pill {
+      display: inline-flex;
       align-items: center;
-    }
-
-    .help-chip {
-      padding: 0.16rem 0.7rem;
-      border-radius: var(--radius-pill);
+      gap: 0.45rem;
+      padding: 0.14rem 0.6rem;
+      border-radius: 999px;
       border: 1px solid rgba(209, 213, 219, 0.9);
-      font-size: 0.72rem;
-      color: var(--text-subtle);
       background: #f9fafb;
+      font-size: 0.74rem;
+      color: var(--text-subtle);
+      font-weight: 900;
+      font-family: var(--font-body);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
     }
 
-    .help-topic-pill {
-      padding: 0.16rem 0.65rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(126, 34, 206, 0.4);
-      font-size: 0.74rem;
+    .pill.topic {
+      border: 1px solid rgba(126, 34, 206, 0.35);
       color: #4c1d95;
-      background: #f5f3ff;
-      font-weight: 600;
+      background: rgba(126, 34, 206, 0.06);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 900;
+      font-size: 0.8rem;
     }
 
     .help-title {
-      font-size: 1.02rem;
-      font-weight: 650;
+      font-family: var(--font-heading);
+      font-size: 1.32rem;
       color: var(--text-strong);
+      margin: 0.25rem 0 0.2rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 700;
     }
 
     .help-lead {
-      font-size: 0.86rem;
+      font-size: 0.96rem;
       color: var(--text-muted);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      max-width: 60rem;
+      letter-spacing: -0.004em;
     }
 
-    .help-body-layout {
+    .help-body-grid {
       margin-top: 0.9rem;
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.4fr);
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    @media (max-width: 860px) {
-      .help-body-layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.9rem;
     }
 
     .prompt-box {
       border-radius: 14px;
       border: 1px solid rgba(209, 213, 219, 0.9);
       background: #f9fafb;
-      padding: 0.9rem 1rem 0.9rem;
-      font-size: 0.84rem;
+      padding: 0.9rem 1rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
-      min-height: 135px;
       white-space: pre-wrap;
+      overflow: hidden;
     }
 
     .prompt-box-header {
       font-size: 0.78rem;
-      font-weight: 600;
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       color: var(--text-subtle);
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-body);
     }
 
-    .prompt-box-body {
-      font-family: var(--font-main);
+    /* READ-ONLY prompt display (not editable) */
+    .prompt-preview {
+      width: 100%;
+      min-height: 170px;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-main);
+      white-space: pre-wrap;
+      user-select: text;
     }
 
     .ai-box {
@@ -280,656 +469,820 @@
       border: 1px solid rgba(129, 140, 248, 0.35);
       background: #ffffff;
       padding: 1rem 1.1rem;
-      min-height: 135px;
-      font-size: 0.94rem;
+      min-height: 160px;
+      font-size: 0.98rem;
       color: #111827;
       white-space: pre-wrap;
-      line-height: 1.7;
+      line-height: 1.75;
+      font-family: var(--font-body);
     }
 
     .ai-box p { margin-bottom: 0.9rem; }
-    .ai-box ul,
-    .ai-box ol { margin: 0.7rem 0 0.7rem 1.3rem; }
-
-    .ai-box strong {
-      font-weight: 700;
-      color: inherit;
-    }
-
+    .ai-box ul, .ai-box ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+    .ai-box strong { font-weight: 800; color: inherit; }
     .ai-box em { font-style: italic; }
 
-    .ai-box .mjx-container[jax="CHTML"] {
-      margin: 0.9rem 0;
-      font-size: 1.05em;
-    }
-
-    .help-actions-row {
-      margin-top: 0.8rem;
+    .actions-row {
+      margin-top: 0.85rem;
       display: flex;
       justify-content: space-between;
       gap: 0.6rem;
       flex-wrap: wrap;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-subtle);
+      font-family: var(--font-body);
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      align-items: center;
+      letter-spacing: -0.004em;
     }
 
-    .help-actions-buttons {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
+    .actions-left { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+    .actions-right { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+
+    /* Right: directory (match nano Help panel look) */
+    .dir-card {
+      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(30, 58, 138, 0.22);
+      box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
+      padding: 0.95rem 1rem;
+      position: sticky;
+      top: 6rem;
     }
 
-    .btn-ghost,
-    .btn-primary {
+    .dir-title{
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.45rem;
+      padding: 0.12rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.32);
+      color: #1e40af;
+      background: rgba(30, 58, 138, 0.06);
+      font-size: 0.82rem;
+      font-weight: 900;
+      font-family: var(--font-body);
+      margin-bottom: 0.6rem;
+      user-select: none;
     }
 
-    .btn-ghost {
-      padding: 0.4rem 0.85rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #ffffff;
+    .dir-desc{
+      margin: 0.28rem 0 0.7rem;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      line-height: 1.65;
+    }
+
+    .dir-cat {
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      padding-top: 0.7rem;
+      margin-top: 0.7rem;
+    }
+    .dir-cat:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+    .dir-cat-toggle {
+      width: 100%;
+      border: none;
+      background: transparent;
       cursor: pointer;
-      transition: var(--transition-fast);
-    }
-    .btn-ghost:hover {
-      background: #f3f4f6;
-      transform: translateY(-1px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      padding: 0.15rem 0.1rem;
     }
 
-    .btn-primary {
-      padding: 0.42rem 1rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      font-weight: 600;
+    .dir-cat-label{
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      background: rgba(30, 58, 138, 0.10);
+      font-size: 0.72rem;
+      color: #1e40af;
+      font-family: var(--font-body);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .dir-cat-chev { font-size: 0.95rem; color: #4c1d95; opacity: 0.9; }
+
+    .dir-cat-body { margin-top: 0.45rem; }
+
+    /* Use the same ▶ bullets as nano help panel */
+    .dir-list { list-style: none; padding-left: 1.2rem; margin-top: 0.45rem; }
+    .dir-list li { position: relative; margin-bottom: 0.35rem; }
+    .dir-list li::before {
+      content: "▶";
+      position: absolute;
+      left: -1.1rem;
+      top: 0.18rem;
+      transform: scale(0.9);
+      transform-origin: left top;
+      color: #1e40af;
+    }
+
+    .dir-link{
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.2rem;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      background: transparent;
+      color: #1e40af;
       border: none;
       cursor: pointer;
-      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
-      color: #fff;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
-      transition: var(--transition-fast);
-    }
-    .btn-primary:hover { transform: translateY(-1px); }
-
-    .btn-copy {
-      font-size: 0.76rem;
-      padding: 0.3rem 0.8rem;
+      font-family: var(--font-body);
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
     }
 
-    footer {
-      margin-top: auto;
-      padding: 1.8rem 0;
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-subtle);
+    .dir-link:hover,
+    .dir-link:focus{
+      background: rgba(30, 58, 138, 0.08);
+      color: #0b1220;
+      text-decoration: underline;
     }
+
+    /* Locked panel — same as nano */
+    .locked-panel {
+      border-radius: 16px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.95rem 1rem;
+      color: #111827;
+      font-family: var(--font-body);
+      box-shadow: var(--shadow-card);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .locked-title { font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-strong); margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .locked-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 0.7rem; }
+    .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    footer { margin-top: auto; padding: 1.8rem 0 2.1rem; text-align: center; font-size: 0.86rem; color: var(--text-subtle); font-family: var(--font-body); letter-spacing: -0.004em; }
+
+    @media (max-width: 980px) {
+      .help-layout { grid-template-columns: minmax(0, 1fr); }
+      .dir-card { position: static; }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
   </style>
 </head>
 
 <body>
-<div class="page">
-
-  <!-- NAV -->
-  <header>
-    <div class="container">
-      <div class="nav">
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <div class="logo-mark">P</div>
-          <div class="logo-text">
-            <span>PromptSchola</span>
-            <span>Prompt-based Physics mastery</span>
-          </div>
-        </div>
-
-        <nav class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="physics.html">Physics</a>
-          <a href="pricing.html">Pricing</a>
-        </nav>
-
-        <div class="nav-right">
-          <!-- Filled by auth.js -->
-          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
-
-          <!-- Shown when logged OUT -->
-          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-pill">Register</a>
-
-          <!-- Shown when logged IN -->
-          <button
-            id="nav-signout-btn"
-            type="button"
-            class="btn-pill"
-            style="display:none;"
-          >
-            Sign out
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero">
+  <div class="page">
+    <header>
       <div class="container">
-        <div class="hero-kicker">Study help · What is Physics?</div>
-        <h1 class="hero-title">Targeted prompts for “What is Physics?”</h1>
-        <p class="hero-subtitle">
-          You arrived here from a side-panel link in the nano-lesson. This page shows one focused study prompt
-          you can run with AI or copy into another chat when you need extra help.
-        </p>
-        <div class="hero-breadcrumbs">
-          <a href="physics.html">Physics</a> ·
-          <a href="nano-what-is-physics.html">Nano-lesson: What is Physics?</a> ·
-          <span>Study help</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- BANNER -->
-    <section>
-      <div class="container">
-        <div class="help-banner">
-          <span class="badge-topic">What is Physics?</span>
-          <span>
-            This page loads a specific help prompt based on the link you clicked. You can always change it using the
-            “Current prompt” selector below.
-          </span>
-        </div>
-      </div>
-    </section>
-
-    <!-- HELP CARD -->
-    <section>
-      <div class="container">
-        <article class="help-card">
-          <div class="help-card-header">
-            <div class="help-chip-row">
-              <span id="help-category-pill" class="help-chip">Category: …</span>
-              <span class="help-topic-pill">Study help · What is Physics?</span>
+        <div class="nav">
+          <div class="nav-left">
+            <div class="logo-mark">P</div>
+            <div class="logo-text">
+              <span>PromptSchola</span>
+              <span>Prompt-based STEM subjects mastery</span>
             </div>
-            <h2 id="help-title" class="help-title">
-              Loading prompt…
-            </h2>
-            <p id="help-lead" class="help-lead">
-              Please wait while the prompt loads.
-            </p>
           </div>
 
-          <div class="help-body-layout">
-            <!-- LEFT: Prompt preview -->
-            <div>
-              <div class="prompt-box">
-                <div class="prompt-box-header">Prompt (you can edit before running)</div>
-                <div id="prompt-text" class="prompt-box-body">
-                  Loading prompt text…
+          <nav class="nav-links">
+            <a href="/index.html">Home</a>
+            <a href="/physics/physics.html">Physics</a>
+            <a href="/math/math.html">Math</a>
+            <a href="/chemistry/chemistry.html">Chemistry</a>
+            <a href="/biology/biology.html">Biology</a>
+            <a href="/pricing.html">Pricing</a>
+          </nav>
+
+          <div class="nav-right">
+            <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+            <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+              Sign In
+            </a>
+
+            <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+              Register for Free
+            </a>
+
+            <button
+              id="nav-signout-btn"
+              type="button"
+              class="btn-pill"
+              style="display:none;"
+              onclick="signOutUser && signOutUser()"
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-kicker">
+            <span class="label">Help</span>
+            <span>Physics · Foundations &amp; Tools · Units, Dimensions &amp; Measurement</span>
+          </div>
+
+          <h1 class="hero-title">Study Help: What is Physics</h1>
+
+          <p class="hero-subtitle">
+            Targeted prompts for the places students get stuck: what physics studies, models vs reality,
+            measurement and uncertainty, and how physics connects across STEM.
+          </p>
+
+          <div class="hero-breadcrumbs">
+            <a href="/physics/physics.html">Physics</a> ·
+            <a href="/physics/foundations-and-tools/foundations-and-tools.html">Foundations &amp; Tools</a> ·
+            <a href="/physics/foundations-and-tools/foundations-and-tools/units-dimensions-and-measurement.html">Units, Dimensions &amp; Measurement</a> ·
+            <a href="nano-what-is-physics.html">Nano-lesson: What is Physics</a> ·
+            <span>Study Help</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="access-band">
+            <div class="access-band-inner">
+              <div>
+                <div class="access-band-title">Access for study help</div>
+                <div class="access-band-desc">
+                  This help page is part of paid access (Mastery). You can still browse the titles, but running prompts
+                  with AI is available to paid learners.
                 </div>
               </div>
-            </div>
-
-            <!-- RIGHT: AI output -->
-            <div>
-              <div id="ai-output" class="ai-box">
-                Run with AI to see a guided explanation here.
+              <div class="access-chips">
+                <span class="chip free">Browse titles</span>
+                <span class="chip mastery">Run with AI (Paid)</span>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div class="help-actions-row">
-            <div class="help-actions-buttons">
-              <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentPrompt()">
-                Copy prompt
-              </button>
-              <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentAnswer()">
-                Copy answer
-              </button>
-              <button class="btn-primary" type="button" onclick="runCurrentPromptWithAI()">
-                Run with AI
-              </button>
+      <section id="help-locked-wrap" style="display:none;">
+        <div class="container">
+          <div class="locked-panel">
+            <div class="locked-title">Study Help is a paid feature</div>
+            <div class="locked-desc">
+              You’re seeing the help library directory, but the full prompt + AI guidance is available to paid learners.
+              Upgrade to unlock all help prompts and run-with-AI support.
             </div>
-            <div>
-              <span id="help-footnote">
-                Tip: You can paste this prompt into any AI chat if you prefer to keep this page for notes.
-              </span>
+            <div class="locked-actions">
+              <a class="btn-primary" href="/pricing.html">Unlock Help</a>
+              <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+              <a class="btn-ghost" href="nano-what-is-physics.html">Back to nano-lesson</a>
             </div>
           </div>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    © 2025 PromptSchola. All rights reserved.
-  </footer>
-</div>
-
-<!-- 🔹 Supabase + shared auth helpers for nav -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="auth.js"></script>
-
-<script>
-  // Library of help prompts for "What is Physics?"
-  // Keys (W1..W10) match the IDs used in nano-what-is-physics side panel links.
-  const helpPromptLibrary = {
-    W1: {
-      id: 'W1',
-      category: 'Confusions & look-alikes',
-      title: 'What exactly counts as “physics” compared to other sciences?',
-      lead: 'Use this when you are not sure which questions belong to physics vs chemistry, biology, or everyday “science news.”',
-      prompt: `You are a Physics tutor.
-
-Explain clearly what kinds of questions and problems belong to **physics** compared to other sciences.
-
-Cover ALL of the following:
-
-• What physics mainly studies (for example, matter, energy, forces, motion, space, time)
-• Examples of questions that are clearly physics (for example, why objects fall, how light travels, how electricity works)
-• Examples that are more chemistry, biology, or earth science
-• How different sciences can overlap on the same real-world situation (for example, climate, medicine, energy, technology)
-
-Use short paragraphs and bullet points. Keep the language friendly and concrete, as if you are talking to a final-year high school student.
-
-If you include any equations, write them in LaTeX display mode on their own line, like:
-  \\[ F = ma \\]
-
-Do NOT use LaTeX environments like align. Do not use markdown headings like # or ###; use bold text for key ideas instead.`
-    },
-
-    W2: {
-      id: 'W2',
-      category: 'Confusions & look-alikes',
-      title: 'Physics vs chemistry vs math vs engineering: who studies what?',
-      lead: 'Use this when the roles of physics, math, chemistry, and engineering feel mixed up in your head.',
-      prompt: `You are a Physics tutor.
-
-Compare, in a clear and friendly way, the roles of **physics**, **mathematics**, **chemistry**, and **engineering**.
-
-Cover ALL of these points:
-
-• What physics focuses on (ideas, laws, and models of nature)
-• What mathematics focuses on (patterns, structures, and logic)
-• What chemistry focuses on (substances, reactions, and molecular-level changes)
-• What engineering focuses on (designing and building devices, systems, and technology)
-• At least one example problem or career that shows how these four areas work together
-
-Use bullet points and short examples. Make the differences feel natural, not like rigid boxes.
-
-If you write equations, put each one in LaTeX display mode, for example:
-  \\[ v = \\frac{\\Delta x}{\\Delta t} \\]
-
-Avoid markdown headings like # or ###. Use bold text instead when you want to emphasise key terms.`
-    },
-
-    W3: {
-      id: 'W3',
-      category: 'Tricky areas & exam traps',
-      title: 'Why exam definitions of physics feel different from everyday explanations',
-      lead: 'Use this when textbook or exam-style definitions feel stiff compared to how people talk about physics in real life.',
-      prompt: `You are a Physics tutor.
-
-Explain why the **formal definition** of physics in exams and textbooks can feel different from everyday explanations.
-
-Do ALL of the following:
-
-• Give a typical exam-style definition of physics
-• Give a more everyday, story-style explanation of physics
-• Show how both are actually describing the same subject from different angles
-• Explain how to remember the key parts of a formal definition without just memorising words
-
-Use short paragraphs and a few bullet points. Include at least one simple “memory hook” or analogy (for example, “physics is the grammar of nature”).
-
-If you include equations, place them in LaTeX display mode like:
-  \\[ F = ma \\]
-
-Do not use markdown headings like # or ###. Use bold text for important words instead.`
-    },
-
-    W4: {
-      id: 'W4',
-      category: 'Tricky areas & exam traps',
-      title: 'How exam questions hide “what physics studies” inside short word problems',
-      lead: 'Use this when you can read a question but do not see how it is actually testing your understanding of what physics studies.',
-      prompt: `You are a Physics tutor.
-
-Show how exam questions about “What is Physics?” can be hidden inside short word problems or everyday situations.
-
-Do ALL of the following:
-
-• Give 3–4 short example questions that are really asking what physics studies (for example, about falling objects, light, sound, or electricity)
-• For each example, explain what part of physics it belongs to and what big idea it is really testing
-• Give simple tips for spotting when a question is really about “what physics studies” rather than just plugging numbers into formulas
-
-Use bullet points and clear steps. Focus on thinking, not heavy calculations.
-
-If you include equations, write them in LaTeX display mode on their own lines, like:
-  \\[ v = u + at \\]
-
-Do not use markdown headings like # or ###. Use bold text for key terms instead.`
-    },
-
-    W5: {
-      id: 'W5',
-      category: 'Common mistakes',
-      title: 'Thinking physics is only about solving equations',
-      lead: 'Use this when physics feels like a long list of formulas and you cannot see the ideas behind them.',
-      prompt: `You are a Physics tutor.
-
-Help a student who believes that physics is “just solving equations” to see the **conceptual** side of the subject.
-
-Cover ALL of the following:
-
-• Why equations in physics are really short ways of writing big ideas about nature
-• One or two examples where you start from an idea and then show the equation (for example, “more force → more acceleration” leading to \\( F = ma \\))
-• How diagrams, words, and everyday examples matter just as much as algebra
-• Practical advice on how to study physics so you always look for the idea first and the equation second
-
-Use short paragraphs and a few bullet points. Keep the tone encouraging.
-
-Write any equations in LaTeX display mode, for example:
-  \\[ F = ma \\]
-
-Do not use markdown headings like # or ###. Use bold text for key ideas instead.`
-    },
-
-    W6: {
-      id: 'W6',
-      category: 'Common mistakes',
-      title: 'Believing physics is just memorizing formulas and constants',
-      lead: 'Use this when you feel pressure to memorize every formula but are not sure what actually matters.',
-      prompt: `You are a Physics tutor.
-
-Explain why physics is **not** mainly about memorising formulas and constants, and show a better way to remember what matters.
-
-Do ALL of the following:
-
-• Explain why understanding relationships (how one quantity affects another) is more important than memorising many separate formulas
-• Give practical tips for organising formulas into a few “families” (for example, motion, forces, energy)
-• Describe how units and dimensions can help you reconstruct or check formulas when you forget them
-• Offer a simple, concrete study routine that focuses on ideas, units, and a small core set of formulas
-
-Use bullet points and friendly language.
-
-Place any equations in LaTeX display mode, for example:
-  \\[ v = u + at \\]
-  \\[ E = \\tfrac{1}{2}mv^2 \\]
-
-Do not use markdown headings like # or ###. Use bold text when you want to emphasise something.`
-    },
-
-    W7: {
-      id: 'W7',
-      category: 'When you feel stuck',
-      title: 'How to read a physics paragraph and turn it into a simple picture',
-      lead: 'Use this when reading about physics feels like reading a block of text with no clear mental image.',
-      prompt: `You are a Physics tutor.
-
-Teach a student a simple method for turning a **paragraph about physics** into a **mental picture or sketch**.
-
-Cover ALL of these:
-
-• A step-by-step process: first read, then underline key objects and actions, then sketch
-• At least one worked example where you start from a short physics description and end with a very simple diagram or picture
-• How this habit helps with later topics like mechanics, fields, and waves
-• A short checklist they can use every time they read a new physics passage
-
-Use numbered or bulleted steps. Keep the drawings “described in words” (the student will draw them themselves).
-
-If you use equations, put them in LaTeX display mode on their own line, like:
-  \\[ a = \\frac{\\Delta v}{\\Delta t} \\]
-
-Avoid markdown headings. Use bold text for key steps instead.`
-    },
-
-    W8: {
-      id: 'W8',
-      category: 'When you feel stuck',
-      title: 'What to do when “what physics is” still does not feel clear',
-      lead: 'Use this when you have seen several explanations of physics but it still feels fuzzy.',
-      prompt: `You are a Physics tutor.
-
-Guide a student who has already read a definition of physics but still feels that “what physics is” is fuzzy.
-
-Do ALL of the following:
-
-• Offer a very short, plain-language definition of physics
-• Give 3–4 concrete examples from daily life that quietly use physics ideas (for example, using a phone, riding a bicycle, cooking)
-• Explain how the same few core questions (about motion, forces, energy, and interactions) appear again and again in different topics
-• Suggest a simple reflection exercise they can do after each lesson to connect new ideas back to “what physics is”
-
-Use short paragraphs and bullet points. Keep the tone reassuring.
-
-If you include equations, write them in LaTeX display mode, for example:
-  \\[ F = ma \\]
-
-Do not use markdown headings like # or ###. Use bold text for emphasis instead.`
-    },
-
-    W9: {
-      id: 'W9',
-      category: 'Concept bridges',
-      title: 'How this intro topic prepares you for Mechanics and later physics',
-      lead: 'Use this when you want to see how this nano-lesson connects to the rest of the course.',
-      prompt: `You are a Physics tutor.
-
-Show how the nano-lesson “What is Physics?” prepares a student for **Mechanics** and later physics topics.
-
-Cover ALL of these points:
-
-• How understanding “what physics studies” makes it easier to see what Mechanics is really about (motion, forces, energy)
-• How ideas like “physical quantity,” “model,” and “law of nature” keep reappearing in every chapter
-• Examples of questions from Mechanics that are really just detailed versions of the big questions introduced here
-• One short “roadmap” sentence that connects this nano-lesson to the next few topics a student will likely meet
-
-Use short paragraphs and bullet points.
-
-If you use equations, write each in LaTeX display mode, for example:
-  \\[ F = ma \\]
-  \\[ v = \\frac{\\Delta x}{\\Delta t} \\]
-
-Do not use markdown headings. Use bold text instead when you highlight key ideas.`
-    },
-
-    W10: {
-      id: 'W10',
-      category: 'Concept bridges',
-      title: 'How understanding “what physics is” connects to real careers and technology',
-      lead: 'Use this when you want to know why this topic matters beyond passing an exam.',
-      prompt: `You are a Physics tutor.
-
-Explain how understanding “what physics is” connects to **real careers** and **modern technology**.
-
-Do ALL of the following:
-
-• Give examples of technologies that rely heavily on physics ideas (for example, smartphones, medical imaging, renewable energy, space missions)
-• Connect each example to the kind of questions physics tries to answer
-• Mention a few broad career paths where physics thinking is valuable (for example, engineering, data science, finance, research, climate science)
-• Encourage the student by showing that learning what physics is changes how they see and reason about the world, even outside of science
-
-Use bullet points and short, vivid examples.
-
-If you include equations, put them in LaTeX display mode on their own line, like:
-  \\[ E = mc^2 \\]
-
-Do not use markdown headings like # or ###. Use bold text when you want to emphasise key ideas.`
+        </div>
+      </section>
+
+      <section id="help-main-wrap">
+        <div class="container">
+          <div class="help-layout">
+
+            <article class="help-card">
+              <div class="help-card-top">
+                <div class="pill-row">
+                  <span id="pill-category" class="pill">Category: …</span>
+                  <span class="pill topic">Study help · What is Physics</span>
+                </div>
+
+                <div class="pill-row">
+                  <a class="btn-ghost" href="nano-what-is-physics.html">Back to nano-lesson</a>
+                </div>
+              </div>
+
+              <h2 id="help-title" class="help-title">Loading help topic…</h2>
+              <p id="help-lead" class="help-lead">Please wait while the help prompt loads.</p>
+
+              <div class="help-body-grid">
+                <div class="prompt-box">
+                  <div class="prompt-box-header">Prompt</div>
+                  <div id="prompt-preview" class="prompt-preview">Loading prompt…</div>
+                </div>
+
+                <div id="ai-output" class="ai-box">
+                  Run with AI to see a guided explanation here.
+                </div>
+              </div>
+
+              <div class="actions-row">
+                <div class="actions-left">
+                  <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentPrompt()">Copy prompt</button>
+                  <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentAnswer()">Copy answer</button>
+                  <button class="btn-primary" id="run-btn" type="button" onclick="runCurrentPromptWithAI()">Run with AI</button>
+                </div>
+                <div class="actions-right">
+                  <span id="hint-text">Tip: Browse the library—use Run with AI when you’re ready for guided help.</span>
+                </div>
+              </div>
+            </article>
+
+            <aside class="dir-card">
+              <div class="dir-title">Deepen your understanding</div>
+              <p class="dir-desc">
+                Pick a help topic. You can add new ones later by adding new IDs in the library + links here.
+              </p>
+
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" data-target="cat-SC" type="button">
+                  <span class="dir-cat-label">Scope &amp; core ideas</span>
+                  <span class="dir-cat-chev">▾</span>
+                </button>
+                <div class="dir-cat-body" id="cat-SC">
+                  <ul class="dir-list">
+                    <li><a class="dir-link" href="help-what-is-physics.html?id=SC01">What physics studies (and why it matters)</a></li>
+                    <li><a class="dir-link" href="help-what-is-physics.html?id=SC02">Physics vs chemistry vs biology (how they differ)</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" data-target="cat-MO" type="button">
+                  <span class="dir-cat-label">Models &amp; approximations</span>
+                  <span class="dir-cat-chev">▾</span>
+                </button>
+                <div class="dir-cat-body" id="cat-MO">
+                  <ul class="dir-list">
+                    <li><a class="dir-link" href="help-what-is-physics.html?id=MO01">Why physics uses models (not perfect reality)</a></li>
+                    <li><a class="dir-link" href="help-what-is-physics.html?id=MO02">Idealizations: point mass, frictionless, rigid body</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" data-target="cat-ME" type="button">
+                  <span class="dir-cat-label">Measurement &amp; uncertainty</span>
+                  <span class="dir-cat-chev">▾</span>
+                </button>
+                <div class="dir-cat-body" id="cat-ME">
+                  <ul class="dir-list">
+                    <li><a class="dir-link" href="help-what-is-physics.html?id=ME01">Why units matter (and how unit mistakes happen)</a></li>
+                    <li><a class="dir-link" href="help-what-is-physics.html?id=ME02">Uncertainty: what it means and why it’s not “error”</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" data-target="cat-TH" type="button">
+                  <span class="dir-cat-label">Thinking like physics</span>
+                  <span class="dir-cat-chev">▾</span>
+                </button>
+                <div class="dir-cat-body" id="cat-TH">
+                  <ul class="dir-list">
+                    <li><a class="dir-link" href="help-what-is-physics.html?id=TH01">How to translate words → quantities → relationships</a></li>
+                    <li><a class="dir-link" href="help-what-is-physics.html?id=TH02">Why math is the language of physics (simple example)</a></li>
+                  </ul>
+                </div>
+              </div>
+
+            </aside>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2025 PromptSchola. All rights reserved.</footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/auth.js"></script>
+
+  <script>
+    function PS_setPostAuthRedirect() {
+      try {
+        const path = window.location.pathname + window.location.search + window.location.hash;
+        localStorage.setItem('ps_post_auth_redirect', path);
+      } catch (e) {}
     }
-  };
+    window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
 
-  let currentHelpId = null;
-  let lastAiAnswer = '';
+    // ---- Help prompt library (extend any time) ----
+    const HELP = {
+      SC01: {
+        id: 'SC01',
+        category: 'Scope & core ideas',
+        title: 'What physics studies (and why it matters)',
+        lead: 'Use this when physics feels like a random mix of formulas instead of a coherent subject.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-  // Canonical PromptSchola formatOutput (with HTML escaping + LaTeX normalization)
-  function formatOutput(text) {
-    if (!text) return '';
+Topic: What is Physics?
 
-    // 1) HTML-escape first
-    let safe = text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+Explain clearly:
+• What physics studies at its core (patterns/laws of nature)
+• The kinds of questions physics asks (how/why, relationships between quantities)
+• The role of observation, measurement, and prediction
+• 3 concrete examples of physics questions (motion, energy, electricity)
 
-    // 2) Normalize escaped LaTeX:
-    //    \\[ ... \\] → \[ ... \]
-    //    \\( ... \\) → \( ... \)
-    safe = safe
-      .replace(/\\\\\[/g, '\\[')
-      .replace(/\\\\\]/g, '\\]')
-      .replace(/\\\\\(/g, '\\(')
-      .replace(/\\\\\)/g, '\\)');
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
 
-    // 3) Convert markdown headings (### etc.) into bold lines
-    safe = safe.replace(/^#{1,6}\s+(.+)$/gm, '<strong>$1</strong>');
+      SC02: {
+        id: 'SC02',
+        category: 'Scope & core ideas',
+        title: 'Physics vs chemistry vs biology (how they differ)',
+        lead: 'Use this when you’re not sure where physics ends and other sciences begin.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-    // 4) Convert markdown bullets (- or *) into •
-    safe = safe.replace(/^\s*[-*]\s+/gm, '• ');
+Topic: Physics vs Chemistry vs Biology.
 
-    // 5) Bold and italic markdown
-    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    safe = safe.replace(/\*(.+?)\*/g, '<em>$1</em>');
+Explain:
+• What each field primarily studies
+• The level of description (fundamental laws vs molecules vs living systems)
+• How physics supports chemistry and biology (examples)
+• One analogy that makes the difference memorable
 
-    // 6) Paragraph spacing: double newlines → paragraph break
-    safe = safe.replace(/\n\n+/g, '</p><p>');
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
 
-    // 7) Remaining single newlines → <br>
-    safe = safe.replace(/\n/g, '<br>');
+      MO01: {
+        id: 'MO01',
+        category: 'Models & approximations',
+        title: 'Why physics uses models (not perfect reality)',
+        lead: 'Use this when students think “the real world is messy, so physics is fake.”',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-    // 8) Wrap in <p> tag
-    safe = '<p>' + safe + '</p>';
+Topic: Models in physics.
 
-    return safe;
-  }
+Explain:
+• What a model is (a simplified representation)
+• Why simplification is necessary (focus on dominant effects)
+• How assumptions work (what you include vs ignore)
+• When a model is “good enough” vs when it breaks
 
-  function loadHelpPromptFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id') || 'W1';
-    const entry = helpPromptLibrary[id] || helpPromptLibrary['W1'];
-    currentHelpId = entry.id;
+Include 2 examples of a useful model and what it ignores.
 
-    const categoryPill = document.getElementById('help-category-pill');
-    const titleEl = document.getElementById('help-title');
-    const leadEl = document.getElementById('help-lead');
-    const promptTextEl = document.getElementById('prompt-text');
-    const aiOutputEl = document.getElementById('ai-output');
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
 
-    if (categoryPill) {
-      categoryPill.textContent = 'Category: ' + (entry.category || 'Study help');
+      MO02: {
+        id: 'MO02',
+        category: 'Models & approximations',
+        title: 'Idealizations: point mass, frictionless, rigid body',
+        lead: 'Use this when you see idealizations in problems and don’t know what they mean.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Common idealizations in physics.
+
+Explain each:
+• Point mass
+• Frictionless surface
+• Rigid body
+• Negligible air resistance
+
+For each, state:
+• What it means
+• Why it is used
+• One real-world situation where it is reasonable (approx.) and one where it fails
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ME01: {
+        id: 'ME01',
+        category: 'Measurement & uncertainty',
+        title: 'Why units matter (and how unit mistakes happen)',
+        lead: 'Use this when students get answers that “look wrong” and don’t know why.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Units in physics.
+
+Explain:
+• Why every number in physics must come with units
+• What dimensional consistency means
+• How unit mistakes happen (mixing cm and m, hours and seconds)
+• One short real-world example where unit mistakes cause big errors
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ME02: {
+        id: 'ME02',
+        category: 'Measurement & uncertainty',
+        title: 'Uncertainty: what it means and why it’s not “error”',
+        lead: 'Use this when students think uncertainty means “I did it wrong.”',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Measurement uncertainty.
+
+Explain:
+• What uncertainty means (range of plausible values)
+• Difference between random uncertainty and systematic error
+• Why uncertainty is normal in science
+• How to report a value with uncertainty (simple, no heavy stats)
+
+Include one short example measurement and how you would report it.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      TH01: {
+        id: 'TH01',
+        category: 'Thinking like physics',
+        title: 'How to translate words → quantities → relationships',
+        lead: 'Use this when a word problem feels like “too much English.”',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Thinking like a physicist.
+
+Teach a routine:
+• Read the scenario
+• Identify quantities (what can be measured)
+• Choose a system and assumptions
+• Relate quantities using a law or definition
+• Check units and reasonableness
+
+Give one short illustrative example (no long solving).
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      TH02: {
+        id: 'TH02',
+        category: 'Thinking like physics',
+        title: 'Why math is the language of physics (simple example)',
+        lead: 'Use this when “why so much math?” becomes a blocker.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Why math is used in physics.
+
+Explain:
+• What equations do (relationships between quantities)
+• Why math makes predictions precise
+• One simple example (e.g., speed = distance/time) and what it lets you predict
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      }
+    };
+
+    let currentId = null;
+    let lastAiAnswer = '';
+    let currentPrompt = '';
+
+    const typeset = (nodes) =>
+      window.MathJax?.typesetPromise
+        ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
+        : null;
+
+    // Canonical PromptSchola formatOutput (HTML escaping + inline formatting)
+    function esc(s){
+      return String(s || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
     }
-    if (titleEl) {
-      titleEl.textContent = entry.title || 'Study help prompt';
+    function inlineFmt(s){
+      return s
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/^\s*[-*]\s+/gm,'• ');
     }
-    if (leadEl) {
-      leadEl.textContent = entry.lead || '';
+    function paras(s){
+      const x = s.replace(/\r\n/g,'\n');
+      return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
     }
-    if (promptTextEl) {
-      promptTextEl.textContent = entry.prompt || '';
-    }
-    if (aiOutputEl) {
-      aiOutputEl.textContent = 'Run with AI to see a guided explanation here.';
-    }
-
-    lastAiAnswer = '';
-  }
-
-  async function runCurrentPromptWithAI() {
-    if (!currentHelpId || !helpPromptLibrary[currentHelpId]) {
-      alert('No prompt selected yet.');
-      return;
+    function formatOutput(raw){
+      return paras(inlineFmt(esc(raw)));
     }
 
-    const prompt = helpPromptLibrary[currentHelpId].prompt;
-    const aiOutputEl = document.getElementById('ai-output');
-    if (!aiOutputEl) return;
+    function loadFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const id = (params.get('id') || 'SC01').trim();
+      const entry = HELP[id] || HELP['SC01'];
 
-    try {
-      aiOutputEl.textContent = 'Running with AI…';
+      currentId = entry.id;
+      currentPrompt = entry.prompt || '';
 
-      const res = await fetch('/api/run-step', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
-      });
+      const cat = document.getElementById('pill-category');
+      const title = document.getElementById('help-title');
+      const lead = document.getElementById('help-lead');
+      const promptPreview = document.getElementById('prompt-preview');
+      const ai = document.getElementById('ai-output');
 
-      if (!res.ok) {
-        aiOutputEl.textContent = 'There was an error contacting the AI. Please try again later.';
+      if (cat) cat.textContent = 'Category: ' + (entry.category || 'Study help');
+      if (title) title.textContent = entry.title || 'Study help';
+      if (lead) lead.textContent = entry.lead || '';
+      if (promptPreview) promptPreview.textContent = currentPrompt || '';
+      if (ai) ai.textContent = 'Run with AI to see a guided explanation here.';
+
+      lastAiAnswer = '';
+      typeset();
+    }
+
+    function copyCurrentPrompt() {
+      const prompt = (currentPrompt || '').trim();
+      if (!prompt) return alert('No prompt to copy.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      navigator.clipboard.writeText(prompt).then(() => alert('Prompt copied.')).catch(() => alert('Could not copy prompt.'));
+    }
+
+    function copyCurrentAnswer() {
+      if (!lastAiAnswer) return alert('No AI answer to copy yet. Run with AI first.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      navigator.clipboard.writeText(lastAiAnswer).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
+    }
+
+    function setRunBtnRunning(running) {
+      const btn = document.getElementById('run-btn');
+      if (!btn) return;
+      if (running) {
+        btn.dataset.prevText = btn.textContent;
+        btn.textContent = 'Running…';
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+      } else {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.prevText || 'Run with AI';
+        btn.removeAttribute('aria-busy');
+      }
+    }
+
+    function redirectToSignupForRunAI() {
+      try { PS_setPostAuthRedirect(); } catch(e){}
+      const redirectTarget = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+      window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+    }
+
+    async function runCurrentPromptWithAI() {
+      const aiOutputEl = document.getElementById('ai-output');
+      if (!aiOutputEl) return;
+
+      const prompt = (currentPrompt || '').trim();
+      if (!prompt) {
+        aiOutputEl.textContent = 'Prompt is empty. Please select a help topic.';
         return;
       }
 
-      const data = await res.json();
-      const raw = data.content || 'No response received from AI.';
-      lastAiAnswer = raw;
-      aiOutputEl.innerHTML = formatOutput(raw);
-
-      if (window.MathJax && window.MathJax.typesetPromise) {
-        MathJax.typesetPromise([aiOutputEl]).catch(err =>
-          console.error('MathJax error in response:', err)
-        );
+      // Require login (same as nano)
+      if (typeof ensureLoggedInOrRedirect === 'function') {
+        const user = await ensureLoggedInOrRedirect();
+        if (!user) return; // redirected
+      } else {
+        redirectToSignupForRunAI();
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      aiOutputEl.textContent = 'Unexpected error. Please try again.';
-    }
-  }
 
-  function copyCurrentPrompt() {
-    if (!currentHelpId || !helpPromptLibrary[currentHelpId]) {
-      alert('No prompt selected yet.');
-      return;
-    }
-    const prompt = helpPromptLibrary[currentHelpId].prompt;
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      alert('Clipboard not supported in this browser.');
-      return;
-    }
-    navigator.clipboard.writeText(prompt)
-      .then(() => { alert('Prompt copied to clipboard.'); })
-      .catch(err => {
+      const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+      if (!token) {
+        aiOutputEl.textContent = 'Session missing. Please sign in again.';
+        return;
+      }
+
+      setRunBtnRunning(true);
+
+      try {
+        aiOutputEl.textContent = 'Running with AI…';
+
+        const res = await fetch('/api/run-step', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          // Help mode bypasses nano step validation server-side
+          body: JSON.stringify({ prompt, step: 4, mode: 'help' })
+        });
+
+        const data = await res.json().catch(()=> ({}));
+
+        if (!res.ok) {
+          let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
+
+          if (data?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
+          if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+          if (data?.code === 'PROMPT_INVALID') msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(data?.details || []);
+
+          aiOutputEl.textContent = msg;
+          return;
+        }
+
+        const raw = data?.content || 'No response received from AI.';
+        lastAiAnswer = raw;
+
+        aiOutputEl.innerHTML = formatOutput(raw);
+        typeset([aiOutputEl]);
+      } catch (err) {
         console.error(err);
-        alert('Could not copy prompt. Please try again.');
+        aiOutputEl.textContent = 'Unexpected error. Please try again.';
+      } finally {
+        setRunBtnRunning(false);
+      }
+    }
+
+    function initDirectoryToggles() {
+      document.querySelectorAll('.dir-cat-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-target');
+          const body = document.getElementById(target);
+          const chev = btn.querySelector('.dir-cat-chev');
+          if (!body) return;
+
+          const open = body.style.display !== 'none';
+          body.style.display = open ? 'none' : 'block';
+          if (chev) chev.textContent = open ? '▸' : '▾';
+        });
       });
-  }
-
-  function copyCurrentAnswer() {
-    if (!lastAiAnswer) {
-      alert('No AI answer to copy yet. Run with AI first.');
-      return;
-    }
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      alert('Clipboard not supported in this browser.');
-      return;
-    }
-    navigator.clipboard.writeText(lastAiAnswer)
-      .then(() => { alert('Answer copied to clipboard.'); })
-      .catch(err => {
-        console.error(err);
-        alert('Could not copy answer. Please try again.');
-      });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // Load prompt from URL
-    loadHelpPromptFromUrl();
-
-    // Initial MathJax typeset (for any LaTeX in prompt text)
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      MathJax.typesetPromise().catch(err =>
-        console.error('MathJax initial typeset error:', err)
-      );
     }
 
-    // Update nav based on auth state
-    if (typeof updateNavUserDisplay === 'function') {
-      updateNavUserDisplay();
+    async function configureAccess() {
+      let loggedIn = false;
+      let tier = 'anon';
+
+      if (typeof getCurrentUser === 'function') {
+        try { loggedIn = !!(await getCurrentUser()); } catch (_) { loggedIn = false; }
+      }
+
+      if (loggedIn && typeof PS_getUserTier === 'function') {
+        try { tier = (await PS_getUserTier()) || 'free'; } catch (_) { tier = 'free'; }
+      }
+
+      if (loggedIn && tier === 'anon') tier = 'free';
+
+      const isPaid = tier === 'paid';
+
+      const lockedWrap = document.getElementById('help-locked-wrap');
+      const runBtn = document.getElementById('run-btn');
+      const hint = document.getElementById('hint-text');
+      const ai = document.getElementById('ai-output');
+
+      if (!isPaid) {
+        if (lockedWrap) lockedWrap.style.display = 'block';
+
+        if (runBtn) {
+          runBtn.disabled = false;
+          runBtn.textContent = loggedIn ? 'Unlock to run' : 'Sign in to run';
+          runBtn.onclick = () => {
+            if (!loggedIn) return redirectToSignupForRunAI();
+            window.location.href = '/pricing.html';
+          };
+        }
+
+        if (hint) hint.textContent = 'Tip: You can browse titles. Upgrade to run help prompts with AI.';
+        if (ai) ai.textContent = 'Upgrade to Mastery to run help prompts with AI.';
+      } else {
+        if (lockedWrap) lockedWrap.style.display = 'none';
+
+        if (runBtn) {
+          runBtn.textContent = 'Run with AI';
+          runBtn.onclick = runCurrentPromptWithAI;
+        }
+
+        if (hint) hint.textContent = 'Tip: Copy the prompt and try it after you attempt the concept on your own.';
+      }
+
+      if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
     }
 
-    const signOutBtn = document.getElementById('nav-signout-btn');
-    if (signOutBtn && typeof signOutUser === 'function') {
-      signOutBtn.addEventListener('click', signOutUser);
-    }
-  });
-</script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      initDirectoryToggles();
+      loadFromUrl();
+      await configureAccess();
 
+      window.addEventListener('popstate', loadFromUrl);
+
+      const signOutBtn = document.getElementById('nav-signout-btn');
+      if (signOutBtn && typeof signOutUser === 'function') {
+        signOutBtn.addEventListener('click', signOutUser);
+      }
+
+      typeset();
+    });
+  </script>
 </body>
 </html>
