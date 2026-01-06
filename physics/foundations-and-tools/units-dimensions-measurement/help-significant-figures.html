@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Significant Figures – Study Help · PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Targeted AI-powered study help for the nano-lesson 'Significant Figures' – clarify confusions, avoid exam traps, and strengthen your problem-solving."
+  />
+
+  <!-- ✅ Final V1.1: Inter + Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+
+      /* ✅ Final V1.1 Navy foundation */
+      --navy: #00255D;
+      --navy-strong: #001c47;
+      --navy-deep: #001833;
+      --navy-soft: rgba(0, 37, 93, 0.10);
+      --navy-soft2: rgba(0, 37, 93, 0.06);
+      --navy-border: rgba(0, 37, 93, 0.22);
+
+      /* PromptSchola spark */
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.10);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      /* ✅ Final V1.1 typography tokens */
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --fs-micro: 0.78rem;
+      --fs-ui: 0.88rem;
+      --fs-body: 1.03rem;
+      --fs-card: 0.96rem;
+      --fs-lede: 1.14rem;
+
+      --lh-body: 1.72;
+      --lh-card: 1.62;
+      --lh-tight: 1.12;
+
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2 { font-family: var(--font-heading); color: var(--text-strong); line-height: var(--lh-tight); letter-spacing: -0.02em; }
+    h3 { font-family: var(--font-heading); color: var(--text-strong); line-height: 1.15; letter-spacing: -0.01em; }
+
+    :focus-visible {
+      outline: 3px solid rgba(129, 140, 248, 0.45);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* NAV — Final V1.1 */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; gap: 1rem; }
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 40%;
+      background:
+        radial-gradient(circle at 70% 0%, rgba(168, 85, 247, 0.26), transparent 60%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+      box-shadow: 0 12px 30px rgba(0, 37, 93, 0.20);
+    }
+
+    .logo-text span:first-child {
+      display: block; font-weight: 800; font-size: 1.02rem; letter-spacing: 0.01em;
+      color: var(--text-strong); font-family: var(--font-body); line-height: 1.1;
+    }
+    .logo-text span:last-child {
+      display: block; font-size: 0.76rem; color: var(--text-subtle); font-family: var(--font-body);
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 1.3rem; font-size: var(--fs-ui); font-family: var(--font-body); }
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.92;
+      transition: opacity var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      padding: 0.25rem 0.1rem;
+      letter-spacing: -0.005em;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); transform: translateY(-1px); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: var(--fs-ui); font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.48rem 0.98rem;
+      font-size: var(--fs-ui);
+      border: 1px solid var(--navy-border);
+      background: #ffffff;
+      color: var(--navy);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center;
+      white-space: nowrap;
+      font-weight: 650;
+      letter-spacing: -0.005em;
+    }
+    .btn-pill:hover {
+      background: rgba(0, 37, 93, 0.06);
+      transform: translateY(-1px);
+      border-color: rgba(0, 37, 93, 0.34);
+      box-shadow: 0 10px 22px rgba(0, 37, 93, 0.12);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.62rem 1.32rem;
+      font-size: var(--fs-ui); font-weight: 800;
+      border: none; cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: 0 12px 26px rgba(79,70,229,0.22);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow: 0 16px 34px rgba(79,70,229,0.28);
+    }
+
+    .btn-primary[disabled], .btn-pill[disabled], .btn-ghost[disabled] {
+      opacity: 0.55; cursor: not-allowed;
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-ghost {
+      padding: 0.44rem 0.95rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.84rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
+      white-space: nowrap;
+      color: var(--text-main);
+    }
+    .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25); }
+    .btn-copy { font-size: 0.80rem; padding: 0.34rem 0.9rem; }
+
+    main { padding-bottom: 2.6rem; }
+    section { padding: 1.4rem 0; }
+
+    /* HERO — Final V1.1 navy hero */
+    .hero {
+      padding: 4.6rem 0 2.7rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.10), transparent 55%),
+        radial-gradient(circle at 82% 22%, rgba(168, 85, 247, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 78%, var(--navy-deep) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: -160px; pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.22), transparent 62%),
+        radial-gradient(circle at 92% 30%, rgba(168, 85, 247, 0.18), transparent 58%),
+        radial-gradient(circle at 50% 110%, rgba(255,255,255,0.10), transparent 62%);
+      opacity: 0.95; filter: blur(12px); z-index: 0;
+    }
+    .hero .container { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: var(--fs-micro);
+      font-weight: 900;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.92);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-kicker span.label {
+      padding: 0.18rem 0.7rem; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.10);
+      color: rgba(226, 232, 240, 0.95);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+    .hero-kicker span:not(.label) {
+      color: rgba(226, 232, 240, 0.88);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .hero-title {
+      font-size: clamp(2.35rem, 4.0vw, 3.0rem);
+      line-height: 1.07;
+      font-weight: 720;
+      margin: 0 auto 0.95rem;
+      max-width: 56rem;
+      color: #ffffff;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: var(--fs-lede);
+      max-width: 52rem;
+      color: rgba(226, 232, 240, 0.92);
+      margin: 0 auto;
+      line-height: 1.7;
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 1.05rem;
+      font-size: 0.90rem;
+      color: rgba(226, 232, 240, 0.72);
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+    .hero-breadcrumbs a { color: rgba(199, 210, 254, 0.92); text-decoration: underline; text-decoration-color: rgba(199, 210, 254, 0.35); }
+    .hero-breadcrumbs a:hover { color: #ffffff; text-decoration-color: rgba(255,255,255,0.50); }
+
+    /* Access band — match nano */
+    .access-band {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 28px;
+      padding: 1.55rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .access-band::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.20), transparent 58%);
+      filter: blur(16px);
+      opacity: 0.9;
+    }
+    .access-band-inner { position: relative; z-index: 1; display: flex; gap: 1.2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .access-band-title { font-family: var(--font-heading); font-size: 1.40rem; color: #ffffff; margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .access-band-desc { font-family: var(--font-body); color: #cbd5e1; font-size: 0.98rem; line-height: 1.65; max-width: 52rem; }
+
+    .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 900;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+    .chip.free { background: #10b981; color: #ffffff; }
+    .chip.mastery { background: #6366f1; color: #ffffff; }
+
+    /* Layout */
+    .help-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+      margin-top: 0.9rem;
+    }
+
+    /* Left: prompt + output card */
+    .help-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 1.05rem 1.15rem 1.1rem;
+    }
+
+    .help-card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .pill-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.14rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #f9fafb;
+      font-size: 0.74rem;
+      color: var(--text-subtle);
+      font-weight: 900;
+      font-family: var(--font-body);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .pill.topic {
+      border: 1px solid rgba(126, 34, 206, 0.35);
+      color: #4c1d95;
+      background: rgba(126, 34, 206, 0.06);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 900;
+      font-size: 0.8rem;
+    }
+
+    .help-title {
+      font-family: var(--font-heading);
+      font-size: 1.32rem;
+      color: var(--text-strong);
+      margin: 0.25rem 0 0.2rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .help-lead {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      max-width: 60rem;
+      letter-spacing: -0.004em;
+    }
+
+    .help-body-grid {
+      margin-top: 0.9rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.9rem;
+    }
+
+    .prompt-box {
+      border-radius: 14px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #f9fafb;
+      padding: 0.9rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
+
+    .prompt-box-header {
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-subtle);
+      margin-bottom: 0.5rem;
+      font-family: var(--font-body);
+    }
+
+    /* READ-ONLY prompt display (not editable) */
+    .prompt-preview {
+      width: 100%;
+      min-height: 170px;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-main);
+      white-space: pre-wrap;
+      user-select: text;
+    }
+
+    .ai-box {
+      border-radius: 14px;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      background: #ffffff;
+      padding: 1rem 1.1rem;
+      min-height: 160px;
+      font-size: 0.98rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.75;
+      font-family: var(--font-body);
+    }
+
+    .ai-box p { margin-bottom: 0.9rem; }
+    .ai-box ul, .ai-box ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+    .ai-box strong { font-weight: 800; color: inherit; }
+    .ai-box em { font-style: italic; }
+
+    .actions-row {
+      margin-top: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      align-items: center;
+      letter-spacing: -0.004em;
+    }
+
+    .actions-left { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+    .actions-right { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+
+    /* Right: directory (match nano Help panel look) */
+    .dir-card {
+      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(30, 58, 138, 0.22);
+      box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
+      padding: 0.95rem 1rem;
+      position: sticky;
+      top: 6rem;
+    }
+
+    .dir-title{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.12rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.32);
+      color: #1e40af;
+      background: rgba(30, 58, 138, 0.06);
+      font-size: 0.82rem;
+      font-weight: 900;
+      font-family: var(--font-body);
+      margin-bottom: 0.6rem;
+      user-select: none;
+    }
+
+    .dir-desc{
+      margin: 0.28rem 0 0.7rem;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      line-height: 1.65;
+    }
+
+    .dir-cat {
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      padding-top: 0.7rem;
+      margin-top: 0.7rem;
+    }
+    .dir-cat:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+    .dir-cat-toggle {
+      width: 100%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      padding: 0.15rem 0.1rem;
+    }
+
+    .dir-cat-label{
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      background: rgba(30, 58, 138, 0.10);
+      font-size: 0.72rem;
+      color: #1e40af;
+      font-family: var(--font-body);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .dir-cat-chev { font-size: 0.95rem; color: #4c1d95; opacity: 0.9; }
+
+    .dir-cat-body { margin-top: 0.45rem; }
+
+    /* Use the same ▶ bullets as nano help panel */
+    .dir-list { list-style: none; padding-left: 1.2rem; margin-top: 0.45rem; }
+    .dir-list li { position: relative; margin-bottom: 0.35rem; }
+    .dir-list li::before {
+      content: "▶";
+      position: absolute;
+      left: -1.1rem;
+      top: 0.18rem;
+      transform: scale(0.9);
+      transform-origin: left top;
+      color: #1e40af;
+    }
+
+    .dir-link{
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.2rem;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      background: transparent;
+      color: #1e40af;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+
+    .dir-link:hover,
+    .dir-link:focus{
+      background: rgba(30, 58, 138, 0.08);
+      color: #0b1220;
+      text-decoration: underline;
+    }
+
+    /* Locked panel — same as nano */
+    .locked-panel {
+      border-radius: 16px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.95rem 1rem;
+      color: #111827;
+      font-family: var(--font-body);
+      box-shadow: var(--shadow-card);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .locked-title { font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-strong); margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .locked-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 0.7rem; }
+    .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    footer { margin-top: auto; padding: 1.8rem 0 2.1rem; text-align: center; font-size: 0.86rem; color: var(--text-subtle); font-family: var(--font-body); letter-spacing: -0.004em; }
+
+    @media (max-width: 980px) {
+      .help-layout { grid-template-columns: minmax(0, 1fr); }
+      .dir-card { position: static; }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <div class="container">
+        <div class="nav">
+          <div class="nav-left">
+            <div class="logo-mark">P</div>
+            <div class="logo-text">
+              <span>PromptSchola</span>
+              <span>Prompt-based STEM subjects mastery</span>
+            </div>
+          </div>
+
+          <nav class="nav-links">
+            <a href="/index.html">Home</a>
+            <a href="/physics/physics.html">Physics</a>
+            <a href="/math/math.html">Math</a>
+            <a href="/chemistry/chemistry.html">Chemistry</a>
+            <a href="/biology/biology.html">Biology</a>
+            <a href="/pricing.html">Pricing</a>
+          </nav>
+
+          <div class="nav-right">
+            <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+
+            <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+              Sign In
+            </a>
+
+            <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+              Register for Free
+            </a>
+
+            <button
+              id="nav-signout-btn"
+              type="button"
+              class="btn-pill"
+              style="display:none;"
+              onclick="signOutUser && signOutUser()"
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-kicker">
+            <span class="label">Help</span>
+            <span>Physics · Foundations &amp; Tools · Units, Dimensions &amp; Measurement</span>
+          </div>
+
+          <h1 class="hero-title">Study Help: Significant Figures</h1>
+
+          <p class="hero-subtitle">
+            Targeted prompts for the exact places students get stuck: counting sig figs, zeros, rounding rules, scientific notation,
+            and avoiding “false precision” in lab and exam answers.
+          </p>
+
+          <div class="hero-breadcrumbs">
+            <a href="/physics/physics.html">Physics</a> ·
+            <a href="/physics/foundations-and-tools/foundations-and-tools.html">Foundations &amp; Tools</a> ·
+            <a href="/physics/foundations-and-tools/units-dimensions-measurement/units-dimensions-measurement.html">Dimensions &amp; Measurement</a> ·
+            <a href="nano-significant-figures.html">Nano-lesson: Significant Figures</a> ·
+            <span>Study Help</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="access-band">
+            <div class="access-band-inner">
+              <div>
+                <div class="access-band-title">Access for study help</div>
+                <div class="access-band-desc">
+                  This help page is part of paid access (Mastery). You can still browse the titles, but running prompts
+                  with AI is available to paid learners.
+                </div>
+              </div>
+              <div class="access-chips">
+                <span class="chip free">Browse titles</span>
+                <span class="chip mastery">Run with AI (Paid)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="help-locked-wrap" style="display:none;">
+        <div class="container">
+          <div class="locked-panel">
+            <div class="locked-title">Mastery feature: Study Help</div>
+            <div class="locked-desc">
+              The Significant Figures help library (prompts + guided paths) is available on Mastery.
+              Upgrade to unlock these help prompts and run them with AI.
+            </div>
+            <div class="locked-actions">
+              <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+              <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="help-layout">
+            <!-- LEFT: Prompt runner -->
+            <div class="help-card" aria-live="polite">
+              <div class="help-card-top">
+                <div>
+                  <div class="pill-row">
+                    <span class="pill">Study Help</span>
+                    <span class="pill topic">Significant Figures</span>
+                  </div>
+                  <h2 class="help-title">Pick a help prompt (right) → run it here</h2>
+                  <p class="help-lead">
+                    Click a title on the right to load a targeted prompt. Then copy it or run it with AI (Mastery).
+                    This page is designed to fix the exact mistakes that keep costing points.
+                  </p>
+                </div>
+
+                <div class="pill-row">
+                  <span class="pill">Category-based</span>
+                  <span class="pill">Exam-focused</span>
+                </div>
+              </div>
+
+              <div class="help-body-grid">
+                <div class="prompt-box">
+                  <div class="prompt-box-header">Prompt (read-only)</div>
+                  <textarea id="prompt-preview" class="prompt-preview" readonly>Choose a help topic from the directory to load a prompt here.</textarea>
+                </div>
+
+                <div id="ai-box" class="ai-box">
+                  Select a help prompt. If you’re on Mastery, click <strong>Run with AI</strong> to get an explanation tailored to you.
+                </div>
+
+                <div class="actions-row">
+                  <div class="actions-left">
+                    <button class="btn-ghost btn-copy" id="copy-prompt-btn" type="button">Copy prompt</button>
+                    <button class="btn-ghost btn-copy" id="copy-answer-btn" type="button" style="display:none;">Copy answer</button>
+                  </div>
+
+                  <div class="actions-right">
+                    <button class="btn-primary" id="run-ai-btn" type="button">Run with AI</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Directory -->
+            <aside class="dir-card" aria-label="Help directory">
+              <div class="dir-title">Help directory</div>
+              <p class="dir-desc">
+                Browse targeted help prompts. Running prompts with AI is available to Mastery learners.
+              </p>
+
+              <!-- Category 1 -->
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" type="button" data-cat="rules">
+                  <span class="dir-cat-label">Rules &amp; counting</span>
+                  <span class="dir-cat-chev">▾</span>
+                </button>
+
+                <div class="dir-cat-body" id="cat-rules">
+                  <ul class="dir-list">
+                    <li><button class="dir-link" type="button" data-id="SF01">Counting significant figures: the 4 rules you must know</button></li>
+                    <li><button class="dir-link" type="button" data-id="SF02">Zeros: leading, captive, trailing — which ones count?</button></li>
+                    <li><button class="dir-link" type="button" data-id="SF03">Scientific notation: how it makes sig figs unambiguous</button></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Category 2 -->
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" type="button" data-cat="rounding">
+                  <span class="dir-cat-label">Rounding &amp; operations</span>
+                  <span class="dir-cat-chev">▾</span>
+                </button>
+
+                <div class="dir-cat-body" id="cat-rounding">
+                  <ul class="dir-list">
+                    <li><button class="dir-link" type="button" data-id="SF04">Rounding: how to round correctly (and avoid double-rounding)</button></li>
+                    <li><button class="dir-link" type="button" data-id="SF05">Multiplication/division: sig figs rule vs decimal places</button></li>
+                    <li><button class="dir-link" type="button" data-id="SF06">Addition/subtraction: decimal place rule (why it’s different)</button></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Category 3 -->
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" type="button" data-cat="traps">
+                  <span class="dir-cat-label">Exam traps</span>
+                  <span class="dir-cat-chev">▾</span>
+                </button>
+
+                <div class="dir-cat-body" id="cat-traps">
+                  <ul class="dir-list">
+                    <li><button class="dir-link" type="button" data-id="SF07">Exact numbers vs measured numbers: what limits sig figs?</button></li>
+                    <li><button class="dir-link" type="button" data-id="SF08">Units + sig figs: why writing units doesn’t “fix” precision</button></li>
+                    <li><button class="dir-link" type="button" data-id="SF09">Calculator outputs: when NOT to copy all digits</button></li>
+                  </ul>
+                </div>
+              </div>
+
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- BATCH B continues with scripts (Supabase/auth gating + prompt map + run logic + footer) -->
+    </main>
+
+    <footer>
+      <a href="/about.html">About.</a> © 2025 PromptSchola. All rights reserved.
+    </footer>
+  </div>
+
+  <!-- Batch B will include scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/auth.js"></script>
+
+  <script>
+    /* ============================================================
+       Significant Figures — Help Page JS (Final V1.1 matched)
+       - Mirrors the style + gating logic pattern used elsewhere
+       - Browse titles for all; Run-with-AI is paid (Mastery)
+       ============================================================ */
+
+    /* Continue Learning marker */
+    (function PS_markLastLearningPage(){
+      try{
+        const p = location.pathname || '';
+        if (p === '/' || p.endsWith('/index.html') || p.endsWith('/auth.html') || p.endsWith('/pricing.html')) return;
+        const t = (document.title || '').replace(/\s+–\s+Study Help.*$/i,'').trim();
+        localStorage.setItem('ps_last_page_path', p);
+        localStorage.setItem('ps_last_page_label', t || 'Continue Learning');
+        localStorage.setItem('ps_last_seen_ts', String(Date.now()));
+      } catch(e){}
+    })();
+
+    /* Post-auth redirect helper (used by nav + locked CTAs) */
+    function PS_setPostAuthRedirect(){
+      try{
+        localStorage.setItem('ps_post_auth_redirect', location.pathname + location.search + location.hash);
+      } catch(e){}
+    }
+    window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+
+    const NANO_SLUG = 'significant-figures';
+    const TRACK_ENDPOINT = '/api/track';
+
+    const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
+    const $ = (id) => document.getElementById(id);
+
+    const typeset = (nodes) =>
+      window.MathJax?.typesetPromise
+        ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
+        : null;
+
+    /* ============================================================
+       ANON ANALYTICS (fail-open, allowlist events)
+       ============================================================ */
+    async function PS_trackAnon(event, extra){
+      try{
+        if (PS_CTX.loggedIn) return;
+        const body = Object.assign({ event, nano_slug: NANO_SLUG, is_anon: true }, extra || {});
+        fetch(TRACK_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }).catch(()=>{});
+      } catch(e){}
+    }
+
+    /* ============================================================
+       Prompt library (IDs match directory buttons)
+       ============================================================ */
+    function basePrompt(meta){
+      return `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures (measurement & reporting).
+
+Student need:
+${meta.need}
+
+Include:
+• Clear rules + short examples
+• Common mistakes + how to avoid them
+• 3 quick practice checks (with answers)
+
+Formatting rules:
+• Short paragraphs + bullet points
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math, one per line:
+\\[ x = ... \\]
+• Do NOT use markdown headings like # or ###.`;
+    }
+
+    const HELP_PROMPTS = {
+      SF01: basePrompt({
+        need: `Explain how to count significant figures using the 4 core rules.
+Cover non-zero digits, leading zeros, captive zeros, and trailing zeros.
+Give at least 8 examples with the correct count (mix integers and decimals).`
+      }),
+
+      SF02: basePrompt({
+        need: `I keep getting confused by zeros. Explain leading vs captive vs trailing zeros.
+Include examples like 0.00450, 1002, 1500, 1500., 1.500e3, 0.000, 10.0.`
+      }),
+
+      SF03: basePrompt({
+        need: `Show how scientific notation removes ambiguity in significant figures.
+Explain why 1500 could mean different things and how to write it clearly.
+Give 6 examples converting between standard form and scientific notation with correct sig figs.`
+      }),
+
+      SF04: basePrompt({
+        need: `Teach rounding correctly for significant figures (including edge cases).
+Explain how to avoid double-rounding and when to keep “guard digits”.
+Give a mini checklist students can apply in exams.`
+      }),
+
+      SF05: basePrompt({
+        need: `Explain the sig-fig rule for multiplication and division.
+Provide examples where one factor has fewer sig figs than the other.
+Include 5 worked examples, then 5 short practice questions with answers.`
+      }),
+
+      SF06: basePrompt({
+        need: `Explain the decimal-place rule for addition and subtraction (and why it’s not the same as sig-fig count).
+Give 5 worked examples and 5 short practice questions (with answers).`
+      }),
+
+      SF07: basePrompt({
+        need: `Explain exact numbers vs measured numbers.
+Include: counting objects, defined conversion factors, and “given constants”.
+Show how exact numbers affect sig figs in calculations with examples.`
+      }),
+
+      SF08: basePrompt({
+        need: `Explain how units and sig figs work together.
+Show why units don’t “fix” precision and how to report final answers with correct units and sig figs.
+Include examples from physics (speed, density, acceleration).`
+      }),
+
+      SF09: basePrompt({
+        need: `I keep copying too many digits from my calculator. Explain why that causes false precision.
+Teach a safe workflow: keep extra digits during steps, round only at the end, and report final properly.
+Include 3 realistic physics-style examples.`
+      })
+    };
+
+    /* ============================================================
+       UI helpers
+       ============================================================ */
+    let lastAnswerText = '';
+    let activePromptId = null;
+
+    function setPrompt(id){
+      const p = HELP_PROMPTS[id];
+      const box = $('prompt-preview');
+      if (!box) return;
+
+      activePromptId = id || null;
+      lastAnswerText = '';
+      $('copy-answer-btn').style.display = 'none';
+
+      box.value = p || 'Prompt not found.';
+      $('ai-box').textContent = 'Ready. Click “Run with AI” to get a targeted explanation.';
+
+      typeset([box]);
+      PS_trackAnon('HELP_TOPIC_SELECTED', { help_id: id });
+    }
+
+    async function copyText(t, okMsg, failMsg){
+      if (!t) return alert(failMsg || 'Nothing to copy.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
+      catch { alert(failMsg || 'Could not copy.'); }
+    }
+
+    function copyPrompt(){
+      const box = $('prompt-preview');
+      return copyText(box?.value, 'Prompt copied.', 'No prompt to copy yet.');
+    }
+
+    function copyAnswer(){
+      return copyText(lastAnswerText, 'Answer copied.', 'No AI answer to copy yet.');
+    }
+
+    function esc(s){
+      return String(s || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+    }
+
+    function inlineFmt(s){
+      return s
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/^\s*[-*]\s+/gm,'• ');
+    }
+
+    function paras(s){
+      const x = s.replace(/\r\n/g,'\n');
+      return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+    }
+
+    function formatOutput(raw){
+      return paras(inlineFmt(esc(raw)));
+    }
+
+    function setRunBtnRunning(running){
+      const btn = $('run-ai-btn');
+      if (!btn) return;
+
+      if (running){
+        btn.dataset.prevText = btn.textContent;
+        btn.textContent = 'Running…';
+        btn.disabled = true;
+        btn.setAttribute('aria-busy','true');
+      } else {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.prevText || btn.textContent;
+        btn.removeAttribute('aria-busy');
+      }
+    }
+
+    /* ============================================================
+       Gating behavior (Help pages are paid for Run-with-AI)
+       ============================================================ */
+    function configureHelpAccess({ loggedIn, tier }){
+      const isPaid = tier === 'paid';
+
+      PS_CTX.loggedIn = !!loggedIn;
+      PS_CTX.tier = tier || (loggedIn ? 'free' : 'anon');
+      PS_CTX.isPaid = !!isPaid;
+
+      // Show locked panel for non-paid
+      const lockedWrap = $('help-locked-wrap');
+      if (lockedWrap) lockedWrap.style.display = isPaid ? 'none' : 'block';
+
+      // Run button behavior
+      const runBtn = $('run-ai-btn');
+      if (runBtn){
+        if (isPaid){
+          runBtn.disabled = false;
+          runBtn.title = '';
+        } else {
+          runBtn.disabled = false; // clickable; we route to pricing/sign-in
+          runBtn.title = 'Mastery required to run with AI.';
+        }
+      }
+
+      // Directory always browseable (titles clickable) — but run requires paid.
+    }
+
+    function redirectToPricingOrAuth(reason){
+      try { PS_setPostAuthRedirect(); } catch(e){}
+      // If anon: take to signup; if free: pricing
+      if (!PS_CTX.loggedIn){
+        const redirectTarget = encodeURIComponent(location.href);
+        location.href = `/auth.html?mode=signup&reason=${encodeURIComponent(reason || 'help-ai')}&redirect=${redirectTarget}`;
+      } else {
+        location.href = '/pricing.html';
+      }
+    }
+
+    /* ============================================================
+       Run-with-AI (paid only)
+       ============================================================ */
+    async function runWithAI(){
+      const box = $('prompt-preview');
+      const prompt = (box?.value || '').trim();
+
+      if (!prompt || prompt.startsWith('Choose a help topic')){
+        alert('Pick a help topic first.');
+        return;
+      }
+
+      if (!PS_CTX.isPaid){
+        PS_trackAnon('HELP_RUN_AI_BLOCKED', { help_id: activePromptId || null });
+        redirectToPricingOrAuth('help-run-ai');
+        return;
+      }
+
+      // Paid: must be logged in
+      if (typeof ensureLoggedInOrRedirect === 'function'){
+        const user = await ensureLoggedInOrRedirect();
+        if (!user) return;
+      } else {
+        redirectToPricingOrAuth('help-run-ai');
+        return;
+      }
+
+      const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+      if (!token){
+        $('ai-box').textContent = 'Session missing. Please sign in again.';
+        return;
+      }
+
+      setRunBtnRunning(true);
+
+      try{
+        $('ai-box').textContent = 'Running with AI…';
+
+        const res = await fetch('/api/run-step', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            prompt,
+            step: 0,
+            nano_slug: NANO_SLUG,
+            mode: 'help',
+            help_id: activePromptId || null
+          })
+        });
+
+        const data = await res.json().catch(()=> ({}));
+
+        if (!res.ok){
+          let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
+          if (data?.code === 'PAYWALL') msg = 'This help page requires Mastery (paid) access.';
+          if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+          if (data?.code === 'PROMPT_INVALID') msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(data?.details || []);
+          $('ai-box').textContent = msg;
+          return;
+        }
+
+        const raw = data?.content || 'No response received from AI.';
+        lastAnswerText = raw;
+
+        $('ai-box').innerHTML = formatOutput(raw);
+        $('copy-answer-btn').style.display = 'inline-flex';
+        typeset([$('ai-box')]);
+
+      } catch(err){
+        console.error(err);
+        $('ai-box').textContent = 'Unexpected error. Please try again.';
+      } finally {
+        setRunBtnRunning(false);
+      }
+    }
+
+    /* ============================================================
+       Directory collapse behavior (simple + stable)
+       ============================================================ */
+    function toggleCategory(btn){
+      const cat = btn.getAttribute('data-cat');
+      const body = document.getElementById(`cat-${cat}`);
+      if (!body) return;
+
+      const chev = btn.querySelector('.dir-cat-chev');
+      const open = body.style.display !== 'none';
+
+      body.style.display = open ? 'none' : 'block';
+      if (chev) chev.textContent = open ? '▸' : '▾';
+    }
+
+    /* ============================================================
+       Boot
+       ============================================================ */
+    document.addEventListener('DOMContentLoaded', async () => {
+      typeset();
+
+      if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+      let loggedIn = false;
+      let tier = 'anon';
+
+      if (typeof getCurrentUser === 'function'){
+        try { loggedIn = !!(await getCurrentUser()); }
+        catch(e){ loggedIn = false; }
+      }
+
+      if (loggedIn && typeof PS_getUserTier === 'function'){
+        try { tier = (await PS_getUserTier()) || 'free'; }
+        catch(e){ tier = 'free'; }
+      }
+
+      if (loggedIn && tier === 'anon') tier = 'free';
+      configureHelpAccess({ loggedIn, tier });
+
+      // Wire directory buttons
+      document.querySelectorAll('.dir-link[data-id]').forEach((btn) => {
+        btn.addEventListener('click', () => setPrompt(btn.getAttribute('data-id')));
+      });
+
+      // Category toggles
+      document.querySelectorAll('.dir-cat-toggle[data-cat]').forEach((btn) => {
+        btn.addEventListener('click', () => toggleCategory(btn));
+      });
+
+      // Default: open all categories
+      ['rules','rounding','traps'].forEach((c) => {
+        const body = document.getElementById(`cat-${c}`);
+        if (body) body.style.display = 'block';
+      });
+
+      // Actions
+      $('copy-prompt-btn')?.addEventListener('click', () => copyPrompt());
+      $('copy-answer-btn')?.addEventListener('click', () => copyAnswer());
+      $('run-ai-btn')?.addEventListener('click', () => runWithAI());
+
+      // URL deep-linking: ?id=SF02
+      try{
+        const params = new URLSearchParams(location.search || '');
+        const id = (params.get('id') || '').trim();
+        if (id && HELP_PROMPTS[id]){
+          setPrompt(id);
+          // scroll to prompt card on narrow screens
+          if (window.innerWidth < 980){
+            document.querySelector('.help-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      } catch(e){}
+
+      // Basic anon tracking
+      PS_trackAnon('PAGE_VIEW');
+
+      document.addEventListener('click', (ev) => {
+        try{
+          if (PS_CTX.loggedIn) return;
+          const a = ev.target?.closest ? ev.target.closest('a') : null;
+          if (!a) return;
+          const href = (a.getAttribute('href') || '').trim();
+          if (!href) return;
+
+          if (href.includes('/pricing.html')) PS_trackAnon('PRICING_CLICK');
+          else if (href.includes('/auth.html')) PS_trackAnon('SIGNUP_CLICK');
+        } catch(e){}
+      }, true);
+    });
+  </script>
+</body>
+</html>
+
