@@ -695,8 +695,8 @@
           <h1 class="hero-title">Study Help: Significant Figures</h1>
 
           <p class="hero-subtitle">
-            Targeted prompts for the exact places students get stuck: counting sig figs, zeros, rounding rules, scientific notation,
-            and avoiding “false precision” in lab and exam answers.
+            Targeted prompts for the exact places students get stuck: leading zeros, trailing zeros,
+            scientific notation, rounding rules, and keeping results consistent across multi-step calculations.
           </p>
 
           <div class="hero-breadcrumbs">
@@ -732,10 +732,9 @@
       <section id="help-locked-wrap" style="display:none;">
         <div class="container">
           <div class="locked-panel">
-            <div class="locked-title">Mastery feature: Study Help</div>
+            <div class="locked-title">Mastery feature</div>
             <div class="locked-desc">
-              The Significant Figures help library (prompts + guided paths) is available on Mastery.
-              Upgrade to unlock these help prompts and run them with AI.
+              The Study Help prompts are available on Mastery. Upgrade to unlock guided help paths and “Run with AI”.
             </div>
             <div class="locked-actions">
               <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
@@ -748,101 +747,129 @@
       <section>
         <div class="container">
           <div class="help-layout">
-            <!-- LEFT: Prompt runner -->
+            <!-- LEFT -->
             <div class="help-card" aria-live="polite">
               <div class="help-card-top">
-                <div>
-                  <div class="pill-row">
-                    <span class="pill">Study Help</span>
-                    <span class="pill topic">Significant Figures</span>
-                  </div>
-                  <h2 class="help-title">Pick a help prompt (right) → run it here</h2>
-                  <p class="help-lead">
-                    Click a title on the right to load a targeted prompt. Then copy it or run it with AI (Mastery).
-                    This page is designed to fix the exact mistakes that keep costing points.
-                  </p>
+                <div class="pill-row">
+                  <span class="pill">Study help</span>
+                  <span class="pill topic">Significant Figures</span>
                 </div>
 
                 <div class="pill-row">
-                  <span class="pill">Category-based</span>
-                  <span class="pill">Exam-focused</span>
+                  <span class="pill" id="help-mode-pill">Browse</span>
                 </div>
               </div>
 
+              <h2 class="help-title">Pick a help prompt, then run it with AI</h2>
+              <p class="help-lead">
+                Use this page when your answer is “numerically right” but marked wrong for sig figs, rounding,
+                or reporting. Click a help title on the right to load the exact prompt on the left.
+              </p>
+
               <div class="help-body-grid">
                 <div class="prompt-box">
-                  <div class="prompt-box-header">Prompt (read-only)</div>
-                  <textarea id="prompt-preview" class="prompt-preview" readonly>Choose a help topic from the directory to load a prompt here.</textarea>
+                  <div class="prompt-box-header">Selected prompt (read-only)</div>
+                  <div class="prompt-preview" id="prompt-preview">
+Select a help topic on the right to load its prompt here.
+                  </div>
                 </div>
 
-                <div id="ai-box" class="ai-box">
-                  Select a help prompt. If you’re on Mastery, click <strong>Run with AI</strong> to get an explanation tailored to you.
+                <div class="ai-box" id="ai-box">
+                  <p style="color:#6b7280;">
+                    AI output will appear here after you run a prompt (Mastery only).
+                  </p>
+                </div>
+              </div>
+
+              <div class="actions-row">
+                <div class="actions-left">
+                  <button class="btn-ghost btn-copy" id="copy-prompt-btn" type="button">Copy prompt</button>
+                  <button class="btn-ghost btn-copy" id="copy-answer-btn" type="button" style="display:none;">Copy answer</button>
                 </div>
 
-                <div class="actions-row">
-                  <div class="actions-left">
-                    <button class="btn-ghost btn-copy" id="copy-prompt-btn" type="button">Copy prompt</button>
-                    <button class="btn-ghost btn-copy" id="copy-answer-btn" type="button" style="display:none;">Copy answer</button>
-                  </div>
-
-                  <div class="actions-right">
-                    <button class="btn-primary" id="run-ai-btn" type="button">Run with AI</button>
-                  </div>
+                <div class="actions-right">
+                  <button class="btn-primary" id="run-ai-btn" type="button">Run with AI</button>
                 </div>
               </div>
             </div>
 
-            <!-- RIGHT: Directory -->
-            <aside class="dir-card" aria-label="Help directory">
-              <div class="dir-title">Help directory</div>
-              <p class="dir-desc">
-                Browse targeted help prompts. Running prompts with AI is available to Mastery learners.
-              </p>
+            <!-- RIGHT -->
+            <aside class="dir-card" aria-label="Help topics directory">
+              <div class="dir-title">Deepen your understanding</div>
+              <div class="dir-desc">
+                Browse the help topics below. Mastery unlocks “Run with AI” for these prompts.
+              </div>
 
               <!-- Category 1 -->
               <div class="dir-cat">
-                <button class="dir-cat-toggle" type="button" data-cat="rules">
-                  <span class="dir-cat-label">Rules &amp; counting</span>
-                  <span class="dir-cat-chev">▾</span>
+                <button class="dir-cat-toggle" type="button" data-cat="cat1" aria-expanded="true">
+                  <span class="dir-cat-label">Confusions &amp; look-alikes</span>
+                  <span class="dir-cat-chev" aria-hidden="true">▾</span>
                 </button>
-
-                <div class="dir-cat-body" id="cat-rules">
+                <div class="dir-cat-body" id="cat1">
                   <ul class="dir-list">
-                    <li><button class="dir-link" type="button" data-id="SF01">Counting significant figures: the 4 rules you must know</button></li>
-                    <li><button class="dir-link" type="button" data-id="SF02">Zeros: leading, captive, trailing — which ones count?</button></li>
-                    <li><button class="dir-link" type="button" data-id="SF03">Scientific notation: how it makes sig figs unambiguous</button></li>
+                    <li><button class="dir-link" type="button" data-id="CL01">Sig figs vs decimal places: what’s the difference and when each matters</button></li>
+                    <li><button class="dir-link" type="button" data-id="CL02">Exact numbers vs measured numbers (and why they don’t limit sig figs)</button></li>
+                    <li><button class="dir-link" type="button" data-id="CL03">Accuracy/precision vs significant figures: why they’re related but not identical</button></li>
                   </ul>
                 </div>
               </div>
 
               <!-- Category 2 -->
               <div class="dir-cat">
-                <button class="dir-cat-toggle" type="button" data-cat="rounding">
-                  <span class="dir-cat-label">Rounding &amp; operations</span>
-                  <span class="dir-cat-chev">▾</span>
+                <button class="dir-cat-toggle" type="button" data-cat="cat2" aria-expanded="true">
+                  <span class="dir-cat-label">Tricky areas &amp; exam traps</span>
+                  <span class="dir-cat-chev" aria-hidden="true">▾</span>
                 </button>
-
-                <div class="dir-cat-body" id="cat-rounding">
+                <div class="dir-cat-body" id="cat2">
                   <ul class="dir-list">
-                    <li><button class="dir-link" type="button" data-id="SF04">Rounding: how to round correctly (and avoid double-rounding)</button></li>
-                    <li><button class="dir-link" type="button" data-id="SF05">Multiplication/division: sig figs rule vs decimal places</button></li>
-                    <li><button class="dir-link" type="button" data-id="SF06">Addition/subtraction: decimal place rule (why it’s different)</button></li>
+                    <li><button class="dir-link" type="button" data-id="ET01">Zeros: leading, captive, and trailing (and how to tell which count)</button></li>
+                    <li><button class="dir-link" type="button" data-id="ET02">Scientific notation: how it clarifies sig figs and avoids “zero confusion”</button></li>
+                    <li><button class="dir-link" type="button" data-id="ET03">Rounding at the end vs rounding every step (and how it can break answers)</button></li>
                   </ul>
                 </div>
               </div>
 
               <!-- Category 3 -->
               <div class="dir-cat">
-                <button class="dir-cat-toggle" type="button" data-cat="traps">
-                  <span class="dir-cat-label">Exam traps</span>
-                  <span class="dir-cat-chev">▾</span>
+                <button class="dir-cat-toggle" type="button" data-cat="cat3" aria-expanded="true">
+                  <span class="dir-cat-label">Common mistakes</span>
+                  <span class="dir-cat-chev" aria-hidden="true">▾</span>
                 </button>
-
-                <div class="dir-cat-body" id="cat-traps">
+                <div class="dir-cat-body" id="cat3">
                   <ul class="dir-list">
-                    <li><button class="dir-link" type="button" data-id="SF07">Exact numbers vs measured numbers: what limits sig figs?</button></li>
-                    <li><button class="dir-link" type="button" data-id="SF08">Units + sig figs: why writing units doesn’t “fix” precision</button></li>
-                    <li><button class="dir-link" type="button" data-id="SF09">Calculator outputs: when NOT to copy all digits</button></li>
+                    <li><button class="dir-link" type="button" data-id="CM01">Using the wrong rule: add/subtract vs multiply/divide sig-fig rule</button></li>
+                    <li><button class="dir-link" type="button" data-id="CM02">Reporting too many digits (false precision) or too few (unnecessary rounding)</button></li>
+                    <li><button class="dir-link" type="button" data-id="CM03">Not marking uncertainty or not matching digits to uncertainty</button></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Category 4 -->
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" type="button" data-cat="cat4" aria-expanded="true">
+                  <span class="dir-cat-label">When you feel stuck</span>
+                  <span class="dir-cat-chev" aria-hidden="true">▾</span>
+                </button>
+                <div class="dir-cat-body" id="cat4">
+                  <ul class="dir-list">
+                    <li><button class="dir-link" type="button" data-id="ST01">A 20-second checklist to decide sig figs in any calculation</button></li>
+                    <li><button class="dir-link" type="button" data-id="ST02">How to keep guard digits and round correctly (without “cheating”)</button></li>
+                    <li><button class="dir-link" type="button" data-id="ST03">Unit sanity + sig figs: catching mistakes before you submit</button></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Category 5 -->
+              <div class="dir-cat">
+                <button class="dir-cat-toggle" type="button" data-cat="cat5" aria-expanded="true">
+                  <span class="dir-cat-label">Concept bridges</span>
+                  <span class="dir-cat-chev" aria-hidden="true">▾</span>
+                </button>
+                <div class="dir-cat-body" id="cat5">
+                  <ul class="dir-list">
+                    <li><button class="dir-link" type="button" data-id="BR01">Sig figs and uncertainty: matching reported digits to measurement resolution</button></li>
+                    <li><button class="dir-link" type="button" data-id="BR02">Propagation idea (intro): why multiplication can “amplify” uncertainty</button></li>
                   </ul>
                 </div>
               </div>
@@ -851,8 +878,6 @@
           </div>
         </div>
       </section>
-
-      <!-- BATCH B continues with scripts (Supabase/auth gating + prompt map + run logic + footer) -->
     </main>
 
     <footer>
@@ -860,30 +885,17 @@
     </footer>
   </div>
 
-  <!-- Batch B will include scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/auth.js"></script>
 
   <script>
     /* ============================================================
-       Significant Figures — Help Page JS (Final V1.1 matched)
-       - Mirrors the style + gating logic pattern used elsewhere
-       - Browse titles for all; Run-with-AI is paid (Mastery)
+       Significant Figures — Study Help JS (matches help template)
+       - Paid-only Run with AI
+       - Browse titles for everyone
+       - Uses /api/run-step with mode:'help'
        ============================================================ */
 
-    /* Continue Learning marker */
-    (function PS_markLastLearningPage(){
-      try{
-        const p = location.pathname || '';
-        if (p === '/' || p.endsWith('/index.html') || p.endsWith('/auth.html') || p.endsWith('/pricing.html')) return;
-        const t = (document.title || '').replace(/\s+–\s+Study Help.*$/i,'').trim();
-        localStorage.setItem('ps_last_page_path', p);
-        localStorage.setItem('ps_last_page_label', t || 'Continue Learning');
-        localStorage.setItem('ps_last_seen_ts', String(Date.now()));
-      } catch(e){}
-    })();
-
-    /* Post-auth redirect helper (used by nav + locked CTAs) */
     function PS_setPostAuthRedirect(){
       try{
         localStorage.setItem('ps_post_auth_redirect', location.pathname + location.search + location.hash);
@@ -902,119 +914,264 @@
         ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
         : null;
 
-    /* ============================================================
-       ANON ANALYTICS (fail-open, allowlist events)
-       ============================================================ */
-    async function PS_trackAnon(event, extra){
+    async function PS_trackAnon(event){
       try{
         if (PS_CTX.loggedIn) return;
-        const body = Object.assign({ event, nano_slug: NANO_SLUG, is_anon: true }, extra || {});
         fetch(TRACK_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
+          body: JSON.stringify({ event, nano_slug: NANO_SLUG, is_anon: true })
         }).catch(()=>{});
       } catch(e){}
     }
 
-    /* ============================================================
-       Prompt library (IDs match directory buttons)
-       ============================================================ */
-    function basePrompt(meta){
-      return `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+    const lastAnswer = { text: '' };
 
-Topic: Significant figures (measurement & reporting).
+    const PROMPTS = {
+      CL01: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-Student need:
-${meta.need}
+Topic: Significant figures.
 
-Include:
-• Clear rules + short examples
-• Common mistakes + how to avoid them
-• 3 quick practice checks (with answers)
+Help focus: Sig figs vs decimal places.
+
+Explain:
+• What significant figures measure (precision of measurement)
+• What decimal places measure (place value precision after addition/subtraction)
+• When to use each rule (addition/subtraction vs multiplication/division)
+• 6 quick examples that mix both kinds of operations (show the correct rounding decision, not long arithmetic)
 
 Formatting rules:
 • Short paragraphs + bullet points
 • Bold key terms sparingly
-• If you include equations, use LaTeX display math, one per line:
-\\[ x = ... \\]
-• Do NOT use markdown headings like # or ###.`;
-    }
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`,
+      CL02: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-    const HELP_PROMPTS = {
-      SF01: basePrompt({
-        need: `Explain how to count significant figures using the 4 core rules.
-Cover non-zero digits, leading zeros, captive zeros, and trailing zeros.
-Give at least 8 examples with the correct count (mix integers and decimals).`
-      }),
+Topic: Significant figures.
 
-      SF02: basePrompt({
-        need: `I keep getting confused by zeros. Explain leading vs captive vs trailing zeros.
-Include examples like 0.00450, 1002, 1500, 1500., 1.500e3, 0.000, 10.0.`
-      }),
+Help focus: Exact numbers vs measured numbers.
 
-      SF03: basePrompt({
-        need: `Show how scientific notation removes ambiguity in significant figures.
-Explain why 1500 could mean different things and how to write it clearly.
-Give 6 examples converting between standard form and scientific notation with correct sig figs.`
-      }),
+Explain:
+• What counts as an exact number (counting, definitions, conversion factors that are defined)
+• Why exact numbers do NOT limit sig figs
+• How to identify the limiting measured value in a multi-step calculation
+• 5 examples (including: 12 eggs, 1 inch = 2.54 cm, counting trials, and a measured length)
 
-      SF04: basePrompt({
-        need: `Teach rounding correctly for significant figures (including edge cases).
-Explain how to avoid double-rounding and when to keep “guard digits”.
-Give a mini checklist students can apply in exams.`
-      }),
+Formatting rules:
+• Short paragraphs + bullet points
+• Bold key terms sparingly
+• Use LaTeX display math for any equations
+• Do NOT use markdown headings like # or ###.`,
+      CL03: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-      SF05: basePrompt({
-        need: `Explain the sig-fig rule for multiplication and division.
-Provide examples where one factor has fewer sig figs than the other.
-Include 5 worked examples, then 5 short practice questions with answers.`
-      }),
+Topic: Significant figures.
 
-      SF06: basePrompt({
-        need: `Explain the decimal-place rule for addition and subtraction (and why it’s not the same as sig-fig count).
-Give 5 worked examples and 5 short practice questions (with answers).`
-      }),
+Help focus: Sig figs vs accuracy/precision.
 
-      SF07: basePrompt({
-        need: `Explain exact numbers vs measured numbers.
-Include: counting objects, defined conversion factors, and “given constants”.
-Show how exact numbers affect sig figs in calculations with examples.`
-      }),
+Explain:
+• How sig figs relate to measurement resolution (instrument limits)
+• Why many sig figs does NOT guarantee accuracy
+• The difference between systematic vs random error (brief)
+• Give 2 short scenarios where sig figs are the same but accuracy differs
+• Give 1 scenario where sig figs differ but the “truer” value has fewer digits
 
-      SF08: basePrompt({
-        need: `Explain how units and sig figs work together.
-Show why units don’t “fix” precision and how to report final answers with correct units and sig figs.
-Include examples from physics (speed, density, acceleration).`
-      }),
+Formatting rules:
+• Short paragraphs + bullet points
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      ET01: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
 
-      SF09: basePrompt({
-        need: `I keep copying too many digits from my calculator. Explain why that causes false precision.
-Teach a safe workflow: keep extra digits during steps, round only at the end, and report final properly.
-Include 3 realistic physics-style examples.`
-      })
+Topic: Significant figures.
+
+Help focus: Zeros (leading/captive/trailing).
+
+Teach the rules with clarity:
+• Leading zeros never count
+• Captive zeros always count
+• Trailing zeros count only if a decimal is shown (or clarified with scientific notation)
+
+Provide:
+• A simple decision tree students can memorize
+• 10 examples (include 0.00450, 1200, 1200., 1200.0, 1.200×10^3, 100.05, 0.0100)
+
+Formatting rules:
+• Bullets + clean spacing
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      ET02: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: Scientific notation.
+
+Explain:
+• Why scientific notation is the cleanest way to show intended sig figs
+• How moving the decimal does NOT change sig figs (only the written form)
+• How to express ambiguous numbers like 1200 with 2 vs 3 vs 4 sig figs using scientific notation
+
+Give:
+• 8 examples converting between standard and scientific notation, explicitly stating sig figs each time
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      ET03: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: Rounding strategy (end vs each step).
+
+Explain:
+• Why rounding every step can drift results
+• What “guard digits” are
+• A practical rule: keep extra digits during work, round at the end to the correct rule
+• Show 2 worked mini-examples where early rounding changes the final rounded answer (keep arithmetic simple)
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      CM01: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: Picking the right rule.
+
+Create:
+• A clear table of which operations use sig figs vs decimal places
+• 6 practice items (mixed add/subtract/multiply/divide)
+• Provide answers with 1–2 sentence explanations of the rounding choice (not long arithmetic)
+
+Formatting rules:
+• Bullets + numbering
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      CM02: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: False precision vs over-rounding.
+
+Explain:
+• What false precision is (too many digits)
+• What over-rounding is (too few digits)
+• How to report results clearly (with units) and match context (lab vs homework)
+
+Give:
+• 6 “fix this report” examples where the student wrote a result incorrectly; rewrite it correctly and explain why.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      CM03: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: Matching uncertainty to reported digits.
+
+Explain:
+• The rule: uncertainty usually has 1–2 sig figs; the value is rounded to the same decimal place as the uncertainty
+• Provide 6 examples converting “raw” values to properly reported value ± uncertainty
+• Include at least 2 examples in scientific notation
+
+Formatting rules:
+• Bullets + clean spacing
+• Bold key terms sparingly
+• Use LaTeX display math when showing ± forms
+• Do NOT use markdown headings like # or ###.`,
+      ST01: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: A fast checklist.
+
+Create a short checklist that decides:
+• Is it counting/defined? (exact)
+• Is it measured? (limits)
+• What operation type? (add/sub vs mult/div)
+• What is the limiting measurement?
+• When do I round?
+
+Then give 8 quick “decide only” items: students only state how many sig figs / decimal places the final should have (no arithmetic).
+
+Formatting rules:
+• Bullets + numbering
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      ST02: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: Guard digits.
+
+Explain:
+• What guard digits are
+• How many extra digits to keep during intermediate steps (simple rule of thumb)
+• When to round, and how to avoid “double rounding”
+
+Provide:
+• 5 short examples where intermediate rounding would mislead, and show the correct approach.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      ST03: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: Units + sig figs.
+
+Explain:
+• How unit checks catch magnitude errors
+• Why sig figs should not be used to “fix” a unit mistake
+• Provide 6 examples where the unit check reveals the problem, then show the correct rounding after fixing units
+
+Formatting rules:
+• Bullets + clean spacing
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`,
+      BR01: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: Sig figs + uncertainty.
+
+Explain:
+• How instrument resolution sets uncertainty
+• How that maps to sig figs (reported digits)
+• Give a mini “lab style” example: measure a length several times, report mean ± uncertainty, then report with correct sig figs
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Use LaTeX display math for mean ± uncertainty
+• Do NOT use markdown headings like # or ###.`,
+      BR02: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures.
+
+Help focus: Propagation idea (intro).
+
+Explain conceptually (no heavy calculus):
+• Why multiplication/division tends to combine relative uncertainties
+• Why addition/subtraction tends to combine absolute uncertainties
+• Provide 4 simple numeric examples (no long arithmetic) illustrating the difference.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
     };
 
-    /* ============================================================
-       UI helpers
-       ============================================================ */
-    let lastAnswerText = '';
-    let activePromptId = null;
-
-    function setPrompt(id){
-      const p = HELP_PROMPTS[id];
+    function setSelected(id){
       const box = $('prompt-preview');
       if (!box) return;
-
-      activePromptId = id || null;
-      lastAnswerText = '';
-      $('copy-answer-btn').style.display = 'none';
-
-      box.value = p || 'Prompt not found.';
-      $('ai-box').textContent = 'Ready. Click “Run with AI” to get a targeted explanation.';
-
+      box.textContent = PROMPTS[id] || 'Prompt not found.';
       typeset([box]);
-      PS_trackAnon('HELP_TOPIC_SELECTED', { help_id: id });
+      PS_trackAnon('HELP_PROMPT_SELECTED');
     }
 
     async function copyText(t, okMsg, failMsg){
@@ -1024,42 +1181,28 @@ Include 3 realistic physics-style examples.`
       catch { alert(failMsg || 'Could not copy.'); }
     }
 
-    function copyPrompt(){
-      const box = $('prompt-preview');
-      return copyText(box?.value, 'Prompt copied.', 'No prompt to copy yet.');
-    }
-
-    function copyAnswer(){
-      return copyText(lastAnswerText, 'Answer copied.', 'No AI answer to copy yet.');
-    }
-
-    function esc(s){
-      return String(s || '')
+    function formatOutput(raw){
+      const esc = (s) => String(s || '')
         .replace(/&/g,'&amp;')
         .replace(/</g,'&lt;')
         .replace(/>/g,'&gt;');
-    }
 
-    function inlineFmt(s){
-      return s
+      const inlineFmt = (s) => s
         .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
         .replace(/\*(.+?)\*/g,'<em>$1</em>')
         .replace(/^\s*[-*]\s+/gm,'• ');
-    }
 
-    function paras(s){
-      const x = s.replace(/\r\n/g,'\n');
-      return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
-    }
+      const paras = (s) => {
+        const x = s.replace(/\r\n/g,'\n');
+        return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+      };
 
-    function formatOutput(raw){
       return paras(inlineFmt(esc(raw)));
     }
 
-    function setRunBtnRunning(running){
+    function setRunState(running){
       const btn = $('run-ai-btn');
       if (!btn) return;
-
       if (running){
         btn.dataset.prevText = btn.textContent;
         btn.textContent = 'Running…';
@@ -1067,88 +1210,46 @@ Include 3 realistic physics-style examples.`
         btn.setAttribute('aria-busy','true');
       } else {
         btn.disabled = false;
-        btn.textContent = btn.dataset.prevText || btn.textContent;
+        btn.textContent = btn.dataset.prevText || 'Run with AI';
         btn.removeAttribute('aria-busy');
       }
     }
 
-    /* ============================================================
-       Gating behavior (Help pages are paid for Run-with-AI)
-       ============================================================ */
-    function configureHelpAccess({ loggedIn, tier }){
-      const isPaid = tier === 'paid';
-
-      PS_CTX.loggedIn = !!loggedIn;
-      PS_CTX.tier = tier || (loggedIn ? 'free' : 'anon');
-      PS_CTX.isPaid = !!isPaid;
-
-      // Show locked panel for non-paid
-      const lockedWrap = $('help-locked-wrap');
-      if (lockedWrap) lockedWrap.style.display = isPaid ? 'none' : 'block';
-
-      // Run button behavior
-      const runBtn = $('run-ai-btn');
-      if (runBtn){
-        if (isPaid){
-          runBtn.disabled = false;
-          runBtn.title = '';
-        } else {
-          runBtn.disabled = false; // clickable; we route to pricing/sign-in
-          runBtn.title = 'Mastery required to run with AI.';
-        }
-      }
-
-      // Directory always browseable (titles clickable) — but run requires paid.
-    }
-
-    function redirectToPricingOrAuth(reason){
+    function redirectToUpgrade(){
       try { PS_setPostAuthRedirect(); } catch(e){}
-      // If anon: take to signup; if free: pricing
-      if (!PS_CTX.loggedIn){
-        const redirectTarget = encodeURIComponent(location.href);
-        location.href = `/auth.html?mode=signup&reason=${encodeURIComponent(reason || 'help-ai')}&redirect=${redirectTarget}`;
-      } else {
-        location.href = '/pricing.html';
-      }
+      location.href = '/pricing.html';
     }
 
-    /* ============================================================
-       Run-with-AI (paid only)
-       ============================================================ */
     async function runWithAI(){
-      const box = $('prompt-preview');
-      const prompt = (box?.value || '').trim();
+      const promptEl = $('prompt-preview');
+      const out = $('ai-box');
+      if (!promptEl || !out) return;
 
-      if (!prompt || prompt.startsWith('Choose a help topic')){
-        alert('Pick a help topic first.');
+      const prompt = (promptEl.textContent || '').trim();
+      if (!prompt || prompt.startsWith('Select a help topic')) return alert('Pick a help prompt first.');
+
+      if (!PS_CTX.loggedIn){
+        PS_trackAnon('RUN_AI_CLICK_ANON');
+        try { PS_setPostAuthRedirect(); } catch(e){}
+        const redirectTarget = encodeURIComponent(location.href);
+        location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
         return;
       }
 
       if (!PS_CTX.isPaid){
-        PS_trackAnon('HELP_RUN_AI_BLOCKED', { help_id: activePromptId || null });
-        redirectToPricingOrAuth('help-run-ai');
-        return;
-      }
-
-      // Paid: must be logged in
-      if (typeof ensureLoggedInOrRedirect === 'function'){
-        const user = await ensureLoggedInOrRedirect();
-        if (!user) return;
-      } else {
-        redirectToPricingOrAuth('help-run-ai');
+        redirectToUpgrade();
         return;
       }
 
       const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
       if (!token){
-        $('ai-box').textContent = 'Session missing. Please sign in again.';
+        out.textContent = 'Session missing. Please sign in again.';
         return;
       }
 
-      setRunBtnRunning(true);
-
+      setRunState(true);
       try{
-        $('ai-box').textContent = 'Running with AI…';
+        out.textContent = 'Running with AI…';
 
         const res = await fetch('/api/run-step', {
           method: 'POST',
@@ -1156,62 +1257,87 @@ Include 3 realistic physics-style examples.`
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({
-            prompt,
-            step: 0,
-            nano_slug: NANO_SLUG,
-            mode: 'help',
-            help_id: activePromptId || null
-          })
+          body: JSON.stringify({ prompt, step: 0, nano_slug: NANO_SLUG, mode: 'help' })
         });
 
         const data = await res.json().catch(()=> ({}));
 
         if (!res.ok){
           let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
-          if (data?.code === 'PAYWALL') msg = 'This help page requires Mastery (paid) access.';
+          if (data?.code === 'PAYWALL') msg = 'This help prompt requires Mastery (paid) access.';
           if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
           if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
-          if (data?.code === 'PROMPT_INVALID') msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(data?.details || []);
-          $('ai-box').textContent = msg;
+          out.textContent = msg;
           return;
         }
 
         const raw = data?.content || 'No response received from AI.';
-        lastAnswerText = raw;
+        lastAnswer.text = raw;
 
-        $('ai-box').innerHTML = formatOutput(raw);
-        $('copy-answer-btn').style.display = 'inline-flex';
-        typeset([$('ai-box')]);
+        out.innerHTML = formatOutput(raw);
+        typeset([out]);
 
-      } catch(err){
-        console.error(err);
-        $('ai-box').textContent = 'Unexpected error. Please try again.';
+        const copyAns = $('copy-answer-btn');
+        if (copyAns) copyAns.style.display = 'inline-flex';
+
+      } catch(e){
+        console.error(e);
+        out.textContent = 'Unexpected error. Please try again.';
       } finally {
-        setRunBtnRunning(false);
+        setRunState(false);
       }
     }
 
-    /* ============================================================
-       Directory collapse behavior (simple + stable)
-       ============================================================ */
-    function toggleCategory(btn){
-      const cat = btn.getAttribute('data-cat');
-      const body = document.getElementById(`cat-${cat}`);
-      if (!body) return;
+    function setupDirectory(){
+      const catBtns = document.querySelectorAll('.dir-cat-toggle');
+      catBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const catId = btn.getAttribute('data-cat');
+          const body = document.getElementById(catId);
+          if (!body) return;
 
-      const chev = btn.querySelector('.dir-cat-chev');
-      const open = body.style.display !== 'none';
+          const expanded = btn.getAttribute('aria-expanded') !== 'false';
+          btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          body.style.display = expanded ? 'none' : 'block';
 
-      body.style.display = open ? 'none' : 'block';
-      if (chev) chev.textContent = open ? '▸' : '▾';
+          const chev = btn.querySelector('.dir-cat-chev');
+          if (chev) chev.textContent = expanded ? '▸' : '▾';
+        });
+      });
+
+      const links = document.querySelectorAll('.dir-link');
+      links.forEach(b => {
+        b.addEventListener('click', () => {
+          const id = b.getAttribute('data-id');
+          if (!id) return;
+          setSelected(id);
+          try { history.replaceState({}, '', `?id=${encodeURIComponent(id)}`); } catch(e){}
+        });
+      });
     }
 
-    /* ============================================================
-       Boot
-       ============================================================ */
+    function applyAccessUI(){
+      const isPaid = PS_CTX.isPaid;
+
+      const runBtn = $('run-ai-btn');
+      const modePill = $('help-mode-pill');
+
+      if (modePill) modePill.textContent = isPaid ? 'Mastery' : 'Browse';
+
+      if (runBtn){
+        runBtn.textContent = 'Run with AI';
+        runBtn.onclick = runWithAI;
+      }
+
+      const lockedWrap = $('help-locked-wrap');
+      if (lockedWrap){
+        lockedWrap.style.display = isPaid ? 'none' : 'block';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', async () => {
       typeset();
+      setupDirectory();
 
       if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
@@ -1229,45 +1355,21 @@ Include 3 realistic physics-style examples.`
       }
 
       if (loggedIn && tier === 'anon') tier = 'free';
-      configureHelpAccess({ loggedIn, tier });
 
-      // Wire directory buttons
-      document.querySelectorAll('.dir-link[data-id]').forEach((btn) => {
-        btn.addEventListener('click', () => setPrompt(btn.getAttribute('data-id')));
-      });
+      PS_CTX.loggedIn = !!loggedIn;
+      PS_CTX.tier = tier;
+      PS_CTX.isPaid = (tier === 'paid');
 
-      // Category toggles
-      document.querySelectorAll('.dir-cat-toggle[data-cat]').forEach((btn) => {
-        btn.addEventListener('click', () => toggleCategory(btn));
-      });
+      applyAccessUI();
 
-      // Default: open all categories
-      ['rules','rounding','traps'].forEach((c) => {
-        const body = document.getElementById(`cat-${c}`);
-        if (body) body.style.display = 'block';
-      });
+      $('copy-prompt-btn')?.addEventListener('click', () => copyText(($('prompt-preview')?.textContent || ''), 'Prompt copied.', 'Nothing to copy.'));
+      $('copy-answer-btn')?.addEventListener('click', () => copyText(lastAnswer.text, 'Answer copied.', 'No AI answer to copy yet.'));
 
-      // Actions
-      $('copy-prompt-btn')?.addEventListener('click', () => copyPrompt());
-      $('copy-answer-btn')?.addEventListener('click', () => copyAnswer());
-      $('run-ai-btn')?.addEventListener('click', () => runWithAI());
+      const params = new URLSearchParams(location.search || '');
+      const id = params.get('id');
+      if (id && PROMPTS[id]) setSelected(id);
 
-      // URL deep-linking: ?id=SF02
-      try{
-        const params = new URLSearchParams(location.search || '');
-        const id = (params.get('id') || '').trim();
-        if (id && HELP_PROMPTS[id]){
-          setPrompt(id);
-          // scroll to prompt card on narrow screens
-          if (window.innerWidth < 980){
-            document.querySelector('.help-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      } catch(e){}
-
-      // Basic anon tracking
       PS_trackAnon('PAGE_VIEW');
-
       document.addEventListener('click', (ev) => {
         try{
           if (PS_CTX.loggedIn) return;
@@ -1284,4 +1386,3 @@ Include 3 realistic physics-style examples.`
   </script>
 </body>
 </html>
-
