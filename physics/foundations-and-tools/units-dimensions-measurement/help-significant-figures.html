@@ -330,6 +330,53 @@
       font-size: 0.95rem;
       line-height: 1.7;
     }
+    /* ✅ Nano-help directory styles (match nano page) */
+.help-category { padding-top: 0.65rem; border-top: 1px solid rgba(209, 213, 219, 0.7); margin-top: 0.65rem; }
+.help-category:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+.help-category-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(30, 58, 138, 0.35);
+  background: rgba(30, 58, 138, 0.10);
+  font-size: 0.72rem;
+  color: #1e40af;
+  font-family: var(--font-body);
+  font-weight: 900;
+}
+
+.help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
+
+.help-prompts-bulleted { list-style: none; padding-left: 1.2rem; margin-top: 0.45rem; }
+.help-prompts-bulleted li { position: relative; margin-bottom: 0.35rem; }
+.help-prompts-bulleted li::before {
+  content: "▶";
+  position: absolute;
+  left: -1.1rem;
+  top: 0.18rem;
+  transform: scale(0.9);
+  transform-origin: left top;
+  color: #1e40af;
+}
+
+.help-prompt-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.4rem 0.2rem;
+  font-size: 0.84rem;
+  border-radius: 10px;
+  background: transparent;
+  color: #1e40af;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
+  font-family: var(--font-body);
+}
+.help-prompt-btn:hover { background: rgba(30, 58, 138, 0.08); color: #0b1220; text-decoration: underline; }
+
 
     /* Prompt box */
     .prompt-box {
@@ -574,7 +621,8 @@
                     </span>
                     <button class="btn-ghost" id="copy-answer-btn" type="button" style="display:none;">Copy answer</button>
                   </div>
-                  <div class="prompt-text" id="answer-text" style="white-space:pre-wrap;"></div>
+                  <!-- ✅ output is now formatted via innerHTML; keep normal wrapping -->
+                  <div class="prompt-text" id="answer-text"></div>
                 </div>
 
                 <!-- Helpful hints -->
@@ -586,7 +634,7 @@
               </div>
             </div>
 
-            <!-- RIGHT: Directory -->
+            <!-- RIGHT: Directory (✅ now matches nano help-panel directory structure) -->
             <aside class="directory">
               <div class="help-card">
                 <div class="dir-title">Help directory</div>
@@ -594,77 +642,62 @@
                   Pick a topic to load a guided prompt.
                 </p>
 
-                <ul class="dir-list" id="dir-list">
-                  <!-- Confusions -->
-                  <li class="dir-item">
-                    <a href="?id=CL01">
-                      <span>Leading vs trailing zeros: which count?</span>
-                      <span class="tag">Confusion</span>
-                    </a>
-                  </li>
-                  <li class="dir-item">
-                    <a href="?id=CL02">
-                      <span>Sig figs vs decimal places: which rule applies?</span>
-                      <span class="tag">Confusion</span>
-                    </a>
-                  </li>
+                <!-- ✅ Match nano-page help panel structure exactly -->
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Confusions &amp; look-alikes</span>
+                    <p class="help-category-desc">Zeros, decimal places, and scientific notation clarity.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted" id="dir-list">
+                    <li><a class="help-prompt-btn" href="?id=CL01">Leading vs trailing zeros: which ones count and why</a></li>
+                    <li><a class="help-prompt-btn" href="?id=CL02">Significant figures vs decimal places: when each rule applies</a></li>
+                  </ul>
+                </div>
 
-                  <!-- Exam traps -->
-                  <li class="dir-item">
-                    <a href="?id=ET01">
-                      <span>Rounding too early: why it changes final answers</span>
-                      <span class="tag">Exam trap</span>
-                    </a>
-                  </li>
-                  <li class="dir-item">
-                    <a href="?id=ET02">
-                      <span>Exact vs measured numbers (sig figs apply?)</span>
-                      <span class="tag">Exam trap</span>
-                    </a>
-                  </li>
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Tricky areas &amp; exam traps</span>
+                    <p class="help-category-desc">The classic places students lose points.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="?id=ET01">Rounding too early: why intermediate rounding changes final answers</a></li>
+                    <li><a class="help-prompt-btn" href="?id=ET02">Exact numbers (counts, definitions) vs measured numbers (sig figs apply)</a></li>
+                  </ul>
+                </div>
 
-                  <!-- Common mistakes -->
-                  <li class="dir-item">
-                    <a href="?id=CM01">
-                      <span>0.020 vs 0.0200: same value, different precision</span>
-                      <span class="tag">Mistake</span>
-                    </a>
-                  </li>
-                  <li class="dir-item">
-                    <a href="?id=CM02">
-                      <span>Using sig-fig rule for addition/subtraction</span>
-                      <span class="tag">Mistake</span>
-                    </a>
-                  </li>
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Common mistakes</span>
+                    <p class="help-category-desc">Fix the errors that cause most wrong answers.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="?id=CM01">Treating 0.020 and 0.0200 as the same precision</a></li>
+                    <li><a class="help-prompt-btn" href="?id=CM02">Using sig-fig rules for addition/subtraction instead of decimal-place rules</a></li>
+                  </ul>
+                </div>
 
-                  <!-- Stuck -->
-                  <li class="dir-item">
-                    <a href="?id=ST01">
-                      <span>10-second checklist: count sig figs fast</span>
-                      <span class="tag">Stuck</span>
-                    </a>
-                  </li>
-                  <li class="dir-item">
-                    <a href="?id=ST02">
-                      <span>Operations checklist: +/− vs ×/÷ vs powers</span>
-                      <span class="tag">Stuck</span>
-                    </a>
-                  </li>
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">When you feel stuck</span>
+                    <p class="help-category-desc">A quick routine that works every time.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="?id=ST01">A 10-second checklist: count sig figs fast (including zeros)</a></li>
+                    <li><a class="help-prompt-btn" href="?id=ST02">Operations checklist: add/subtract vs multiply/divide vs powers</a></li>
+                  </ul>
+                </div>
 
-                  <!-- Bridges -->
-                  <li class="dir-item">
-                    <a href="?id=BR01">
-                      <span>Sig figs ↔ uncertainty (estimated last digit)</span>
-                      <span class="tag">Bridge</span>
-                    </a>
-                  </li>
-                  <li class="dir-item">
-                    <a href="?id=BR02">
-                      <span>Best practice: report value ± uncertainty</span>
-                      <span class="tag">Bridge</span>
-                    </a>
-                  </li>
-                </ul>
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Concept bridges</span>
+                    <p class="help-category-desc">Connect sig figs to uncertainty and reporting.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="?id=BR01">How sig figs relate to measurement uncertainty (estimated last digit)</a></li>
+                    <li><a class="help-prompt-btn" href="?id=BR02">Best practice: report value ± uncertainty and match decimal places</a></li>
+                  </ul>
+                </div>
+
               </div>
             </aside>
           </div>
@@ -686,6 +719,7 @@
        - Help-page structure (left prompt + right directory)
        - Help-page gating (NOT nano-lesson step gating)
        - Avoids /api/run-step error by always sending step: 1
+       - ✅ Formats AI output (bold/italics/bullets/paragraphs) like nano page
        ============================================================ */
 
     function PS_setPostAuthRedirect(){
@@ -707,6 +741,32 @@
       window.MathJax?.typesetPromise
         ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
         : null;
+
+    /* ------------------------------------------------------------
+       ✅ Output formatting (MATCH nano lesson behavior)
+       ------------------------------------------------------------ */
+    function esc(s){
+      return String(s || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+    }
+
+    function inlineFmt(s){
+      return s
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/^\s*[-*]\s+/gm,'• ');
+    }
+
+    function paras(s){
+      const x = s.replace(/\r\n/g,'\n');
+      return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+    }
+
+    function formatOutput(raw){
+      return paras(inlineFmt(esc(raw)));
+    }
 
     /* ------------------------------------------------------------
        ANON analytics (same style as your nano pages: fail-open)
@@ -744,8 +804,7 @@ Give 8 quick examples, each with the sig-fig count and a one-line explanation.
 Formatting rules:
 • Short paragraphs + bullets
 • Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       },
 
       CL02: {
@@ -767,8 +826,7 @@ Help focus:
 Formatting rules:
 • Short paragraphs + bullets
 • Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       },
 
       ET01: {
@@ -786,9 +844,8 @@ Help focus:
 
 Formatting rules:
 • Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• Use simple arithmetic, no overly long numbers
+• No markdown headings like # or ###.`
       },
 
       ET02: {
@@ -807,8 +864,7 @@ Help focus:
 Formatting rules:
 • Short paragraphs + bullets
 • Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       },
 
       CM01: {
@@ -826,9 +882,7 @@ Help focus:
 
 Formatting rules:
 • Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       },
 
       CM02: {
@@ -846,9 +900,7 @@ Help focus:
 
 Formatting rules:
 • Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       },
 
       ST01: {
@@ -867,9 +919,7 @@ Then give 10 rapid-fire examples (numbers only), each with:
 
 Formatting rules:
 • Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       },
 
       ST02: {
@@ -889,9 +939,7 @@ Help focus:
 
 Formatting rules:
 • Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       },
 
       BR01: {
@@ -909,9 +957,7 @@ Help focus:
 
 Formatting rules:
 • Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       },
 
       BR02: {
@@ -929,9 +975,7 @@ Help focus:
 
 Formatting rules:
 • Short paragraphs + bullets
-• Bold key terms sparingly
-• If you include equations, use LaTeX display math one per line
-• Do NOT use markdown headings like # or ###.`
+• No markdown headings like # or ###.`
       }
     };
 
@@ -995,7 +1039,11 @@ Formatting rules:
         gate.style.display = 'none';
         if (copyBtn) { copyBtn.disabled = false; copyBtn.title = ''; }
         if (runBtn) { runBtn.disabled = false; runBtn.title = ''; }
-        if (card) card.style.opacity = '1';
+        if (card){
+          card.style.opacity = '1';
+          card.style.cursor = '';
+          card.onclick = null;
+        }
         return;
       }
 
@@ -1010,7 +1058,7 @@ Formatting rules:
         runBtn.title = 'Mastery feature';
       }
 
-      // Optional: click anywhere on left card -> pricing (matches your locked-help intent)
+      // Click anywhere on left card -> pricing (matches your locked-help intent)
       if (card){
         card.style.cursor = 'pointer';
         card.onclick = (e) => {
@@ -1107,7 +1155,9 @@ Formatting rules:
 
         const raw = data?.content || 'No response received from AI.';
         lastAi.text = raw;
-        answerText.textContent = raw;
+
+        // ✅ IMPORTANT: format output like nano page (renders **bold**, *italics*, bullets, paragraphs)
+        answerText.innerHTML = formatOutput(raw);
         typeset([answerText]);
 
         if (copyAnswerBtn){
