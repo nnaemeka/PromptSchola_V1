@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Targeted AI-powered study help for the nano-lesson 'Significant Figures' – clarify confusions, avoid exam traps, and strengthen your problem-solving."
+    content="Targeted AI-powered study help for Significant Figures — clarify zeros, rounding rules, and common lab/exam traps."
   />
 
   <!-- ✅ Final V1.1: Inter + Lora -->
@@ -14,7 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
 
-  <!-- MathJax -->
   <script>
     window.MathJax = {
       tex: {
@@ -216,14 +215,10 @@
       color: var(--text-main);
     }
     .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25); }
-    .btn-copy { font-size: 0.80rem; padding: 0.34rem 0.9rem; }
 
-    main { padding-bottom: 2.6rem; }
-    section { padding: 1.4rem 0; }
-
-    /* HERO — Final V1.1 navy hero */
+    /* HERO — help page */
     .hero {
-      padding: 4.6rem 0 2.7rem;
+      padding: 3.9rem 0 2.5rem;
       position: relative;
       overflow: hidden;
       text-align: center;
@@ -245,9 +240,9 @@
 
     .hero-kicker {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: var(--fs-micro);
+      font-size: 0.78rem;
       font-weight: 900;
-      margin-bottom: 1.05rem;
+      margin-bottom: 0.9rem;
       font-family: var(--font-body);
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -255,7 +250,6 @@
       justify-content: center;
       flex-wrap: wrap;
     }
-
     .hero-kicker span.label {
       padding: 0.18rem 0.7rem; border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.16);
@@ -272,10 +266,10 @@
     }
 
     .hero-title {
-      font-size: clamp(2.35rem, 4.0vw, 3.0rem);
+      font-size: clamp(2.1rem, 3.6vw, 2.7rem);
       line-height: 1.07;
       font-weight: 720;
-      margin: 0 auto 0.95rem;
+      margin: 0 auto 0.75rem;
       max-width: 56rem;
       color: #ffffff;
       text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
@@ -284,7 +278,7 @@
 
     .hero-subtitle {
       font-size: var(--fs-lede);
-      max-width: 52rem;
+      max-width: 54rem;
       color: rgba(226, 232, 240, 0.92);
       margin: 0 auto;
       line-height: 1.7;
@@ -293,47 +287,70 @@
     }
 
     .hero-breadcrumbs {
-      margin-top: 1.05rem;
+      margin-top: 0.9rem;
       font-size: 0.90rem;
       color: rgba(226, 232, 240, 0.72);
       font-family: var(--font-body);
       letter-spacing: -0.004em;
     }
-    .hero-breadcrumbs a { color: rgba(199, 210, 254, 0.92); text-decoration: underline; text-decoration-color: rgba(199, 210, 254, 0.35); }
+    .hero-breadcrumbs a {
+      color: rgba(199, 210, 254, 0.92);
+      text-decoration: underline;
+      text-decoration-color: rgba(199, 210, 254, 0.35);
+    }
     .hero-breadcrumbs a:hover { color: #ffffff; text-decoration-color: rgba(255,255,255,0.50); }
 
-    /* Access band — match nano */
-    .access-band {
-      background: #0f172a;
-      color: #f8fafc;
-      border-radius: 28px;
-      padding: 1.55rem 1.5rem;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      box-shadow: var(--shadow-soft);
-      max-width: 980px;
-      margin: 0 auto;
-    }
-    .access-band::before {
-      content: "";
-      position: absolute;
-      inset: -120px;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.22), transparent 60%),
-        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.20), transparent 58%);
-      filter: blur(16px);
-      opacity: 0.9;
-    }
-    .access-band-inner { position: relative; z-index: 1; display: flex; gap: 1.2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-    .access-band-title { font-family: var(--font-heading); font-size: 1.40rem; color: #ffffff; margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
-    .access-band-desc { font-family: var(--font-body); color: #cbd5e1; font-size: 0.98rem; line-height: 1.65; max-width: 52rem; }
+    main { padding: 2.0rem 0 2.6rem; }
 
-    .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
-    .chip {
+    /* Help layout: left prompt area + right directory */
+    .help-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(280px, 1.15fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 0.7rem;
+    }
+
+    .help-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 1.05rem 1.15rem;
+    }
+
+    .help-card h2 {
+      font-size: 1.18rem;
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.02em;
+    }
+
+    .help-muted {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Prompt box */
+    .prompt-box {
+      margin-top: 0.75rem;
+      border-radius: 16px;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      background: #ffffff;
+      padding: 0.95rem 1.0rem;
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.10);
+    }
+
+    .prompt-box .label-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+      margin-bottom: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
       display: inline-flex;
       align-items: center;
+      gap: 0.45rem;
       font-weight: 900;
       font-size: 0.72rem;
       text-transform: uppercase;
@@ -342,301 +359,112 @@
       border-radius: 8px;
       font-family: var(--font-body);
       white-space: nowrap;
-    }
-    .chip.free { background: #10b981; color: #ffffff; }
-    .chip.mastery { background: #6366f1; color: #ffffff; }
-
-    /* Layout */
-    .help-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
-      gap: 1.4rem;
-      align-items: flex-start;
-      margin-top: 0.9rem;
+      background: rgba(30, 58, 138, 0.06);
+      border: 1px solid rgba(30, 58, 138, 0.28);
+      color: #1e40af;
     }
 
-    /* Left: prompt + output card */
-    .help-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-card);
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-card);
-      padding: 1.05rem 1.15rem 1.1rem;
-    }
-
-    .help-card-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.8rem;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      margin-bottom: 0.6rem;
-    }
-
-    .pill-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.14rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #f9fafb;
-      font-size: 0.74rem;
-      color: var(--text-subtle);
-      font-weight: 900;
+    .prompt-text {
       font-family: var(--font-body);
-      white-space: nowrap;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-
-    .pill.topic {
-      border: 1px solid rgba(126, 34, 206, 0.35);
-      color: #4c1d95;
-      background: rgba(126, 34, 206, 0.06);
-      text-transform: none;
-      letter-spacing: 0;
-      font-weight: 900;
-      font-size: 0.8rem;
-    }
-
-    .help-title {
-      font-family: var(--font-heading);
-      font-size: 1.32rem;
-      color: var(--text-strong);
-      margin: 0.25rem 0 0.2rem;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      font-weight: 700;
-    }
-
-    .help-lead {
-      font-size: 0.96rem;
-      color: var(--text-muted);
-      font-family: var(--font-body);
-      line-height: 1.65;
-      max-width: 60rem;
-      letter-spacing: -0.004em;
-    }
-
-    .help-body-grid {
-      margin-top: 0.9rem;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 0.9rem;
-    }
-
-    .prompt-box {
-      border-radius: 14px;
-      border: 1px solid rgba(209, 213, 219, 0.9);
-      background: #f9fafb;
-      padding: 0.9rem 1rem;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      white-space: pre-wrap;
-      overflow: hidden;
-    }
-
-    .prompt-box-header {
-      font-size: 0.78rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--text-subtle);
-      margin-bottom: 0.5rem;
-      font-family: var(--font-body);
-    }
-
-    /* READ-ONLY prompt display (not editable) */
-    .prompt-preview {
-      width: 100%;
-      min-height: 170px;
-      border: none;
-      outline: none;
-      background: transparent;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      line-height: 1.7;
+      font-size: 0.92rem;
       color: var(--text-main);
-      white-space: pre-wrap;
-      user-select: text;
-    }
-
-    .ai-box {
-      border-radius: 14px;
-      border: 1px solid rgba(129, 140, 248, 0.35);
-      background: #ffffff;
-      padding: 1rem 1.1rem;
-      min-height: 160px;
-      font-size: 0.98rem;
-      color: #111827;
-      white-space: pre-wrap;
       line-height: 1.75;
-      font-family: var(--font-body);
+      white-space: pre-wrap;
     }
 
-    .ai-box p { margin-bottom: 0.9rem; }
-    .ai-box ul, .ai-box ol { margin: 0.7rem 0 0.7rem 1.3rem; }
-    .ai-box strong { font-weight: 800; color: inherit; }
-    .ai-box em { font-style: italic; }
-
-    .actions-row {
-      margin-top: 0.85rem;
+    .prompt-actions {
       display: flex;
-      justify-content: space-between;
-      gap: 0.6rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
-      font-size: 0.82rem;
-      color: var(--text-subtle);
-      font-family: var(--font-body);
-      padding-top: 0.85rem;
-      border-top: 1px solid rgba(209, 213, 219, 0.7);
-      align-items: center;
-      letter-spacing: -0.004em;
+      margin-top: 0.75rem;
+      justify-content: flex-end;
     }
 
-    .actions-left { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
-    .actions-right { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
-
-    /* Right: directory (match nano Help panel look) */
-    .dir-card {
-      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
-      border-radius: var(--radius-card);
-      border: 1px solid rgba(30, 58, 138, 0.22);
-      box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
-      padding: 0.95rem 1rem;
+    /* Directory / right panel */
+    .directory {
       position: sticky;
       top: 6rem;
     }
 
-    .dir-title{
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.12rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(30, 58, 138, 0.32);
-      color: #1e40af;
-      background: rgba(30, 58, 138, 0.06);
-      font-size: 0.82rem;
-      font-weight: 900;
-      font-family: var(--font-body);
-      margin-bottom: 0.6rem;
-      user-select: none;
+    .directory .dir-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      margin-bottom: 0.45rem;
+      color: var(--text-strong);
+      letter-spacing: -0.02em;
     }
 
-    .dir-desc{
-      margin: 0.28rem 0 0.7rem;
-      font-size: 0.78rem;
-      color: var(--text-subtle);
-      font-family: var(--font-body);
-      line-height: 1.65;
+    .dir-list {
+      list-style: none;
+      margin-top: 0.45rem;
+      padding-left: 0.2rem;
+      display: grid;
+      gap: 0.25rem;
     }
 
-    .dir-cat {
-      border-top: 1px solid rgba(209, 213, 219, 0.7);
-      padding-top: 0.7rem;
-      margin-top: 0.7rem;
-    }
-    .dir-cat:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
-
-    .dir-cat-toggle {
-      width: 100%;
-      border: none;
-      background: transparent;
-      cursor: pointer;
+    .dir-item a {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.7rem;
-      padding: 0.15rem 0.1rem;
+      gap: 0.75rem;
+      padding: 0.48rem 0.6rem;
+      border-radius: 12px;
+      border: 1px solid rgba(30, 58, 138, 0.16);
+      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.06));
+      color: #0b1220;
+      font-family: var(--font-body);
+      font-size: 0.86rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
 
-    .dir-cat-label{
-      display: inline-flex;
-      align-items: center;
-      padding: 0.12rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(30, 58, 138, 0.35);
-      background: rgba(30, 58, 138, 0.10);
+    .dir-item a:hover {
+      transform: translateY(-1px);
+      border-color: rgba(30, 58, 138, 0.30);
+      box-shadow: 0 12px 26px rgba(30, 58, 138, 0.12);
+    }
+
+    .dir-item .tag {
       font-size: 0.72rem;
-      color: #1e40af;
-      font-family: var(--font-body);
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(126, 34, 206, 0.10);
+      border: 1px solid rgba(126, 34, 206, 0.18);
+      color: #4c1d95;
       font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.02em;
       white-space: nowrap;
     }
 
-    .dir-cat-chev { font-size: 0.95rem; color: #4c1d95; opacity: 0.9; }
-
-    .dir-cat-body { margin-top: 0.45rem; }
-
-    /* Use the same ▶ bullets as nano help panel */
-    .dir-list { list-style: none; padding-left: 1.2rem; margin-top: 0.45rem; }
-    .dir-list li { position: relative; margin-bottom: 0.35rem; }
-    .dir-list li::before {
-      content: "▶";
-      position: absolute;
-      left: -1.1rem;
-      top: 0.18rem;
-      transform: scale(0.9);
-      transform-origin: left top;
-      color: #1e40af;
-    }
-
-    .dir-link{
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 0.4rem 0.2rem;
-      font-size: 0.84rem;
-      border-radius: 10px;
-      background: transparent;
-      color: #1e40af;
-      border: none;
-      cursor: pointer;
-      font-family: var(--font-body);
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
-    }
-
-    .dir-link:hover,
-    .dir-link:focus{
-      background: rgba(30, 58, 138, 0.08);
-      color: #0b1220;
-      text-decoration: underline;
-    }
-
-    /* Locked panel — same as nano */
-    .locked-panel {
+    /* Inline “callout” blocks used in help page content */
+    .callout {
+      margin-top: 0.85rem;
       border-radius: 16px;
       border: 1px solid rgba(99, 102, 241, 0.35);
       background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
-      padding: 0.95rem 1rem;
+      padding: 0.85rem 0.9rem;
       color: #111827;
-      font-family: var(--font-body);
-      box-shadow: var(--shadow-card);
-      max-width: 980px;
-      margin: 0 auto;
     }
-    .locked-title { font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-strong); margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
-    .locked-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 0.7rem; }
-    .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .callout strong { font-weight: 900; }
+    .callout p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; }
 
-    footer { margin-top: auto; padding: 1.8rem 0 2.1rem; text-align: center; font-size: 0.86rem; color: var(--text-subtle); font-family: var(--font-body); letter-spacing: -0.004em; }
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0 2.1rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
 
     @media (max-width: 980px) {
       .help-layout { grid-template-columns: minmax(0, 1fr); }
-      .dir-card { position: static; }
+      .directory { position: static; }
     }
     @media (max-width: 860px) { .nav-links { display: none; } }
   </style>
 </head>
-
 <body>
   <div class="page">
     <header>
@@ -661,22 +489,13 @@
 
           <div class="nav-right">
             <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
-
             <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
               Sign In
             </a>
-
             <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
               Register for Free
             </a>
-
-            <button
-              id="nav-signout-btn"
-              type="button"
-              class="btn-pill"
-              style="display:none;"
-              onclick="signOutUser && signOutUser()"
-            >
+            <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">
               Sign out
             </button>
           </div>
@@ -689,58 +508,19 @@
         <div class="container">
           <div class="hero-kicker">
             <span class="label">Help</span>
-            <span>Physics · Foundations &amp; Tools · Units, Dimensions &amp; Measurement</span>
+            <span>Physics · Foundations &amp; Tools · Measurement</span>
           </div>
 
-          <h1 class="hero-title">Study Help: Significant Figures</h1>
+          <h1 class="hero-title">Significant Figures — Study Help</h1>
 
           <p class="hero-subtitle">
-            Targeted prompts for the exact places students get stuck: rounding rules, counting sig figs,
-            addition/subtraction vs multiplication/division rules, and reporting results without over-claiming precision.
+            Targeted help for the places students get stuck: zeros, rounding rules, and lab-report honesty.
+            Choose a help topic, copy the prompt, and (if unlocked) run it with AI.
           </p>
 
           <div class="hero-breadcrumbs">
-            <a href="/physics/physics.html">Physics</a> ·
-            <a href="/physics/foundations-and-tools/foundations-and-tools.html">Foundations &amp; Tools</a> ·
-            <a href="/physics/foundations-and-tools/units-dimensions-measurement/units-dimensions-measurement.html">Dimensions &amp; Measurement</a> ·
-            <a href="nano-significant-figures.html">Nano-lesson: Significant Figures</a> ·
-            <span>Study Help</span>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div class="container">
-          <div class="access-band">
-            <div class="access-band-inner">
-              <div>
-                <div class="access-band-title">Access for study help</div>
-                <div class="access-band-desc">
-                  This help page is part of paid access (Mastery). You can still browse the titles and copy prompts,
-                  but running prompts with AI is available to paid learners.
-                </div>
-              </div>
-              <div class="access-chips">
-                <span class="chip free">Browse titles</span>
-                <span class="chip mastery">Run with AI (Paid)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ✅ Correct HELP gating: show this panel only for non-paid -->
-      <section id="help-locked-wrap" style="display:none;">
-        <div class="container">
-          <div class="locked-panel">
-            <div class="locked-title">Mastery feature</div>
-            <div class="locked-desc">
-              Running help prompts with AI is available to Mastery learners. You can still browse the help topics and copy prompts.
-            </div>
-            <div class="locked-actions">
-              <a class="btn-primary" href="/pricing.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Upgrade to Mastery</a>
-              <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
-            </div>
+            <a href="significant-figures.html">Back to nano-lesson</a> ·
+            <span>Help Library</span>
           </div>
         </div>
       </section>
@@ -748,133 +528,83 @@
       <section>
         <div class="container">
           <div class="help-layout">
-            <!-- LEFT: Prompt + output -->
-            <div class="help-card">
-              <div class="help-card-top">
-                <div>
-                  <div class="pill-row">
-                    <span class="pill">Study help</span>
-                    <span class="pill topic">Significant Figures</span>
-                  </div>
+            <!-- LEFT: Selected help topic -->
+            <div class="help-left">
+              <div class="help-card">
+                <h2 id="help-title">Choose a help topic</h2>
+                <p class="help-muted" id="help-desc">
+                  Pick a topic from the directory. You’ll see a short explanation and a ready-to-copy prompt.
+                </p>
 
-                  <div class="help-title">Pick a help prompt → copy it → (Mastery) run it with AI</div>
-                  <div class="help-lead">
-                    Use this page when answers “look right” but rounding or reporting is off. These prompts are designed to
-                    force consistent, exam-safe significant-figure decisions.
-                  </div>
-                </div>
-
-                <div class="pill-row">
-                  <span class="pill" id="help-selected-pill">Selected: none</span>
-                </div>
-              </div>
-
-              <div class="help-body-grid">
-                <div class="prompt-box">
-                  <div class="prompt-box-header">Prompt (read-only)</div>
-                  <div class="prompt-preview" id="prompt-preview">Select a help topic on the right to load a prompt here.</div>
-                </div>
-
-                <div class="ai-box" id="ai-box">
-                  <p><strong>AI output</strong> will appear here (Mastery only).</p>
-                  <p>
-                    Tip: For exams/labs, always ask: “What does the instrument resolution justify?” and “Which operation rule applies?”
+                <div class="callout" id="help-callout" style="display:none;">
+                  <p class="help-muted" style="margin:0;">
+                    <strong>Tip:</strong> Try the prompt first. If the answer still feels fuzzy, add:
+                    “Use one concrete numeric example and explain the zeros.”
                   </p>
                 </div>
-              </div>
 
-              <div class="actions-row">
-                <div class="actions-left">
-                  <button class="btn-ghost btn-copy" id="copy-prompt-btn" type="button">Copy prompt</button>
-                  <button class="btn-ghost btn-copy" id="copy-answer-btn" type="button" style="display:none;">Copy answer</button>
-                </div>
+                <div class="prompt-box">
+                  <div class="label-row">
+                    <span class="pill" id="help-pill">HELP PROMPT</span>
+                    <span class="help-muted" id="help-id" style="font-size:0.85rem;color:var(--text-subtle);"></span>
+                  </div>
 
-                <div class="actions-right">
-                  <button class="btn-primary" id="run-ai-btn" type="button">Run with AI</button>
+                  <div class="prompt-text" id="prompt-text">Select a topic to load its prompt.</div>
+
+                  <div class="prompt-actions">
+                    <button class="btn-ghost" id="btn-copy" type="button">Copy prompt</button>
+                    <button class="btn-primary" id="btn-run" type="button">Run with AI</button>
+                  </div>
+
+                  <div class="callout" id="locked-note" style="display:none; margin-top:0.9rem; border-color: rgba(99,102,241,0.30);">
+                    <p style="margin:0;">
+                      <strong>Locked:</strong> The Help Library is a Mastery feature.
+                      You can still view the topic list here, but prompts + AI are available only on paid access.
+                    </p>
+                    <div style="margin-top:0.7rem; display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:flex-end;">
+                      <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+                      <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                    </div>
+                  </div>
+
+                  <div class="help-card" id="ai-card" style="display:none; margin-top:1rem; padding:0.95rem 1.0rem;">
+                    <h3 style="font-size:1.05rem; margin-bottom:0.35rem;">AI response</h3>
+                    <div id="ai-output" class="help-muted" style="white-space:pre-wrap; color:#111827; line-height:1.75;"></div>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- RIGHT: Directory -->
-            <aside class="dir-card">
-              <div class="dir-title">Deepen your understanding</div>
-              <div class="dir-desc">
-                Choose a prompt. Copy it freely. Mastery learners can run prompts with AI and copy the generated answer.
-              </div>
+            <aside class="directory">
+              <div class="help-card">
+                <div class="dir-title">Help topics</div>
+                <p class="help-muted" style="margin-top:0.25rem;">
+                  These match the nano-lesson Help panel topic IDs.
+                </p>
 
-              <!-- CATEGORY 1 -->
-              <div class="dir-cat">
-                <button class="dir-cat-toggle" type="button" onclick="toggleDir('cat1')">
-                  <span class="dir-cat-label">Confusions &amp; look-alikes</span>
-                  <span class="dir-cat-chev" id="chev-cat1">▾</span>
-                </button>
-                <div class="dir-cat-body" id="cat1">
-                  <ul class="dir-list">
-                    <li><button class="dir-link" type="button" data-id="CL01">Sig figs vs decimal places: what’s the difference?</button></li>
-                    <li><button class="dir-link" type="button" data-id="CL02">Leading/trailing zeros: which zeros count and why?</button></li>
-                    <li><button class="dir-link" type="button" data-id="CL03">Exact numbers (counts, defined constants): when sig figs don’t limit</button></li>
-                  </ul>
-                </div>
-              </div>
+                <ul class="dir-list" id="dir-list">
+                  <!-- Confusions & look-alikes -->
+                  <li class="dir-item"><a href="?id=CL01"><span>Leading vs trailing zeros: which ones count and why</span><span class="tag">CL</span></a></li>
+                  <li class="dir-item"><a href="?id=CL02"><span>Sig figs vs decimal places: when each rule applies</span><span class="tag">CL</span></a></li>
 
-              <!-- CATEGORY 2 -->
-              <div class="dir-cat">
-                <button class="dir-cat-toggle" type="button" onclick="toggleDir('cat2')">
-                  <span class="dir-cat-label">Tricky areas &amp; exam traps</span>
-                  <span class="dir-cat-chev" id="chev-cat2">▾</span>
-                </button>
-                <div class="dir-cat-body" id="cat2">
-                  <ul class="dir-list">
-                    <li><button class="dir-link" type="button" data-id="ET01">Addition/subtraction vs multiplication/division rules (with examples)</button></li>
-                    <li><button class="dir-link" type="button" data-id="ET02">Rounding twice: why intermediate rounding can wreck the final answer</button></li>
-                    <li><button class="dir-link" type="button" data-id="ET03">Scientific notation: how it clarifies sig figs instantly</button></li>
-                  </ul>
-                </div>
-              </div>
+                  <!-- Exam traps -->
+                  <li class="dir-item"><a href="?id=ET01"><span>Rounding too early: why intermediate rounding changes answers</span><span class="tag">ET</span></a></li>
+                  <li class="dir-item"><a href="?id=ET02"><span>Exact numbers vs measured numbers: when sig figs apply</span><span class="tag">ET</span></a></li>
 
-              <!-- CATEGORY 3 -->
-              <div class="dir-cat">
-                <button class="dir-cat-toggle" type="button" onclick="toggleDir('cat3')">
-                  <span class="dir-cat-label">Common mistakes</span>
-                  <span class="dir-cat-chev" id="chev-cat3">▾</span>
-                </button>
-                <div class="dir-cat-body" id="cat3">
-                  <ul class="dir-list">
-                    <li><button class="dir-link" type="button" data-id="CM01">Treating measured values as exact (over-reporting precision)</button></li>
-                    <li><button class="dir-link" type="button" data-id="CM02">Forgetting the decimal-place rule in addition/subtraction</button></li>
-                    <li><button class="dir-link" type="button" data-id="CM03">Reporting too many sig figs in final units (and how to fix it)</button></li>
-                  </ul>
-                </div>
-              </div>
+                  <!-- Common mistakes -->
+                  <li class="dir-item"><a href="?id=CM01"><span>0.020 vs 0.0200: not the same precision</span><span class="tag">CM</span></a></li>
+                  <li class="dir-item"><a href="?id=CM02"><span>Add/subtract uses decimals (not sig figs): stop mixing rules</span><span class="tag">CM</span></a></li>
 
-              <!-- CATEGORY 4 -->
-              <div class="dir-cat">
-                <button class="dir-cat-toggle" type="button" onclick="toggleDir('cat4')">
-                  <span class="dir-cat-label">When you feel stuck</span>
-                  <span class="dir-cat-chev" id="chev-cat4">▾</span>
-                </button>
-                <div class="dir-cat-body" id="cat4">
-                  <ul class="dir-list">
-                    <li><button class="dir-link" type="button" data-id="ST01">A 20-second decision tree for sig figs (operation-based)</button></li>
-                    <li><button class="dir-link" type="button" data-id="ST02">How to report a value with uncertainty without confusion</button></li>
-                  </ul>
-                </div>
-              </div>
+                  <!-- Stuck -->
+                  <li class="dir-item"><a href="?id=ST01"><span>10-second checklist: count sig figs fast (including zeros)</span><span class="tag">ST</span></a></li>
+                  <li class="dir-item"><a href="?id=ST02"><span>Operations checklist: +/− vs ×/÷ vs powers</span><span class="tag">ST</span></a></li>
 
-              <!-- CATEGORY 5 -->
-              <div class="dir-cat">
-                <button class="dir-cat-toggle" type="button" onclick="toggleDir('cat5')">
-                  <span class="dir-cat-label">Concept bridges</span>
-                  <span class="dir-cat-chev" id="chev-cat5">▾</span>
-                </button>
-                <div class="dir-cat-body" id="cat5">
-                  <ul class="dir-list">
-                    <li><button class="dir-link" type="button" data-id="BR01">Sig figs and measurement resolution: what your instrument really implies</button></li>
-                    <li><button class="dir-link" type="button" data-id="BR02">Sig figs vs uncertainty propagation: the deeper “why”</button></li>
-                  </ul>
-                </div>
+                  <!-- Bridges -->
+                  <li class="dir-item"><a href="?id=BR01"><span>How sig figs relate to uncertainty (estimated last digit)</span><span class="tag">BR</span></a></li>
+                  <li class="dir-item"><a href="?id=BR02"><span>Best practice: report value ± uncertainty and match decimals</span><span class="tag">BR</span></a></li>
+                </ul>
               </div>
-
             </aside>
           </div>
         </div>
@@ -891,10 +621,10 @@
 
   <script>
     /* ============================================================
-       Significant Figures — HELP PAGE JS (Correct gating)
-       - Copy prompt is allowed for everyone
-       - Run with AI is PAID only
-       - NO nano-step gating on help pages
+       Significant Figures — Help Page JS (same-folder with nano)
+       - Assumes nano page: significant-figures.html
+       - Help IDs match the nano lesson help links (?id=XXXX)
+       - Help Library is paid-only: hard lock prompts + AI when not paid
        ============================================================ */
 
     function PS_setPostAuthRedirect(){
@@ -904,16 +634,253 @@
     }
     window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
 
-    const NANO_SLUG = 'significant-figures';
-
-    const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
     const $ = (id) => document.getElementById(id);
-
     const typeset = (nodes) =>
       window.MathJax?.typesetPromise
         ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
         : null;
 
+    const HELP_SLUG = 'help-significant-figures';
+    const NANO_SLUG = 'significant-figures';
+
+    const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
+
+    /* ============================================================
+       Topic registry
+       ============================================================ */
+    const TOPICS = {
+      CL01: {
+        title: 'Leading vs trailing zeros: which ones count and why',
+        desc: 'A clear rule-set for zeros, plus why scientific notation removes ambiguity.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Significant figures — zeros.
+
+Explain, with clear examples:
+• Leading zeros vs captive zeros vs trailing zeros
+• When trailing zeros count (decimal point present) vs when the number is ambiguous (e.g., 1500)
+• Show how scientific notation makes intended precision explicit
+
+Include 6 quick examples and state the number of significant figures for each.
+End with a 3-line “zero rule summary” students can memorize.
+
+Formatting:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• No markdown headings like # or ###.`
+      },
+
+      CL02: {
+        title: 'Significant figures vs decimal places: when each rule applies',
+        desc: 'Stop mixing rules: add/subtract uses decimal places; multiply/divide uses sig figs.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Significant figures vs decimal places.
+
+Explain:
+• What sig figs measure (precision of the whole number)
+• What decimal places measure (precision near the decimal point)
+• Why addition/subtraction uses decimal places
+• Why multiplication/division uses significant figures
+
+Give 2 short worked examples:
+1) Addition/subtraction rounding using decimal places
+2) Multiplication/division rounding using significant figures
+
+Formatting:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• No markdown headings like # or ###.`
+      },
+
+      ET01: {
+        title: 'Rounding too early: why intermediate rounding changes final answers',
+        desc: 'The most common lab + exam trap: intermediate rounding error accumulation.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Rounding too early.
+
+Explain why rounding intermediate steps can change the final reported result.
+Include:
+• A simple multi-step calculation example where early rounding gives a different final rounded answer
+• The best-practice rule: keep guard digits and round at the end
+• When intermediate rounding is acceptable (rare cases)
+
+Formatting:
+• Short paragraphs + bullets
+• Show math plainly (LaTeX optional)
+• No markdown headings like # or ###.`
+      },
+
+      ET02: {
+        title: 'Exact numbers (counts, definitions) vs measured numbers (sig figs apply)',
+        desc: 'Sig figs apply to measured quantities, not to exact counts or defined constants.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Exact vs measured numbers.
+
+Explain:
+• What an “exact number” is (counts, defined conversions)
+• Why exact numbers do not limit significant figures
+• What “measured numbers” are and how they set precision
+
+Give 6 examples total:
+• 3 exact (and explain why)
+• 3 measured (and show their sig figs)
+
+Then do one short mixed example:
+Compute a result using both exact and measured values and show which value limits the final sig figs.
+
+Formatting:
+• Short paragraphs + bullets
+• No markdown headings like # or ###.`
+      },
+
+      CM01: {
+        title: 'Treating 0.020 and 0.0200 as the same precision',
+        desc: 'Those extra zeros are information: they communicate measurement certainty.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: 0.020 vs 0.0200.
+
+Explain:
+• How 0.020 and 0.0200 differ in significant figures
+• What the extra trailing zeros mean in terms of measurement precision
+• How to rewrite both values in scientific notation to make the difference obvious
+
+Include one “instrument story”:
+Describe what kind of measuring situation could reasonably produce 0.0200 instead of 0.020.
+
+Formatting:
+• Short paragraphs + bullets
+• No markdown headings like # or ###.`
+      },
+
+      CM02: {
+        title: 'Using sig-fig rules for addition/subtraction instead of decimal-place rules',
+        desc: 'A fast correction pattern: identify operation → choose rule → round once at the end.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Add/Subtract rounding.
+
+Explain:
+• Why addition/subtraction uses decimal places (place value alignment)
+• A 3-step routine: line up decimals → compute → round to least decimals
+
+Give 3 worked examples:
+1) Addition with different decimal places
+2) Subtraction with different decimal places
+3) A mixed add/subtract chain where rounding happens only at the end
+
+Formatting:
+• Short paragraphs + bullets
+• No markdown headings like # or ###.`
+      },
+
+      ST01: {
+        title: 'A 10-second checklist: count sig figs fast (including zeros)',
+        desc: 'A quick routine that works for almost every number format.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Counting significant figures fast.
+
+Create a “10-second checklist” students can run mentally.
+It must handle:
+• Leading zeros
+• Captive zeros
+• Trailing zeros with and without a decimal point
+• Scientific notation
+• Exact numbers
+
+Then give 10 quick practice numbers and the correct sig fig count for each.
+
+Formatting:
+• Short bullets
+• No markdown headings like # or ###.`
+      },
+
+      ST02: {
+        title: 'Operations checklist: add/subtract vs multiply/divide vs powers',
+        desc: 'One page of rules + one example per operation type.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Significant-figure operations rules.
+
+Create a compact checklist for:
+• Addition/subtraction (decimal places)
+• Multiplication/division (sig figs)
+• Powers/roots (use sig figs of input)
+• Mixed multi-step problems (round at the end)
+
+Provide one short worked example for each category.
+
+Formatting:
+• Short paragraphs + bullets
+• No markdown headings like # or ###.`
+      },
+
+      BR01: {
+        title: 'How sig figs relate to measurement uncertainty (estimated last digit)',
+        desc: 'Sig figs are a shorthand for uncertainty: the last digit is the “estimated” one.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Significant figures and uncertainty.
+
+Explain:
+• The “estimated last digit” idea
+• How instrument resolution limits precision
+• Analog vs digital readings (what changes?)
+• Why reporting extra digits is misleading
+
+Include one concrete example:
+A ruler reading (analog) and a digital readout example, and show the implied uncertainty in each.
+
+Formatting:
+• Short paragraphs + bullets
+• No markdown headings like # or ###.`
+      },
+
+      BR02: {
+        title: 'Best practice: report value ± uncertainty and match decimal places',
+        desc: 'The professional reporting standard: uncertainty controls the decimal place of the value.',
+        prompt: `You are a friendly, rigorous Physics tutor.
+
+Topic: Report value ± uncertainty.
+
+Explain the best practice:
+• Report as value ± uncertainty
+• Match decimal places between value and uncertainty
+• Round uncertainty to 1–2 sig figs (common convention)
+
+Give 3 examples showing correct formatting, including one where rounding changes the reported value.
+
+Formatting:
+• Short paragraphs + bullets
+• No markdown headings like # or ###.`
+      }
+    };
+
+    /* ============================================================
+       Utils: query string
+       ============================================================ */
+    function getQueryParam(name){
+      const u = new URL(location.href);
+      return (u.searchParams.get(name) || '').trim();
+    }
+
+    /* ============================================================
+       Copy
+       ============================================================ */
+    async function copyText(t, okMsg, failMsg){
+      if (!t) return alert(failMsg || 'Nothing to copy.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
+      catch { alert(failMsg || 'Could not copy.'); }
+    }
+
+    /* ============================================================
+       Output formatting (simple + safe)
+       ============================================================ */
     function esc(s){
       return String(s || '')
         .replace(/&/g,'&amp;')
@@ -934,78 +901,112 @@
       return paras(inlineFmt(esc(raw)));
     }
 
-    function applyHelpAccessUI(){
-      const lockedWrap = $('help-locked-wrap');
-      if (lockedWrap) lockedWrap.style.display = PS_CTX.isPaid ? 'none' : 'block';
+    /* ============================================================
+       UI: apply selected topic
+       ============================================================ */
+    function applyTopic(id){
+      const t = TOPICS[id] || null;
 
-      const runBtn = $('run-ai-btn');
-      if (runBtn){
-        runBtn.disabled = false;
-        runBtn.textContent = 'Run with AI';
-        runBtn.onclick = runWithAI;
+      const title = $('help-title');
+      const desc = $('help-desc');
+      const pill = $('help-pill');
+      const pid = $('help-id');
+      const promptEl = $('prompt-text');
+      const callout = $('help-callout');
+
+      if (!t){
+        if (title) title.textContent = 'Choose a help topic';
+        if (desc) desc.textContent = 'Pick a topic from the directory. You’ll see a short explanation and a ready-to-copy prompt.';
+        if (pill) pill.textContent = 'HELP PROMPT';
+        if (pid) pid.textContent = '';
+        if (promptEl) promptEl.textContent = 'Select a topic to load its prompt.';
+        if (callout) callout.style.display = 'none';
+        return;
+      }
+
+      if (title) title.textContent = t.title;
+      if (desc) desc.textContent = t.desc;
+      if (pill) pill.textContent = 'HELP PROMPT';
+      if (pid) pid.textContent = `ID: ${id}`;
+      if (promptEl) promptEl.textContent = t.prompt;
+      if (callout) callout.style.display = 'block';
+
+      typeset([promptEl]);
+    }
+
+    /* ============================================================
+       Paid lock for help page (prompts + AI)
+       ============================================================ */
+    function configureHelpPageAccess(isPaid){
+      const btnCopy = $('btn-copy');
+      const btnRun = $('btn-run');
+      const lockedNote = $('locked-note');
+      const aiCard = $('ai-card');
+
+      if (isPaid){
+        if (btnCopy) btnCopy.disabled = false;
+        if (btnRun) btnRun.disabled = false;
+        if (lockedNote) lockedNote.style.display = 'none';
+      } else {
+        if (btnCopy) btnCopy.disabled = true;
+        if (btnRun) btnRun.disabled = true;
+        if (lockedNote) lockedNote.style.display = 'block';
+        if (aiCard) aiCard.style.display = 'none';
       }
     }
 
-    function goToSignupForRunAI(){
-      try { PS_setPostAuthRedirect(); } catch(e){}
-      const redirectTarget = encodeURIComponent(location.href);
-      location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+    /* ============================================================
+       Run with AI (paid)
+       ============================================================ */
+    function setRunRunning(running){
+      const btn = $('btn-run');
+      if (!btn) return;
+      if (running){
+        btn.dataset.prevText = btn.textContent;
+        btn.textContent = 'Running…';
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+      } else {
+        btn.textContent = btn.dataset.prevText || 'Run with AI';
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
+      }
     }
 
-    function goToPricing(){
-      try { PS_setPostAuthRedirect(); } catch(e){}
-      location.href = '/pricing.html';
-    }
+    async function runHelpWithAI(){
+      const id = getQueryParam('id');
+      const t = TOPICS[id];
+      if (!t) return alert('Pick a help topic first.');
 
-    function getSelectedPrompt(){
-      const el = $('prompt-preview');
-      const t = (el?.textContent || '').trim();
-      if (!t) return null;
-      if (/^Select a help topic/i.test(t)) return null;
-      return t;
-    }
+      if (!PS_CTX.isPaid){
+        location.href = '/pricing.html';
+        return;
+      }
 
-    async function copyText(t, okMsg, failMsg){
-      if (!t) return alert(failMsg || 'Nothing to copy.');
-      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
-      try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
-      catch { alert(failMsg || 'Could not copy.'); }
-    }
+      const out = $('ai-output');
+      const aiCard = $('ai-card');
+      if (!out || !aiCard) return;
 
-    function copyPrompt(){
-      return copyText(getSelectedPrompt(), 'Prompt copied.', 'Select a help prompt first.');
-    }
-
-    function copyAnswer(){
-      return copyText(window.__last_help_answer, 'Answer copied.', 'No AI answer to copy yet.');
-    }
-
-    async function runWithAI(){
-      const out = $('ai-box');
-      if (!out) return;
-
-      const prompt = getSelectedPrompt();
-      if (!prompt) return alert('Pick a help prompt first.');
-
-      // ✅ HELP PAGE gating only
-      if (!PS_CTX.loggedIn) return goToSignupForRunAI();
-      if (!PS_CTX.isPaid) return goToPricing();
+      if (typeof ensureLoggedInOrRedirect === 'function'){
+        const user = await ensureLoggedInOrRedirect();
+        if (!user) return;
+      } else {
+        try{ PS_setPostAuthRedirect(); } catch(e){}
+        location.href = '/auth.html?mode=signup&reason=run-ai&redirect=' + encodeURIComponent(location.href);
+        return;
+      }
 
       const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
       if (!token){
         out.textContent = 'Session missing. Please sign in again.';
+        aiCard.style.display = 'block';
         return;
       }
 
-      const runBtn = $('run-ai-btn');
-      if (runBtn){
-        runBtn.dataset.prevText = runBtn.textContent;
-        runBtn.textContent = 'Running…';
-        runBtn.disabled = true;
-        runBtn.setAttribute('aria-busy','true');
-      }
+      setRunRunning(true);
 
       try{
+        aiCard.style.display = 'block';
         out.textContent = 'Running with AI…';
 
         const res = await fetch('/api/run-step', {
@@ -1014,14 +1015,20 @@
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({ prompt, step: 0, nano_slug: NANO_SLUG, mode: 'help' })
+          body: JSON.stringify({
+            prompt: t.prompt,
+            step: 0,
+            nano_slug: NANO_SLUG,
+            mode: 'help',
+            help_id: id
+          })
         });
 
         const data = await res.json().catch(()=> ({}));
 
         if (!res.ok){
-          let msg = data?.error || 'There was an error contacting the AI.';
-          if (data?.code === 'PAYWALL') msg = 'This help prompt requires Mastery (paid) access.';
+          let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
+          if (data?.code === 'PAYWALL') msg = 'This help feature requires Mastery (paid) access.';
           if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
           if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
           out.textContent = msg;
@@ -1029,290 +1036,23 @@
         }
 
         const raw = data?.content || 'No response received from AI.';
-        window.__last_help_answer = raw;
-
         out.innerHTML = formatOutput(raw);
         typeset([out]);
 
-        const copyAns = $('copy-answer-btn');
-        if (copyAns) copyAns.style.display = 'inline-flex';
-
-      } catch(e){
-        console.error(e);
+      } catch(err){
+        console.error(err);
         out.textContent = 'Unexpected error. Please try again.';
       } finally {
-        if (runBtn){
-          runBtn.disabled = false;
-          runBtn.textContent = runBtn.dataset.prevText || 'Run with AI';
-          runBtn.removeAttribute('aria-busy');
-        }
+        setRunRunning(false);
       }
     }
 
     /* ============================================================
-       Directory open/close + prompt loader
+       Boot
        ============================================================ */
-    function toggleDir(id){
-      const el = $(id);
-      const chev = $(`chev-${id}`);
-      if (!el) return;
-      const isHidden = el.style.display === 'none';
-      el.style.display = isHidden ? 'block' : 'none';
-      if (chev) chev.textContent = isHidden ? '▾' : '▸';
-    }
-
-    const HELP_PROMPTS = {
-      CL01: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Explain the difference between **significant figures** and **decimal places** with 5 quick examples.
-Include:
-• Why sig figs represent measurement precision
-• Why decimal places represent the position of the rounding
-• A simple rule students can memorize for each
-• A mini-check: “Which one applies here?”
-
-Formatting rules:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• No markdown headings like # or ###.`,
-
-      CL02: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Teach the rules for **zeros** (leading, captive, trailing) and whether they count as significant.
-Include:
-• 8 examples total (mix of standard + scientific notation)
-• For each example: state the number of sig figs AND explain why in one sentence
-• A quick “best practice” note about scientific notation to avoid ambiguity
-
-Formatting rules:
-• Clear bullets
-• No markdown headings like # or ###.`,
-
-      CL03: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Explain **exact numbers** and why they do NOT limit significant figures.
-Include:
-• Counted quantities (e.g., 12 students)
-• Defined constants (e.g., 1 in = 2.54 cm exactly)
-• A short warning: when a constant is NOT exact (measured g, measured density)
-
-Then provide 4 short practice items with answers.
-
-Formatting rules:
-• Clear spacing
-• Answers at the end under: "Answers:"
-• No markdown headings like # or ###.`,
-
-      ET01: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Explain and compare the rounding rules for:
-• Addition/subtraction (decimal places rule)
-• Multiplication/division (sig figs rule)
-
-Give 6 worked examples:
-• 3 for +/−
-• 3 for ×/÷
-
-For each example:
-• Show the operation
-• State which rule applies
-• Give the correctly rounded final result
-• Mention what NOT to do (common trap)
-
-Formatting rules:
-• Short, clear steps
-• No markdown headings like # or ###.`,
-
-      ET02: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Explain why **rounding in intermediate steps** can change the final answer.
-Provide:
-• 1 “bad workflow” example (rounding too early)
-• 1 “good workflow” example (keep guard digits, round at the end)
-• A simple practical rule students can follow in exams and labs
-
-Formatting rules:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`,
-
-      ET03: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Teach how scientific notation makes significant figures unambiguous.
-Include:
-• Convert 6 numbers (mix of large/small, with zeros) into scientific notation
-• For each: state sig figs and justify
-• A short note: how to indicate precision in trailing zeros (e.g., 1.230×10^3)
-
-Formatting rules:
-• Bullets + clear spacing
-• No markdown headings like # or ###.`,
-
-      CM01: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-A student reports: "The measured length is 12.34567 cm" from a ruler with 1 mm smallest division.
-Explain why this is wrong and how to report it correctly.
-Include:
-• Instrument resolution idea
-• Estimated digit
-• What a correct report might look like (with units)
-• A short “lab notebook” rule of thumb
-
-Formatting rules:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`,
-
-      CM02: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Explain the **decimal-place rule** for addition/subtraction with 4 examples that look tricky.
-Include at least:
-• One example with scientific notation
-• One example where the smallest decimal place is “0” (whole numbers)
-
-For each:
-• Identify the limiting decimal place
-• Show the rounded result
-
-Formatting rules:
-• Clear steps
-• No markdown headings like # or ###.`,
-
-      CM03: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-A student calculates a density and reports 3 extra digits “because the calculator shows them.”
-Explain:
-• Why calculators show more digits than justified
-• How to decide the correct sig figs in the final answer
-• One worked mini-example with numbers (include units)
-
-Formatting rules:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`,
-
-      ST01: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Create a **20-second decision tree** students can follow to determine rounding:
-1) Identify operation type (+/− vs ×/÷ vs mixed)
-2) Choose the correct rule
-3) Keep guard digits
-4) Round at the end
-
-Then give 5 quick practice expressions and provide answers.
-
-Formatting rules:
-• Numbered steps for the decision tree
-• Practice section + Answers section
-• No markdown headings like # or ###.`,
-
-      ST02: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Explain how to report a measurement with uncertainty properly.
-Include:
-• The matching-decimal-place rule between value and uncertainty
-• One example with (value ± uncertainty)
-• One example with percent uncertainty
-• A short note on how this connects to significant figures
-
-Formatting rules:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`,
-
-      BR01: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Explain the connection between significant figures and **instrument resolution**.
-Include:
-• Smallest scale division and estimated digit
-• What it means to “over-claim precision”
-• 3 short examples with instruments (ruler, digital scale, stopwatch)
-
-Formatting rules:
-• Bullets + short paragraphs
-• No markdown headings like # or ###.`,
-
-      BR02: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant Figures.
-
-Explain, at a high level, how significant figures relate to **uncertainty propagation**.
-Include:
-• Why sig figs are a simplified classroom proxy for uncertainty
-• When uncertainty propagation is more appropriate
-• A simple “rule of thumb” comparison table with 3 rows
-
-Formatting rules:
-• Keep it accessible to first-year students
-• No markdown headings like # or ###.`
-    };
-
-    function setSelectedPrompt(id){
-      const prompt = HELP_PROMPTS[id];
-      const pv = $('prompt-preview');
-      const pill = $('help-selected-pill');
-
-      if (!pv || !pill) return;
-
-      if (!prompt){
-        pv.textContent = 'Prompt not found.';
-        pill.textContent = 'Selected: none';
-        return;
-      }
-
-      pv.textContent = prompt;
-      pill.textContent = `Selected: ${id}`;
-      typeset([pv]);
-    }
-
     document.addEventListener('DOMContentLoaded', async () => {
-      // default collapse all cats open
-      ['cat1','cat2','cat3','cat4','cat5'].forEach((id) => {
-        const el = $(id);
-        const chev = $(`chev-${id}`);
-        if (el) el.style.display = 'block';
-        if (chev) chev.textContent = '▾';
-      });
-
-      // wire prompt selection
-      document.querySelectorAll('.dir-link').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-id');
-          setSelectedPrompt(id);
-        });
-      });
-
-      // copy buttons
-      const cp = $('copy-prompt-btn');
-      if (cp) cp.onclick = copyPrompt;
-
-      const ca = $('copy-answer-btn');
-      if (ca) ca.onclick = copyAnswer;
-
-      // update nav user display
       if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
-      // auth/tier detection
       let loggedIn = false;
       let tier = 'anon';
 
@@ -1332,7 +1072,27 @@ Formatting rules:
       PS_CTX.tier = tier || (loggedIn ? 'free' : 'anon');
       PS_CTX.isPaid = (PS_CTX.tier === 'paid');
 
-      applyHelpAccessUI();
+      configureHelpPageAccess(PS_CTX.isPaid);
+
+      const id = getQueryParam('id');
+      applyTopic(id);
+
+      const btnCopy = $('btn-copy');
+      if (btnCopy){
+        btnCopy.onclick = () => {
+          const tid = getQueryParam('id');
+          const t = TOPICS[tid];
+          if (!t) return alert('Pick a help topic first.');
+          if (!PS_CTX.isPaid) return (location.href = '/pricing.html');
+          return copyText(t.prompt, 'Prompt copied.', 'Nothing to copy.');
+        };
+      }
+
+      const btnRun = $('btn-run');
+      if (btnRun){
+        btnRun.onclick = () => runHelpWithAI();
+      }
+
       typeset();
     });
   </script>
