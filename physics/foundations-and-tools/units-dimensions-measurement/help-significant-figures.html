@@ -508,14 +508,14 @@
         <div class="container">
           <div class="hero-kicker">
             <span class="label">Help</span>
-            <span>Physics · Foundations &amp; Tools · Measurement</span>
+            <span>Physics · Foundations &amp; Tools · Units, Dimensions &amp; Measurement</span>
           </div>
 
           <h1 class="hero-title">Significant Figures — Study Help</h1>
 
           <p class="hero-subtitle">
-            Targeted help for the places students get stuck: zeros, rounding rules, and lab-report honesty.
-            Choose a help topic, copy the prompt, and (if unlocked) run it with AI.
+            Use this help library when zeros confuse you, when rounding rules feel inconsistent, or when your final answer has “too many digits.”
+            Choose a topic, copy the prompt, and (if unlocked) run it with AI.
           </p>
 
           <div class="hero-breadcrumbs">
@@ -528,49 +528,56 @@
       <section>
         <div class="container">
           <div class="help-layout">
-            <!-- LEFT: Selected help topic -->
-            <div class="help-left">
+            <!-- LEFT: Topic + prompt -->
+            <div>
               <div class="help-card">
-                <h2 id="help-title">Choose a help topic</h2>
-                <p class="help-muted" id="help-desc">
+                <h2 id="topic-title">Choose a help topic</h2>
+                <p class="help-muted" id="topic-desc">
                   Pick a topic from the directory. You’ll see a short explanation and a ready-to-copy prompt.
                 </p>
 
-                <div class="callout" id="help-callout" style="display:none;">
-                  <p class="help-muted" style="margin:0;">
-                    <strong>Tip:</strong> Try the prompt first. If the answer still feels fuzzy, add:
+                <div class="callout" id="topic-callout" style="display:none;">
+                  <p style="margin:0;">
+                    <strong>Use it well:</strong> Try the prompt first. If your answer still feels fuzzy, add:
                     “Use one concrete numeric example and explain the zeros.”
                   </p>
                 </div>
 
                 <div class="prompt-box">
                   <div class="label-row">
-                    <span class="pill" id="help-pill">HELP PROMPT</span>
-                    <span class="help-muted" id="help-id" style="font-size:0.85rem;color:var(--text-subtle);"></span>
+                    <span class="pill" id="topic-pill">HELP PROMPT</span>
+                    <span class="help-muted" id="topic-id" style="font-size:0.85rem;color:var(--text-subtle);"></span>
                   </div>
 
-                  <div class="prompt-text" id="prompt-text">Select a topic to load its prompt.</div>
+                  <div class="prompt-text" id="prompt-text">
+                    Select a topic to load its prompt.
+                  </div>
 
                   <div class="prompt-actions">
                     <button class="btn-ghost" id="btn-copy" type="button">Copy prompt</button>
                     <button class="btn-primary" id="btn-run" type="button">Run with AI</button>
                   </div>
 
-                  <div class="callout" id="locked-note" style="display:none; margin-top:0.9rem; border-color: rgba(99,102,241,0.30);">
+                  <!-- ✅ Help-page gating (PAID ONLY) -->
+                  <div class="callout" id="help-locked-callout" style="display:none; margin-top:0.9rem; border-color: rgba(99, 102, 241, 0.30);">
                     <p style="margin:0;">
-                      <strong>Locked:</strong> The Help Library is a Mastery feature.
-                      You can still view the topic list here, but prompts + AI are available only on paid access.
+                      <strong>Mastery feature:</strong> Help prompts + AI are unlocked on the paid plan.
+                      Upgrade to access the Help Library for this lesson.
                     </p>
                     <div style="margin-top:0.7rem; display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:flex-end;">
                       <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
                       <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
                     </div>
                   </div>
+                </div>
 
-                  <div class="help-card" id="ai-card" style="display:none; margin-top:1rem; padding:0.95rem 1.0rem;">
-                    <h3 style="font-size:1.05rem; margin-bottom:0.35rem;">AI response</h3>
-                    <div id="ai-output" class="help-muted" style="white-space:pre-wrap; color:#111827; line-height:1.75;"></div>
+                <!-- AI Output (paid only) -->
+                <div class="prompt-box" id="ai-box" style="display:none; margin-top:1rem;">
+                  <div class="label-row">
+                    <span class="pill">AI RESPONSE</span>
+                    <span class="help-muted" style="font-size:0.85rem;color:var(--text-subtle);">Tip: copy key lines into your notes.</span>
                   </div>
+                  <div class="prompt-text" id="ai-output" style="white-space:pre-wrap;"></div>
                 </div>
               </div>
             </div>
@@ -583,26 +590,71 @@
                   These match the nano-lesson Help panel topic IDs.
                 </p>
 
-                <ul class="dir-list" id="dir-list">
-                  <!-- Confusions & look-alikes -->
-                  <li class="dir-item"><a href="?id=CL01"><span>Leading vs trailing zeros: which ones count and why</span><span class="tag">CL</span></a></li>
-                  <li class="dir-item"><a href="?id=CL02"><span>Sig figs vs decimal places: when each rule applies</span><span class="tag">CL</span></a></li>
+                <ul class="dir-list">
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=CL01">
+                      <span>Leading vs trailing zeros: which ones count and why</span>
+                      <span class="tag">CL</span>
+                    </a>
+                  </li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=CL02">
+                      <span>Significant figures vs decimal places: when each rule applies</span>
+                      <span class="tag">CL</span>
+                    </a>
+                  </li>
 
-                  <!-- Exam traps -->
-                  <li class="dir-item"><a href="?id=ET01"><span>Rounding too early: why intermediate rounding changes answers</span><span class="tag">ET</span></a></li>
-                  <li class="dir-item"><a href="?id=ET02"><span>Exact numbers vs measured numbers: when sig figs apply</span><span class="tag">ET</span></a></li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=ET01">
+                      <span>Rounding too early: why intermediate rounding changes final answers</span>
+                      <span class="tag">ET</span>
+                    </a>
+                  </li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=ET02">
+                      <span>Exact numbers (counts, definitions) vs measured numbers (sig figs apply)</span>
+                      <span class="tag">ET</span>
+                    </a>
+                  </li>
 
-                  <!-- Common mistakes -->
-                  <li class="dir-item"><a href="?id=CM01"><span>0.020 vs 0.0200: not the same precision</span><span class="tag">CM</span></a></li>
-                  <li class="dir-item"><a href="?id=CM02"><span>Add/subtract uses decimals (not sig figs): stop mixing rules</span><span class="tag">CM</span></a></li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=CM01">
+                      <span>Treating 0.020 and 0.0200 as the same precision</span>
+                      <span class="tag">CM</span>
+                    </a>
+                  </li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=CM02">
+                      <span>Using sig-fig rules for add/subtract instead of decimal-place rules</span>
+                      <span class="tag">CM</span>
+                    </a>
+                  </li>
 
-                  <!-- Stuck -->
-                  <li class="dir-item"><a href="?id=ST01"><span>10-second checklist: count sig figs fast (including zeros)</span><span class="tag">ST</span></a></li>
-                  <li class="dir-item"><a href="?id=ST02"><span>Operations checklist: +/− vs ×/÷ vs powers</span><span class="tag">ST</span></a></li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=ST01">
+                      <span>A 10-second checklist: count sig figs fast (including zeros)</span>
+                      <span class="tag">ST</span>
+                    </a>
+                  </li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=ST02">
+                      <span>Operations checklist: add/subtract vs multiply/divide vs powers</span>
+                      <span class="tag">ST</span>
+                    </a>
+                  </li>
 
-                  <!-- Bridges -->
-                  <li class="dir-item"><a href="?id=BR01"><span>How sig figs relate to uncertainty (estimated last digit)</span><span class="tag">BR</span></a></li>
-                  <li class="dir-item"><a href="?id=BR02"><span>Best practice: report value ± uncertainty and match decimals</span><span class="tag">BR</span></a></li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=BR01">
+                      <span>How sig figs relate to measurement uncertainty (estimated last digit)</span>
+                      <span class="tag">BR</span>
+                    </a>
+                  </li>
+                  <li class="dir-item">
+                    <a href="help-significant-figures.html?id=BR02">
+                      <span>Best practice: report value ± uncertainty and match decimal places</span>
+                      <span class="tag">BR</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </aside>
@@ -621,10 +673,9 @@
 
   <script>
     /* ============================================================
-       Significant Figures — Help Page JS (same-folder with nano)
-       - Assumes nano page: significant-figures.html
-       - Help IDs match the nano lesson help links (?id=XXXX)
-       - Help Library is paid-only: hard lock prompts + AI when not paid
+       Significant Figures — Help Page JS
+       ✅ Uses the help-page structure you provided (prompt-box + directory)
+       ✅ Help-page gating is PAID ONLY (NOT nano gating)
        ============================================================ */
 
     function PS_setPostAuthRedirect(){
@@ -640,247 +691,13 @@
         ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
         : null;
 
-    const HELP_SLUG = 'help-significant-figures';
-    const NANO_SLUG = 'significant-figures';
-
     const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
 
-    /* ============================================================
-       Topic registry
-       ============================================================ */
-    const TOPICS = {
-      CL01: {
-        title: 'Leading vs trailing zeros: which ones count and why',
-        desc: 'A clear rule-set for zeros, plus why scientific notation removes ambiguity.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant figures — zeros.
-
-Explain, with clear examples:
-• Leading zeros vs captive zeros vs trailing zeros
-• When trailing zeros count (decimal point present) vs when the number is ambiguous (e.g., 1500)
-• Show how scientific notation makes intended precision explicit
-
-Include 6 quick examples and state the number of significant figures for each.
-End with a 3-line “zero rule summary” students can memorize.
-
-Formatting:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• No markdown headings like # or ###.`
-      },
-
-      CL02: {
-        title: 'Significant figures vs decimal places: when each rule applies',
-        desc: 'Stop mixing rules: add/subtract uses decimal places; multiply/divide uses sig figs.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant figures vs decimal places.
-
-Explain:
-• What sig figs measure (precision of the whole number)
-• What decimal places measure (precision near the decimal point)
-• Why addition/subtraction uses decimal places
-• Why multiplication/division uses significant figures
-
-Give 2 short worked examples:
-1) Addition/subtraction rounding using decimal places
-2) Multiplication/division rounding using significant figures
-
-Formatting:
-• Short paragraphs + bullets
-• Bold key terms sparingly
-• No markdown headings like # or ###.`
-      },
-
-      ET01: {
-        title: 'Rounding too early: why intermediate rounding changes final answers',
-        desc: 'The most common lab + exam trap: intermediate rounding error accumulation.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Rounding too early.
-
-Explain why rounding intermediate steps can change the final reported result.
-Include:
-• A simple multi-step calculation example where early rounding gives a different final rounded answer
-• The best-practice rule: keep guard digits and round at the end
-• When intermediate rounding is acceptable (rare cases)
-
-Formatting:
-• Short paragraphs + bullets
-• Show math plainly (LaTeX optional)
-• No markdown headings like # or ###.`
-      },
-
-      ET02: {
-        title: 'Exact numbers (counts, definitions) vs measured numbers (sig figs apply)',
-        desc: 'Sig figs apply to measured quantities, not to exact counts or defined constants.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Exact vs measured numbers.
-
-Explain:
-• What an “exact number” is (counts, defined conversions)
-• Why exact numbers do not limit significant figures
-• What “measured numbers” are and how they set precision
-
-Give 6 examples total:
-• 3 exact (and explain why)
-• 3 measured (and show their sig figs)
-
-Then do one short mixed example:
-Compute a result using both exact and measured values and show which value limits the final sig figs.
-
-Formatting:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`
-      },
-
-      CM01: {
-        title: 'Treating 0.020 and 0.0200 as the same precision',
-        desc: 'Those extra zeros are information: they communicate measurement certainty.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: 0.020 vs 0.0200.
-
-Explain:
-• How 0.020 and 0.0200 differ in significant figures
-• What the extra trailing zeros mean in terms of measurement precision
-• How to rewrite both values in scientific notation to make the difference obvious
-
-Include one “instrument story”:
-Describe what kind of measuring situation could reasonably produce 0.0200 instead of 0.020.
-
-Formatting:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`
-      },
-
-      CM02: {
-        title: 'Using sig-fig rules for addition/subtraction instead of decimal-place rules',
-        desc: 'A fast correction pattern: identify operation → choose rule → round once at the end.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Add/Subtract rounding.
-
-Explain:
-• Why addition/subtraction uses decimal places (place value alignment)
-• A 3-step routine: line up decimals → compute → round to least decimals
-
-Give 3 worked examples:
-1) Addition with different decimal places
-2) Subtraction with different decimal places
-3) A mixed add/subtract chain where rounding happens only at the end
-
-Formatting:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`
-      },
-
-      ST01: {
-        title: 'A 10-second checklist: count sig figs fast (including zeros)',
-        desc: 'A quick routine that works for almost every number format.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Counting significant figures fast.
-
-Create a “10-second checklist” students can run mentally.
-It must handle:
-• Leading zeros
-• Captive zeros
-• Trailing zeros with and without a decimal point
-• Scientific notation
-• Exact numbers
-
-Then give 10 quick practice numbers and the correct sig fig count for each.
-
-Formatting:
-• Short bullets
-• No markdown headings like # or ###.`
-      },
-
-      ST02: {
-        title: 'Operations checklist: add/subtract vs multiply/divide vs powers',
-        desc: 'One page of rules + one example per operation type.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant-figure operations rules.
-
-Create a compact checklist for:
-• Addition/subtraction (decimal places)
-• Multiplication/division (sig figs)
-• Powers/roots (use sig figs of input)
-• Mixed multi-step problems (round at the end)
-
-Provide one short worked example for each category.
-
-Formatting:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`
-      },
-
-      BR01: {
-        title: 'How sig figs relate to measurement uncertainty (estimated last digit)',
-        desc: 'Sig figs are a shorthand for uncertainty: the last digit is the “estimated” one.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Significant figures and uncertainty.
-
-Explain:
-• The “estimated last digit” idea
-• How instrument resolution limits precision
-• Analog vs digital readings (what changes?)
-• Why reporting extra digits is misleading
-
-Include one concrete example:
-A ruler reading (analog) and a digital readout example, and show the implied uncertainty in each.
-
-Formatting:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`
-      },
-
-      BR02: {
-        title: 'Best practice: report value ± uncertainty and match decimal places',
-        desc: 'The professional reporting standard: uncertainty controls the decimal place of the value.',
-        prompt: `You are a friendly, rigorous Physics tutor.
-
-Topic: Report value ± uncertainty.
-
-Explain the best practice:
-• Report as value ± uncertainty
-• Match decimal places between value and uncertainty
-• Round uncertainty to 1–2 sig figs (common convention)
-
-Give 3 examples showing correct formatting, including one where rounding changes the reported value.
-
-Formatting:
-• Short paragraphs + bullets
-• No markdown headings like # or ###.`
-      }
-    };
-
-    /* ============================================================
-       Utils: query string
-       ============================================================ */
-    function getQueryParam(name){
-      const u = new URL(location.href);
-      return (u.searchParams.get(name) || '').trim();
+    function getParam(name){
+      try { return (new URL(location.href)).searchParams.get(name) || ''; }
+      catch { return ''; }
     }
 
-    /* ============================================================
-       Copy
-       ============================================================ */
-    async function copyText(t, okMsg, failMsg){
-      if (!t) return alert(failMsg || 'Nothing to copy.');
-      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
-      try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
-      catch { alert(failMsg || 'Could not copy.'); }
-    }
-
-    /* ============================================================
-       Output formatting (simple + safe)
-       ============================================================ */
     function esc(s){
       return String(s || '')
         .replace(/&/g,'&amp;')
@@ -901,71 +718,307 @@ Formatting:
       return paras(inlineFmt(esc(raw)));
     }
 
+    async function copyText(t, okMsg, failMsg){
+      if (!t) return alert(failMsg || 'Nothing to copy.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
+      catch { alert(failMsg || 'Could not copy.'); }
+    }
+
     /* ============================================================
-       UI: apply selected topic
+       Help topics (IDs must match nano help panel)
+       ============================================================ */
+    const TOPICS = {
+      CL01: {
+        title: 'Leading vs trailing zeros: which ones count and why',
+        desc: 'Zeros are the main source of confusion. This makes the rules predictable (and shows why scientific notation is safer).',
+        callout: 'If you keep mixing “leading” vs “trailing” zeros, memorize the 3-line rule at the end of the answer.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures — zeros.
+
+Explain:
+• Leading zeros vs captive zeros vs trailing zeros
+• When trailing zeros count (decimal point present) vs when the number is ambiguous (e.g., 1500)
+• How scientific notation makes intended precision explicit
+
+Give 8 quick examples and state the number of significant figures for each.
+End with a 3-line “zero rules” summary students can memorize.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      CL02: {
+        title: 'Significant figures vs decimal places: when each rule applies',
+        desc: 'Stop losing points by using the wrong rounding rule for the operation.',
+        callout: 'When in doubt: +/− → decimal places. ×/÷ → significant figures.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures vs decimal places.
+
+Explain:
+• What significant figures communicate about precision
+• What decimal places communicate about resolution
+• Why addition/subtraction uses decimal places
+• Why multiplication/division uses significant figures
+
+Give 2 short worked examples:
+1) Addition/subtraction rounding using decimal places
+2) Multiplication/division rounding using significant figures
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ET01: {
+        title: 'Rounding too early: why intermediate rounding changes final answers',
+        desc: 'The classic exam trap: rounding in the middle can flip the final rounded result.',
+        callout: 'Keep guard digits. Round once—at the end—unless your teacher/lab manual says otherwise.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Rounding too early.
+
+Explain why rounding intermediate steps can change the final answer.
+Include:
+• One multi-step example where early rounding gives a different final rounded result
+• The best-practice rule: keep guard digits and round at the end
+• When intermediate rounding is acceptable (rare cases)
+
+Formatting rules:
+• Short paragraphs + bullets
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ET02: {
+        title: 'Exact numbers (counts, definitions) vs measured numbers (sig figs apply)',
+        desc: 'Sig figs apply to measured quantities, not exact counts or defined constants.',
+        callout: 'Exact numbers never “limit” your final sig figs—measured numbers do.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Exact vs measured numbers.
+
+Explain:
+• What “exact numbers” are (counts, defined conversions)
+• Why exact numbers do NOT limit significant figures
+• What “measured numbers” are and how they set precision
+
+Give 6 examples total (3 exact, 3 measured), then one mixed example calculation and show what limits the final sig figs.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      CM01: {
+        title: 'Treating 0.020 and 0.0200 as the same precision',
+        desc: 'Those extra zeros are information—they change the implied precision of the measurement.',
+        callout: 'Rewrite both in scientific notation to “see” the precision difference instantly.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: 0.020 vs 0.0200.
+
+Explain:
+• How many significant figures each has
+• What the extra trailing zeros mean about measurement precision
+• How to rewrite both values in scientific notation to remove ambiguity
+
+Add one “instrument story” example: what kind of measurement could justify 0.0200 instead of 0.020?
+
+Formatting rules:
+• Short paragraphs + bullets
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      CM02: {
+        title: 'Using sig-fig rules for add/subtract instead of decimal-place rules',
+        desc: 'A fast fix for the most common rounding mistake in intro physics.',
+        callout: 'For +/−, align decimals first, then round to the least decimal places.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Addition/subtraction rounding.
+
+Explain:
+• Why addition/subtraction uses decimal places (place-value alignment)
+• A 3-step routine: line up decimals → compute → round to least decimals
+
+Give 3 worked examples:
+1) Addition with different decimal places
+2) Subtraction with different decimal places
+3) A mixed add/subtract chain where rounding happens only at the end
+
+Formatting rules:
+• Short paragraphs + bullets
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ST01: {
+        title: 'A 10-second checklist: count sig figs fast (including zeros)',
+        desc: 'A quick routine you can run mentally in exams.',
+        callout: 'If scientific notation is allowed, use it. It makes precision explicit.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Counting significant figures fast.
+
+Create a “10-second checklist” students can run mentally.
+It must handle:
+• Leading zeros, captive zeros, trailing zeros
+• Numbers with and without decimal points
+• Scientific notation
+• Exact numbers
+
+Then give 10 quick practice numbers with the correct sig-fig count.
+
+Formatting rules:
+• Short bullets
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ST02: {
+        title: 'Operations checklist: add/subtract vs multiply/divide vs powers',
+        desc: 'One compact checklist that covers the three operation families.',
+        callout: 'Mixed problems: do NOT round every line—round once at the end.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant-figure operations.
+
+Create a compact checklist for:
+• Addition/subtraction (decimal places)
+• Multiplication/division (significant figures)
+• Powers/roots (use sig figs of the input)
+• Mixed multi-step problems (round at the end)
+
+Provide one short worked example for each.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      BR01: {
+        title: 'How sig figs relate to measurement uncertainty (estimated last digit)',
+        desc: 'Sig figs are a shorthand for uncertainty: the last digit is the “estimated” one.',
+        callout: 'Ask: “Which digit is the first uncertain digit?” That’s where sig figs stop.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Significant figures and uncertainty.
+
+Explain:
+• The “estimated last digit” idea
+• Instrument resolution limits precision
+• Analog vs digital readings (what changes?)
+• Why reporting extra digits is misleading
+
+Include one concrete example (analog + digital) and state the implied uncertainty.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      BR02: {
+        title: 'Best practice: report value ± uncertainty and match decimal places',
+        desc: 'The professional reporting standard: uncertainty controls the decimal place of the value.',
+        callout: 'Match decimals: the value and the uncertainty must line up.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Report value ± uncertainty.
+
+Explain best practice:
+• Report as value ± uncertainty
+• Match decimal places between value and uncertainty
+• Round uncertainty to 1–2 sig figs (common convention)
+
+Give 3 examples showing correct formatting, including one where rounding changes the reported value.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Do NOT use markdown headings like # or ###.`
+      }
+    };
+
+    /* ============================================================
+       Apply topic to UI
        ============================================================ */
     function applyTopic(id){
       const t = TOPICS[id] || null;
 
-      const title = $('help-title');
-      const desc = $('help-desc');
-      const pill = $('help-pill');
-      const pid = $('help-id');
+      const title = $('topic-title');
+      const desc = $('topic-desc');
+      const cid  = $('topic-id');
+      const callout = $('topic-callout');
       const promptEl = $('prompt-text');
-      const callout = $('help-callout');
 
       if (!t){
         if (title) title.textContent = 'Choose a help topic';
         if (desc) desc.textContent = 'Pick a topic from the directory. You’ll see a short explanation and a ready-to-copy prompt.';
-        if (pill) pill.textContent = 'HELP PROMPT';
-        if (pid) pid.textContent = '';
-        if (promptEl) promptEl.textContent = 'Select a topic to load its prompt.';
+        if (cid) cid.textContent = '';
         if (callout) callout.style.display = 'none';
+        if (promptEl) promptEl.textContent = 'Select a topic to load its prompt.';
         return;
       }
 
       if (title) title.textContent = t.title;
       if (desc) desc.textContent = t.desc;
-      if (pill) pill.textContent = 'HELP PROMPT';
-      if (pid) pid.textContent = `ID: ${id}`;
+      if (cid) cid.textContent = `ID: ${id}`;
+
+      if (callout){
+        callout.style.display = 'block';
+        callout.querySelector('p').innerHTML = `<strong>Tip:</strong> ${esc(t.callout || '')}`;
+      }
+
+      // Paid gating will decide whether we show prompt text or a teaser.
       if (promptEl) promptEl.textContent = t.prompt;
-      if (callout) callout.style.display = 'block';
 
       typeset([promptEl]);
     }
 
     /* ============================================================
-       Paid lock for help page (prompts + AI)
+       Help-page gating (PAID ONLY)
+       - Not paid: hide prompt content + disable actions + show CTA
        ============================================================ */
-    function configureHelpPageAccess(isPaid){
+    function applyHelpGating(isPaid){
+      const lockCallout = $('help-locked-callout');
       const btnCopy = $('btn-copy');
       const btnRun = $('btn-run');
-      const lockedNote = $('locked-note');
-      const aiCard = $('ai-card');
+      const promptEl = $('prompt-text');
+      const aiBox = $('ai-box');
 
       if (isPaid){
+        if (lockCallout) lockCallout.style.display = 'none';
         if (btnCopy) btnCopy.disabled = false;
         if (btnRun) btnRun.disabled = false;
-        if (lockedNote) lockedNote.style.display = 'none';
       } else {
+        if (lockCallout) lockCallout.style.display = 'block';
         if (btnCopy) btnCopy.disabled = true;
         if (btnRun) btnRun.disabled = true;
-        if (lockedNote) lockedNote.style.display = 'block';
-        if (aiCard) aiCard.style.display = 'none';
+        if (aiBox) aiBox.style.display = 'none';
+
+        // Replace prompt content with teaser, but keep selected topic title/desc visible.
+        if (promptEl){
+          const id = (getParam('id') || '').trim();
+          promptEl.textContent = id
+            ? '🔒 Prompt hidden. Upgrade to Mastery to view and copy this help prompt.'
+            : '🔒 Prompts are hidden. Select a topic, then upgrade to unlock the Help Library.';
+        }
       }
     }
 
     /* ============================================================
-       Run with AI (paid)
+       Run with AI (PAID ONLY)
        ============================================================ */
-    function setRunRunning(running){
+    function setRunBusy(running){
       const btn = $('btn-run');
       if (!btn) return;
       if (running){
         btn.dataset.prevText = btn.textContent;
         btn.textContent = 'Running…';
         btn.disabled = true;
-        btn.setAttribute('aria-busy', 'true');
+        btn.setAttribute('aria-busy','true');
       } else {
         btn.textContent = btn.dataset.prevText || 'Run with AI';
         btn.disabled = false;
@@ -973,8 +1026,8 @@ Formatting:
       }
     }
 
-    async function runHelpWithAI(){
-      const id = getQueryParam('id');
+    async function runHelpAI(){
+      const id = (getParam('id') || '').trim();
       const t = TOPICS[id];
       if (!t) return alert('Pick a help topic first.');
 
@@ -983,30 +1036,26 @@ Formatting:
         return;
       }
 
-      const out = $('ai-output');
-      const aiCard = $('ai-card');
-      if (!out || !aiCard) return;
-
       if (typeof ensureLoggedInOrRedirect === 'function'){
         const user = await ensureLoggedInOrRedirect();
         if (!user) return;
       } else {
-        try{ PS_setPostAuthRedirect(); } catch(e){}
-        location.href = '/auth.html?mode=signup&reason=run-ai&redirect=' + encodeURIComponent(location.href);
+        try { PS_setPostAuthRedirect(); } catch(e){}
+        const redirectTarget = encodeURIComponent(location.href);
+        location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
         return;
       }
 
       const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
-      if (!token){
-        out.textContent = 'Session missing. Please sign in again.';
-        aiCard.style.display = 'block';
-        return;
-      }
+      if (!token) return alert('Session missing. Please sign in again.');
 
-      setRunRunning(true);
+      const aiBox = $('ai-box');
+      const out = $('ai-output');
+      if (!aiBox || !out) return;
 
+      setRunBusy(true);
       try{
-        aiCard.style.display = 'block';
+        aiBox.style.display = 'block';
         out.textContent = 'Running with AI…';
 
         const res = await fetch('/api/run-step', {
@@ -1017,8 +1066,7 @@ Formatting:
           },
           body: JSON.stringify({
             prompt: t.prompt,
-            step: 0,
-            nano_slug: NANO_SLUG,
+            nano_slug: 'significant-figures',
             mode: 'help',
             help_id: id
           })
@@ -1027,11 +1075,7 @@ Formatting:
         const data = await res.json().catch(()=> ({}));
 
         if (!res.ok){
-          let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
-          if (data?.code === 'PAYWALL') msg = 'This help feature requires Mastery (paid) access.';
-          if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
-          if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
-          out.textContent = msg;
+          out.textContent = data?.error || 'There was an error contacting the AI. Please try again later.';
           return;
         }
 
@@ -1043,7 +1087,7 @@ Formatting:
         console.error(err);
         out.textContent = 'Unexpected error. Please try again.';
       } finally {
-        setRunRunning(false);
+        setRunBusy(false);
       }
     }
 
@@ -1051,8 +1095,11 @@ Formatting:
        Boot
        ============================================================ */
     document.addEventListener('DOMContentLoaded', async () => {
+      typeset();
+
       if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
 
+      // Determine auth + tier (paid only unlocks help)
       let loggedIn = false;
       let tier = 'anon';
 
@@ -1072,15 +1119,16 @@ Formatting:
       PS_CTX.tier = tier || (loggedIn ? 'free' : 'anon');
       PS_CTX.isPaid = (PS_CTX.tier === 'paid');
 
-      configureHelpPageAccess(PS_CTX.isPaid);
-
-      const id = getQueryParam('id');
+      // Apply topic + gating
+      const id = (getParam('id') || '').trim();
       applyTopic(id);
+      applyHelpGating(PS_CTX.isPaid);
 
+      // Actions
       const btnCopy = $('btn-copy');
       if (btnCopy){
-        btnCopy.onclick = () => {
-          const tid = getQueryParam('id');
+        btnCopy.onclick = async () => {
+          const tid = (getParam('id') || '').trim();
           const t = TOPICS[tid];
           if (!t) return alert('Pick a help topic first.');
           if (!PS_CTX.isPaid) return (location.href = '/pricing.html');
@@ -1090,10 +1138,8 @@ Formatting:
 
       const btnRun = $('btn-run');
       if (btnRun){
-        btnRun.onclick = () => runHelpWithAI();
+        btnRun.onclick = () => runHelpAI();
       }
-
-      typeset();
     });
   </script>
 </body>
