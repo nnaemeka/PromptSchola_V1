@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Nano-lesson on vector components (2D &amp; 3D): how to resolve vectors into components, use unit vectors, handle signs, and avoid common exam traps."
+    content="Nano-lesson on vector components in 2D and 3D: how to resolve vectors into components, handle signs and angles, use unit vectors, and avoid common exam traps."
   />
 
   <!-- ✅ Final V1.1: Inter + Lora -->
@@ -691,732 +691,1174 @@
   <div class="page">
     <header>
       <div class="container">
-        <nav class="nav">
+        <div class="nav">
           <div class="nav-left">
-            <a href="/index.html" class="logo-mark" aria-label="PromptSchola home">P</a>
+            <div class="logo-mark">P</div>
             <div class="logo-text">
               <span>PromptSchola</span>
-              <span>PromptPhysics</span>
+              <span>Prompt-based STEM subjects mastery</span>
             </div>
           </div>
 
-          <div class="nav-links" aria-label="Primary navigation">
+          <nav class="nav-links">
             <a href="/index.html">Home</a>
-            <a href="/physics.html">Physics</a>
-            <a href="/physics/mechanics.html">Mechanics</a>
-            <a href="/about.html">About</a>
-          </div>
+            <a href="/physics/physics.html">Physics</a>
+            <a href="/math/math.html">Math</a>
+            <a href="/chemistry/chemistry.html">Chemistry</a>
+            <a href="/biology/biology.html">Biology</a>
+            <a href="/pricing.html">Pricing</a>
+          </nav>
 
           <div class="nav-right">
-            <button class="btn-ghost" id="psLoginBtn" type="button">Log in</button>
-            <button class="btn-pill" id="psLogoutBtn" type="button" style="display:none;">Log out</button>
-            <a class="btn-primary" id="psSubscribeBtn" href="/pricing.html" style="display:none;">Mastery</a>
-            <span id="psUserBadge" style="display:none;"></span>
+            <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+            <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+              Sign In
+            </a>
+            <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+              Register for Free
+            </a>
+            <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">
+              Sign out
+            </button>
           </div>
-        </nav>
+        </div>
       </div>
     </header>
 
-    <section class="hero" aria-label="Lesson hero">
-      <div class="container">
-        <div class="hero-kicker">
-          <span class="label">Nano-lesson</span>
-          <span>PromptPhysics • Mechanics</span>
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-kicker">
+            <span class="label">Nano</span>
+            <span>PHYSICS · FOUNDATIONS &amp; TOOLS . SCALARS AND VECTORS</span>
+          </div>
+
+          <h1 class="hero-title">Vector components (2D &amp; 3D)</h1>
+
+          <p class="hero-subtitle">
+            Learn how to resolve vectors into components in 2D and 3D, handle signs and angles cleanly, and use unit vectors to avoid common exam traps
+            (final-year high school + first-year university).
+          </p>
+
+          <div class="hero-breadcrumbs">
+            <a href="/physics.html">PHYSICS</a> ·
+            <a href="physics/foundations-and-tools.html">FOUNDATIONS &amp; TOOLS</a> ·
+            <a href="physics/foundations-and-tools/scalars-and-vectors.html">SCALARS AND VECTORS</a> ·
+            <span>Vector components (2D &amp; 3D)</span>
+          </div>
         </div>
+      </section>
 
-        <h1 class="hero-title">Vector components (2D &amp; 3D)</h1>
-
-        <p class="hero-subtitle">
-          Learn how to break any vector into clean, sign-correct components using geometry, unit vectors, and a consistent angle convention.
-          Then practice typical exam setups in 2D and 3D.
-        </p>
-
-        <div class="hero-breadcrumbs" aria-label="Breadcrumbs">
-          <a href="/physics.html">Physics</a> / <a href="/physics/mechanics.html">Mechanics</a> / Vector components (2D &amp; 3D)
-        </div>
-
-        <div style="height: 1.35rem;"></div>
-
-        <div class="access-band" role="region" aria-label="Access overview">
-          <div class="access-band-inner">
-            <div>
-              <div class="access-band-title">Your access</div>
-              <div class="access-band-desc">
-                Free learners can view Steps 1–3 and run AI for Steps 1–2. Mastery unlocks Steps 1–6, AI for all steps, and full Help access.
+      <section>
+        <div class="container">
+          <div class="access-band">
+            <div class="access-band-inner">
+              <div>
+                <div class="access-band-title">Access for this nano-lesson</div>
+                <div class="access-band-desc">
+                  Unsigned visitors can <strong>show &amp; copy prompts</strong> for Steps 1–3.
+                  Signed-in free accounts can also <strong>Run with AI</strong> for Steps 1–2.
+                  Paid accounts unlock everything (Steps 1–6 + Help prompts + AI).
+                </div>
               </div>
-            </div>
-            <div class="access-chips" aria-label="Access tiers">
-              <span class="chip free">Free</span>
-              <span class="chip mastery">Mastery</span>
+
+              <div class="access-chips">
+                <span class="chip free">Steps 1–3 Free</span>
+                <span class="chip mastery">Steps 4–6 Paid</span>
+
+                <!-- ✅ Progress chip -->
+                <span class="chip mastery" id="ps-progress-chip" style="display:none;" title="">
+                  Progress: Step 0/6
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <main class="container">
-      <section aria-label="Lesson content">
-        <div class="lesson-layout">
-          <!-- LEFT: Steps -->
-          <div class="steps-grid" id="stepsGrid">
-
-            <!-- STEP 1 -->
-            <article class="step-card" data-step="1" data-step-free="true">
-              <div class="step-header">
-                <div class="step-header-left">
-                  <div class="step-index">Step 1</div>
-                  <div class="step-title">Orient (what “components” really mean)</div>
-                </div>
-                <div class="step-header-right">
-                  <span class="step-access-pill">Free</span>
-                  <button class="toggle-btn" type="button" aria-label="Toggle step 1 details" data-toggle-step="1">+</button>
-                </div>
-              </div>
-
-              <div class="step-content" id="stepContent1">
-                <div class="step-body">
-                  Components are not “pieces” of the vector—components are the vector’s shadows (projections) onto chosen axes. Your job is to pick axes, define your angle convention, and keep signs consistent.
-                </div>
-
-                <div class="prompt-preview" id="promptPreview1"></div>
-
-                <div class="copy-row">
-                  <button class="btn-ghost btn-copy" type="button" data-copy-step="1">Copy prompt</button>
-                  <button class="btn-primary" type="button" data-run-step="1">Run with AI</button>
-                </div>
-
-                <div class="ai-response" id="aiResponse1"></div>
-
-                <div class="step-footer">
-                  <div class="left-actions">
-                    <span>Tip: Decide whether angles are measured from +x, +y, or from another vector—then never change mid-problem.</span>
+      <section>
+        <div class="container">
+          <div class="lesson-layout">
+            <div class="lesson-main">
+              <div class="steps-grid">
+                <!-- STEP 1 -->
+                <article class="step-card" data-step="1">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 1</div>
+                      <div class="step-title">Orient / Definition: what are vector components in 2D and 3D?</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill">Free</span>
+                      <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+                    </div>
                   </div>
-                  <span>Visible to everyone</span>
-                </div>
-              </div>
-            </article>
 
-            <!-- STEP 2 -->
-            <article class="step-card" data-step="2" data-step-free="true">
-              <div class="step-header">
-                <div class="step-header-left">
-                  <div class="step-index">Step 2</div>
-                  <div class="step-title">Understand (2D components with sign discipline)</div>
-                </div>
-                <div class="step-header-right">
-                  <span class="step-access-pill">Free</span>
-                  <button class="toggle-btn" type="button" aria-label="Toggle step 2 details" data-toggle-step="2">+</button>
-                </div>
-              </div>
+                  <div class="step-content" id="step-content-1">
+                    <div class="step-unlocked" id="step-unlocked-1">
+                      <div class="step-body">
+                        Build crisp definitions of components and unit vectors, and learn how a single vector can be represented as sums along axes in 2D and 3D.
+                      </div>
 
-              <div class="step-content" id="stepContent2">
-                <div class="step-body">
-                  In 2D, a vector of magnitude \(A\) at angle \(\theta\) from +x has
-                  \[
-                    A_x = A\cos\theta,\quad A_y = A\sin\theta
-                  \]
-                  **only if** \(\theta\) is measured from +x toward +y. If the problem uses a different reference angle, convert it first or use geometry with quadrant checks.
-                </div>
+                      <div class="prompt-preview" id="preview-step1">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step1"></div>
 
-                <div class="prompt-preview" id="promptPreview2"></div>
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(1)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-1" onclick="copyAnswer(1)" style="display:none;">Copy answer</button>
+                      </div>
 
-                <div class="copy-row">
-                  <button class="btn-ghost btn-copy" type="button" data-copy-step="2">Copy prompt</button>
-                  <button class="btn-primary" type="button" data-run-step="2">Run with AI</button>
-                </div>
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-1" type="button">Run with AI</button>
+                        </div>
+                        <span>Goal: represent any vector as “x + y (+ z)” cleanly and consistently.</span>
+                      </div>
+                    </div>
 
-                <div class="ai-response" id="aiResponse2"></div>
-
-                <div class="step-footer">
-                  <div class="left-actions">
-                    <span>Exam trap: using \(\sin\) and \(\cos\) swapped because the angle is measured from +y.</span>
+                    <div class="locked-panel" id="step-locked-1" style="display:none;">
+                      <div class="locked-title">Locked</div>
+                      <div class="locked-desc">This step is not available for your account level.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">View plans</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
                   </div>
-                  <span>Visible to everyone</span>
-                </div>
-              </div>
-            </article>
+                </article>
 
-            <!-- STEP 3 -->
-            <article class="step-card" data-step="3" data-step-free="true">
-              <div class="step-header">
-                <div class="step-header-left">
-                  <div class="step-index">Step 3</div>
-                  <div class="step-title">Apply (unit-vector form and reconstruction)</div>
-                </div>
-                <div class="step-header-right">
-                  <span class="step-access-pill">Free</span>
-                  <button class="toggle-btn" type="button" aria-label="Toggle step 3 details" data-toggle-step="3">+</button>
-                </div>
-              </div>
-
-              <div class="step-content" id="stepContent3">
-                <div class="step-body">
-                  Write vectors using unit vectors:
-                  \[
-                    \vec{A}=A_x\,\hat{\imath}+A_y\,\hat{\jmath}\quad(\text{and }+A_z\,\hat{k}\text{ in 3D})
-                  \]
-                  Rebuild magnitude and direction from components:
-                  \[
-                    |\vec{A}|=\sqrt{A_x^2+A_y^2},\quad \theta=\operatorname{atan2}(A_y,A_x)
-                  \]
-                  Using \(\operatorname{atan2}\) keeps the quadrant correct.
-                </div>
-
-                <div class="prompt-preview" id="promptPreview3"></div>
-
-                <div class="copy-row">
-                  <button class="btn-ghost btn-copy" type="button" data-copy-step="3">Copy prompt</button>
-                  <button class="btn-primary" type="button" data-run-step="3">Run with AI</button>
-                </div>
-
-                <div class="ai-response" id="aiResponse3"></div>
-
-                <div class="step-footer">
-                  <div class="left-actions">
-                    <span>Shortcut: check signs by sketching the vector; components must point into the same quadrant.</span>
+                <!-- STEP 2 -->
+                <article class="step-card" data-step="2">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 2</div>
+                      <div class="step-title">Conceptual grounding: angles, signs, projections, and unit vectors</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill">Free</span>
+                      <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
+                    </div>
                   </div>
-                  <span>Visible to everyone</span>
-                </div>
-              </div>
-            </article>
 
-            <!-- STEP 4 (Mastery gated) -->
-            <article class="step-card" data-step="4" data-step-free="false">
-              <div class="step-header">
-                <div class="step-header-left">
-                  <div class="step-index">Step 4</div>
-                  <div class="step-title">Work Through It (Check Your Understanding – mini-quiz)</div>
-                </div>
-                <div class="step-header-right">
-                  <span class="step-access-pill mastery">Mastery</span>
-                  <button class="toggle-btn" type="button" aria-label="Toggle step 4 details" data-toggle-step="4">+</button>
-                </div>
-              </div>
+                  <div class="step-content" id="step-content-2">
+                    <div class="step-unlocked" id="step-unlocked-2">
+                      <div class="step-body">
+                        Learn how components come from projections, how to choose the correct trig function from your reference angle, and how signs follow the quadrant/axis direction.
+                      </div>
 
-              <div class="step-content" id="stepContent4">
-                <div class="step-body">
-                  <strong>Part A — Diagnostic</strong><br>
-                  Answer quickly (no long algebra): determine signs, which trig function to use, and whether your angle needs conversion.
-                  <br><br>
-                  <strong>Part B — Solutions</strong><br>
-                  Reveal solutions only after you commit to an answer and explain your reasoning.
-                </div>
+                      <div class="prompt-preview" id="preview-step2">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step2"></div>
 
-                <div class="prompt-preview" id="promptPreview4"></div>
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(2)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-2" onclick="copyAnswer(2)" style="display:none;">Copy answer</button>
+                      </div>
 
-                <div class="copy-row">
-                  <button class="btn-ghost btn-copy" type="button" data-copy-step="4">Copy prompt</button>
-                  <button class="btn-primary" type="button" data-run-step="4">Run with AI</button>
-                </div>
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-2" type="button">Run with AI</button>
+                        </div>
+                        <span>Goal: stop angle/sign mistakes before they happen.</span>
+                      </div>
+                    </div>
 
-                <div class="ai-response" id="aiResponse4"></div>
-
-                <div class="step-footer">
-                  <div class="left-actions">
-                    <span>Design: 5 quick questions that target the most common component mistakes.</span>
+                    <div class="locked-panel" id="step-locked-2" style="display:none;">
+                      <div class="locked-title">Locked</div>
+                      <div class="locked-desc">This step is not available for your account level.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">View plans</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
                   </div>
-                  <span>Mastery required</span>
-                </div>
-              </div>
-            </article>
+                </article>
 
-            <!-- STEP 5 (Mastery gated) -->
-            <article class="step-card" data-step="5" data-step-free="false">
-              <div class="step-header">
-                <div class="step-header-left">
-                  <div class="step-index">Step 5</div>
-                  <div class="step-title">Review &amp; Practice (multi-step word problems)</div>
-                </div>
-                <div class="step-header-right">
-                  <span class="step-access-pill mastery">Mastery</span>
-                  <button class="toggle-btn" type="button" aria-label="Toggle step 5 details" data-toggle-step="5">+</button>
-                </div>
-              </div>
-
-              <div class="step-content" id="stepContent5">
-                <div class="step-body">
-                  Practice using components in context: adding vectors, relative velocity, and forces at angles. Focus on clean diagrams, consistent axes, and unit-vector bookkeeping.
-                </div>
-
-                <div class="prompt-preview" id="promptPreview5"></div>
-
-                <div class="copy-row">
-                  <button class="btn-ghost btn-copy" type="button" data-copy-step="5">Copy prompt</button>
-                  <button class="btn-primary" type="button" data-run-step="5">Run with AI</button>
-                </div>
-
-                <div class="ai-response" id="aiResponse5"></div>
-
-                <div class="step-footer">
-                  <div class="left-actions">
-                    <span>Goal: build speed + accuracy for component-based setups.</span>
+                <!-- STEP 3 -->
+                <article class="step-card" data-step="3">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 3</div>
+                      <div class="step-title">Real-world connection: components in forces, motion, and 3D coordinate systems</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill">Free</span>
+                      <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
+                    </div>
                   </div>
-                  <span>Mastery required</span>
-                </div>
-              </div>
-            </article>
 
-            <!-- STEP 6 (Mastery gated) -->
-            <article class="step-card" data-step="6" data-step-free="false">
-              <div class="step-header">
-                <div class="step-header-left">
-                  <div class="step-index">Step 6</div>
-                  <div class="step-title">Explore interactive simulation</div>
-                </div>
-                <div class="step-header-right">
-                  <span class="step-access-pill mastery">Mastery</span>
-                  <button class="toggle-btn" type="button" aria-label="Toggle step 6 details" data-toggle-step="6">+</button>
-                </div>
-              </div>
+                  <div class="step-content" id="step-content-3">
+                    <div class="step-unlocked" id="step-unlocked-3">
+                      <div class="step-body">
+                        See why components are the “language” of physics: 2D projectiles, inclined planes, navigation, and how 3D components show up in fields and forces.
+                      </div>
 
-              <div class="step-content" id="stepContent6">
-                <div class="step-body">
-                  Use the simulation to rotate a vector in 2D and adjust its elevation/azimuth in 3D. Watch components change live, then predict signs and magnitudes before revealing the readout.
-                </div>
+                      <div class="prompt-preview" id="preview-step3">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step3"></div>
 
-                <div class="prompt-preview" id="promptPreview6"></div>
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(3)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-3" onclick="copyAnswer(3)" style="display:none;">Copy answer</button>
+                      </div>
 
-                <div class="copy-row">
-                  <a class="btn-pill" href="simulation/simulation.html" aria-label="Open simulation (Mastery)">Run simulation</a>
-                  <button class="btn-primary" type="button" data-run-step="6">Run with AI</button>
-                </div>
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-3" type="button">Try with AI</button>
+                        </div>
+                        <span>Goal: recognize when “resolve into components” is the fastest path to an answer.</span>
+                      </div>
+                    </div>
 
-                <div class="ai-response" id="aiResponse6"></div>
-
-                <div class="step-footer">
-                  <div class="left-actions">
-                    <span>Try: keep \(A\) constant, sweep \(\theta\) through quadrants, and predict when components change sign.</span>
+                    <div class="locked-panel" id="step-locked-3" style="display:none;">
+                      <div class="locked-title">Locked</div>
+                      <div class="locked-desc">This step is not available for your account level.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">View plans</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
                   </div>
-                  <span>Mastery required</span>
-                </div>
-              </div>
-            </article>
+                </article>
 
-            <!-- Locked overlay area for steps 4–6 (shown for free users) -->
-            <div id="lockedStepsNotice" class="locked-panel" style="display:none;">
-              <div class="locked-title">Mastery unlocks Steps 4–6</div>
-              <div class="locked-desc">
-                You can view Steps 1–3 now. Upgrade to Mastery to access the diagnostic mini-quiz, full practice set, interactive simulation, and AI help for every step.
-              </div>
-              <div class="locked-actions">
-                <a class="btn-primary" href="/pricing.html">Unlock Mastery</a>
-                <a class="btn-pill" href="/auth.html">Log in</a>
+                <!-- STEP 4 -->
+                <article class="step-card" data-step="4">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 4</div>
+                      <div class="step-title">Check your understanding: mini-quiz (answers hidden until you reveal)</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill mastery">Paid</span>
+                      <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-4">
+                    <div class="step-unlocked" id="step-unlocked-4">
+                      <div class="step-body">
+                        Try each question first. Answers + feedback appear only when you click <strong>Reveal answer</strong>.
+                        This prevents accidental spoilers and builds real exam readiness.
+                      </div>
+
+                      <div class="prompt-preview" id="preview-step4">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step4"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(4)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-4" onclick="copyAnswer(4)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(4)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-4" type="button">Run with AI</button>
+                        </div>
+                        <span>Goal: attempt first → then reveal and learn from your mistakes.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-4" style="display:none;">
+                      <div class="locked-title">Paid step</div>
+                      <div class="locked-desc">Steps 4–6 are part of paid access.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">Unlock full access</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- STEP 5 -->
+                <article class="step-card" data-step="5">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 5</div>
+                      <div class="step-title">Practice: resolve, combine, and move between (magnitude, angle) and (x, y, z)</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill mastery">Paid</span>
+                      <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-5">
+                    <div class="step-unlocked" id="step-unlocked-5">
+                      <div class="step-body">
+                        Practice resolving vectors into components, reconstructing magnitude and direction from components, and combining vectors using the component method in 2D and 3D.
+                      </div>
+
+                      <div class="prompt-preview" id="preview-step5">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step5"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(5)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-5" onclick="copyAnswer(5)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(5)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-5" type="button">Run with AI</button>
+                        </div>
+                        <span>Goal: solve component problems reliably—even with awkward angles.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-5" style="display:none;">
+                      <div class="locked-title">Paid step</div>
+                      <div class="locked-desc">Steps 4–6 are part of paid access.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">Unlock full access</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- STEP 6 -->
+                <article class="step-card" data-step="6">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 6</div>
+                      <div class="step-title">Summary & reflection + Exploration / “simulation” prompts</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill mastery">Paid</span>
+                      <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-6">
+                    <div class="step-unlocked" id="step-unlocked-6">
+                      <div class="step-body">
+                        Consolidate the key takeaways, then explore “what if?” scenarios by changing axes, angles, and signs to predict how components and resultants change in 2D and 3D.
+                      </div>
+
+                      <div class="prompt-preview" id="preview-step6">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step6"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(6)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-6" onclick="copyAnswer(6)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(6)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-6" type="button">Run with AI</button>
+                          <a class="btn-pill"
+                             href="/physics/simulations/vector-components-2d-3d.html"
+                             style="border-color: rgba(129,140,248,0.45); color:#4f46e5; font-weight:700;">
+                            🔒 ▶ Explore interactive simulation
+                          </a>
+                        </div>
+                        <span>Goal: build “component discipline” you can reuse in every 2D/3D mechanics topic.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-6" style="display:none;">
+                      <div class="locked-title">Paid step</div>
+                      <div class="locked-desc">Steps 4–6 are part of paid access.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">Unlock full access</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                        <a class="btn-pill" href="/physics/simulations/vector-components-2d-3d.html" style="border-color: rgba(129,140,248,0.45); color:#4f46e5; font-weight:700;">
+                          🔒 ▶ Explore interactive simulation
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
               </div>
             </div>
+
+            <!-- RIGHT: Help Panel -->
+            <aside class="help-panel">
+              <div class="help-panel-inner" id="help-panel-inner">
+                <div class="help-locked-clickcatcher" id="help-locked-clickcatcher" aria-hidden="true"></div>
+
+                <button class="help-panel-toggle" id="help-panel-toggle" type="button">
+                  <span class="nano-help-title">Deepen your understanding</span>
+                  <span class="help-panel-toggle-icon">▾</span>
+                </button>
+
+                <div class="help-lock-wrap" id="help-lock-wrap">
+                  <div class="help-panel-body" id="help-panel-body">
+                    <p>
+                      Use these help topics when angles and signs confuse you, when “which trig?” feels unclear, or when 3D components and unit vectors are tripping you up.
+                    </p>
+
+                    <div class="help-cta" id="help-cta" aria-hidden="true">
+                      <div class="kicker">Mastery feature</div>
+                      <div class="title">Help Library + guided prompt paths</div>
+                      <div class="desc">Upgrade to Mastery to unlock the Help Library for this lesson.</div>
+                      <div class="actions">
+                        <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
+
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">Confusions &amp; look-alikes</span>
+                        <p class="help-category-desc">Angles, projections, signs, and notation clarity.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=CL01">Component meaning: projection vs “shadow” intuition</a></li>
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=CL02">Sign mistakes: how to assign +/− from the diagram</a></li>
+                      </ul>
+                    </div>
+
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">Tricky areas &amp; exam traps</span>
+                        <p class="help-category-desc">Where students lose marks in components problems.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=ET01">Which trig? sin vs cos from a reference angle (fast method)</a></li>
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=ET02">Quadrants and direction words: turning language into components</a></li>
+                      </ul>
+                    </div>
+
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">Common mistakes</span>
+                        <p class="help-category-desc">Fix the errors that cause most wrong answers.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=CM01">Forgetting signs after computing magnitudes of components</a></li>
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=CM02">Mixing axis labels: swapping x/y (or x/y/z) accidentally</a></li>
+                      </ul>
+                    </div>
+
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">When you feel stuck</span>
+                        <p class="help-category-desc">A routine that works every time.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=ST01">A 6-step checklist for resolving any vector into components</a></li>
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=ST02">Reverse direction: go from (x, y, z) back to magnitude + angles</a></li>
+                      </ul>
+                    </div>
+
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">Concept bridges</span>
+                        <p class="help-category-desc">Connect components to later physics topics.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=BR01">Unit vectors \u02c6i, \u02c6j, \u02c6k and why they simplify everything</a></li>
+                        <li><a class="help-prompt-btn" href="help-vector-components-2d-3d.html?id=BR02">From components to forces: the same math powers FBDs and equilibrium</a></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="help-lock-overlay" id="help-lock-overlay" aria-hidden="true">
+                    <div class="teaser-card">
+                      <div class="teaser-kicker">Mastery feature</div>
+                      <div class="teaser-title">Unlock the Help Library</div>
+                      <div class="teaser-desc">
+                        The Help panel (topics + prompts) is part of Mastery. Upgrade to access these help paths and prompts.
+                      </div>
+                      <div class="teaser-actions">
+                        <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </aside>
 
           </div>
-
-          <!-- RIGHT: Help Panel -->
-          <aside aria-label="Help panel">
-            <div class="help-panel-inner">
-              <button class="help-panel-toggle" id="helpPanelToggle" type="button" aria-expanded="false">
-                <span class="nano-help-title">Study Help</span>
-                <span class="help-panel-toggle-icon" aria-hidden="true">▾</span>
-              </button>
-
-              <div class="help-lock-wrap" style="position:relative;">
-                <div class="help-panel-body" id="helpPanelBody" style="display:none;">
-                  <p>
-                    Quick, targeted help for common confusions—without giving away the entire lesson. Use these to ask AI the right question at the right time.
-                  </p>
-
-                  <div class="help-category">
-                    <div class="help-category-label">Concept clarity</div>
-                    <p class="help-category-desc">When “projection” and “components” feel slippery.</p>
-                    <ul class="help-prompts-bulleted">
-                      <li><button class="help-prompt-btn" type="button" data-help-prompt="Explain vector components as projections. Use a simple diagram description (no image) and a quick numeric example.">Explain components as projections</button></li>
-                      <li><button class="help-prompt-btn" type="button" data-help-prompt="Give me a checklist to choose the correct sign for Ax, Ay (and Az). Include a quadrant-based method.">Sign + quadrant checklist</button></li>
-                    </ul>
-                  </div>
-
-                  <div class="help-category">
-                    <div class="help-category-label">Exam traps</div>
-                    <p class="help-category-desc">Angle conventions that cause swapped \(\sin\)/\(\cos\).</p>
-                    <ul class="help-prompts-bulleted">
-                      <li><button class="help-prompt-btn" type="button" data-help-prompt="Show 3 common angle-convention mistakes for vector components and how to fix each. Include one measured from +y.">Angle convention mistakes</button></li>
-                      <li><button class="help-prompt-btn" type="button" data-help-prompt="Teach me how to convert a reference angle (like '20° below +x' or '35° west of north') into Ax and Ay correctly.">Convert word angles to components</button></li>
-                    </ul>
-                  </div>
-
-                  <div class="help-cta" id="helpCtaBox">
-                    <div style="font-weight:900; letter-spacing:-0.01em; margin-bottom:0.25rem; font-family: var(--font-heading);">Want full Help access?</div>
-                    <div style="color:#cbd5e1; font-size:0.92rem; line-height:1.55;">
-                      Mastery unlocks all Help prompts and deep-dive explanations across every lesson step.
-                    </div>
-                    <div style="height:0.65rem;"></div>
-                    <a class="btn-primary" href="/pricing.html">Unlock Mastery</a>
-                  </div>
-                </div>
-
-                <!-- Overlay shown for anon + free -->
-                <div class="help-lock-overlay" id="helpLockOverlay">
-                  <div class="teaser-card">
-                    <div class="teaser-kicker">🔒 Locked • Mastery</div>
-                    <div class="teaser-title">Study Help is available with Mastery</div>
-                    <div class="teaser-desc">
-                      Unlock curated prompts, misconception fixes, and exam-trap warnings tailored to this nano-lesson.
-                    </div>
-                    <div class="teaser-actions">
-                      <a class="btn-primary" href="/pricing.html">Unlock Mastery</a>
-                      <a class="btn-pill" href="/auth.html">Log in</a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Click catcher for locked help (keeps panel non-navigable) -->
-                <div class="help-locked-clickcatcher" id="helpLockedClickcatcher" aria-hidden="true"></div>
-              </div>
-
-            </div>
-          </aside>
         </div>
       </section>
     </main>
 
     <footer>
-      © <span id="psYear"></span> PromptSchola • Built for calm, focused STEM mastery
+      <a href="/about.html">About.</a> © 2025 PromptSchola. All rights reserved.
     </footer>
   </div>
 
-  <!-- Shared auth helpers -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/auth.js"></script>
 
   <script>
-    // ========= PromptSchola Nano-lesson: Vector components (2D & 3D) =========
+    /* ============================================================
+       Nano Lesson JS (Final V1.1 matched)
+       - Keeps gating behavior + help hard-lock
+       - Keeps progress chip updating instantly from /api/run-step meta.progress
+       ============================================================ */
 
-    // --- Prompts (only content differs per topic) ---
-    const PS_PROMPTS = {
-      1: `You are my physics tutor. Topic: Vector components (2D & 3D).
-Explain what "components" mean using the idea of projections. Use one simple numeric example in 2D.
-Then list 3 quick checks to avoid sign mistakes.`,
-      2: `Teach vector components in 2D with strict angle conventions.
-Include: (1) when Ax=Acosθ and Ay=Asinθ applies, (2) what to do if θ is measured from +y or from another direction,
-and (3) 2 worked examples (different quadrants) with sign checks.`,
-      3: `Show how to write vectors in unit-vector form (i, j, k) and how to reconstruct magnitude and direction from components.
-Explain why atan2(Ay,Ax) is better than arctan(Ay/Ax). Give one example.`,
-      4: `STEP 4 (Check your understanding – mini-quiz) for vector components (2D & 3D).
+    /* Continue Learning marker */
+    (function PS_markLastLearningPage(){
+      try{
+        const p = location.pathname || '';
+        if (p === '/' || p.endsWith('/index.html') || p.endsWith('/auth.html') || p.endsWith('/pricing.html')) return;
+        const t = (document.title || '').replace(/\s+–\s+PromptSchola.*$/i,'').trim();
+        localStorage.setItem('ps_last_page_path', p);
+        localStorage.setItem('ps_last_page_label', t || 'Continue Learning');
+        localStorage.setItem('ps_last_seen_ts', String(Date.now()));
+      } catch(e){}
+    })();
 
-Part A — Diagnostic (5 items):
-- Each item should target one common component mistake (wrong trig, wrong sign, wrong reference angle, mixing degrees/radians, forgetting Az).
-- For each item, ask for: (i) signs of components, (ii) which trig function to use, and (iii) a quick numeric result.
+    /* Post-auth redirect helper (used by nav + locked CTAs) */
+    function PS_setPostAuthRedirect(){
+      try{
+        localStorage.setItem('ps_post_auth_redirect', location.pathname + location.search + location.hash);
+      } catch(e){}
+    }
+    window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
 
-Part B — Solutions:
-- Provide solutions in expandable sections (use "Answer:" headings and short reasoning).
-- Emphasize the angle convention and quadrant reasoning.`,
-      5: `Create 3 multi-step practice problems where vector components are essential:
-1) Forces on an object with two angled forces (find net force components).
-2) Relative velocity in 2D (wind + plane).
-3) A 3D vector given magnitude + elevation/azimuth (find Ax, Ay, Az).
+    const NANO_SLUG = 'vector-components-2d-3d';
+    const STORAGE_KEY = 'ps_nano_vector_components_2d_3d_collapse';
+    const TRACK_ENDPOINT = '/api/track';
 
-For each: provide a clean setup, show component breakdown, and final answer with units.
-Also include 3 "check yourself" questions per problem.`,
-      6: `Design an interactive exploration guide for a simulation where I rotate a vector in 2D and change elevation/azimuth in 3D.
-Give me: (1) 6 short experiments to run, (2) predictions I should make before revealing components,
-and (3) the key takeaways about when components change sign and how magnitude relates to components.`
-    };
+    const lastAiResponses = {};
+    let collapseState = {};
 
-    // --- UI: Step expand/collapse ---
-    function qs(sel, root=document){ return root.querySelector(sel); }
-    function qsa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+    const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
+    const $ = (id) => document.getElementById(id);
+    const typeset = (nodes) =>
+      window.MathJax?.typesetPromise
+        ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
+        : null;
 
-    function setYear(){
-      const y = new Date().getFullYear();
-      const el = qs('#psYear');
-      if(el) el.textContent = y;
+    /* ============================================================
+       Progress cache + UI (instant update from meta.progress)
+       ============================================================ */
+    const PROGRESS_CACHE_KEY = `ps_progress_${NANO_SLUG}_v1`;
+
+    function PS_readProgressCache(){
+      try{
+        const t = localStorage.getItem(PROGRESS_CACHE_KEY);
+        return t ? JSON.parse(t) : null;
+      } catch { return null; }
     }
 
-    function toggleStep(step){
-      const content = qs('#stepContent' + step);
-      const btn = qs('[data-toggle-step="' + step + '"]');
-      if(!content || !btn) return;
-      const isOpen = content.style.display !== 'none';
-      content.style.display = isOpen ? 'none' : 'block';
-      btn.textContent = isOpen ? '+' : '–';
+    function PS_writeProgressCache(p){
+      try{ localStorage.setItem(PROGRESS_CACHE_KEY, JSON.stringify(p || null)); } catch(e){}
     }
 
-    function initStepToggles(){
-      qsa('[data-toggle-step]').forEach(btn=>{
-        const step = btn.getAttribute('data-toggle-step');
-        btn.addEventListener('click', ()=>toggleStep(step));
-      });
-      // Default: open Steps 1–2, close others
-      [1,2].forEach(s=>{
-        const c = qs('#stepContent'+s);
-        const b = qs('[data-toggle-step="'+s+'"]');
-        if(c && b){ c.style.display='block'; b.textContent='–'; }
-      });
-      [3,4,5,6].forEach(s=>{
-        const c = qs('#stepContent'+s);
-        const b = qs('[data-toggle-step="'+s+'"]');
-        if(c && b){ c.style.display='none'; b.textContent='+'; }
-      });
+    function PS_clearProgressCache(){
+      try{ localStorage.removeItem(PROGRESS_CACHE_KEY); } catch(e){}
     }
 
-    // --- Copy prompt ---
-    async function copyText(text){
-      try {
-        await navigator.clipboard.writeText(text);
-        return true;
-      } catch(e){
-        // Fallback
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); } catch(_) {}
-        document.body.removeChild(ta);
-        return true;
-      }
-    }
+    function PS_applyProgress(p){
+      const chip = $('ps-progress-chip');
+      if (!chip) return;
 
-    function initCopyButtons(){
-      qsa('[data-copy-step]').forEach(btn=>{
-        btn.addEventListener('click', async ()=>{
-          const step = btn.getAttribute('data-copy-step');
-          const prompt = PS_PROMPTS[step] || '';
-          const ok = await copyText(prompt);
-          btn.textContent = ok ? 'Copied!' : 'Copy failed';
-          setTimeout(()=>btn.textContent='Copy prompt', 1100);
-        });
-      });
-    }
-
-    // --- Gating rules (match canonical behavior) ---
-    // Steps 1–3 visible (prompts visible + copy works).
-    // Free signed-in users: Run AI for Steps 1–2 only.
-    // Paid users: Run AI Steps 1–6 + Help access.
-    // Anon + free: Help panel locked (cannot toggle/click/navigate).
-    let PS_USER = null;
-    let PS_TIER = 'anon'; // 'anon' | 'free' | 'paid'
-
-    function normalizeTier(ent){
-      const raw =
-        (ent?.tier && String(ent.tier).toLowerCase()) ||
-        (ent?.is_paid ? 'paid' : '') ||
-        'free';
-      if(raw === 'paid' || raw === 'mastery' || raw === 'pro' || raw === 'premium') return 'paid';
-      return 'free';
-    }
-
-    async function resolveUserAndTier(){
-      try {
-        PS_USER = await (window.getCurrentUser ? window.getCurrentUser() : null);
-        if(!PS_USER){
-          PS_TIER = 'anon';
-          return;
-        }
-        // entitlements helper (from /auth.js) – if absent, treat as free
-        const ent = await (window.PS_getEntitlements ? window.PS_getEntitlements() : null);
-        PS_TIER = normalizeTier(ent);
-      } catch(e){
-        PS_USER = null;
-        PS_TIER = 'anon';
-      }
-    }
-
-    function updateNav(){
-      const loginBtn = qs('#psLoginBtn');
-      const logoutBtn = qs('#psLogoutBtn');
-      const subBtn = qs('#psSubscribeBtn');
-      const badge = qs('#psUserBadge');
-
-      if(!loginBtn || !logoutBtn || !subBtn || !badge) return;
-
-      if(!PS_USER){
-        loginBtn.style.display = 'inline-flex';
-        logoutBtn.style.display = 'none';
-        subBtn.style.display = 'none';
-        badge.style.display = 'none';
+      if (!p || typeof p !== 'object'){
+        chip.style.display = 'none';
+        chip.title = '';
         return;
       }
 
-      loginBtn.style.display = 'none';
-      logoutBtn.style.display = 'inline-flex';
-      badge.style.display = 'inline-flex';
-      badge.textContent = (PS_TIER === 'paid') ? 'Mastery' : 'Free';
-      badge.style.padding = '0.32rem 0.7rem';
-      badge.style.borderRadius = '999px';
-      badge.style.border = '1px solid rgba(209,213,219,0.9)';
-      badge.style.background = (PS_TIER === 'paid') ? 'rgba(99,102,241,0.12)' : '#dcfce7';
-      badge.style.color = (PS_TIER === 'paid') ? '#3730a3' : '#166534';
-      badge.style.fontWeight = '900';
-      badge.style.fontSize = '0.78rem';
+      const max = Number(p?.max_step_completed ?? 0);
+      const runs = Number(p?.ai_runs_count ?? 0);
+      const last = (p?.last_ai_run_step != null) ? Number(p.last_ai_run_step) : null;
 
-      subBtn.style.display = (PS_TIER === 'paid') ? 'none' : 'inline-flex';
-    }
+      const step = Number.isFinite(max) ? Math.max(0, Math.min(6, max)) : 0;
 
-    function enforceStepGatingUI(){
-      // Show locked notice for steps 4–6 when not paid
-      const lockedNotice = qs('#lockedStepsNotice');
-      const showLocked = (PS_TIER !== 'paid');
-      if(lockedNotice) lockedNotice.style.display = showLocked ? 'block' : 'none';
-
-      // Disable Run AI buttons based on tier and step
-      qsa('[data-run-step]').forEach(btn=>{
-        const step = parseInt(btn.getAttribute('data-run-step'), 10);
-        let allowed = false;
-
-        if(PS_TIER === 'paid') allowed = true;
-        else if(PS_TIER === 'free') allowed = (step === 1 || step === 2);
-        else allowed = false; // anon cannot run AI
-
-        btn.disabled = !allowed;
-        btn.title = allowed ? '' : (PS_TIER === 'anon'
-          ? 'Log in to run AI'
-          : 'Upgrade to Mastery to run AI for this step');
-      });
-    }
-
-    function enforceHelpPanelGating(){
-      const toggle = qs('#helpPanelToggle');
-      const body = qs('#helpPanelBody');
-      const overlay = qs('#helpLockOverlay');
-      const clickcatcher = qs('#helpLockedClickcatcher');
-
-      const isLocked = (PS_TIER !== 'paid'); // anon + free locked
-      if(toggle){
-        toggle.classList.toggle('help-toggle-disabled', isLocked);
-        toggle.setAttribute('aria-disabled', isLocked ? 'true' : 'false');
-        if(isLocked){
-          toggle.setAttribute('aria-expanded', 'false');
-        }
+      if (!step && !runs && !last){
+        chip.style.display = 'none';
+        chip.title = '';
+        return;
       }
 
-      // When locked: prevent interaction, show overlay + click catcher
-      if(isLocked){
-        if(body) body.style.display = 'none';
-        if(overlay) overlay.style.display = 'flex';
-        if(clickcatcher) clickcatcher.style.display = 'block';
+      chip.textContent = `Progress: Step ${step}/6`;
+      chip.style.display = 'inline-flex';
+      chip.title = `AI runs: ${Number.isFinite(runs) ? runs : 0}${Number.isFinite(last) ? ` • Last AI run: Step ${last}` : ''}`;
+    }
+
+    /* ============================================================
+       ANON ANALYTICS (fail-open, allowlist events)
+       ============================================================ */
+    async function PS_trackAnon(event){
+      try{
+        if (PS_CTX.loggedIn) return;
+        const body = { event, nano_slug: NANO_SLUG, is_anon: true };
+        fetch(TRACK_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }).catch(()=>{});
+      } catch(e){}
+    }
+
+    /* ============================================================
+       Prompts
+       ============================================================ */
+    const prompts = {
+      1: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Vector components (2D & 3D).
+
+STEP 1 (Orient/Definition): Explain what vector components are and why we use them. Include:
+• A one-sentence definition of “component” and “unit vector”
+• How a vector in 2D can be written as (x, y) or as Ax \\hat{i} + Ay \\hat{j}
+• How a vector in 3D extends to (x, y, z) / Ax \\hat{i} + Ay \\hat{j} + Az \\hat{k}
+• The meaning of signs (+/−) for components
+• A tiny concrete example in 2D and a tiny example in 3D (no long algebra)
+
+Formatting rules:
+• Short paragraphs + bullet points
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math, one per line
+• Do NOT use markdown headings like # or ###.`,
+
+      2: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Vector components (2D & 3D).
+
+STEP 2 (Conceptual grounding): Build intuition for projections, angles, and sign conventions. Include:
+• “Projection” meaning (shadow idea) and how it creates components
+• How to choose sin vs cos from a reference angle (quick rule)
+• Quadrants and signs: how to get the correct sign even if the trig gives a positive number
+• Unit vector form \\hat{i}, \\hat{j}, \\hat{k} and what it communicates
+• One short worked anchor example: given magnitude and direction, compute components and interpret the signs
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key concepts sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`,
+
+      3: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Vector components (2D & 3D).
+
+STEP 3 (Real-world connection): Explain where components show up in physics and why they simplify problems. Include:
+• Forces on an incline (why resolving is natural)
+• Projectile motion decomposition (horizontal vs vertical)
+• Navigation/relative motion (2D) and a simple 3D example (e.g., field/force components)
+• 5 “before you compute” questions students should ask (axes choice, angle reference, sign, units, report form)
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`,
+
+      4: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Vector components (2D & 3D).
+
+STEP 4 (Check your understanding – mini-quiz): Create 7 questions total:
+• 4 multiple-choice (A–D)
+• 2 short-answer
+• 1 calculation question that requires resolving a vector and/or recombining components
+
+Coverage must include:
+• Component meaning and sign interpretation
+• sin vs cos choice from a reference angle
+• Reconstruct magnitude from components
+• A simple 3D component interpretation (or unit vectors) question
+
+CRITICAL OUTPUT FORMAT (so the site can hide answers):
+For each question, write the question first, then put the answer+explanation inside these exact markers on their own lines:
+[[[ANSWER]]]
+...answer + 1–2 sentence explanation...
+[[[/ANSWER]]]
+
+Formatting rules:
+• Clear spacing
+• Bullets and numbering
+• No markdown headings like # or ###.`,
+
+      5: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Vector components (2D & 3D).
+
+STEP 5 (Practice): Create 5 short problems focused on:
+1) Resolve a 2D vector with a given magnitude and angle into x and y (include sign logic)
+2) Given (x, y), find magnitude and direction (report angle clearly)
+3) Add two 2D vectors using components (resultant components + magnitude)
+4) A quick “choose axes” scenario (incline or projectile) and write the component form of a force/velocity
+5) A 3D vector in unit-vector form; compute magnitude and interpret which axis contributes most
+
+For each problem:
+• State the problem clearly
+• Then provide a step-by-step solution with brief reasoning
+• Show any math as LaTeX display math, one per line
+
+Formatting rules:
+• Numbered problems
+• Bold “Solution” for each
+• No markdown headings like # or ###.`,
+
+      6: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Vector components (2D & 3D).
+
+STEP 6 (Summary & reflection + Exploration/Simulation prompts):
+PART A — Summary & reflection:
+• Give a tight summary of the core ideas (components, projections, signs, unit vectors, rebuild magnitude/direction)
+• Provide a “reflection checklist” with 6 yes/no items students can self-check
+
+PART B — Exploration:
+Provide 5 “what if” experiments students can do on paper:
+• Rotate the axes and predict how components change (vector stays the same)
+• Change the reference angle definition and predict sin/cos swap effects
+• Flip a sign convention and interpret what changes physically
+• Keep magnitude fixed but sweep direction through quadrants and track component signs
+• Extend a 2D vector to 3D by adding a z-component and predict magnitude change
+
+Formatting rules:
+• Short paragraphs + bullet lists
+• Bold key terms sparingly
+• If you include equations, use LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+    };
+
+    /* ============================================================
+       Collapse state
+       ============================================================ */
+    function loadCollapse(){
+      try { collapseState = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {}; }
+      catch { collapseState = {}; }
+    }
+    function saveCollapse(){
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState)); } catch(e){}
+    }
+    function toggleStep(step){
+      const content = $(`step-content-${step}`);
+      const btn = $(`toggle-btn-${step}`);
+      if (!content || !btn) return;
+
+      const isNowHidden = content.style.display !== 'none';
+      content.style.display = isNowHidden ? 'none' : 'block';
+      btn.textContent = isNowHidden ? '+' : '−';
+
+      collapseState[String(step)] = !isNowHidden;
+      saveCollapse();
+    }
+
+    /* ============================================================
+       Output formatting (site-friendly)
+       ============================================================ */
+    function esc(s){
+      return String(s || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+    }
+
+    function inlineFmt(s){
+      return s
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/^\s*[-*]\s+/gm,'• ');
+    }
+
+    function paras(s){
+      const x = s.replace(/\r\n/g,'\n');
+      return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+    }
+
+    function formatOutput(raw){
+      return paras(inlineFmt(esc(raw)));
+    }
+
+    function formatQuizWithToggles(raw){
+      const OPEN = '[[[ANSWER]]]';
+      const CLOSE = '[[[/ANSWER]]]';
+
+      let out = '';
+      let i = 0;
+
+      while (true){
+        const a = raw.indexOf(OPEN, i);
+        if (a === -1){
+          out += formatOutput(raw.slice(i));
+          break;
+        }
+
+        const b = raw.indexOf(CLOSE, a + OPEN.length);
+        if (b === -1){
+          out += formatOutput(raw.slice(i));
+          break;
+        }
+
+        out += formatOutput(raw.slice(i, a));
+
+        const inner = raw.slice(a + OPEN.length, b).trim();
+        out += `
+          <details class="answer-toggle">
+            <summary>Reveal answer</summary>
+            <div class="answer-body">${paras(inlineFmt(esc(inner)))}</div>
+          </details>
+        `;
+
+        i = b + CLOSE.length;
+      }
+
+      return out;
+    }
+
+    /* ============================================================
+       Prompt show/copy
+       ============================================================ */
+    function showPrompt(step){
+      const preview = $(`preview-step${step}`);
+      if (!preview) return;
+      preview.textContent = prompts[step] || 'Prompt coming soon.';
+      preview.style.display = 'block';
+      typeset([preview]);
+      PS_trackAnon('PROMPT_SHOWN');
+    }
+
+    async function copyText(t, okMsg, failMsg){
+      if (!t) return alert(failMsg || 'Nothing to copy.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
+      catch { alert(failMsg || 'Could not copy.'); }
+    }
+
+    function copyPrompt(step){
+      PS_trackAnon('PROMPT_COPIED');
+      return copyText(prompts[step], 'Prompt copied.', 'No prompt defined for this step yet.');
+    }
+
+    function copyAnswer(step){
+      return copyText(lastAiResponses[step], 'Answer copied.', 'No AI answer to copy yet.');
+    }
+
+    /* ============================================================
+       Run-with-AI
+       ============================================================ */
+    function redirectToSignupForRunAI(){
+      PS_trackAnon('RUN_AI_CLICK_ANON');
+      try { PS_setPostAuthRedirect(); } catch(e){}
+      const redirectTarget = encodeURIComponent(location.href);
+      location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+    }
+
+    function setRunBtnRunning(step, running){
+      const btn = $(`run-btn-${step}`);
+      if (!btn) return;
+
+      if (running){
+        btn.dataset.prevText = btn.textContent;
+        btn.textContent = 'Running…';
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
       } else {
-        if(overlay) overlay.style.display = 'none';
-        if(clickcatcher) clickcatcher.style.display = 'none';
+        btn.disabled = false;
+        btn.textContent = btn.dataset.prevText || btn.textContent;
+        btn.removeAttribute('aria-busy');
       }
     }
 
-    function initHelpPanel(){
-      const toggle = qs('#helpPanelToggle');
-      const body = qs('#helpPanelBody');
+    function PS_buildDailyLimitPanel({ limit, used, resetsAt, timezone }){
+      const when = resetsAt ? `Resets ${resetsAt} (${timezone || 'local time'}).` : 'Resets tomorrow.';
+      const usedText = (typeof used === 'number' && typeof limit === 'number')
+        ? `You used ${used}/${limit} free AI runs today.`
+        : `You reached today’s free AI limit.`;
 
-      if(!toggle || !body) return;
+      return `
+        <div class="locked-panel" style="border-color: rgba(245,158,11,0.35); background: linear-gradient(to bottom, rgba(245,158,11,0.10), rgba(126, 34, 206, 0.06));">
+          <div class="locked-title" style="color:#92400e;">Daily AI limit reached</div>
+          <div class="locked-desc">
+            ${usedText} ${when}
+            <br><span style="color: var(--text-subtle); font-size: 0.88rem;">
+              Upgrade to Mastery for full access (Steps 1–6 + Help + AI).
+            </span>
+          </div>
+          <div class="locked-actions">
+            <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+            <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Account</a>
+          </div>
+        </div>
+      `;
+    }
 
-      toggle.addEventListener('click', ()=>{
-        if(PS_TIER !== 'paid') return; // hard lock
-        const isOpen = body.style.display !== 'none';
-        body.style.display = isOpen ? 'none' : 'block';
-        toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-      });
-
-      // Help prompt buttons (when unlocked)
-      qsa('[data-help-prompt]').forEach(btn=>{
-        btn.addEventListener('click', async ()=>{
-          if(PS_TIER !== 'paid') return;
-          const prompt = btn.getAttribute('data-help-prompt') || '';
-          await copyText(prompt);
-          btn.textContent = 'Copied!';
-          setTimeout(()=>btn.textContent = btn.textContent === 'Copied!' ? 'Copy again' : btn.textContent, 700);
-        });
-      });
-
-      // If locked and someone clicks catch area, route to pricing (optional: keep purely non-navigable)
-      const clickcatcher = qs('#helpLockedClickcatcher');
-      if(clickcatcher){
-        clickcatcher.addEventListener('click', ()=>{
-          // Keep non-navigable per your rule; do nothing.
-        });
+    function PS_disableRunAIButtons(reasonText){
+      for (let step = 1; step <= 6; step++){
+        const btn = $(`run-btn-${step}`);
+        if (!btn) continue;
+        btn.disabled = true;
+        btn.dataset.psDisabledReason = reasonText || 'Daily AI limit reached';
+        btn.title = btn.dataset.psDisabledReason;
       }
     }
 
-    // --- Run with AI (calls /api/run-step) ---
-    function setResponse(step, text){
-      const box = qs('#aiResponse' + step);
-      if(box) box.textContent = text || '';
-      if(window.MathJax && window.MathJax.typeset){
-        try { window.MathJax.typeset(); } catch(e){}
+    function PS_showDailyLimitCTA(step, payload){
+      const content = $(`step-content-${step}`);
+      if (!content) return;
+
+      const existing = content.querySelector('[data-ps-daily-limit="1"]');
+      const html = `<div data-ps-daily-limit="1">${PS_buildDailyLimitPanel(payload || {})}</div>`;
+
+      if (existing) {
+        existing.outerHTML = html;
+        return;
       }
+
+      const resp = $(`response-step${step}`);
+      if (resp) resp.insertAdjacentHTML('afterend', html);
+      else content.insertAdjacentHTML('beforeend', html);
     }
 
-    async function runStep(step){
-      const prompt = PS_PROMPTS[step] || '';
-      if(!prompt) return;
+    async function runWithAI(step){
+      const prompt = prompts[step];
+      if (!prompt) return alert('No prompt defined for this step yet.');
 
-      setResponse(step, 'Running…');
+      const output = $(`response-step${step}`);
+      if (!output) return alert('No response area found for this step.');
 
-      try {
-        const token = await (window.PS_getAccessToken ? window.PS_getAccessToken() : null);
-        if(!token){
-          setResponse(step, 'Please log in to run AI.');
-          return;
-        }
+      const preview = $(`preview-step${step}`);
+      if (preview) preview.style.display = 'none';
+
+      if (typeof ensureLoggedInOrRedirect === 'function'){
+        const user = await ensureLoggedInOrRedirect();
+        if (!user) return;
+      } else {
+        redirectToSignupForRunAI();
+        return;
+      }
+
+      const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+      if (!token){
+        output.textContent = 'Session missing. Please sign in again.';
+        return;
+      }
+
+      setRunBtnRunning(step, true);
+
+      try{
+        output.textContent = 'Running with AI…';
 
         const res = await fetch('/api/run-step', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({
-            nano_slug: 'vector-components-2d-3d',
-            step: Number(step),
-            prompt
-          })
+          body: JSON.stringify({ prompt, step, nano_slug: NANO_SLUG, mode: 'nano' })
         });
 
         const data = await res.json().catch(()=> ({}));
-        if(!res.ok){
-          setResponse(step, data?.error || 'Request failed.');
+
+        if (!res.ok){
+          let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
+
+          if (data?.code === 'DAILY_LIMIT_REACHED'){
+            PS_disableRunAIButtons('Daily AI limit reached');
+            PS_showDailyLimitCTA(step, {
+              limit: data?.limit,
+              used: data?.used,
+              resetsAt: data?.resetsAt,
+              timezone: data?.timezone
+            });
+            output.textContent = data?.error || 'Daily AI limit reached. Upgrade to continue.';
+            return;
+          }
+
+          if (data?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
+          if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+          if (data?.code === 'PROMPT_INVALID') msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(data?.details || []);
+
+          output.textContent = msg;
           return;
         }
 
-        setResponse(step, data?.text || data?.response || '(No response returned.)');
-      } catch (e){
-        setResponse(step, 'Network error. Please try again.');
+        const raw = data?.content || 'No response received from AI.';
+        lastAiResponses[step] = raw;
+
+        output.innerHTML = (step === 4) ? formatQuizWithToggles(raw) : formatOutput(raw);
+        typeset([output]);
+
+        const copyBtn = $(`copy-answer-${step}`);
+        if (copyBtn) copyBtn.style.display = 'inline-flex';
+
+        const progress = data?.meta?.progress || null;
+        if (progress){
+          PS_writeProgressCache(progress);
+          PS_applyProgress(progress);
+        }
+
+      } catch(err){
+        console.error(err);
+        output.textContent = 'Unexpected error. Please try again.';
+      } finally {
+        setRunBtnRunning(step, false);
       }
     }
 
-    function initRunButtons(){
-      qsa('[data-run-step]').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          const step = btn.getAttribute('data-run-step');
-          runStep(step);
-        });
+    /* ============================================================
+       Help hard lock (anon + free)
+       ============================================================ */
+    function configureHelpAccess(isPaid){
+      const toggleBtn = $('help-panel-toggle');
+      const body = $('help-panel-body');
+      const overlay = $('help-lock-overlay');
+      const wrap = $('help-lock-wrap');
+      const icon = document.querySelector('.help-panel-toggle-icon');
+      const clickCatcher = $('help-locked-clickcatcher');
+      const inner = $('help-panel-inner');
+
+      if (inner) inner.style.position = inner.style.position || 'sticky';
+      if (!toggleBtn || !body || !overlay || !wrap) return;
+
+      if (isPaid){
+        wrap.classList.remove('help-lock-disabled');
+        overlay.style.display = 'none';
+        overlay.setAttribute('aria-hidden','true');
+        toggleBtn.disabled = false;
+        toggleBtn.classList.remove('help-toggle-disabled');
+        toggleBtn.setAttribute('aria-disabled','false');
+        if (icon) icon.textContent = '▾';
+        if (clickCatcher){
+          clickCatcher.style.display = 'none';
+          clickCatcher.setAttribute('aria-hidden','true');
+        }
+      } else {
+        wrap.classList.add('help-lock-disabled');
+        overlay.style.display = 'flex';
+        overlay.setAttribute('aria-hidden','false');
+        toggleBtn.disabled = true;
+        toggleBtn.classList.add('help-toggle-disabled');
+        toggleBtn.setAttribute('aria-disabled','true');
+        if (icon) icon.textContent = '🔒';
+        body.style.display = 'block';
+
+        if (clickCatcher){
+          clickCatcher.style.display = 'block';
+          clickCatcher.setAttribute('aria-hidden','false');
+          clickCatcher.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            PS_trackAnon('HELP_LOCKED_ATTEMPT');
+            location.href = '/pricing.html';
+          };
+        }
+      }
+    }
+
+    /* ============================================================
+       UI gating rules
+       ============================================================ */
+    function configureUI({ loggedIn, tier }){
+      const isPaid = tier === 'paid';
+      const isFreeSignedIn = loggedIn && !isPaid;
+
+      PS_CTX.loggedIn = !!loggedIn;
+      PS_CTX.tier = tier || (loggedIn ? 'free' : 'anon');
+      PS_CTX.isPaid = !!isPaid;
+
+      for (let step = 1; step <= 6; step++){
+        const unlocked = $(`step-unlocked-${step}`);
+        const locked = $(`step-locked-${step}`);
+        if (!unlocked || !locked) continue;
+
+        const lock = (step >= 4) && !isPaid;
+        unlocked.style.display = lock ? 'none' : 'block';
+        locked.style.display = lock ? 'block' : 'none';
+      }
+
+      configureHelpAccess(isPaid);
+
+      [1,2].forEach(step => {
+        const btn = $(`run-btn-${step}`);
+        if (!btn) return;
+        btn.style.display = 'inline-flex';
+        btn.textContent = 'Run with AI';
+        btn.onclick = () => {
+          if (!loggedIn) return redirectToSignupForRunAI();
+          return runWithAI(step);
+        };
       });
-    }
 
-    // --- Login/logout wiring ---
-    function initAuthButtons(){
-      const loginBtn = qs('#psLoginBtn');
-      const logoutBtn = qs('#psLogoutBtn');
-
-      if(loginBtn){
-        loginBtn.addEventListener('click', ()=>{
-          if(window.PS_setPostAuthRedirect) window.PS_setPostAuthRedirect(window.location.pathname);
-          window.location.href = '/auth.html';
-        });
+      const btn3 = $('run-btn-3');
+      if (btn3){
+        btn3.style.display = 'inline-flex';
+        btn3.textContent = 'Try with AI';
+        btn3.onclick = () => {
+          if (!loggedIn) return redirectToSignupForRunAI();
+          if (isFreeSignedIn) return (location.href = '/pricing.html');
+          return runWithAI(3);
+        };
       }
-      if(logoutBtn){
-        logoutBtn.addEventListener('click', async ()=>{
-          if(window.PS_signOut) await window.PS_signOut();
-          window.location.reload();
-        });
+
+      for (let step = 4; step <= 6; step++){
+        const btn = $(`run-btn-${step}`);
+        if (!btn) continue;
+
+        if (isPaid){
+          btn.style.display = 'inline-flex';
+          btn.textContent = 'Run with AI';
+          btn.onclick = () => runWithAI(step);
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      if (loggedIn){
+        PS_applyProgress(PS_readProgressCache());
+      } else {
+        PS_clearProgressCache();
+        PS_applyProgress(null);
       }
     }
 
-    // --- Init ---
-    async function init(){
-      setYear();
-      initStepToggles();
-      initCopyButtons();
-      initRunButtons();
-      initHelpPanel();
-      initAuthButtons();
+    /* ============================================================
+       Boot
+       ============================================================ */
+    document.addEventListener('DOMContentLoaded', async () => {
+      loadCollapse();
 
-      await resolveUserAndTier();
-      updateNav();
-      enforceStepGatingUI();
-      enforceHelpPanelGating();
-    }
+      for (let step = 1; step <= 6; step++){
+        const content = $(`step-content-${step}`);
+        const btn = $(`toggle-btn-${step}`);
+        if (!content || !btn) continue;
 
-    init();
+        const expanded = (collapseState[String(step)] !== false);
+        content.style.display = expanded ? 'block' : 'none';
+        btn.textContent = expanded ? '−' : '+';
+      }
+
+      typeset();
+
+      if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+      let loggedIn = false;
+      let tier = 'anon';
+
+      if (typeof getCurrentUser === 'function'){
+        try { loggedIn = !!(await getCurrentUser()); }
+        catch(e){ loggedIn = false; }
+      }
+
+      if (loggedIn && typeof PS_getUserTier === 'function'){
+        try { tier = (await PS_getUserTier()) || 'free'; }
+        catch(e){ tier = 'free'; }
+      }
+
+      if (loggedIn && tier === 'anon') tier = 'free';
+
+      configureUI({ loggedIn, tier });
+
+      PS_trackAnon('PAGE_VIEW');
+
+      document.addEventListener('click', (ev) => {
+        try{
+          if (PS_CTX.loggedIn) return;
+          const a = ev.target?.closest ? ev.target.closest('a') : null;
+          if (!a) return;
+          const href = (a.getAttribute('href') || '').trim();
+          if (!href) return;
+
+          if (href.includes('/pricing.html')) PS_trackAnon('PRICING_CLICK');
+          else if (href.includes('/auth.html')) PS_trackAnon('SIGNUP_CLICK');
+        } catch(e){}
+      }, true);
+    });
   </script>
 </body>
 </html>
