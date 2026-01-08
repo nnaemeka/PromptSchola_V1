@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vector Components (2D &amp; 3D) – Study Help · PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Targeted AI-powered study help for Vector Components (2D &amp; 3D) — clarify projections, signs, sin/cos selection, unit vectors, and common exam traps."
+  />
+
+  <!-- ✅ Final V1.1: Inter + Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+
+      /* ✅ Final V1.1 Navy foundation */
+      --navy: #00255D;
+      --navy-strong: #001c47;
+      --navy-deep: #001833;
+      --navy-soft: rgba(0, 37, 93, 0.10);
+      --navy-soft2: rgba(0, 37, 93, 0.06);
+      --navy-border: rgba(0, 37, 93, 0.22);
+
+      /* PromptSchola spark */
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.10);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      /* ✅ Final V1.1 typography tokens */
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --fs-micro: 0.78rem;
+      --fs-ui: 0.88rem;
+      --fs-body: 1.03rem;
+      --fs-card: 0.96rem;
+      --fs-lede: 1.14rem;
+
+      --lh-body: 1.72;
+      --lh-card: 1.62;
+      --lh-tight: 1.12;
+
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2 { font-family: var(--font-heading); color: var(--text-strong); line-height: var(--lh-tight); letter-spacing: -0.02em; }
+    h3 { font-family: var(--font-heading); color: var(--text-strong); line-height: 1.15; letter-spacing: -0.01em; }
+
+    :focus-visible {
+      outline: 3px solid rgba(129, 140, 248, 0.45);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* NAV — Final V1.1 */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; gap: 1rem; }
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 40%;
+      background:
+        radial-gradient(circle at 70% 0%, rgba(168, 85, 247, 0.26), transparent 60%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+      box-shadow: 0 12px 30px rgba(0, 37, 93, 0.20);
+    }
+
+    .logo-text span:first-child {
+      display: block; font-weight: 800; font-size: 1.02rem; letter-spacing: 0.01em;
+      color: var(--text-strong); font-family: var(--font-body); line-height: 1.1;
+    }
+    .logo-text span:last-child {
+      display: block; font-size: 0.76rem; color: var(--text-subtle); font-family: var(--font-body);
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 1.3rem; font-size: var(--fs-ui); font-family: var(--font-body); }
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.92;
+      transition: opacity var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      padding: 0.25rem 0.1rem;
+      letter-spacing: -0.005em;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); transform: translateY(-1px); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: var(--fs-ui); font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.48rem 0.98rem;
+      font-size: var(--fs-ui);
+      border: 1px solid var(--navy-border);
+      background: #ffffff;
+      color: var(--navy);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center;
+      white-space: nowrap;
+      font-weight: 650;
+      letter-spacing: -0.005em;
+    }
+    .btn-pill:hover {
+      background: rgba(0, 37, 93, 0.06);
+      transform: translateY(-1px);
+      border-color: rgba(0, 37, 93, 0.34);
+      box-shadow: 0 10px 22px rgba(0, 37, 93, 0.12);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.62rem 1.32rem;
+      font-size: var(--fs-ui); font-weight: 800;
+      border: none; cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: 0 12px 26px rgba(79,70,229,0.22);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow: 0 16px 34px rgba(79,70,229,0.28);
+    }
+
+    .btn-primary[disabled], .btn-pill[disabled], .btn-ghost[disabled] {
+      opacity: 0.55; cursor: not-allowed;
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-ghost {
+      padding: 0.44rem 0.95rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.84rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
+      white-space: nowrap;
+      color: var(--text-main);
+    }
+    .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25); }
+
+    /* HERO — help page */
+    .hero {
+      padding: 3.9rem 0 2.5rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.10), transparent 55%),
+        radial-gradient(circle at 82% 22%, rgba(168, 85, 247, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 78%, var(--navy-deep) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: -160px; pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.22), transparent 62%),
+        radial-gradient(circle at 92% 30%, rgba(168, 85, 247, 0.18), transparent 58%),
+        radial-gradient(circle at 50% 110%, rgba(255,255,255,0.10), transparent 62%);
+      opacity: 0.95; filter: blur(12px); z-index: 0;
+    }
+    .hero .container { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 900;
+      margin-bottom: 0.9rem;
+      font-family: var(--font-body);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.92);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-kicker span.label {
+      padding: 0.18rem 0.7rem; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.10);
+      color: rgba(226, 232, 240, 0.95);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+    .hero-kicker span:not(.label) {
+      color: rgba(226, 232, 240, 0.88);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3.6vw, 2.7rem);
+      line-height: 1.07;
+      font-weight: 720;
+      margin: 0 auto 0.75rem;
+      max-width: 56rem;
+      color: #ffffff;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: var(--fs-lede);
+      max-width: 54rem;
+      color: rgba(226, 232, 240, 0.92);
+      margin: 0 auto;
+      line-height: 1.7;
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 0.9rem;
+      font-size: 0.90rem;
+      color: rgba(226, 232, 240, 0.72);
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+    .hero-breadcrumbs a {
+      color: rgba(199, 210, 254, 0.92);
+      text-decoration: underline;
+      text-decoration-color: rgba(199, 210, 254, 0.35);
+    }
+    .hero-breadcrumbs a:hover { color: #ffffff; text-decoration-color: rgba(255,255,255,0.50); }
+
+    main { padding: 2.0rem 0 2.6rem; }
+
+    /* Help layout: left prompt area + right directory */
+    .help-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(280px, 1.15fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 0.7rem;
+    }
+
+    .help-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 1.05rem 1.15rem;
+    }
+
+    .help-card h2 {
+      font-size: 1.18rem;
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.02em;
+    }
+
+    .help-muted {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ✅ Nano-help directory styles (match nano page) */
+    .help-category { padding-top: 0.65rem; border-top: 1px solid rgba(209, 213, 219, 0.7); margin-top: 0.65rem; }
+    .help-category:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+    .help-category-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      background: rgba(30, 58, 138, 0.10);
+      font-size: 0.72rem;
+      color: #1e40af;
+      font-family: var(--font-body);
+      font-weight: 900;
+    }
+
+    .help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
+
+    .help-prompts-bulleted { list-style: none; padding-left: 1.2rem; margin-top: 0.45rem; }
+    .help-prompts-bulleted li { position: relative; margin-bottom: 0.35rem; }
+    .help-prompts-bulleted li::before {
+      content: "▶";
+      position: absolute;
+      left: -1.1rem;
+      top: 0.18rem;
+      transform: scale(0.9);
+      transform-origin: left top;
+      color: #1e40af;
+    }
+
+    .help-prompt-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.2rem;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      background: transparent;
+      color: #1e40af;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
+      font-family: var(--font-body);
+    }
+    .help-prompt-btn:hover { background: rgba(30, 58, 138, 0.08); color: #0b1220; text-decoration: underline; }
+
+    /* Prompt box */
+    .prompt-box {
+      margin-top: 0.75rem;
+      border-radius: 16px;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      background: #ffffff;
+      padding: 0.95rem 1.0rem;
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.10);
+    }
+
+    .prompt-box .label-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+      margin-bottom: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 900;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+      background: rgba(30, 58, 138, 0.06);
+      border: 1px solid rgba(30, 58, 138, 0.28);
+      color: #1e40af;
+    }
+
+    .prompt-text {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--text-main);
+      line-height: 1.75;
+      white-space: pre-wrap;
+    }
+
+    .prompt-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    /* Directory / right panel */
+    .directory {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .directory .dir-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      margin-bottom: 0.45rem;
+      color: var(--text-strong);
+      letter-spacing: -0.02em;
+    }
+
+    /* Inline “callout” blocks used in help page content */
+    .callout {
+      margin-top: 0.85rem;
+      border-radius: 16px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.85rem 0.9rem;
+      color: #111827;
+    }
+    .callout strong { font-weight: 900; }
+    .callout p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 1.8rem 0 2.1rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+
+    @media (max-width: 980px) {
+      .help-layout { grid-template-columns: minmax(0, 1fr); }
+      .directory { position: static; }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="container">
+        <div class="nav">
+          <div class="nav-left">
+            <div class="logo-mark">P</div>
+            <div class="logo-text">
+              <span>PromptSchola</span>
+              <span>Prompt-based STEM subjects mastery</span>
+            </div>
+          </div>
+
+          <nav class="nav-links">
+            <a href="/index.html">Home</a>
+            <a href="/physics.html">Physics</a>
+            <a href="/math/math.html">Math</a>
+            <a href="/chemistry/chemistry.html">Chemistry</a>
+            <a href="/biology/biology.html">Biology</a>
+            <a href="/pricing.html">Pricing</a>
+          </nav>
+
+          <div class="nav-right">
+            <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
+            <a id="nav-login-btn" href="/auth.html" class="btn-pill" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+              Sign In
+            </a>
+            <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">
+              Register for Free
+            </a>
+            <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-kicker">
+            <span class="label">Help</span>
+            <span>PHYSICS · FOUNDATIONS &amp; TOOLS · VECTORS</span>
+          </div>
+
+          <h1 class="hero-title">Vector Components (2D &amp; 3D) — Study Help</h1>
+
+          <p class="hero-subtitle">
+            Targeted help for the places students lose points: picking the wrong sine/cosine, sign mistakes,
+            mixing magnitude with components, forgetting unit vectors, and confusion about angles.
+            Use a topic on the right to load a guided prompt.
+          </p>
+
+          <div class="hero-breadcrumbs">
+            <a href="/physics.html">Physics</a> ·
+            <a href="/physics/foundations-and-tools.html">Foundations &amp; Tools</a> ·
+            <a href="/physics/foundations-and-tools/vectors.html">Vectors</a> ·
+            <a href="nano-vector-components.html">Vector Components (2D &amp; 3D)</a> ·
+            <span>Study Help</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="help-layout">
+            <!-- LEFT: Selected help topic -->
+            <div class="help-left">
+              <div class="help-card" id="help-card">
+                <h2 id="help-title">Choose a help topic</h2>
+                <p class="help-muted" id="help-desc">
+                  Select a topic from the directory to load a ready-to-use prompt (and optionally run it with AI if you have Mastery).
+                </p>
+
+                <!-- Gating callout (help-page gating, not nano-step gating) -->
+                <div class="callout" id="help-gate-callout" style="display:none;">
+                  <p style="margin:0;">
+                    <strong>Mastery feature:</strong> The Help Library (prompts + “Run with AI”) is part of Mastery.
+                    Upgrade to unlock all help paths for this lesson.
+                  </p>
+                  <div class="prompt-actions" style="justify-content:flex-start; margin-top:0.65rem;">
+                    <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+                    <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                  </div>
+                </div>
+
+                <!-- Prompt box -->
+                <div class="prompt-box" id="prompt-box" style="display:none;">
+                  <div class="label-row">
+                    <span class="pill" id="help-pill">HELP TOPIC</span>
+                    <span style="font-size:0.78rem;color:#9ca3af;font-family:var(--font-body);" id="help-id-label"></span>
+                  </div>
+
+                  <div class="prompt-text" id="prompt-text"></div>
+
+                  <div class="prompt-actions">
+                    <button class="btn-ghost" id="copy-prompt-btn" type="button">Copy prompt</button>
+                    <button class="btn-primary" id="run-help-btn" type="button">Run with AI</button>
+                  </div>
+                </div>
+
+                <!-- AI output area -->
+                <div class="prompt-box" id="answer-box" style="display:none; margin-top:0.85rem;">
+                  <div class="label-row">
+                    <span class="pill" style="background: rgba(126, 34, 206, 0.10); border-color: rgba(126, 34, 206, 0.25); color:#4c1d95;">
+                      AI Response
+                    </span>
+                    <button class="btn-ghost" id="copy-answer-btn" type="button" style="display:none;">Copy answer</button>
+                  </div>
+                  <!-- ✅ output is now formatted via innerHTML; keep normal wrapping -->
+                  <div class="prompt-text" id="answer-text"></div>
+                </div>
+
+                <!-- Helpful hints -->
+                <div class="callout" id="micro-hints" style="display:none;">
+                  <p style="margin:0;">
+                    <strong>Quick hint:</strong> If you’re unsure between sine and cosine, draw the right triangle and label
+                    the angle you actually have — then use “adjacent” and “opposite” relative to that angle.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Directory (✅ matches nano help-panel directory structure) -->
+            <aside class="directory">
+              <div class="help-card">
+                <div class="dir-title">Help directory</div>
+                <p class="help-muted" style="font-size:0.90rem;">
+                  Pick a topic to load a guided prompt.
+                </p>
+
+                <!-- ✅ Match nano-page help panel structure exactly -->
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Confusions &amp; look-alikes</span>
+                    <p class="help-category-desc">Components, magnitude, projections — what’s what?</p>
+                  </div>
+                  <ul class="help-prompts-bulleted" id="dir-list">
+                    <li><a class="help-prompt-btn" href="?id=CL01">Component vs magnitude: what each number means physically</a></li>
+                    <li><a class="help-prompt-btn" href="?id=CL02">Angle confusion: “from x-axis” vs “from y-axis” and why sine/cos flips</a></li>
+                  </ul>
+                </div>
+
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Tricky areas &amp; exam traps</span>
+                    <p class="help-category-desc">Where students lose points even with the right idea.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="?id=ET01">Sine vs cosine selection: a foolproof triangle method</a></li>
+                    <li><a class="help-prompt-btn" href="?id=ET02">Sign traps: quadrants, “left/down”, and negative components</a></li>
+                  </ul>
+                </div>
+
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Common mistakes</span>
+                    <p class="help-category-desc">Fix the errors that cause most wrong answers.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="?id=CM01">Mixing component notation: \(v_x\), \(\vec{v}\), and \(|\vec{v}|\)</a></li>
+                    <li><a class="help-prompt-btn" href="?id=CM02">Forgetting unit vectors: answers need \(\hat{i},\hat{j},\hat{k}\) (or direction)</a></li>
+                  </ul>
+                </div>
+
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">When you feel stuck</span>
+                    <p class="help-category-desc">A quick routine that works every time.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="?id=ST01">10-second routine: decompose any vector into components</a></li>
+                    <li><a class="help-prompt-btn" href="?id=ST02">Reverse problem: given components, rebuild magnitude + direction</a></li>
+                  </ul>
+                </div>
+
+                <div class="help-category">
+                  <div>
+                    <span class="help-category-label">Concept bridges</span>
+                    <p class="help-category-desc">Connect components to dot products, projections, and physics.</p>
+                  </div>
+                  <ul class="help-prompts-bulleted">
+                    <li><a class="help-prompt-btn" href="?id=BR01">Projection meaning: component as “shadow” along an axis (physical intuition)</a></li>
+                    <li><a class="help-prompt-btn" href="?id=BR02">3D bridge: components, direction cosines, and unit vectors in space</a></li>
+                  </ul>
+                </div>
+
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a href="/about.html">About.</a> © 2025 PromptSchola. All rights reserved.
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/auth.js"></script>
+
+  <script>
+    /* ============================================================
+       Vector Components (2D & 3D) — Study Help JS
+       - Help-page structure (left prompt + right directory)
+       - Help-page gating (NOT nano-lesson step gating)
+       - Avoids /api/run-step error by always sending step: 1
+       - ✅ Formats AI output (bold/italics/bullets/paragraphs) like nano page
+       ============================================================ */
+
+    function PS_setPostAuthRedirect(){
+      try{
+        localStorage.setItem('ps_post_auth_redirect', location.pathname + location.search + location.hash);
+      } catch(e){}
+    }
+    window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+
+    const NANO_SLUG = 'vector-components';
+    const RUN_ENDPOINT = '/api/run-step';
+    const TRACK_ENDPOINT = '/api/track';
+
+    const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
+    const lastAi = { text: '' };
+
+    const $ = (id) => document.getElementById(id);
+    const typeset = (nodes) =>
+      window.MathJax?.typesetPromise
+        ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
+        : null;
+
+    /* ------------------------------------------------------------
+       ✅ Output formatting (MATCH nano lesson behavior)
+       ------------------------------------------------------------ */
+    function esc(s){
+      return String(s || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+    }
+
+    function inlineFmt(s){
+      return s
+        .replace(/^\s{0,3}#{1,6}\s+(.+)$/gm, '<strong>$1</strong>')
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/^\s*[-*]\s+/gm,'• ');
+    }
+
+    function paras(s){
+      const x = s.replace(/\r\n/g,'\n');
+      return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+    }
+
+    function formatOutput(raw){
+      return paras(inlineFmt(esc(raw)));
+    }
+
+    /* ------------------------------------------------------------
+       ANON analytics (same style as your nano pages: fail-open)
+       ------------------------------------------------------------ */
+    async function PS_trackAnon(event, extra){
+      try{
+        if (PS_CTX.loggedIn) return;
+        fetch(TRACK_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event, nano_slug: NANO_SLUG, is_anon: true, ...extra })
+        }).catch(()=>{});
+      } catch(e){}
+    }
+
+    /* ------------------------------------------------------------
+       Help topics (id -> content)
+       ------------------------------------------------------------ */
+    const HELP_TOPICS = {
+      CL01: {
+        tag: 'Confusions & look-alikes',
+        title: 'Component vs magnitude: what each number means physically',
+        desc: 'Make “components” feel physical: what \(v_x\) actually represents, and what information magnitude keeps/loses.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Vector components in 2D/3D.
+
+Help focus:
+• Define "vector component" and "magnitude" precisely
+• Explain the physical meaning of \(v_x\) and \(v_y\) (not just formulas)
+• Show what information is lost when you only keep \(|\\vec{v}|\)
+• Give 2 short examples (one in 2D, one in 3D) interpreting components
+• End with a quick checklist: “When do I need components vs magnitude?”
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      CL02: {
+        tag: 'Confusions & look-alikes',
+        title: 'Angle confusion: “from x-axis” vs “from y-axis” and why sine/cos flips',
+        desc: 'If the angle is measured from a different axis, the trig pair swaps. Learn to detect this instantly.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Angles and components.
+
+Help focus:
+• Explain the difference between measuring \\(\\theta\\) from the +x axis vs from the +y axis
+• Show how that changes which component uses sine vs cosine
+• Give 4 mini examples: same vector, different angle definition → compute components correctly
+• Include one “exam trap” where students plug the wrong trig function
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ET01: {
+        tag: 'Tricky areas & exam traps',
+        title: 'Sine vs cosine selection: a foolproof triangle method',
+        desc: 'A repeatable triangle method that works even when the diagram is rotated or the angle is nonstandard.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Choosing sine vs cosine for components.
+
+Help focus:
+• Teach a foolproof method using a right triangle: label hypotenuse, adjacent, opposite relative to the GIVEN angle
+• Emphasize: “relative to the angle you actually have,” not what you wish you had
+• Provide 5 quick practice cases described in words (no images), each with the correct component setup
+• End with a one-line rule students can memorize
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ET02: {
+        tag: 'Tricky areas & exam traps',
+        title: 'Sign traps: quadrants, “left/down”, and negative components',
+        desc: 'Most component errors are sign errors. Fix the quadrant/sign logic and you fix the grade.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Signs of vector components in 2D/3D.
+
+Help focus:
+• Explain how signs of \\(v_x, v_y\\) come from direction (right/left, up/down)
+• Give a quadrant-based sign table (conceptual, not fancy)
+• Provide 6 short word-to-components examples (e.g., “30° below +x”, “toward negative y”)
+• Include 2 exam traps and how to avoid them (especially “angle is acute but component is negative”)
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      CM01: {
+        tag: 'Common mistakes',
+        title: 'Mixing component notation: \(v_x\), \(\vec{v}\), and \(|\vec{v}|\)',
+        desc: 'Students often treat a component like a vector, or write magnitudes as if they were signed.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Vector notation and components.
+
+Help focus:
+• Clarify: component (\\(v_x\\)), vector (\\(\\vec{v}\\)), magnitude (\\(|\\vec{v}|\\))
+• Explain what can be negative and what cannot
+• Give 6 quick “Is this statement valid?” checks (e.g., “|\\vec{v}| = -3\\,m/s”)
+• Include one short worked example: components → vector form → magnitude
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      CM02: {
+        tag: 'Common mistakes',
+        title: 'Forgetting unit vectors: answers need \(\hat{i},\hat{j},\hat{k}\) (or direction)',
+        desc: 'A complete vector needs direction information. Unit vectors encode that direction cleanly.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Unit vectors and writing vector answers.
+
+Help focus:
+• Explain what \\(\\hat{i},\\hat{j},\\hat{k}\\) represent and why they matter
+• Show the standard component form:
+  \\[
+  \\vec{v} = v_x\\hat{i} + v_y\\hat{j} + v_z\\hat{k}
+  \\]
+• Give 5 example final answers (mix 2D and 3D)
+• Include one “common wrong answer” and correct it
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ST01: {
+        tag: 'When you feel stuck',
+        title: '10-second routine: decompose any vector into components',
+        desc: 'A fast routine: sketch → label angle → decide adjacent/opposite → assign signs → write components.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Decomposing vectors into components.
+
+Help focus:
+Create a “10-second routine” students can follow every time:
+1) quick sketch
+2) define axes
+3) label the given angle
+4) pick adjacent/opposite
+5) assign signs
+6) write components with units
+
+Then give 6 rapid-fire practice prompts (word descriptions), and for each show the correct component setup.
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      ST02: {
+        tag: 'When you feel stuck',
+        title: 'Reverse problem: given components, rebuild magnitude + direction',
+        desc: 'Convert \((v_x, v_y)\) to \(|\vec{v}|\) and \(\theta\) correctly, including quadrant logic.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Rebuilding magnitude and direction from components.
+
+Help focus:
+• Show how to compute magnitude from components (2D and 3D)
+• Explain direction angle in 2D and how to choose the correct quadrant
+• Provide 4 short examples with different sign combinations
+• Include one exam trap: using \\(\\tan^{-1}(v_y/v_x)\\) without checking quadrant
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      BR01: {
+        tag: 'Concept bridges',
+        title: 'Projection meaning: component as “shadow” along an axis (physical intuition)',
+        desc: 'Components are projections. Make the “shadow” idea stick so dot products later feel natural.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: Projection and components.
+
+Help focus:
+• Explain “component along an axis” as a projection (a “shadow”)
+• Connect to dot product conceptually (no heavy derivation)
+• Give a simple physical scenario (pulling a sled with a rope at an angle) showing why components matter
+• End with 3 concept-check questions students can ask themselves
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      },
+
+      BR02: {
+        tag: 'Concept bridges',
+        title: '3D bridge: components, direction cosines, and unit vectors in space',
+        desc: 'How 3D component form generalizes 2D, and how direction can be encoded in multiple equivalent ways.',
+        prompt: `You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.
+
+Topic: 3D vectors and components.
+
+Help focus:
+• Explain the 3D component form and how it extends 2D
+• Clarify: a direction in 3D needs more than one angle (or needs a unit vector)
+• Introduce direction cosines at a high level (conceptual explanation)
+• Provide 2 short 3D examples writing vectors with \\(\\hat{i},\\hat{j},\\hat{k}\\)
+
+Formatting rules:
+• Short paragraphs + bullets
+• Bold key terms sparingly
+• Equations in LaTeX display math one per line
+• Do NOT use markdown headings like # or ###.`
+      }
+    };
+
+    function getIdFromURL(){
+      const u = new URL(location.href);
+      return (u.searchParams.get('id') || '').trim();
+    }
+
+    function setSelected(id){
+      const t = HELP_TOPICS[id];
+      const title = $('help-title');
+      const desc = $('help-desc');
+      const pill = $('help-pill');
+      const idLabel = $('help-id-label');
+      const promptBox = $('prompt-box');
+      const promptText = $('prompt-text');
+      const microHints = $('micro-hints');
+
+      if (!t){
+        title.textContent = 'Choose a help topic';
+        desc.textContent = 'Select a topic from the directory to load a ready-to-use prompt (and optionally run it with AI if you have Mastery).';
+        promptBox.style.display = 'none';
+        microHints.style.display = 'none';
+        return;
+      }
+
+      title.textContent = t.title;
+      desc.textContent = t.desc;
+      pill.textContent = t.tag;
+      idLabel.textContent = `ID: ${id}`;
+      promptText.textContent = t.prompt;
+
+      promptBox.style.display = 'block';
+      microHints.style.display = 'block';
+
+      typeset([promptText]);
+      PS_trackAnon('HELP_TOPIC_OPENED', { help_id: id });
+    }
+
+    /* ------------------------------------------------------------
+       Copy helpers
+       ------------------------------------------------------------ */
+    async function copyText(t, okMsg, failMsg){
+      if (!t) return alert(failMsg || 'Nothing to copy.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
+      catch { alert(failMsg || 'Could not copy.'); }
+    }
+
+    /* ------------------------------------------------------------
+       Help gating (help-page gating, not nano-step gating)
+       - If not paid: show callout, disable run/copy, clicks route to pricing
+       ------------------------------------------------------------ */
+    function applyHelpGating(isPaid){
+      const gate = $('help-gate-callout');
+      const copyBtn = $('copy-prompt-btn');
+      const runBtn = $('run-help-btn');
+      const card = $('help-card');
+
+      if (isPaid){
+        gate.style.display = 'none';
+        if (copyBtn) { copyBtn.disabled = false; copyBtn.title = ''; }
+        if (runBtn) { runBtn.disabled = false; runBtn.title = ''; }
+        if (card){
+          card.style.opacity = '1';
+          card.style.cursor = '';
+          card.onclick = null;
+        }
+        return;
+      }
+
+      gate.style.display = 'block';
+
+      if (copyBtn){
+        copyBtn.disabled = true;
+        copyBtn.title = 'Mastery feature';
+      }
+      if (runBtn){
+        runBtn.disabled = true;
+        runBtn.title = 'Mastery feature';
+      }
+
+      // Click anywhere on left card -> pricing (matches your locked-help intent)
+      if (card){
+        card.style.cursor = 'pointer';
+        card.onclick = (e) => {
+          const a = e.target?.closest ? e.target.closest('a') : null;
+          const btn = e.target?.closest ? e.target.closest('button') : null;
+          if (a || btn) return; // don’t override real links/buttons
+          PS_trackAnon('HELP_LOCKED_ATTEMPT');
+          location.href = '/pricing.html';
+        };
+      }
+    }
+
+    /* ------------------------------------------------------------
+       Run with AI (Help)
+       - MUST satisfy /api/run-step validation by sending step: 1
+       - Still tags as help via mode:'help' and help_id
+       ------------------------------------------------------------ */
+    function setRunning(running){
+      const btn = $('run-help-btn');
+      if (!btn) return;
+      if (running){
+        btn.dataset.prevText = btn.textContent;
+        btn.textContent = 'Running…';
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+      } else {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.prevText || 'Run with AI';
+        btn.removeAttribute('aria-busy');
+      }
+    }
+
+    async function runHelpAI(){
+      const id = getIdFromURL();
+      const t = HELP_TOPICS[id];
+      if (!t) return alert('Choose a help topic first.');
+
+      const answerBox = $('answer-box');
+      const answerText = $('answer-text');
+      const copyAnswerBtn = $('copy-answer-btn');
+      if (!answerBox || !answerText) return;
+
+      // Must be logged in + paid (help gating)
+      if (typeof ensureLoggedInOrRedirect === 'function'){
+        const user = await ensureLoggedInOrRedirect();
+        if (!user) return;
+      } else {
+        PS_setPostAuthRedirect();
+        location.href = '/auth.html?mode=signup&reason=help-ai';
+        return;
+      }
+
+      const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+      if (!token){
+        answerBox.style.display = 'block';
+        answerText.textContent = 'Session missing. Please sign in again.';
+        return;
+      }
+
+      setRunning(true);
+      answerBox.style.display = 'block';
+      answerText.textContent = 'Running with AI…';
+
+      try{
+        const res = await fetch(RUN_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            // ✅ REQUIRED by your endpoint validation (avoids “Missing or invalid step”):
+            step: 1,
+
+            // ✅ Help context:
+            prompt: t.prompt,
+            nano_slug: NANO_SLUG,
+            mode: 'help',
+            help_id: id
+          })
+        });
+
+        const data = await res.json().catch(()=> ({}));
+
+        if (!res.ok){
+          const msg =
+            (data?.code === 'PAYWALL') ? 'This Help Library feature requires Mastery (paid) access.' :
+            (data?.code === 'INVALID_SESSION') ? 'Session expired. Please sign in again.' :
+            (data?.error || 'There was an error contacting the AI. Please try again later.');
+
+          answerText.textContent = msg;
+          return;
+        }
+
+        const raw = data?.content || 'No response received from AI.';
+        lastAi.text = raw;
+
+        // ✅ IMPORTANT: format output like nano page (renders **bold**, *italics*, bullets, paragraphs)
+        answerText.innerHTML = formatOutput(raw);
+        typeset([answerText]);
+
+        if (copyAnswerBtn){
+          copyAnswerBtn.style.display = 'inline-flex';
+        }
+
+      } catch(err){
+        console.error(err);
+        answerText.textContent = 'Unexpected error. Please try again.';
+      } finally {
+        setRunning(false);
+      }
+    }
+
+    /* ------------------------------------------------------------
+       Boot
+       ------------------------------------------------------------ */
+    document.addEventListener('DOMContentLoaded', async () => {
+      typeset();
+
+      if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+      let loggedIn = false;
+      let tier = 'anon';
+
+      if (typeof getCurrentUser === 'function'){
+        try { loggedIn = !!(await getCurrentUser()); }
+        catch(e){ loggedIn = false; }
+      }
+
+      if (loggedIn && typeof PS_getUserTier === 'function'){
+        try { tier = (await PS_getUserTier()) || 'free'; }
+        catch(e){ tier = 'free'; }
+      }
+      if (loggedIn && tier === 'anon') tier = 'free';
+
+      PS_CTX.loggedIn = !!loggedIn;
+      PS_CTX.tier = tier;
+      PS_CTX.isPaid = (tier === 'paid');
+
+      // Apply help-page gating
+      applyHelpGating(PS_CTX.isPaid);
+
+      // Wire buttons
+      $('copy-prompt-btn')?.addEventListener('click', () => {
+        const id = getIdFromURL();
+        const t = HELP_TOPICS[id];
+        if (!t) return alert('Choose a help topic first.');
+        PS_trackAnon('HELP_PROMPT_COPIED', { help_id: id });
+        copyText(t.prompt, 'Prompt copied.', 'Nothing to copy.');
+      });
+
+      $('run-help-btn')?.addEventListener('click', () => runHelpAI());
+
+      $('copy-answer-btn')?.addEventListener('click', () => {
+        copyText(lastAi.text, 'Answer copied.', 'No AI answer yet.');
+      });
+
+      // Load selection
+      const id = getIdFromURL() || 'CL01';
+      // If URL has no id, keep directory consistent by updating URL once
+      if (!getIdFromURL()){
+        try{
+          const u = new URL(location.href);
+          u.searchParams.set('id', id);
+          history.replaceState({}, '', u.toString());
+        } catch(e){}
+      }
+      setSelected(id);
+
+      // Client-side nav: keep you on the same file, just switch content
+      $('dir-list')?.addEventListener('click', (e) => {
+        const a = e.target?.closest ? e.target.closest('a') : null;
+        if (!a) return;
+        const href = (a.getAttribute('href') || '').trim();
+        if (!href.startsWith('?id=')) return;
+
+        e.preventDefault();
+        const newId = href.replace('?id=','').trim();
+        try{
+          const u = new URL(location.href);
+          u.searchParams.set('id', newId);
+          history.pushState({}, '', u.toString());
+        } catch(e){}
+        setSelected(newId);
+
+        // Clear previous answer when switching topics
+        const answerBox = $('answer-box');
+        const answerText = $('answer-text');
+        const copyAnswerBtn = $('copy-answer-btn');
+        if (answerBox && answerText){
+          answerText.textContent = '';
+          answerBox.style.display = 'none';
+        }
+        if (copyAnswerBtn) copyAnswerBtn.style.display = 'none';
+        lastAi.text = '';
+      });
+
+      window.addEventListener('popstate', () => {
+        setSelected(getIdFromURL());
+      });
+
+      PS_trackAnon('HELP_PAGE_VIEW');
+    });
+  </script>
+</body>
+</html>
