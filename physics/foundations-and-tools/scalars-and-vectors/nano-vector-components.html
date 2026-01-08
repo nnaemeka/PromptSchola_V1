@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vector components (2D &amp; 3D) – PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Nano-lesson on vector components (2D &amp; 3D): how to resolve vectors into components, use unit vectors, handle signs, and avoid common exam traps."
+  />
+
+  <!-- ✅ Final V1.1: Inter + Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+
+      /* ✅ Final V1.1 Navy foundation */
+      --navy: #00255D;
+      --navy-strong: #001c47;
+      --navy-deep: #001833;
+      --navy-soft: rgba(0, 37, 93, 0.10);
+      --navy-soft2: rgba(0, 37, 93, 0.06);
+      --navy-border: rgba(0, 37, 93, 0.22);
+
+      /* PromptSchola spark */
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.10);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      /* ✅ Final V1.1 typography tokens */
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --fs-micro: 0.78rem;
+      --fs-ui: 0.88rem;
+      --fs-body: 1.03rem;
+      --fs-card: 0.96rem;
+      --fs-lede: 1.14rem;
+
+      --lh-body: 1.72;
+      --lh-card: 1.62;
+      --lh-tight: 1.12;
+
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2 { font-family: var(--font-heading); color: var(--text-strong); line-height: var(--lh-tight); letter-spacing: -0.02em; }
+    h3 { font-family: var(--font-heading); color: var(--text-strong); line-height: 1.15; letter-spacing: -0.01em; }
+
+    :focus-visible {
+      outline: 3px solid rgba(129, 140, 248, 0.45);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    /* NAV — Final V1.1 */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; gap: 1rem; }
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 40%;
+      background:
+        radial-gradient(circle at 70% 0%, rgba(168, 85, 247, 0.26), transparent 60%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+      box-shadow: 0 12px 30px rgba(0, 37, 93, 0.20);
+    }
+
+    .logo-text span:first-child {
+      display: block; font-weight: 800; font-size: 1.02rem; letter-spacing: 0.01em;
+      color: var(--text-strong); font-family: var(--font-body); line-height: 1.1;
+    }
+    .logo-text span:last-child {
+      display: block; font-size: 0.76rem; color: var(--text-subtle); font-family: var(--font-body);
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 1.3rem; font-size: var(--fs-ui); font-family: var(--font-body); }
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.92;
+      transition: opacity var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      padding: 0.25rem 0.1rem;
+      letter-spacing: -0.005em;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); transform: translateY(-1px); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: var(--fs-ui); font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.48rem 0.98rem;
+      font-size: var(--fs-ui);
+      border: 1px solid var(--navy-border);
+      background: #ffffff;
+      color: var(--navy);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center;
+      white-space: nowrap;
+      font-weight: 650;
+      letter-spacing: -0.005em;
+    }
+    .btn-pill:hover {
+      background: rgba(0, 37, 93, 0.06);
+      transform: translateY(-1px);
+      border-color: rgba(0, 37, 93, 0.34);
+      box-shadow: 0 10px 22px rgba(0, 37, 93, 0.12);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.62rem 1.32rem;
+      font-size: var(--fs-ui); font-weight: 800;
+      border: none; cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: 0 12px 26px rgba(79,70,229,0.22);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow: 0 16px 34px rgba(79,70,229,0.28);
+    }
+
+    .btn-primary[disabled], .btn-pill[disabled], .btn-ghost[disabled] {
+      opacity: 0.55; cursor: not-allowed;
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-ghost {
+      padding: 0.44rem 0.95rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.84rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
+      white-space: nowrap;
+      color: var(--text-main);
+    }
+    .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25); }
+    .btn-copy { font-size: 0.80rem; padding: 0.34rem 0.9rem; }
+
+    /* HERO — Final V1.1 navy hero */
+    .hero {
+      padding: 4.8rem 0 3.0rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.10), transparent 55%),
+        radial-gradient(circle at 82% 22%, rgba(168, 85, 247, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 78%, var(--navy-deep) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: -160px; pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.22), transparent 62%),
+        radial-gradient(circle at 92% 30%, rgba(168, 85, 247, 0.18), transparent 58%),
+        radial-gradient(circle at 50% 110%, rgba(255,255,255,0.10), transparent 62%);
+      opacity: 0.95; filter: blur(12px); z-index: 0;
+    }
+    .hero .container { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: var(--fs-micro);
+      font-weight: 900;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.92);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-kicker span.label {
+      padding: 0.18rem 0.7rem; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.10);
+      color: rgba(226, 232, 240, 0.95);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+    .hero-kicker span:not(.label) {
+      color: rgba(226, 232, 240, 0.88);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .hero-title {
+      font-size: clamp(2.35rem, 4.0vw, 3.0rem);
+      line-height: 1.07;
+      font-weight: 720;
+      margin: 0 auto 0.95rem;
+      max-width: 56rem;
+      color: #ffffff;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: var(--fs-lede);
+      max-width: 52rem;
+      color: rgba(226, 232, 240, 0.92);
+      margin: 0 auto;
+      line-height: 1.7;
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 1.05rem;
+      font-size: 0.90rem;
+      color: rgba(226, 232, 240, 0.72);
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+    .hero-breadcrumbs a { color: rgba(199, 210, 254, 0.92); text-decoration: underline; text-decoration-color: rgba(199, 210, 254, 0.35); }
+    .hero-breadcrumbs a:hover { color: #ffffff; text-decoration-color: rgba(255,255,255,0.50); }
+
+    .access-band {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 28px;
+      padding: 1.55rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .access-band::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.20), transparent 58%);
+      filter: blur(16px);
+      opacity: 0.9;
+    }
+    .access-band-inner { position: relative; z-index: 1; display: flex; gap: 1.2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .access-band-title { font-family: var(--font-heading); font-size: 1.40rem; color: #ffffff; margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .access-band-desc { font-family: var(--font-body); color: #cbd5e1; font-size: 0.98rem; line-height: 1.65; max-width: 52rem; }
+
+    .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 900;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+    .chip.free { background: #10b981; color: #ffffff; }
+    .chip.mastery { background: #6366f1; color: #ffffff; }
+
+    main { padding-bottom: 2.6rem; }
+    section { padding: 1.4rem 0; }
+
+    .lesson-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(280px, 1.1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 0.9rem;
+    }
+
+    .steps-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+
+    .step-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      font-size: var(--fs-card);
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+      padding: 1rem 1.15rem 1.05rem;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+    .step-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(0, 37, 93, 0.14);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+    }
+
+    .step-header { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
+    .step-header-left { display: flex; flex-direction: column; gap: 0.28rem; min-width: 0; }
+
+    .step-index {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #4c1d95;
+      background: #ede9fe;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      font-weight: 900;
+      font-family: var(--font-body);
+      width: fit-content;
+    }
+
+    .step-title {
+      font-size: 1.06rem;
+      font-weight: 700;
+      color: #111827;
+      font-family: var(--font-heading);
+      line-height: 1.25;
+      word-break: break-word;
+      letter-spacing: -0.01em;
+    }
+
+    .step-header-right { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; justify-content: flex-end; }
+
+    .step-access-pill {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      background: #dcfce7;
+      color: #166534;
+      white-space: nowrap;
+      font-family: var(--font-body);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .step-access-pill.mastery { border-color: rgba(99, 102, 241, 0.9); background: rgba(99, 102, 241, 0.12); color: #3730a3; }
+
+    .toggle-btn {
+      width: 30px; height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      color: #4c1d95;
+      font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      font-family: var(--font-body);
+    }
+    .toggle-btn:hover { transform: translateY(-1px) scale(1.07); box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75); background: #e0e7ff; }
+
+    .step-content { margin-top: 0.35rem; display: block; }
+    .step-body { font-size: 0.92rem; color: var(--text-muted); font-family: var(--font-body); line-height: 1.7; }
+
+    .prompt-preview {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid rgba(229, 231, 235, 0.8);
+      font-size: 0.83rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      min-height: 2.2rem;
+      white-space: pre-wrap;
+      display: none;
+    }
+
+    .ai-response {
+      margin-top: 0.6rem;
+      padding: 1.05rem 1.15rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      font-size: 0.98rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.75;
+      font-family: var(--font-body);
+      min-height: 1.2rem;
+    }
+
+    .ai-response p { margin-bottom: 0.9rem; }
+    .ai-response ul, .ai-response ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+    .ai-response strong { font-weight: 800; color: inherit; }
+    .ai-response em { font-style: italic; }
+
+    .ai-response details.answer-toggle {
+      margin: 0.55rem 0 0.75rem;
+      border: 1px solid rgba(209, 213, 219, 0.85);
+      background: #f9fafb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .ai-response details.answer-toggle summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.55rem 0.75rem;
+      font-weight: 800;
+      color: #4c1d95;
+      background: linear-gradient(to bottom, rgba(126, 34, 206, 0.06), rgba(129, 140, 248, 0.06));
+      border-bottom: 1px solid rgba(209, 213, 219, 0.7);
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+    .ai-response details.answer-toggle summary::-webkit-details-marker { display:none; }
+    .ai-response .answer-body { padding: 0.75rem 0.85rem 0.85rem; color: #111827; font-size: 0.95rem; line-height: 1.7; }
+
+    .copy-row { margin-top: 0.55rem; display: flex; justify-content: flex-end; gap: 0.45rem; flex-wrap: wrap; }
+
+    .step-footer {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+
+    .step-footer .left-actions { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+
+    .locked-panel {
+      margin-top: 0.55rem;
+      border-radius: 16px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.95rem 1rem;
+      color: #111827;
+      font-family: var(--font-body);
+    }
+    .locked-title { font-family: var(--font-heading); font-size: 1.05rem; color: var(--text-strong); margin-bottom: 0.25rem; font-weight: 700; }
+    .locked-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin-bottom: 0.7rem; }
+    .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    /* Help Panel */
+    .help-panel-inner { position: sticky; top: 6rem; }
+
+    .help-panel-toggle {
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(30, 58, 138, 0.28);
+      background: radial-gradient(circle at 0 0, #f9fafb, rgba(30, 58, 138, 0.10));
+      color: var(--text-main);
+      padding: 0.48rem 0.98rem;
+      font-size: 0.84rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 0.6rem;
+      box-shadow: 0 6px 16px rgba(30, 58, 138, 0.12);
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+
+    .nano-help-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.12rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.32);
+      color: #1e40af;
+      background: rgba(30, 58, 138, 0.06);
+      font-size: 0.82rem;
+      font-weight: 900;
+      font-family: var(--font-body);
+    }
+    .help-panel-toggle-icon { font-size: 0.95rem; opacity: 0.85; }
+
+    .help-lock-wrap { position: relative; }
+    .help-panel-body {
+      border-radius: 1.1rem;
+      border: 1px solid rgba(30, 58, 138, 0.22);
+      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
+      box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
+      padding: 0.9rem 0.95rem;
+      font-size: 0.82rem;
+      font-family: var(--font-body);
+      position: relative;
+      overflow: hidden;
+    }
+    .help-panel-body p { color: var(--text-muted); line-height: 1.65; }
+
+    .help-cta {
+      margin-top: 0.65rem;
+      padding: 0.7rem 0.75rem;
+      border-radius: 14px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.88));
+      color: #f8fafc;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.18);
+      display: none;
+    }
+
+    .help-category { padding-top: 0.65rem; border-top: 1px solid rgba(209, 213, 219, 0.7); margin-top: 0.65rem; }
+    .help-category:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+    .help-category-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      background: rgba(30, 58, 138, 0.10);
+      font-size: 0.72rem;
+      color: #1e40af;
+      font-family: var(--font-body);
+      font-weight: 900;
+    }
+
+    .help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
+
+    .help-prompts-bulleted { list-style: none; padding-left: 1.2rem; }
+    .help-prompts-bulleted li { position: relative; margin-bottom: 0.35rem; }
+    .help-prompts-bulleted li::before {
+      content: "▶";
+      position: absolute;
+      left: -1.1rem;
+      top: 0.18rem;
+      transform: scale(0.9);
+      transform-origin: left top;
+      color: #1e40af;
+    }
+
+    .help-prompt-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.2rem;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      background: transparent;
+      color: #1e40af;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
+      font-family: var(--font-body);
+    }
+    .help-prompt-btn:hover { background: rgba(30, 58, 138, 0.08); color: #0b1220; text-decoration: underline; }
+
+    footer { margin-top: auto; padding: 1.8rem 0 2.1rem; text-align: center; font-size: 0.86rem; color: var(--text-subtle); font-family: var(--font-body); letter-spacing: -0.004em; }
+
+    @media (max-width: 980px) {
+      .lesson-layout { grid-template-columns: minmax(0, 1fr); }
+      .help-panel-inner { position: static; }
+      .help-panel-toggle { margin-top: 1.25rem; }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+
+    /* =========================================================
+       HARD LOCK FOR HELP PANEL (anon + free)
+       ========================================================= */
+    .help-lock-disabled { pointer-events: none; user-select: none; opacity: 0.92; filter: grayscale(0.08); }
+
+    .help-lock-overlay {
+      position: absolute; inset: 0;
+      border-radius: 1.1rem;
+      background: linear-gradient(to bottom, rgba(249,250,251,0.55), rgba(249,250,251,0.88));
+      border: 1px dashed rgba(37, 99, 235, 0.45);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0.85rem 0.85rem;
+      z-index: 5;
+    }
+
+    .help-lock-overlay .teaser-card {
+      width: 100%;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.94);
+      color: #f8fafc;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      padding: 0.85rem 0.9rem;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.22);
+    }
+
+    .teaser-kicker {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em;
+      font-weight: 900; color: #c7d2fe; margin-bottom: 0.35rem;
+      font-family: var(--font-body);
+    }
+
+    .teaser-title { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.2; margin-bottom: 0.25rem; font-weight: 700; color: #ffffff; letter-spacing: -0.02em; }
+    .teaser-desc { font-size: 0.9rem; color: #cbd5e1; line-height: 1.55; margin-bottom: 0.7rem; font-family: var(--font-body); }
+    .teaser-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+
+    .help-toggle-disabled { opacity: 0.75; cursor: not-allowed; }
+
+    /* Click-catcher for locked help (anon analytics) */
+    .help-locked-clickcatcher{
+      position: absolute; inset: 0; z-index: 20; display: none;
+      border-radius: 18px; background: transparent; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="container">
+        <nav class="nav">
+          <div class="nav-left">
+            <a href="/index.html" class="logo-mark" aria-label="PromptSchola home">P</a>
+            <div class="logo-text">
+              <span>PromptSchola</span>
+              <span>PromptPhysics</span>
+            </div>
+          </div>
+
+          <div class="nav-links" aria-label="Primary navigation">
+            <a href="/index.html">Home</a>
+            <a href="/physics.html">Physics</a>
+            <a href="/physics/mechanics.html">Mechanics</a>
+            <a href="/about.html">About</a>
+          </div>
+
+          <div class="nav-right">
+            <button class="btn-ghost" id="psLoginBtn" type="button">Log in</button>
+            <button class="btn-pill" id="psLogoutBtn" type="button" style="display:none;">Log out</button>
+            <a class="btn-primary" id="psSubscribeBtn" href="/pricing.html" style="display:none;">Mastery</a>
+            <span id="psUserBadge" style="display:none;"></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Lesson hero">
+      <div class="container">
+        <div class="hero-kicker">
+          <span class="label">Nano-lesson</span>
+          <span>PromptPhysics • Mechanics</span>
+        </div>
+
+        <h1 class="hero-title">Vector components (2D &amp; 3D)</h1>
+
+        <p class="hero-subtitle">
+          Learn how to break any vector into clean, sign-correct components using geometry, unit vectors, and a consistent angle convention.
+          Then practice typical exam setups in 2D and 3D.
+        </p>
+
+        <div class="hero-breadcrumbs" aria-label="Breadcrumbs">
+          <a href="/physics.html">Physics</a> / <a href="/physics/mechanics.html">Mechanics</a> / Vector components (2D &amp; 3D)
+        </div>
+
+        <div style="height: 1.35rem;"></div>
+
+        <div class="access-band" role="region" aria-label="Access overview">
+          <div class="access-band-inner">
+            <div>
+              <div class="access-band-title">Your access</div>
+              <div class="access-band-desc">
+                Free learners can view Steps 1–3 and run AI for Steps 1–2. Mastery unlocks Steps 1–6, AI for all steps, and full Help access.
+              </div>
+            </div>
+            <div class="access-chips" aria-label="Access tiers">
+              <span class="chip free">Free</span>
+              <span class="chip mastery">Mastery</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="container">
+      <section aria-label="Lesson content">
+        <div class="lesson-layout">
+          <!-- LEFT: Steps -->
+          <div class="steps-grid" id="stepsGrid">
+
+            <!-- STEP 1 -->
+            <article class="step-card" data-step="1" data-step-free="true">
+              <div class="step-header">
+                <div class="step-header-left">
+                  <div class="step-index">Step 1</div>
+                  <div class="step-title">Orient (what “components” really mean)</div>
+                </div>
+                <div class="step-header-right">
+                  <span class="step-access-pill">Free</span>
+                  <button class="toggle-btn" type="button" aria-label="Toggle step 1 details" data-toggle-step="1">+</button>
+                </div>
+              </div>
+
+              <div class="step-content" id="stepContent1">
+                <div class="step-body">
+                  Components are not “pieces” of the vector—components are the vector’s shadows (projections) onto chosen axes. Your job is to pick axes, define your angle convention, and keep signs consistent.
+                </div>
+
+                <div class="prompt-preview" id="promptPreview1"></div>
+
+                <div class="copy-row">
+                  <button class="btn-ghost btn-copy" type="button" data-copy-step="1">Copy prompt</button>
+                  <button class="btn-primary" type="button" data-run-step="1">Run with AI</button>
+                </div>
+
+                <div class="ai-response" id="aiResponse1"></div>
+
+                <div class="step-footer">
+                  <div class="left-actions">
+                    <span>Tip: Decide whether angles are measured from +x, +y, or from another vector—then never change mid-problem.</span>
+                  </div>
+                  <span>Visible to everyone</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- STEP 2 -->
+            <article class="step-card" data-step="2" data-step-free="true">
+              <div class="step-header">
+                <div class="step-header-left">
+                  <div class="step-index">Step 2</div>
+                  <div class="step-title">Understand (2D components with sign discipline)</div>
+                </div>
+                <div class="step-header-right">
+                  <span class="step-access-pill">Free</span>
+                  <button class="toggle-btn" type="button" aria-label="Toggle step 2 details" data-toggle-step="2">+</button>
+                </div>
+              </div>
+
+              <div class="step-content" id="stepContent2">
+                <div class="step-body">
+                  In 2D, a vector of magnitude \(A\) at angle \(\theta\) from +x has
+                  \[
+                    A_x = A\cos\theta,\quad A_y = A\sin\theta
+                  \]
+                  **only if** \(\theta\) is measured from +x toward +y. If the problem uses a different reference angle, convert it first or use geometry with quadrant checks.
+                </div>
+
+                <div class="prompt-preview" id="promptPreview2"></div>
+
+                <div class="copy-row">
+                  <button class="btn-ghost btn-copy" type="button" data-copy-step="2">Copy prompt</button>
+                  <button class="btn-primary" type="button" data-run-step="2">Run with AI</button>
+                </div>
+
+                <div class="ai-response" id="aiResponse2"></div>
+
+                <div class="step-footer">
+                  <div class="left-actions">
+                    <span>Exam trap: using \(\sin\) and \(\cos\) swapped because the angle is measured from +y.</span>
+                  </div>
+                  <span>Visible to everyone</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- STEP 3 -->
+            <article class="step-card" data-step="3" data-step-free="true">
+              <div class="step-header">
+                <div class="step-header-left">
+                  <div class="step-index">Step 3</div>
+                  <div class="step-title">Apply (unit-vector form and reconstruction)</div>
+                </div>
+                <div class="step-header-right">
+                  <span class="step-access-pill">Free</span>
+                  <button class="toggle-btn" type="button" aria-label="Toggle step 3 details" data-toggle-step="3">+</button>
+                </div>
+              </div>
+
+              <div class="step-content" id="stepContent3">
+                <div class="step-body">
+                  Write vectors using unit vectors:
+                  \[
+                    \vec{A}=A_x\,\hat{\imath}+A_y\,\hat{\jmath}\quad(\text{and }+A_z\,\hat{k}\text{ in 3D})
+                  \]
+                  Rebuild magnitude and direction from components:
+                  \[
+                    |\vec{A}|=\sqrt{A_x^2+A_y^2},\quad \theta=\operatorname{atan2}(A_y,A_x)
+                  \]
+                  Using \(\operatorname{atan2}\) keeps the quadrant correct.
+                </div>
+
+                <div class="prompt-preview" id="promptPreview3"></div>
+
+                <div class="copy-row">
+                  <button class="btn-ghost btn-copy" type="button" data-copy-step="3">Copy prompt</button>
+                  <button class="btn-primary" type="button" data-run-step="3">Run with AI</button>
+                </div>
+
+                <div class="ai-response" id="aiResponse3"></div>
+
+                <div class="step-footer">
+                  <div class="left-actions">
+                    <span>Shortcut: check signs by sketching the vector; components must point into the same quadrant.</span>
+                  </div>
+                  <span>Visible to everyone</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- STEP 4 (Mastery gated) -->
+            <article class="step-card" data-step="4" data-step-free="false">
+              <div class="step-header">
+                <div class="step-header-left">
+                  <div class="step-index">Step 4</div>
+                  <div class="step-title">Work Through It (Check Your Understanding – mini-quiz)</div>
+                </div>
+                <div class="step-header-right">
+                  <span class="step-access-pill mastery">Mastery</span>
+                  <button class="toggle-btn" type="button" aria-label="Toggle step 4 details" data-toggle-step="4">+</button>
+                </div>
+              </div>
+
+              <div class="step-content" id="stepContent4">
+                <div class="step-body">
+                  <strong>Part A — Diagnostic</strong><br>
+                  Answer quickly (no long algebra): determine signs, which trig function to use, and whether your angle needs conversion.
+                  <br><br>
+                  <strong>Part B — Solutions</strong><br>
+                  Reveal solutions only after you commit to an answer and explain your reasoning.
+                </div>
+
+                <div class="prompt-preview" id="promptPreview4"></div>
+
+                <div class="copy-row">
+                  <button class="btn-ghost btn-copy" type="button" data-copy-step="4">Copy prompt</button>
+                  <button class="btn-primary" type="button" data-run-step="4">Run with AI</button>
+                </div>
+
+                <div class="ai-response" id="aiResponse4"></div>
+
+                <div class="step-footer">
+                  <div class="left-actions">
+                    <span>Design: 5 quick questions that target the most common component mistakes.</span>
+                  </div>
+                  <span>Mastery required</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- STEP 5 (Mastery gated) -->
+            <article class="step-card" data-step="5" data-step-free="false">
+              <div class="step-header">
+                <div class="step-header-left">
+                  <div class="step-index">Step 5</div>
+                  <div class="step-title">Review &amp; Practice (multi-step word problems)</div>
+                </div>
+                <div class="step-header-right">
+                  <span class="step-access-pill mastery">Mastery</span>
+                  <button class="toggle-btn" type="button" aria-label="Toggle step 5 details" data-toggle-step="5">+</button>
+                </div>
+              </div>
+
+              <div class="step-content" id="stepContent5">
+                <div class="step-body">
+                  Practice using components in context: adding vectors, relative velocity, and forces at angles. Focus on clean diagrams, consistent axes, and unit-vector bookkeeping.
+                </div>
+
+                <div class="prompt-preview" id="promptPreview5"></div>
+
+                <div class="copy-row">
+                  <button class="btn-ghost btn-copy" type="button" data-copy-step="5">Copy prompt</button>
+                  <button class="btn-primary" type="button" data-run-step="5">Run with AI</button>
+                </div>
+
+                <div class="ai-response" id="aiResponse5"></div>
+
+                <div class="step-footer">
+                  <div class="left-actions">
+                    <span>Goal: build speed + accuracy for component-based setups.</span>
+                  </div>
+                  <span>Mastery required</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- STEP 6 (Mastery gated) -->
+            <article class="step-card" data-step="6" data-step-free="false">
+              <div class="step-header">
+                <div class="step-header-left">
+                  <div class="step-index">Step 6</div>
+                  <div class="step-title">Explore interactive simulation</div>
+                </div>
+                <div class="step-header-right">
+                  <span class="step-access-pill mastery">Mastery</span>
+                  <button class="toggle-btn" type="button" aria-label="Toggle step 6 details" data-toggle-step="6">+</button>
+                </div>
+              </div>
+
+              <div class="step-content" id="stepContent6">
+                <div class="step-body">
+                  Use the simulation to rotate a vector in 2D and adjust its elevation/azimuth in 3D. Watch components change live, then predict signs and magnitudes before revealing the readout.
+                </div>
+
+                <div class="prompt-preview" id="promptPreview6"></div>
+
+                <div class="copy-row">
+                  <a class="btn-pill" href="simulation/simulation.html" aria-label="Open simulation (Mastery)">Run simulation</a>
+                  <button class="btn-primary" type="button" data-run-step="6">Run with AI</button>
+                </div>
+
+                <div class="ai-response" id="aiResponse6"></div>
+
+                <div class="step-footer">
+                  <div class="left-actions">
+                    <span>Try: keep \(A\) constant, sweep \(\theta\) through quadrants, and predict when components change sign.</span>
+                  </div>
+                  <span>Mastery required</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Locked overlay area for steps 4–6 (shown for free users) -->
+            <div id="lockedStepsNotice" class="locked-panel" style="display:none;">
+              <div class="locked-title">Mastery unlocks Steps 4–6</div>
+              <div class="locked-desc">
+                You can view Steps 1–3 now. Upgrade to Mastery to access the diagnostic mini-quiz, full practice set, interactive simulation, and AI help for every step.
+              </div>
+              <div class="locked-actions">
+                <a class="btn-primary" href="/pricing.html">Unlock Mastery</a>
+                <a class="btn-pill" href="/auth.html">Log in</a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: Help Panel -->
+          <aside aria-label="Help panel">
+            <div class="help-panel-inner">
+              <button class="help-panel-toggle" id="helpPanelToggle" type="button" aria-expanded="false">
+                <span class="nano-help-title">Study Help</span>
+                <span class="help-panel-toggle-icon" aria-hidden="true">▾</span>
+              </button>
+
+              <div class="help-lock-wrap" style="position:relative;">
+                <div class="help-panel-body" id="helpPanelBody" style="display:none;">
+                  <p>
+                    Quick, targeted help for common confusions—without giving away the entire lesson. Use these to ask AI the right question at the right time.
+                  </p>
+
+                  <div class="help-category">
+                    <div class="help-category-label">Concept clarity</div>
+                    <p class="help-category-desc">When “projection” and “components” feel slippery.</p>
+                    <ul class="help-prompts-bulleted">
+                      <li><button class="help-prompt-btn" type="button" data-help-prompt="Explain vector components as projections. Use a simple diagram description (no image) and a quick numeric example.">Explain components as projections</button></li>
+                      <li><button class="help-prompt-btn" type="button" data-help-prompt="Give me a checklist to choose the correct sign for Ax, Ay (and Az). Include a quadrant-based method.">Sign + quadrant checklist</button></li>
+                    </ul>
+                  </div>
+
+                  <div class="help-category">
+                    <div class="help-category-label">Exam traps</div>
+                    <p class="help-category-desc">Angle conventions that cause swapped \(\sin\)/\(\cos\).</p>
+                    <ul class="help-prompts-bulleted">
+                      <li><button class="help-prompt-btn" type="button" data-help-prompt="Show 3 common angle-convention mistakes for vector components and how to fix each. Include one measured from +y.">Angle convention mistakes</button></li>
+                      <li><button class="help-prompt-btn" type="button" data-help-prompt="Teach me how to convert a reference angle (like '20° below +x' or '35° west of north') into Ax and Ay correctly.">Convert word angles to components</button></li>
+                    </ul>
+                  </div>
+
+                  <div class="help-cta" id="helpCtaBox">
+                    <div style="font-weight:900; letter-spacing:-0.01em; margin-bottom:0.25rem; font-family: var(--font-heading);">Want full Help access?</div>
+                    <div style="color:#cbd5e1; font-size:0.92rem; line-height:1.55;">
+                      Mastery unlocks all Help prompts and deep-dive explanations across every lesson step.
+                    </div>
+                    <div style="height:0.65rem;"></div>
+                    <a class="btn-primary" href="/pricing.html">Unlock Mastery</a>
+                  </div>
+                </div>
+
+                <!-- Overlay shown for anon + free -->
+                <div class="help-lock-overlay" id="helpLockOverlay">
+                  <div class="teaser-card">
+                    <div class="teaser-kicker">🔒 Locked • Mastery</div>
+                    <div class="teaser-title">Study Help is available with Mastery</div>
+                    <div class="teaser-desc">
+                      Unlock curated prompts, misconception fixes, and exam-trap warnings tailored to this nano-lesson.
+                    </div>
+                    <div class="teaser-actions">
+                      <a class="btn-primary" href="/pricing.html">Unlock Mastery</a>
+                      <a class="btn-pill" href="/auth.html">Log in</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Click catcher for locked help (keeps panel non-navigable) -->
+                <div class="help-locked-clickcatcher" id="helpLockedClickcatcher" aria-hidden="true"></div>
+              </div>
+
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="psYear"></span> PromptSchola • Built for calm, focused STEM mastery
+    </footer>
+  </div>
+
+  <!-- Shared auth helpers -->
+  <script src="/auth.js"></script>
+
+  <script>
+    // ========= PromptSchola Nano-lesson: Vector components (2D & 3D) =========
+
+    // --- Prompts (only content differs per topic) ---
+    const PS_PROMPTS = {
+      1: `You are my physics tutor. Topic: Vector components (2D & 3D).
+Explain what "components" mean using the idea of projections. Use one simple numeric example in 2D.
+Then list 3 quick checks to avoid sign mistakes.`,
+      2: `Teach vector components in 2D with strict angle conventions.
+Include: (1) when Ax=Acosθ and Ay=Asinθ applies, (2) what to do if θ is measured from +y or from another direction,
+and (3) 2 worked examples (different quadrants) with sign checks.`,
+      3: `Show how to write vectors in unit-vector form (i, j, k) and how to reconstruct magnitude and direction from components.
+Explain why atan2(Ay,Ax) is better than arctan(Ay/Ax). Give one example.`,
+      4: `STEP 4 (Check your understanding – mini-quiz) for vector components (2D & 3D).
+
+Part A — Diagnostic (5 items):
+- Each item should target one common component mistake (wrong trig, wrong sign, wrong reference angle, mixing degrees/radians, forgetting Az).
+- For each item, ask for: (i) signs of components, (ii) which trig function to use, and (iii) a quick numeric result.
+
+Part B — Solutions:
+- Provide solutions in expandable sections (use "Answer:" headings and short reasoning).
+- Emphasize the angle convention and quadrant reasoning.`,
+      5: `Create 3 multi-step practice problems where vector components are essential:
+1) Forces on an object with two angled forces (find net force components).
+2) Relative velocity in 2D (wind + plane).
+3) A 3D vector given magnitude + elevation/azimuth (find Ax, Ay, Az).
+
+For each: provide a clean setup, show component breakdown, and final answer with units.
+Also include 3 "check yourself" questions per problem.`,
+      6: `Design an interactive exploration guide for a simulation where I rotate a vector in 2D and change elevation/azimuth in 3D.
+Give me: (1) 6 short experiments to run, (2) predictions I should make before revealing components,
+and (3) the key takeaways about when components change sign and how magnitude relates to components.`
+    };
+
+    // --- UI: Step expand/collapse ---
+    function qs(sel, root=document){ return root.querySelector(sel); }
+    function qsa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+
+    function setYear(){
+      const y = new Date().getFullYear();
+      const el = qs('#psYear');
+      if(el) el.textContent = y;
+    }
+
+    function toggleStep(step){
+      const content = qs('#stepContent' + step);
+      const btn = qs('[data-toggle-step="' + step + '"]');
+      if(!content || !btn) return;
+      const isOpen = content.style.display !== 'none';
+      content.style.display = isOpen ? 'none' : 'block';
+      btn.textContent = isOpen ? '+' : '–';
+    }
+
+    function initStepToggles(){
+      qsa('[data-toggle-step]').forEach(btn=>{
+        const step = btn.getAttribute('data-toggle-step');
+        btn.addEventListener('click', ()=>toggleStep(step));
+      });
+      // Default: open Steps 1–2, close others
+      [1,2].forEach(s=>{
+        const c = qs('#stepContent'+s);
+        const b = qs('[data-toggle-step="'+s+'"]');
+        if(c && b){ c.style.display='block'; b.textContent='–'; }
+      });
+      [3,4,5,6].forEach(s=>{
+        const c = qs('#stepContent'+s);
+        const b = qs('[data-toggle-step="'+s+'"]');
+        if(c && b){ c.style.display='none'; b.textContent='+'; }
+      });
+    }
+
+    // --- Copy prompt ---
+    async function copyText(text){
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch(e){
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch(_) {}
+        document.body.removeChild(ta);
+        return true;
+      }
+    }
+
+    function initCopyButtons(){
+      qsa('[data-copy-step]').forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+          const step = btn.getAttribute('data-copy-step');
+          const prompt = PS_PROMPTS[step] || '';
+          const ok = await copyText(prompt);
+          btn.textContent = ok ? 'Copied!' : 'Copy failed';
+          setTimeout(()=>btn.textContent='Copy prompt', 1100);
+        });
+      });
+    }
+
+    // --- Gating rules (match canonical behavior) ---
+    // Steps 1–3 visible (prompts visible + copy works).
+    // Free signed-in users: Run AI for Steps 1–2 only.
+    // Paid users: Run AI Steps 1–6 + Help access.
+    // Anon + free: Help panel locked (cannot toggle/click/navigate).
+    let PS_USER = null;
+    let PS_TIER = 'anon'; // 'anon' | 'free' | 'paid'
+
+    function normalizeTier(ent){
+      const raw =
+        (ent?.tier && String(ent.tier).toLowerCase()) ||
+        (ent?.is_paid ? 'paid' : '') ||
+        'free';
+      if(raw === 'paid' || raw === 'mastery' || raw === 'pro' || raw === 'premium') return 'paid';
+      return 'free';
+    }
+
+    async function resolveUserAndTier(){
+      try {
+        PS_USER = await (window.getCurrentUser ? window.getCurrentUser() : null);
+        if(!PS_USER){
+          PS_TIER = 'anon';
+          return;
+        }
+        // entitlements helper (from /auth.js) – if absent, treat as free
+        const ent = await (window.PS_getEntitlements ? window.PS_getEntitlements() : null);
+        PS_TIER = normalizeTier(ent);
+      } catch(e){
+        PS_USER = null;
+        PS_TIER = 'anon';
+      }
+    }
+
+    function updateNav(){
+      const loginBtn = qs('#psLoginBtn');
+      const logoutBtn = qs('#psLogoutBtn');
+      const subBtn = qs('#psSubscribeBtn');
+      const badge = qs('#psUserBadge');
+
+      if(!loginBtn || !logoutBtn || !subBtn || !badge) return;
+
+      if(!PS_USER){
+        loginBtn.style.display = 'inline-flex';
+        logoutBtn.style.display = 'none';
+        subBtn.style.display = 'none';
+        badge.style.display = 'none';
+        return;
+      }
+
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-flex';
+      badge.style.display = 'inline-flex';
+      badge.textContent = (PS_TIER === 'paid') ? 'Mastery' : 'Free';
+      badge.style.padding = '0.32rem 0.7rem';
+      badge.style.borderRadius = '999px';
+      badge.style.border = '1px solid rgba(209,213,219,0.9)';
+      badge.style.background = (PS_TIER === 'paid') ? 'rgba(99,102,241,0.12)' : '#dcfce7';
+      badge.style.color = (PS_TIER === 'paid') ? '#3730a3' : '#166534';
+      badge.style.fontWeight = '900';
+      badge.style.fontSize = '0.78rem';
+
+      subBtn.style.display = (PS_TIER === 'paid') ? 'none' : 'inline-flex';
+    }
+
+    function enforceStepGatingUI(){
+      // Show locked notice for steps 4–6 when not paid
+      const lockedNotice = qs('#lockedStepsNotice');
+      const showLocked = (PS_TIER !== 'paid');
+      if(lockedNotice) lockedNotice.style.display = showLocked ? 'block' : 'none';
+
+      // Disable Run AI buttons based on tier and step
+      qsa('[data-run-step]').forEach(btn=>{
+        const step = parseInt(btn.getAttribute('data-run-step'), 10);
+        let allowed = false;
+
+        if(PS_TIER === 'paid') allowed = true;
+        else if(PS_TIER === 'free') allowed = (step === 1 || step === 2);
+        else allowed = false; // anon cannot run AI
+
+        btn.disabled = !allowed;
+        btn.title = allowed ? '' : (PS_TIER === 'anon'
+          ? 'Log in to run AI'
+          : 'Upgrade to Mastery to run AI for this step');
+      });
+    }
+
+    function enforceHelpPanelGating(){
+      const toggle = qs('#helpPanelToggle');
+      const body = qs('#helpPanelBody');
+      const overlay = qs('#helpLockOverlay');
+      const clickcatcher = qs('#helpLockedClickcatcher');
+
+      const isLocked = (PS_TIER !== 'paid'); // anon + free locked
+      if(toggle){
+        toggle.classList.toggle('help-toggle-disabled', isLocked);
+        toggle.setAttribute('aria-disabled', isLocked ? 'true' : 'false');
+        if(isLocked){
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+
+      // When locked: prevent interaction, show overlay + click catcher
+      if(isLocked){
+        if(body) body.style.display = 'none';
+        if(overlay) overlay.style.display = 'flex';
+        if(clickcatcher) clickcatcher.style.display = 'block';
+      } else {
+        if(overlay) overlay.style.display = 'none';
+        if(clickcatcher) clickcatcher.style.display = 'none';
+      }
+    }
+
+    function initHelpPanel(){
+      const toggle = qs('#helpPanelToggle');
+      const body = qs('#helpPanelBody');
+
+      if(!toggle || !body) return;
+
+      toggle.addEventListener('click', ()=>{
+        if(PS_TIER !== 'paid') return; // hard lock
+        const isOpen = body.style.display !== 'none';
+        body.style.display = isOpen ? 'none' : 'block';
+        toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      });
+
+      // Help prompt buttons (when unlocked)
+      qsa('[data-help-prompt]').forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+          if(PS_TIER !== 'paid') return;
+          const prompt = btn.getAttribute('data-help-prompt') || '';
+          await copyText(prompt);
+          btn.textContent = 'Copied!';
+          setTimeout(()=>btn.textContent = btn.textContent === 'Copied!' ? 'Copy again' : btn.textContent, 700);
+        });
+      });
+
+      // If locked and someone clicks catch area, route to pricing (optional: keep purely non-navigable)
+      const clickcatcher = qs('#helpLockedClickcatcher');
+      if(clickcatcher){
+        clickcatcher.addEventListener('click', ()=>{
+          // Keep non-navigable per your rule; do nothing.
+        });
+      }
+    }
+
+    // --- Run with AI (calls /api/run-step) ---
+    function setResponse(step, text){
+      const box = qs('#aiResponse' + step);
+      if(box) box.textContent = text || '';
+      if(window.MathJax && window.MathJax.typeset){
+        try { window.MathJax.typeset(); } catch(e){}
+      }
+    }
+
+    async function runStep(step){
+      const prompt = PS_PROMPTS[step] || '';
+      if(!prompt) return;
+
+      setResponse(step, 'Running…');
+
+      try {
+        const token = await (window.PS_getAccessToken ? window.PS_getAccessToken() : null);
+        if(!token){
+          setResponse(step, 'Please log in to run AI.');
+          return;
+        }
+
+        const res = await fetch('/api/run-step', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({
+            nano_slug: 'vector-components-2d-3d',
+            step: Number(step),
+            prompt
+          })
+        });
+
+        const data = await res.json().catch(()=> ({}));
+        if(!res.ok){
+          setResponse(step, data?.error || 'Request failed.');
+          return;
+        }
+
+        setResponse(step, data?.text || data?.response || '(No response returned.)');
+      } catch (e){
+        setResponse(step, 'Network error. Please try again.');
+      }
+    }
+
+    function initRunButtons(){
+      qsa('[data-run-step]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const step = btn.getAttribute('data-run-step');
+          runStep(step);
+        });
+      });
+    }
+
+    // --- Login/logout wiring ---
+    function initAuthButtons(){
+      const loginBtn = qs('#psLoginBtn');
+      const logoutBtn = qs('#psLogoutBtn');
+
+      if(loginBtn){
+        loginBtn.addEventListener('click', ()=>{
+          if(window.PS_setPostAuthRedirect) window.PS_setPostAuthRedirect(window.location.pathname);
+          window.location.href = '/auth.html';
+        });
+      }
+      if(logoutBtn){
+        logoutBtn.addEventListener('click', async ()=>{
+          if(window.PS_signOut) await window.PS_signOut();
+          window.location.reload();
+        });
+      }
+    }
+
+    // --- Init ---
+    async function init(){
+      setYear();
+      initStepToggles();
+      initCopyButtons();
+      initRunButtons();
+      initHelpPanel();
+      initAuthButtons();
+
+      await resolveUserAndTier();
+      updateNav();
+      enforceStepGatingUI();
+      enforceHelpPanelGating();
+    }
+
+    init();
+  </script>
+</body>
+</html>
