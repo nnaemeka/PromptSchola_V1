@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Deep conceptual help on motion graphs, slopes, areas, and interpreting motion correctly."
+    content="Deep conceptual help on motion graphs, including slope, area, sign, graph shape, and connecting different graph types."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -680,7 +680,7 @@
 
           <h1 class="hero-title">Study Help: Motion Graphs</h1>
 
-          <p class="hero-subtitle">Interpret slopes, areas, and graph shapes with confidence.</p>
+          <p class="hero-subtitle">Targeted prompts for the exact places students get stuck: slope vs value, area vs value, sign, flat lines, and connecting one graph to another.</p>
 
           <div class="hero-breadcrumbs">
             
@@ -714,10 +714,10 @@
             <div class="access-band-inner">
               <div>
                 <div class="access-band-title">Access for study help</div>
-                <div class="access-band-desc">Browse freely. AI explanations require upgrade.</div>
+                <div class="access-band-desc">This help page is part of paid access (Mastery). You can still browse the titles, but running prompts with AI is available to paid learners.</div>
               </div>
               <div class="access-chips">
-                <span class="chip free">Browse topics</span>
+                <span class="chip free">Browse titles</span>
                 <span class="chip mastery">Run with AI (Paid)</span>
               </div>
             </div>
@@ -728,10 +728,10 @@
       <section id="help-locked-wrap" style="display:none;">
         <div class="container">
           <div class="locked-panel">
-            <div class="locked-title">Help Locked</div>
-            <div class="locked-desc">Upgrade to unlock AI explanations.</div>
+            <div class="locked-title">Study Help is a paid feature</div>
+            <div class="locked-desc">You’re seeing the help library directory, but the full prompt + AI guidance is available to paid learners. Upgrade to unlock all help prompts and run-with-AI support.</div>
             <div class="locked-actions">
-              <a class="btn-primary" href="/pricing.html">Upgrade Now</a>
+              <a class="btn-primary" href="/pricing.html">Unlock Help</a>
               <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
               <a class="btn-ghost" href="nano-motion-graphs.html">Back to nano-lesson</a>
             </div>
@@ -747,7 +747,7 @@
               <div class="help-card-top">
                 <div class="pill-row">
                   <span id="pill-category" class="pill">Category: …</span>
-                  <span class="pill topic">Motion Graphs</span>
+                  <span class="pill topic">Study help · Motion Graphs</span>
                 </div>
 
                 <div class="pill-row">
@@ -776,14 +776,14 @@
                   <button class="btn-primary" id="run-btn" type="button" onclick="runCurrentPromptWithAI()">Run with AI</button>
                 </div>
                 <div class="actions-right">
-                  <span id="hint-text">Browse help topics.</span>
+                  <span id="hint-text">Tip: Browse the library—use Run with AI when you’re ready for guided help.</span>
                 </div>
               </div>
             </article>
 
             <aside class="dir-card">
               <div class="dir-title">Deepen your understanding</div>
-              <p class="dir-desc">Interpret slopes, areas, and shapes correctly.</p>
+              <p class="dir-desc">Pick a help topic. You can add new ones later by adding new IDs in the library + links here.</p>
 
               
                 <div class="dir-cat">
@@ -794,9 +794,9 @@
                   <div class="dir-cat-body" id="cat-CL">
                     <ul class="dir-list">
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=CL01">Slope vs value</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=CL01">Slope vs value: what the graph height means versus what the slope means</a></li>
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=CL02">Area vs value</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=CL02">Area vs value: why the area under a graph is not the same as the graph value</a></li>
                       
                     </ul>
                   </div>
@@ -804,15 +804,15 @@
                 
                 <div class="dir-cat">
                   <button class="dir-cat-toggle" data-target="cat-ET" type="button">
-                    <span class="dir-cat-label">Edge cases & tricky areas</span>
+                    <span class="dir-cat-label">Tricky areas & exam traps</span>
                     <span class="dir-cat-chev">▾</span>
                   </button>
                   <div class="dir-cat-body" id="cat-ET">
                     <ul class="dir-list">
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=ET01">Flat lines meaning</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=ET01">Flat lines on different motion graphs: why they do not all mean the same thing</a></li>
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=ET02">Crossing zero</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=ET02">Crossing zero on a motion graph: what changes physically and what does not</a></li>
                       
                     </ul>
                   </div>
@@ -826,9 +826,9 @@
                   <div class="dir-cat-body" id="cat-CM">
                     <ul class="dir-list">
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=CM01">Slope confusion</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=CM01">Confusing slope with the actual quantity plotted on the graph</a></li>
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=CM02">Ignoring sign</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=CM02">Ignoring the sign of graph values, slope, or area</a></li>
                       
                     </ul>
                   </div>
@@ -836,15 +836,15 @@
                 
                 <div class="dir-cat">
                   <button class="dir-cat-toggle" data-target="cat-PS" type="button">
-                    <span class="dir-cat-label">Problem-solving</span>
+                    <span class="dir-cat-label">When you feel stuck</span>
                     <span class="dir-cat-chev">▾</span>
                   </button>
                   <div class="dir-cat-body" id="cat-PS">
                     <ul class="dir-list">
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=PS01">Reading graphs step-by-step</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=PS01">How to read a motion graph step-by-step without guessing</a></li>
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=PS02">Connecting graphs</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=PS02">How to connect position–time, velocity–time, and acceleration–time graphs</a></li>
                       
                     </ul>
                   </div>
@@ -852,15 +852,15 @@
                 
                 <div class="dir-cat">
                   <button class="dir-cat-toggle" data-target="cat-EX" type="button">
-                    <span class="dir-cat-label">Extensions</span>
+                    <span class="dir-cat-label">Concept bridges</span>
                     <span class="dir-cat-chev">▾</span>
                   </button>
                   <div class="dir-cat-body" id="cat-EX">
                     <ul class="dir-list">
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=EX01">Non-linear motion</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=EX01">How non-linear graph shapes reveal changing motion</a></li>
                       
-                      <li><a class="dir-link" href="help-motion-graphs.html?id=EX02">Graph transformations</a></li>
+                      <li><a class="dir-link" href="help-motion-graphs.html?id=EX02">How changing one graph changes the shape of related motion graphs</a></li>
                       
                     </ul>
                   </div>
@@ -892,73 +892,73 @@
     const HELP = {
   "CL01": {
     "id": "CL01",
-    "category": "CL",
-    "title": "Slope vs Value",
-    "lead": "Key interpretation error.",
-    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students. Explain slope vs value in motion graphs."
+    "category": "Confusions & look-alikes",
+    "title": "Slope vs value: what the graph height means versus what the slope means",
+    "lead": "Use this when you know the graph shows motion, but you are not sure whether to read the y-value or the slope.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Slope vs graph value in motion graphs.\n\nA student is confused about the difference between the value of the graph and the slope of the graph.\n\nExplain clearly:\n• What the graph value means on a position–time graph\n• What the slope means on a position–time graph\n• What the graph value means on a velocity–time graph\n• What the slope means on a velocity–time graph\n• Why students often mix these ideas up\n\nInclude one short conceptual example.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "CL02": {
     "id": "CL02",
-    "category": "CL",
-    "title": "Area vs Value",
-    "lead": "Common confusion.",
-    "prompt": "Explain area vs value in motion graphs."
+    "category": "Confusions & look-alikes",
+    "title": "Area vs value: why the area under a graph is not the same as the graph value",
+    "lead": "Use this when area under the graph and height of the graph feel interchangeable.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Area vs graph value in motion graphs.\n\nExplain:\n• What the value of a velocity–time graph means\n• What the area under a velocity–time graph means\n• Why area and graph height are different physical ideas\n• Why this distinction matters when finding displacement\n• One quick example with a simple constant-velocity graph\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "ET01": {
     "id": "ET01",
-    "category": "ET",
-    "title": "Flat Lines",
-    "lead": "Constant behavior.",
-    "prompt": "Explain flat lines in motion graphs."
+    "category": "Tricky areas & exam traps",
+    "title": "Flat lines on different motion graphs: why they do not all mean the same thing",
+    "lead": "Use this when flat lines seem to mean “nothing is happening” on every graph.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Flat lines on motion graphs.\n\nExplain clearly:\n• What a flat line means on a position–time graph\n• What a flat line means on a velocity–time graph\n• What a flat line means on an acceleration–time graph\n• Why flat does not mean the same thing on every graph\n• How to answer exam questions that test this distinction\n\nInclude a short “common wrong thought → correct thought” pair.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "ET02": {
     "id": "ET02",
-    "category": "ET",
-    "title": "Crossing Zero",
-    "lead": "Sign change meaning.",
-    "prompt": "Explain crossing zero."
+    "category": "Tricky areas & exam traps",
+    "title": "Crossing zero on a motion graph: what changes physically and what does not",
+    "lead": "Use this when students are unsure what a zero crossing really means.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Zero crossings on motion graphs.\n\nExplain:\n• What it means if a velocity–time graph crosses zero\n• What it means if an acceleration–time graph crosses zero\n• Why crossing zero can matter physically, but not always in the same way on different graphs\n• How sign changes affect interpretation of motion\n\nInclude one simple conceptual example.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "CM01": {
     "id": "CM01",
-    "category": "CM",
-    "title": "Slope Confusion",
-    "lead": "Typical mistake.",
-    "prompt": "Explain slope confusion."
+    "category": "Common mistakes",
+    "title": "Confusing slope with the actual quantity plotted on the graph",
+    "lead": "Use this when the graph is being read too literally without checking what the axes mean.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Common slope mistakes in motion graphs.\n\nExplain:\n• Why students often confuse the graph value with its slope\n• How to avoid that mistake on position–time graphs\n• How to avoid that mistake on velocity–time graphs\n• A quick method for deciding whether you need the value, slope, or area\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "CM02": {
     "id": "CM02",
-    "category": "CM",
-    "title": "Ignoring Sign",
-    "lead": "Critical error.",
-    "prompt": "Explain ignoring sign."
+    "category": "Common mistakes",
+    "title": "Ignoring the sign of graph values, slope, or area",
+    "lead": "Use this when positive and negative parts of the graph are being treated as the same.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Sign interpretation in motion graphs.\n\nExplain:\n• Why sign matters when reading motion graphs\n• What negative velocity means physically\n• What negative acceleration can mean physically\n• Why signed area under a velocity–time graph matters for displacement\n• How students can keep sign interpretation consistent\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "PS01": {
     "id": "PS01",
-    "category": "PS",
-    "title": "Step-by-step Reading",
-    "lead": "Systematic approach.",
-    "prompt": "Explain how to read graphs step-by-step."
+    "category": "When you feel stuck",
+    "title": "How to read a motion graph step-by-step without guessing",
+    "lead": "Use this when the graph feels visually busy and you do not know what to inspect first.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Reading motion graphs systematically.\n\nTeach a reliable routine:\n• First identify the graph type\n• Then read what each axis means\n• Then check graph value, slope, and whether area is relevant\n• Then check sign\n• Then translate the graph into a motion story\n\nShow one worked example briefly.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "PS02": {
     "id": "PS02",
-    "category": "PS",
-    "title": "Connecting Graphs",
-    "lead": "Link ideas.",
-    "prompt": "Explain graph connections."
+    "category": "When you feel stuck",
+    "title": "How to connect position–time, velocity–time, and acceleration–time graphs",
+    "lead": "Use this when one graph makes sense but the student cannot see how it links to the others.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Connecting motion graphs.\n\nExplain a step-by-step approach for connecting:\n• Position–time graphs to velocity–time graphs\n• Velocity–time graphs to acceleration–time graphs\n• Slope meaning across the chain\n• Why changes in one graph affect the likely shape of another\n\nInclude one short worked example.\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "EX01": {
     "id": "EX01",
-    "category": "EX",
-    "title": "Non-linear Motion",
-    "lead": "Curved graphs.",
-    "prompt": "Explain non-linear graphs."
+    "category": "Concept bridges",
+    "title": "How non-linear graph shapes reveal changing motion",
+    "lead": "Use this when you want to go beyond straight lines and understand curved motion graphs.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Non-linear motion graphs.\n\nExplain:\n• Why a curved position–time graph signals changing velocity\n• Why a sloped velocity–time graph signals acceleration\n• How graph curvature and slope help reveal changing motion\n• One simple conceptual example involving speeding up motion\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   },
   "EX02": {
     "id": "EX02",
-    "category": "EX",
-    "title": "Transformations",
-    "lead": "Graph shifts.",
-    "prompt": "Explain graph transformations."
+    "category": "Concept bridges",
+    "title": "How changing one graph changes the shape of related motion graphs",
+    "lead": "Use this when you want a deeper sense of how graph families move together.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Relationships among motion graphs.\n\nExplain:\n• How changing the slope of a position–time graph affects the implied velocity–time graph\n• How changing the slope of a velocity–time graph affects the implied acceleration–time graph\n• Why graph relationships matter in later kinematics problem-solving\n• One short conceptual example linking all three graphs\n\nFormatting rules:\n• Short paragraphs + bullets\n• Bold key terms sparingly\n• If you include equations, use simple LaTeX display math, one per line\n• Do NOT use markdown headings like # or ###."
   }
 };
 
@@ -1150,7 +1150,7 @@
       const runBtn = document.getElementById('run-btn');
       const hint = document.getElementById('hint-text');
       const ai = document.getElementById('ai-output');
-      const paidHint = "Upgrade to run AI explanations.";
+      const paidHint = "Tip: You can browse titles. Upgrade to run help prompts with AI.";
 
       if (!isPaid) {
         if (lockedWrap) lockedWrap.style.display = 'block';
@@ -1174,7 +1174,7 @@
           runBtn.onclick = runCurrentPromptWithAI;
         }
 
-        if (hint) hint.textContent = "Browse help topics.";
+        if (hint) hint.textContent = "Tip: Browse the library\u2014use Run with AI when you\u2019re ready for guided help.";
       }
 
       if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
