@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptSchola – Master STEM with Purpose</title>
+  <title>PromptSchola Physics – Learn Physics with Purpose</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="PromptSchola helps you master Mathematics, Physics, Chemistry and Biology through a 6-step prompt-based mastery system. Stop guessing what to ask AI and start learning STEM with purpose."
+    content="PromptSchola Physics helps you learn Physics through a 6-step prompt-based mastery system. Stop guessing what to ask AI and build real understanding with purpose."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -527,6 +527,23 @@
       box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
     }
 
+    /* Physics-first landing page: retain the original subject-card visual language at a focused scale. */
+    .subjects-grid.physics-only {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .physics-card {
+      padding: 1.35rem 1.4rem 1.45rem;
+      gap: 0.9rem;
+    }
+
+    .physics-list {
+      margin-bottom: 0;
+    }
+
     .subject-title {
       font-size: 1.32rem;
       font-weight: 850;
@@ -775,7 +792,8 @@
     }
 
     @media (max-width: 800px) {
-      .subjects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .subjects-grid:not(.physics-only) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .subjects-grid.physics-only { grid-template-columns: minmax(0, 1fr); }
       .why-grid { grid-template-columns: minmax(0, 1fr); }
       .steps-grid { grid-template-columns: minmax(0, 1fr); }
       .nav-links { display: none; }
@@ -800,16 +818,14 @@
           <div class="logo-mark">P</div>
           <div class="logo-text">
             <span>PromptSchola</span>
-            <span>Prompt-based STEM subjects mastery</span>
+            <span>Prompt-based Physics mastery</span>
           </div>
         </div>
 
         <nav class="nav-links">
           <a href="/index.html">Home</a>
           <a href="/physics/physics.html">Physics</a>
-          <a href="/math/math.html">Math</a>
-          <a href="/chemistry/chemistry.html">Chemistry</a>
-          <a href="/biology/biology.html">Biology</a>
+          <a href="#how-it-works">How It Works</a>
           <a href="/pricing.html">Pricing</a>
         </nav>
 
@@ -839,22 +855,22 @@
         <div class="hero-heading">
           <div class="hero-kicker">
             <span class="label">New</span>
-            <span>Prompt-based learning for STEM subjects</span>
+            <span>Prompt-based learning for Physics</span>
           </div>
-          <h1 class="hero-title">Learn Math and Science through guided prompts.</h1>
+          <h1 class="hero-title">Learn Physics through guided prompts.</h1>
           <p class="hero-subtitle">
-            A clear, step-by-step system that shows you what to ask and what comes next.
+            Build lasting understanding with a clear, step-by-step path for every Physics topic.
           </p>
         </div>
       </div>
     </section>
 
     <!-- Today’s STEM Thought -->
-    <section class="stem-thought-band" aria-label="Today’s STEM Thought">
+    <section class="stem-thought-band" aria-label="Today’s Physics Thought">
       <div class="container">
         <div class="stem-thought">
-          <div class="stem-thought-label">Today’s STEM Thought</div>
-          <p class="stem-thought-text">A good theory doesn’t end curiosity—it organizes it.</p>
+          <div class="stem-thought-label">Today’s Physics Thought</div>
+          <p class="stem-thought-text">Physics becomes clearer when each question leads naturally to the next one.</p>
         </div>
       </div>
     </section>
@@ -865,7 +881,7 @@
         <div class="section-header">
           <div class="section-kicker">How PromptSchola works</div>
           <h2 class="section-title">A repeatable 6-step flow for every topic</h2>
-          <p class="section-subtitle">Each topic uses the same simple, repeatable path to understanding.</p>
+          <p class="section-subtitle">Every Physics topic follows the same clear path from first ideas to confident application.</p>
         </div>
 
         <div class="steps-grid">
@@ -873,118 +889,74 @@
             <div class="step-badge">Free</div>
             <div class="step-label">Step 1</div>
             <h3>Orient</h3>
-            <p>Get an overview of the topic and quick checks of what you already understand.</p>
+            <p>Build a precise starting picture of the topic, its language, and why it matters.</p>
           </article>
 
           <article class="step-card free">
             <div class="step-badge">Free</div>
             <div class="step-label">Step 2</div>
-            <h3>Understand</h3>
-            <p>See the idea explained in plain language, with everyday examples.</p>
+            <h3>Conceptual Grounding</h3>
+            <p>Develop the intuition behind the Physics, with careful examples that make the idea stick.</p>
           </article>
 
           <article class="step-card free">
             <div class="step-badge">Free</div>
             <div class="step-label">Step 3</div>
-            <h3>Apply</h3>
-            <p>Connect the concept to real systems, so it stops feeling abstract.</p>
+            <h3>Real-World Connection</h3>
+            <p>Connect the concept to real systems so the equations and ideas stop feeling abstract.</p>
           </article>
 
           <article class="step-card">
             <div class="step-badge">Mastery</div>
             <div class="step-label">Step 4</div>
-            <h3>Work Through It</h3>
-            <p>Walk through carefully selected examples with step-by-step reasoning.</p>
+            <h3>Check Your Understanding</h3>
+            <p>Try diagnostic questions first, then reveal concise answers and explanations.</p>
           </article>
 
           <article class="step-card">
             <div class="step-badge">Mastery</div>
             <div class="step-label">Step 5</div>
-            <h3>Review &amp; Practice</h3>
-            <p>Pull together key ideas and test yourself with problems that reveal gaps.</p>
+            <h3>Practice</h3>
+            <p>Work through carefully sequenced problems with step-by-step reasoning.</p>
           </article>
 
           <article class="step-card">
             <div class="step-badge">Mastery</div>
             <div class="step-label">Step 6</div>
-            <h3>Simulation Lab</h3>
-            <p>Use simulations and visualizations to see the physics change as you adjust parameters.</p>
+            <h3>Summary &amp; Explore</h3>
+            <p>Consolidate the big ideas, reflect on them, and explore what changes when conditions change.</p>
           </article>
         </div>
 
         <p class="steps-note">
-          Each step is driven by a carefully crafted prompt. You copy, paste, and learn — no more guessing what to ask AI.
+          Each step is driven by a carefully crafted prompt. You copy, paste, and learn—without guessing what to ask AI next.
         </p>
       </div>
     </section>
 
-    <!-- Subjects -->
-    <section id="subjects">
+    <!-- Physics curriculum -->
+    <section id="physics">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker">Subjects</div>
-          <h2 class="section-title">Start with Physics, expand into full STEM</h2>
-          <p class="section-subtitle">Dive into Physics, Math, Chemistry, or Biology.</p>
+          <div class="section-kicker">Physics curriculum</div>
+          <h2 class="section-title">Build Physics understanding, one connected topic at a time</h2>
+          <p class="section-subtitle">Start with mechanics, then build toward waves, electricity and magnetism, thermal physics, and modern physics.</p>
         </div>
 
-        <div class="subjects-grid">
-          <article class="subject-card">
+        <div class="subjects-grid physics-only">
+          <article class="subject-card physics-card">
             <div>
-              <h3 class="subject-title">Physics</h3>
-              <p class="subject-topline">Mechanics, EM, Thermodynamics, Modern Physics</p>
-              <ul class="subject-list">
-                <li>• Forces &amp; Newton’s Laws</li>
-                <li>• Energy, Work &amp; Power</li>
-                <li>• Electric Fields &amp; Circuits</li>
+              <h3 class="subject-title">Physics Learning Pathway</h3>
+              <p class="subject-topline">A growing, structured curriculum for final-year high school and first-year university learners.</p>
+              <ul class="subject-list physics-list">
+                <li>• Mechanics: motion, forces, energy, momentum, and circular motion</li>
+                <li>• Waves and oscillations: patterns, sound, light, and resonance</li>
+                <li>• Electricity and magnetism: fields, circuits, and electromagnetic ideas</li>
+                <li>• Thermal and modern physics: energy transfer, atoms, and beyond</li>
               </ul>
             </div>
             <div class="subject-cta">
-              <a href="/physics/physics.html" class="btn-subject-primary">Explore Physics</a>
-            </div>
-          </article>
-
-          <article class="subject-card">
-            <div>
-              <h3 class="subject-title">Mathematics</h3>
-              <p class="subject-topline">Algebra, Calculus, Probability &amp; more</p>
-              <ul class="subject-list">
-                <li>• Functions &amp; Graphs</li>
-                <li>• Limits &amp; Derivatives</li>
-                <li>• Integrals &amp; Applications</li>
-              </ul>
-            </div>
-            <div class="subject-cta">
-              <a href="/math/math.html" class="btn-subject-primary">Explore Math</a>
-            </div>
-          </article>
-
-          <article class="subject-card">
-            <div>
-              <h3 class="subject-title">Chemistry</h3>
-              <p class="subject-topline">Structure, reactions, thermochemistry</p>
-              <ul class="subject-list">
-                <li>• Atomic Structure &amp; Periodic Table</li>
-                <li>• Chemical Bonding</li>
-                <li>• Stoichiometry</li>
-              </ul>
-            </div>
-            <div class="subject-cta">
-              <a href="/chemistry/chemistry.html" class="btn-subject-primary">Explore Chemistry</a>
-            </div>
-          </article>
-
-          <article class="subject-card">
-            <div>
-              <h3 class="subject-title">Biology</h3>
-              <p class="subject-topline">Cells, genetics, physiology</p>
-              <ul class="subject-list">
-                <li>• Cell Structure &amp; Function</li>
-                <li>• Genetics &amp; Inheritance</li>
-                <li>• Human Physiology</li>
-              </ul>
-            </div>
-            <div class="subject-cta">
-              <a href="/biology/biology.html" class="btn-subject-primary">Explore Biology</a>
+              <a href="/physics/physics.html" class="btn-subject-primary">Explore the Physics Curriculum</a>
             </div>
           </article>
         </div>
@@ -995,10 +967,10 @@
     <section>
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker">Why PromptSchola</div>
-          <h2 class="section-title">Built by a former university professor</h2>
+          <div class="section-kicker">Why PromptSchola Physics</div>
+          <h2 class="section-title">Physics learning with a rigorous path</h2>
           <p class="section-subtitle">
-            PromptSchola turns aimless AI chatting into a rigorous, 6-step path to deep understanding.
+            PromptSchola turns aimless AI chatting into a rigorous, 6-step path for learning Physics with confidence.
           </p>
         </div>
 
@@ -1010,9 +982,9 @@
             </p>
           </article>
           <article class="why-card">
-            <h3>Designed for core STEM subjects</h3>
+            <h3>Designed specifically for Physics</h3>
             <p>
-              Every prompt, explanation, and example is carefully crafted for Mathematics, Physics, Chemistry, and Biology — from fundamentals to deeper mastery.
+              Every prompt, explanation, and example is built around the conceptual links, representations, and problem-solving habits that Physics demands.
             </p>
           </article>
           <article class="why-card">
@@ -1067,7 +1039,7 @@
         <span>&copy; 2025 PromptSchola. All rights reserved.</span>
         <div class="footer-links">
           <a href="#how-it-works">How it works</a>
-          <a href="#subjects">Subjects roadmap</a>
+          <a href="#physics">Physics curriculum</a>
           <a href="#access">Access</a>
           <a href="/auth.html">Account</a>
           <a href="/about.html">About</a>
