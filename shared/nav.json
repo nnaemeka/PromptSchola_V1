@@ -1,0 +1,30 @@
+{
+  "brand": {
+    "name": "PromptSchola",
+    "tagline": "Prompt-based Physics mastery",
+    "homeHref": "/index.html"
+  },
+  "links": [
+    {
+      "label": "Home",
+      "href": "/index.html"
+    },
+    {
+      "label": "Physics Curriculum",
+      "href": "/physics/physics.html"
+    },
+    {
+      "label": "How It Works",
+      "href": "/index.html#how-it-works"
+    },
+    {
+      "label": "Pricing",
+      "href": "/pricing.html"
+    }
+  ],
+  "auth": {
+    "signInHref": "/auth.html",
+    "registerHref": "/auth.html?mode=signup",
+    "registerLabel": "Register for Free"
+  }
+}
