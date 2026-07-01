@@ -637,6 +637,9 @@ export default async function handler(req, res) {
               'Assume no prior university physics, but do not oversimplify. ' +
               'Always give a complete, correct explanation, but keep answers reasonably concise (about 400–700 words). ' +
               'Use short paragraphs, bullet points where helpful, and clear spacing. ' +
+              'Never use Markdown heading syntax. Do not begin any line with #, ##, ###, or any number of # symbols. ' +
+              'Use plain-text section labels instead, optionally followed by a colon. ' +
+              'For example, write "Every force has a receiver and an agent:" rather than "### Every force has a receiver and an agent". ' +
               'When you write equations, use simple LaTeX display math \\[ ... \\], one equation per line. ' +
               'Avoid complex LaTeX environments like align/cases. ' +
               'Never end your response in the middle of a sentence or in the middle of a bold marker.'
