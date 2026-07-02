@@ -139,30 +139,13 @@
     .foot a{color:var(--text-muted); text-decoration:none; margin-right:12px}
     .foot a:hover{color:var(--text-main)}
   </style>
+  <!-- Shared site navigation -->
+  <link rel="stylesheet" href="/shared/shared-nav.css">
+  <script src="/shared/shared-nav.js" defer></script>
 </head>
 
 <body>
-  <header class="nav">
-    <div class="wrap nav-inner">
-      <a class="brand" href="/index.html" aria-label="PromptSchola home">
-        <span class="mark" aria-hidden="true"></span>
-        <span>PromptSchola</span>
-      </a>
-
-      <nav class="nav-links" aria-label="Primary">
-        <a href="/physics/physics.html">Physics</a>
-        <a href="/pricing.html">Pricing</a>
-        <a href="/faq.html" aria-current="page">FAQ</a>
-      </nav>
-
-      <div class="nav-actions">
-        <span id="nav-user" class="pill" title="Account status">Not signed in</span>
-        <button id="nav-login-btn" class="btn secondary" type="button" onclick="window.location.href='/auth.html'">Login</button>
-        <button id="nav-register-btn" class="btn secondary" type="button" onclick="window.location.href='/auth.html#register'">Register</button>
-        <button id="nav-signout-btn" class="btn secondary" type="button" onclick="signOutUser()">Sign out</button>
-      </div>
-    </div>
-  </header>
+  <header id="site-header"></header>
 
   <main class="wrap">
     <section class="hero">
