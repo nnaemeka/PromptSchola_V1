@@ -278,50 +278,16 @@
       .nav-links { display: none; }
     }
   </style>
+  <!-- Shared site navigation -->
+  <link rel="stylesheet" href="/shared/shared-nav.css">
+  <script src="/shared/shared-nav.js" defer></script>
 </head>
 
 <body>
 <div class="page">
 
   <!-- NAV -->
-  <header>
-    <div class="container">
-      <div class="nav">
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <div class="logo-mark">P</div>
-          <div class="logo-text">
-            <span>PromptSchola</span>
-            <span>Prompt-based Physics mastery</span>
-          </div>
-        </div>
-
-        <nav class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="physics.html">Physics</a>
-          <a href="pricing.html">Pricing</a>
-        </nav>
-
-        <div class="nav-right">
-          <!-- Filled by auth.js -->
-          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
-
-          <!-- Shown when logged OUT -->
-          <a id="nav-login-btn" href="auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="auth.html?mode=signup" class="btn-pill">Register</a>
-
-          <!-- Shown when logged IN -->
-          <button
-            id="nav-signout-btn"
-            type="button"
-            class="btn-pill"
-            style="display:none;"
-          >
-            Sign out
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
+  <header id="site-header"></header>
 
   <main>
     <!-- HERO -->

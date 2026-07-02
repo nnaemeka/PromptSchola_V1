@@ -104,39 +104,14 @@
     @media (max-width:960px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media (max-width:800px){.topics-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-title{font-size:2.1rem}}
   </style>
+  <!-- Shared site navigation -->
+  <link rel="stylesheet" href="/shared/shared-nav.css">
+  <script src="/shared/shared-nav.js" defer></script>
 </head>
 
 <body>
 <div class="page">
-  <header>
-    <div class="container">
-      <div class="nav">
-        <div class="nav-left">
-          <div class="logo-mark">P</div>
-          <div class="logo-text">
-            <span>PromptSchola</span>
-            <span>Prompt-based Physics mastery</span>
-          </div>
-        </div>
-
-        <nav class="nav-links">
-          <a href="/index.html">Home</a>
-          <a href="/physics/physics.html">Physics</a>
-          
-          
-          
-          <a href="/pricing.html">Pricing</a>
-        </nav>
-
-        <div class="nav-right">
-          <span id="nav-user" style="font-size:0.78rem;color:#9ca3af;"></span>
-          <a id="nav-login-btn" href="/auth.html" class="btn-pill">Sign In</a>
-          <a id="nav-register-btn" href="/auth.html?mode=signup" class="btn-primary">Register for Free</a>
-          <button id="nav-signout-btn" type="button" class="btn-pill" style="display:none;" onclick="signOutUser && signOutUser()">Sign out</button>
-        </div>
-      </div>
-    </div>
-  </header>
+  <header id="site-header"></header>
 
   <main>
     <section class="hero">
