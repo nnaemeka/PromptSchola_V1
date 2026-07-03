@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>System vs Surroundings - Study Help · PromptSchola Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Focused study help for defining systems, identifying surroundings, and distinguishing external from internal forces in mechanics."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+
+      --navy: #00255D;
+      --navy-strong: #001c47;
+      --navy-deep: #001833;
+      --navy-soft: rgba(0, 37, 93, 0.10);
+      --navy-soft2: rgba(0, 37, 93, 0.06);
+      --navy-border: rgba(0, 37, 93, 0.22);
+
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.10);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --fs-micro: 0.78rem;
+      --fs-ui: 0.88rem;
+      --fs-body: 1.03rem;
+      --fs-card: 0.96rem;
+      --fs-lede: 1.14rem;
+
+      --lh-body: 1.72;
+      --lh-card: 1.62;
+      --lh-tight: 1.12;
+
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2 { font-family: var(--font-heading); color: var(--text-strong); line-height: var(--lh-tight); letter-spacing: -0.02em; }
+    h3 { font-family: var(--font-heading); color: var(--text-strong); line-height: 1.15; letter-spacing: -0.01em; }
+
+    :focus-visible {
+      outline: 3px solid rgba(129, 140, 248, 0.45);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; gap: 1rem; }
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 40%;
+      background:
+        radial-gradient(circle at 70% 0%, rgba(168, 85, 247, 0.26), transparent 60%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+      box-shadow: 0 12px 30px rgba(0, 37, 93, 0.20);
+    }
+
+    .logo-text span:first-child {
+      display: block; font-weight: 800; font-size: 1.02rem; letter-spacing: 0.01em;
+      color: var(--text-strong); font-family: var(--font-body); line-height: 1.1;
+    }
+    .logo-text span:last-child {
+      display: block; font-size: 0.76rem; color: var(--text-subtle); font-family: var(--font-body);
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 1.3rem; font-size: var(--fs-ui); font-family: var(--font-body); }
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.92;
+      transition: opacity var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      padding: 0.25rem 0.1rem;
+      letter-spacing: -0.005em;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); transform: translateY(-1px); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: var(--fs-ui); font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.48rem 0.98rem;
+      font-size: var(--fs-ui);
+      border: 1px solid var(--navy-border);
+      background: #ffffff;
+      color: var(--navy);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center;
+      white-space: nowrap;
+      font-weight: 650;
+      letter-spacing: -0.005em;
+    }
+    .btn-pill:hover {
+      background: rgba(0, 37, 93, 0.06);
+      transform: translateY(-1px);
+      border-color: rgba(0, 37, 93, 0.34);
+      box-shadow: 0 10px 22px rgba(0, 37, 93, 0.12);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.62rem 1.32rem;
+      font-size: var(--fs-ui); font-weight: 800;
+      border: none; cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: 0 12px 26px rgba(79,70,229,0.22);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow: 0 16px 34px rgba(79,70,229,0.28);
+    }
+
+    .btn-primary[disabled], .btn-pill[disabled], .btn-ghost[disabled] {
+      opacity: 0.55; cursor: not-allowed;
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-ghost {
+      padding: 0.44rem 0.95rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.84rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
+      white-space: nowrap;
+      color: var(--text-main);
+    }
+    .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25); }
+    .btn-copy { font-size: 0.80rem; padding: 0.34rem 0.9rem; }
+
+    main { padding-bottom: 2.6rem; }
+    section { padding: 1.4rem 0; }
+
+    .hero {
+      padding: 4.6rem 0 2.7rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.10), transparent 55%),
+        radial-gradient(circle at 82% 22%, rgba(168, 85, 247, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 78%, var(--navy-deep) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: -160px; pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.22), transparent 62%),
+        radial-gradient(circle at 92% 30%, rgba(168, 85, 247, 0.18), transparent 58%),
+        radial-gradient(circle at 50% 110%, rgba(255,255,255,0.10), transparent 62%);
+      opacity: 0.95; filter: blur(12px); z-index: 0;
+    }
+    .hero .container { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: var(--fs-micro);
+      font-weight: 900;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.92);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-kicker span.label {
+      padding: 0.18rem 0.7rem; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.10);
+      color: rgba(226, 232, 240, 0.95);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+    .hero-kicker span:not(.label) {
+      color: rgba(226, 232, 240, 0.88);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .hero-title {
+      font-size: clamp(2.35rem, 4.0vw, 3.0rem);
+      line-height: 1.07;
+      font-weight: 720;
+      margin: 0 auto 0.95rem;
+      max-width: 56rem;
+      color: #ffffff;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: var(--fs-lede);
+      max-width: 52rem;
+      color: rgba(226, 232, 240, 0.92);
+      margin: 0 auto;
+      line-height: 1.7;
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 1.05rem;
+      font-size: 0.90rem;
+      color: rgba(226, 232, 240, 0.72);
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+    .hero-breadcrumbs a { color: rgba(199, 210, 254, 0.92); text-decoration: underline; text-decoration-color: rgba(199, 210, 254, 0.35); }
+    .hero-breadcrumbs a:hover { color: #ffffff; text-decoration-color: rgba(255,255,255,0.50); }
+
+    .access-band {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 28px;
+      padding: 1.55rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .access-band::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.20), transparent 58%);
+      filter: blur(16px);
+      opacity: 0.9;
+    }
+    .access-band-inner { position: relative; z-index: 1; display: flex; gap: 1.2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .access-band-title { font-family: var(--font-heading); font-size: 1.40rem; color: #ffffff; margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .access-band-desc { font-family: var(--font-body); color: #cbd5e1; font-size: 0.98rem; line-height: 1.65; max-width: 52rem; }
+
+    .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 900;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+    .chip.free { background: #10b981; color: #ffffff; }
+    .chip.mastery { background: #6366f1; color: #ffffff; }
+
+    .help-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+      margin-top: 0.9rem;
+    }
+
+    .help-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      padding: 1.05rem 1.15rem 1.1rem;
+    }
+
+    .help-card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .pill-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.14rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #f9fafb;
+      font-size: 0.74rem;
+      color: var(--text-subtle);
+      font-weight: 900;
+      font-family: var(--font-body);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .pill.topic {
+      border: 1px solid rgba(126, 34, 206, 0.35);
+      color: #4c1d95;
+      background: rgba(126, 34, 206, 0.06);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 900;
+      font-size: 0.8rem;
+    }
+
+    .help-title {
+      font-family: var(--font-heading);
+      font-size: 1.32rem;
+      color: var(--text-strong);
+      margin: 0.25rem 0 0.2rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .help-lead {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      max-width: 60rem;
+      letter-spacing: -0.004em;
+    }
+
+    .help-body-grid {
+      margin-top: 0.9rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.9rem;
+    }
+
+    .prompt-box {
+      border-radius: 14px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #f9fafb;
+      padding: 0.9rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
+
+    .prompt-box-header {
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-subtle);
+      margin-bottom: 0.5rem;
+      font-family: var(--font-body);
+    }
+
+    .prompt-preview {
+      width: 100%;
+      min-height: 170px;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-main);
+      white-space: pre-wrap;
+      user-select: text;
+    }
+
+    .ai-box {
+      border-radius: 14px;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      background: #ffffff;
+      padding: 1rem 1.1rem;
+      min-height: 160px;
+      font-size: 0.98rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.75;
+      font-family: var(--font-body);
+    }
+
+    .ai-box p { margin-bottom: 0.9rem; }
+    .ai-box ul, .ai-box ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+    .ai-box strong { font-weight: 800; color: inherit; }
+    .ai-box em { font-style: italic; }
+
+    .actions-row {
+      margin-top: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      align-items: center;
+      letter-spacing: -0.004em;
+    }
+
+    .actions-left { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+    .actions-right { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+
+    .dir-card {
+      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(30, 58, 138, 0.22);
+      box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
+      padding: 0.95rem 1rem;
+      position: sticky;
+      top: 6rem;
+    }
+
+    .dir-title{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.12rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.32);
+      color: #1e40af;
+      background: rgba(30, 58, 138, 0.06);
+      font-size: 0.82rem;
+      font-weight: 900;
+      font-family: var(--font-body);
+      margin-bottom: 0.6rem;
+      user-select: none;
+    }
+
+    .dir-desc{
+      margin: 0.28rem 0 0.7rem;
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      line-height: 1.65;
+    }
+
+    .dir-cat {
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      padding-top: 0.7rem;
+      margin-top: 0.7rem;
+    }
+    .dir-cat:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+    .dir-cat-toggle {
+      width: 100%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      padding: 0.15rem 0.1rem;
+    }
+
+    .dir-cat-label{
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      background: rgba(30, 58, 138, 0.10);
+      font-size: 0.72rem;
+      color: #1e40af;
+      font-family: var(--font-body);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .dir-cat-chev { font-size: 0.95rem; color: #4c1d95; opacity: 0.9; }
+
+    .dir-cat-body { margin-top: 0.45rem; }
+
+    .dir-list { list-style: none; padding-left: 1.2rem; margin-top: 0.45rem; }
+    .dir-list li { position: relative; margin-bottom: 0.35rem; }
+    .dir-list li::before {
+      content: "▶";
+      position: absolute;
+      left: -1.1rem;
+      top: 0.18rem;
+      transform: scale(0.9);
+      transform-origin: left top;
+      color: #1e40af;
+    }
+
+    .dir-link{
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.2rem;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      background: transparent;
+      color: #1e40af;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+
+    .dir-link:hover,
+    .dir-link:focus{
+      background: rgba(30, 58, 138, 0.08);
+      color: #0b1220;
+      text-decoration: underline;
+    }
+
+    .locked-panel {
+      border-radius: 16px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.95rem 1rem;
+      color: #111827;
+      font-family: var(--font-body);
+      box-shadow: var(--shadow-card);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .locked-title { font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-strong); margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .locked-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 0.7rem; }
+    .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    footer { margin-top: auto; padding: 1.8rem 0 2.1rem; text-align: center; font-size: 0.86rem; color: var(--text-subtle); font-family: var(--font-body); letter-spacing: -0.004em; }
+
+    @media (max-width: 980px) {
+      .help-layout { grid-template-columns: minmax(0, 1fr); }
+      .dir-card { position: static; }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+  </style>
+  <!-- Shared site navigation -->
+  <link rel="stylesheet" href="/shared/shared-nav.css">
+  <script src="/shared/shared-nav.js" defer></script>
+</head>
+
+<body>
+  <div class="page">
+        <header id="site-header"></header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-kicker">
+            <span class="label">Help</span>
+            <span>PHYSICS . MECHANICS . DYNAMICS . FORCES AND INTERACTIONS</span>
+          </div>
+
+          <h1 class="hero-title">Study Help: System vs Surroundings</h1>
+
+          <p class="hero-subtitle">Targeted guidance for choosing useful systems, separating internal and external forces, and avoiding system-boundary mistakes.</p>
+
+          <div class="hero-breadcrumbs">
+            
+              
+                <a href="/physics/physics.html">Physics</a>
+              
+               · 
+            
+              
+                <a href="#">Mechanics</a>
+              
+               · 
+            
+              
+                <a href="nano-system-vs-surroundings.html">Nano-lesson: System vs Surroundings</a>
+              
+               · 
+            
+              
+                <span>Study Help</span>
+              
+              
+            
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="access-band">
+            <div class="access-band-inner">
+              <div>
+                <div class="access-band-title">Access for study help</div>
+                <div class="access-band-desc">This help page is part of paid access (Mastery). You can still browse the titles, but running prompts with AI is available to paid learners.</div>
+              </div>
+              <div class="access-chips">
+                <span class="chip free">Browse titles</span>
+                <span class="chip mastery">Run with AI (Paid)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="help-locked-wrap" style="display:none;">
+        <div class="container">
+          <div class="locked-panel">
+            <div class="locked-title">Study Help is a paid feature</div>
+            <div class="locked-desc">You can browse the help library, but guided prompts and AI support are available to paid learners.</div>
+            <div class="locked-actions">
+              <a class="btn-primary" href="/pricing.html">Unlock Help</a>
+              <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+              <a class="btn-ghost" href="nano-system-vs-surroundings.html">Back to nano-lesson</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="help-main-wrap">
+        <div class="container">
+          <div class="help-layout">
+
+            <article class="help-card">
+              <div class="help-card-top">
+                <div class="pill-row">
+                  <span id="pill-category" class="pill">Category: …</span>
+                  <span class="pill topic">Study help · System vs Surroundings</span>
+                </div>
+
+                <div class="pill-row">
+                  <a class="btn-ghost" href="nano-system-vs-surroundings.html">Back to nano-lesson</a>
+                </div>
+              </div>
+
+              <h2 id="help-title" class="help-title">Loading help topic…</h2>
+              <p id="help-lead" class="help-lead">Please wait while the help prompt loads.</p>
+
+              <div class="help-body-grid">
+                <div class="prompt-box">
+                  <div class="prompt-box-header">Prompt</div>
+                  <div id="prompt-preview" class="prompt-preview">Loading prompt…</div>
+                </div>
+
+                <div id="ai-output" class="ai-box">
+                  Run with AI to see a guided explanation here.
+                </div>
+              </div>
+
+              <div class="actions-row">
+                <div class="actions-left">
+                  <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentPrompt()">Copy prompt</button>
+                  <button class="btn-ghost btn-copy" type="button" onclick="copyCurrentAnswer()">Copy answer</button>
+                  <button class="btn-primary" id="run-btn" type="button" onclick="runCurrentPromptWithAI()">Run with AI</button>
+                </div>
+                <div class="actions-right">
+                  <span id="hint-text">Tip: Browse the help library, then run the prompt when you want targeted guided support.</span>
+                </div>
+              </div>
+            </article>
+
+            <aside class="dir-card">
+              <div class="dir-title">Deepen your understanding</div>
+              <p class="dir-desc">Choose focused help for system boundaries, single-object and multi-object systems, and force classification.</p>
+
+              
+                <div class="dir-cat">
+                  <button class="dir-cat-toggle" data-target="cat-CL" type="button">
+                    <span class="dir-cat-label">Confusions & look-alikes</span>
+                    <span class="dir-cat-chev">▾</span>
+                  </button>
+                  <div class="dir-cat-body" id="cat-CL">
+                    <ul class="dir-list">
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=CL01">System versus surroundings: what belongs inside the boundary?</a></li>
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=CL02">Internal versus external force: why the label depends on the system</a></li>
+                      
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="dir-cat">
+                  <button class="dir-cat-toggle" data-target="cat-ET" type="button">
+                    <span class="dir-cat-label">Tricky areas & exam traps</span>
+                    <span class="dir-cat-chev">▾</span>
+                  </button>
+                  <div class="dir-cat-body" id="cat-ET">
+                    <ul class="dir-list">
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=ET01">Including Earth: when gravitational interaction becomes internal</a></li>
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=ET02">Two connected objects: when tension or contact force changes classification</a></li>
+                      
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="dir-cat">
+                  <button class="dir-cat-toggle" data-target="cat-CM" type="button">
+                    <span class="dir-cat-label">Common mistakes</span>
+                    <span class="dir-cat-chev">▾</span>
+                  </button>
+                  <div class="dir-cat-body" id="cat-CM">
+                    <ul class="dir-list">
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=CM01">Changing the system halfway through an explanation</a></li>
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=CM02">Calling a force internal or external without first naming the system</a></li>
+                      
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="dir-cat">
+                  <button class="dir-cat-toggle" data-target="cat-PS" type="button">
+                    <span class="dir-cat-label">When you feel stuck</span>
+                    <span class="dir-cat-chev">▾</span>
+                  </button>
+                  <div class="dir-cat-body" id="cat-PS">
+                    <ul class="dir-list">
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=PS01">A four-step system-boundary routine</a></li>
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=PS02">Use boundary-crossing arrows to find external forces</a></li>
+                      
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="dir-cat">
+                  <button class="dir-cat-toggle" data-target="cat-EX" type="button">
+                    <span class="dir-cat-label">Concept bridges</span>
+                    <span class="dir-cat-chev">▾</span>
+                  </button>
+                  <div class="dir-cat-body" id="cat-EX">
+                    <ul class="dir-list">
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=EX01">System choice and free-body diagrams</a></li>
+                      
+                      <li><a class="dir-link" href="help-system-vs-surroundings.html?id=EX02">Why multi-object systems help with momentum and energy reasoning</a></li>
+                      
+                    </ul>
+                  </div>
+                </div>
+                
+
+            </aside>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2025 PromptSchola. All rights reserved.</footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/auth.js"></script>
+
+  <script>
+    function PS_setPostAuthRedirect() {
+      try {
+        const path = window.location.pathname + window.location.search + window.location.hash;
+        localStorage.setItem('ps_post_auth_redirect', path);
+      } catch (e) {}
+    }
+    window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+
+    const HELP = {
+  "CL01": {
+    "id": "CL01",
+    "category": "Confusions & look-alikes",
+    "title": "System versus surroundings: what belongs inside the boundary?",
+    "lead": "Use this when you know the objects in a scene but are unsure which ones should be included in the system.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: System versus surroundings.\n\nExplain with precision:\n- What a system boundary represents in an introductory mechanics model\n- Why the system can contain one object or several objects\n- Why surroundings include all objects and fields outside the stated boundary that may interact with the system\n- Why a system boundary is chosen for a purpose rather than discovered as a fixed feature of the scene\n- How to state a system in a complete sentence before listing any forces\n- How the same object can be part of the system in one model and part of the surroundings in another model\n\nUse a book, table, and Earth scene. Compare the systems “book alone,” “book plus table,” and “book plus Earth.” For each, state what lies outside the boundary.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "CL02": {
+    "id": "CL02",
+    "category": "Confusions & look-alikes",
+    "title": "Internal versus external force: why the label depends on the system",
+    "lead": "Use this when a force is being treated as permanently internal or permanently external.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Internal versus external forces.\n\nExplain with precision:\n- Why internal and external are labels relative to a stated system\n- Why an interaction between two objects inside the same multi-object system is internal to that system\n- Why the same interaction is external to either object when it is analyzed alone\n- Why an external force comes from an object or field outside the chosen boundary\n- Why the force type itself does not determine the label\n- Why internal forces may still be important when studying the motion of individual pieces\n\nUse two blocks A and B touching on a floor. Analyze block A alone, block B alone, and the combined A + B system. Classify the A-B contact interaction in each case.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "ET01": {
+    "id": "ET01",
+    "category": "Tricky areas & exam traps",
+    "title": "Including Earth: when gravitational interaction becomes internal",
+    "lead": "Use this when you are unsure why weight is external in one model but can be internal in a larger Earth-object system.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Including Earth in the system.\n\nExplain with precision:\n- Why Earth is normally outside a single-object system near Earth's surface\n- Why Earth's gravitational force on the object is then external to that object-only system\n- What changes when the system includes both Earth and the object\n- Why the Earth-object gravitational interaction is internal to the combined system\n- Why the gravitational interaction still exists even when it is classified differently\n- Why including Earth can be useful for some momentum and energy discussions but may be unnecessary for a basic force diagram\n\nCompare a falling ball analyzed as “ball only” and as “Earth plus ball.” State which interactions cross the boundary in each model.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "ET02": {
+    "id": "ET02",
+    "category": "Tricky areas & exam traps",
+    "title": "Two connected objects: when tension or contact force changes classification",
+    "lead": "Use this when a rope force or contact force seems to disappear after two objects are grouped into one system.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Connected objects and system boundaries.\n\nExplain with precision:\n- Why a taut rope exerts tension on the object attached to it\n- Why that tension is external when the attached object alone is the system\n- What changes when both the rope and the attached object are included in one system\n- Why the rope-object tension becomes internal to that larger system\n- Why the tension has not vanished physically even though it may not be needed in a net external-force analysis of the combined system\n- How the same logic applies to contact forces between two touching blocks\n\nUse a bucket hanging from a rope and two blocks pushed together on a floor. Compare a one-object boundary and a multi-object boundary for each scene.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "CM01": {
+    "id": "CM01",
+    "category": "Common mistakes",
+    "title": "Changing the system halfway through an explanation",
+    "lead": "Use this when a solution starts with one system but classifies later forces as if a different system had been chosen.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Keeping the system boundary consistent.\n\nExplain with precision:\n- Why a force classification only has meaning relative to a stated system\n- How a solution can become inconsistent when its system boundary changes without being announced\n- Warning signs that the system has changed silently\n- How to write a system statement at the beginning of a solution\n- How to explicitly announce a change from a smaller system to a larger system\n- Why a newly chosen system requires rechecking the surroundings and force classification\n\nUse a car-and-trailer example. Show one inconsistent explanation, diagnose the boundary shift, and rewrite the reasoning using clear system statements.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "CM02": {
+    "id": "CM02",
+    "category": "Common mistakes",
+    "title": "Calling a force internal or external without first naming the system",
+    "lead": "Use this when a force label is asserted without identifying the boundary that makes the label meaningful.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Naming the system before classifying a force.\n\nExplain with precision:\n- Why “the tension is internal” is incomplete without a system statement\n- How to repair incomplete claims using a full sentence pattern\n- The sentence pattern: “For the system consisting of ..., the force exerted by ... is internal/external because ...”\n- Why the same contact force can receive a different classification in two valid models\n- How this practice helps with free-body diagrams, momentum reasoning, and energy accounting\n\nProvide six short claims about a rope, table, Earth, two blocks, and a person pushing a cart. For each claim, label it incomplete or complete, then rewrite incomplete claims correctly.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "PS01": {
+    "id": "PS01",
+    "category": "When you feel stuck",
+    "title": "A four-step system-boundary routine",
+    "lead": "Use this when you need a repeatable process for choosing a system and finding its surroundings.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: A four-step system-boundary routine.\n\nTeach this practical sequence:\n1) What quantity or motion is the question asking about?\n2) Which object or collection of objects should be inside the boundary to address that question?\n3) What objects or fields remain outside the boundary and can interact with the system?\n4) Which interactions cross the boundary, and are therefore external to the chosen system?\n\nFor each step:\n- Explain what evidence to look for in a word problem or diagram\n- Give a useful sentence starter\n- State one common wrong turn and how to correct it\n\nThen apply the routine to a rope pulling a sled across snow.\n\nFormatting rules:\n- Use short paragraphs plus numbered lists\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "PS02": {
+    "id": "PS02",
+    "category": "When you feel stuck",
+    "title": "Use boundary-crossing arrows to find external forces",
+    "lead": "Use this when you are unsure which forces belong in the external-force list for a chosen system.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Boundary-crossing interactions.\n\nExplain the visual reasoning method:\n- Imagine the chosen system inside a closed boundary\n- Identify each outside object or field that reaches across the boundary to interact with the system\n- Treat each cross-boundary interaction as an external-force source for the chosen system\n- Identify interactions entirely inside the boundary as internal\n- Explain why a force arrow on a free-body diagram represents an interaction across the boundary for a single-object system\n\nApply the method to:\n- A book resting on a table\n- A two-block system being pushed across a floor\n- A bucket-and-rope system hanging from a ceiling\n\nFor each case, identify the boundary-crossing interactions and any interactions that become internal.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "EX01": {
+    "id": "EX01",
+    "category": "Concept bridges",
+    "title": "System choice and free-body diagrams",
+    "lead": "Use this when you want to connect a system boundary to the force arrows included in a free-body diagram.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: System choice and free-body diagrams.\n\nExplain with precision:\n- Why a free-body diagram represents one specified system\n- Why the arrows represent external interactions acting on that system\n- Why internal interactions between objects inside a multi-object system usually do not appear as separate external arrows on the combined-system diagram\n- Why a free-body diagram for one component can look different from a force model for the combined system\n- How to state the system directly above or beside a free-body diagram\n- How system choice affects which forces are useful for applying Newton's second law\n\nUse two blocks in contact on a floor. Compare a text-based free-body diagram for block A alone with one for the combined A + B system.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  },
+  "EX02": {
+    "id": "EX02",
+    "category": "Concept bridges",
+    "title": "Why multi-object systems help with momentum and energy reasoning",
+    "lead": "Use this when you want to see why combining objects can simplify later mechanics ideas.",
+    "prompt": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\nTopic: Multi-object systems in mechanics.\n\nExplain with precision:\n- Why grouping interacting objects can move their mutual forces inside the system boundary\n- Why this can simplify an analysis of the combined system's momentum or motion\n- Why external interactions remain important even after internal interactions are grouped\n- Why system choice is central to deciding whether an interaction transfers energy into or out of the system\n- Why combining objects is useful only when it matches the question being studied\n- Why individual-object analysis can still be necessary when you need forces on one component\n\nUse two skaters pushing apart and a car pulling a trailer as conceptual examples. Do not perform numerical calculations; focus on what the system boundary makes easier to describe.\n\nFormatting rules:\n- Use short paragraphs plus bullets\n- Bold key terms sparingly\n- Use simple display LaTeX only when useful\n- Do NOT use markdown headings such as # or ###."
+  }
+};
+
+    let currentId = null;
+    let lastAiAnswer = '';
+    let currentPrompt = '';
+
+    const typeset = (nodes) =>
+      window.MathJax?.typesetPromise
+        ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
+        : null;
+
+    function esc(s){
+      return String(s || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+    }
+    function inlineFmt(s){
+      return s
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/^\s*[-*]\s+/gm,'• ');
+    }
+    function paras(s){
+      const x = s.replace(/\r\n/g,'\n');
+      return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+    }
+    function formatOutput(raw){
+      return paras(inlineFmt(esc(raw)));
+    }
+
+    function loadFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const fallbackId = "CL01";
+      const id = (params.get('id') || fallbackId).trim();
+      const entry = HELP[id] || HELP[fallbackId];
+
+      currentId = entry.id;
+      currentPrompt = entry.prompt || '';
+
+      const cat = document.getElementById('pill-category');
+      const title = document.getElementById('help-title');
+      const lead = document.getElementById('help-lead');
+      const promptPreview = document.getElementById('prompt-preview');
+      const ai = document.getElementById('ai-output');
+
+      if (cat) cat.textContent = 'Category: ' + (entry.category || 'Study help');
+      if (title) title.textContent = entry.title || 'Study help';
+      if (lead) lead.textContent = entry.lead || '';
+      if (promptPreview) promptPreview.textContent = currentPrompt || '';
+      if (ai) ai.textContent = 'Run with AI to see a guided explanation here.';
+
+      lastAiAnswer = '';
+      typeset();
+    }
+
+    function copyCurrentPrompt() {
+      const prompt = (currentPrompt || '').trim();
+      if (!prompt) return alert('No prompt to copy.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      navigator.clipboard.writeText(prompt).then(() => alert('Prompt copied.')).catch(() => alert('Could not copy prompt.'));
+    }
+
+    function copyCurrentAnswer() {
+      if (!lastAiAnswer) return alert('No AI answer to copy yet. Run with AI first.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      navigator.clipboard.writeText(lastAiAnswer).then(() => alert('Answer copied.')).catch(() => alert('Could not copy answer.'));
+    }
+
+    function setRunBtnRunning(running) {
+      const btn = document.getElementById('run-btn');
+      if (!btn) return;
+      if (running) {
+        btn.dataset.prevText = btn.textContent;
+        btn.textContent = 'Running…';
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+      } else {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.prevText || 'Run with AI';
+        btn.removeAttribute('aria-busy');
+      }
+    }
+
+    function redirectToSignupForRunAI() {
+      try { PS_setPostAuthRedirect(); } catch(e){}
+      const redirectTarget = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+      window.location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+    }
+
+    async function runCurrentPromptWithAI() {
+      const aiOutputEl = document.getElementById('ai-output');
+      if (!aiOutputEl) return;
+
+      const prompt = (currentPrompt || '').trim();
+      if (!prompt) {
+        aiOutputEl.textContent = 'Prompt is empty. Please select a help topic.';
+        return;
+      }
+
+      if (typeof ensureLoggedInOrRedirect === 'function') {
+        const user = await ensureLoggedInOrRedirect();
+        if (!user) return;
+      } else {
+        redirectToSignupForRunAI();
+        return;
+      }
+
+      const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+      if (!token) {
+        aiOutputEl.textContent = 'Session missing. Please sign in again.';
+        return;
+      }
+
+      setRunBtnRunning(true);
+
+      try {
+        aiOutputEl.textContent = 'Running with AI…';
+
+        const res = await fetch('/api/run-step', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ prompt, step: 4, mode: 'help' })
+        });
+
+        const data = await res.json().catch(()=> ({}));
+
+        if (!res.ok) {
+          let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
+
+          if (data?.code === 'PAYWALL') msg = 'Help prompts require Mastery (paid) access.';
+          if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+          if (data?.code === 'PROMPT_INVALID') msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(data?.details || []);
+
+          aiOutputEl.textContent = msg;
+          return;
+        }
+
+        const raw = data?.content || 'No response received from AI.';
+        lastAiAnswer = raw;
+
+        aiOutputEl.innerHTML = formatOutput(raw);
+        typeset([aiOutputEl]);
+      } catch (err) {
+        console.error(err);
+        aiOutputEl.textContent = 'Unexpected error. Please try again.';
+      } finally {
+        setRunBtnRunning(false);
+      }
+    }
+
+    function initDirectoryToggles() {
+      document.querySelectorAll('.dir-cat-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-target');
+          const body = document.getElementById(target);
+          const chev = btn.querySelector('.dir-cat-chev');
+          if (!body) return;
+
+          const open = body.style.display !== 'none';
+          body.style.display = open ? 'none' : 'block';
+          if (chev) chev.textContent = open ? '▸' : '▾';
+        });
+      });
+    }
+
+    async function configureAccess() {
+      let loggedIn = false;
+      let tier = 'anon';
+
+      if (typeof getCurrentUser === 'function') {
+        try { loggedIn = !!(await getCurrentUser()); } catch (_) { loggedIn = false; }
+      }
+
+      if (loggedIn && typeof PS_getUserTier === 'function') {
+        try { tier = (await PS_getUserTier()) || 'free'; } catch (_) { tier = 'free'; }
+      }
+
+      if (loggedIn && tier === 'anon') tier = 'free';
+
+      const isPaid = tier === 'paid';
+
+      const lockedWrap = document.getElementById('help-locked-wrap');
+      const runBtn = document.getElementById('run-btn');
+      const hint = document.getElementById('hint-text');
+      const ai = document.getElementById('ai-output');
+      const paidHint = "Tip: You can browse the help library. Upgrade to run help prompts with AI.";
+
+      if (!isPaid) {
+        if (lockedWrap) lockedWrap.style.display = 'block';
+
+        if (runBtn) {
+          runBtn.disabled = false;
+          runBtn.textContent = loggedIn ? 'Unlock to run' : 'Sign in to run';
+          runBtn.onclick = () => {
+            if (!loggedIn) return redirectToSignupForRunAI();
+            window.location.href = '/pricing.html';
+          };
+        }
+
+        if (hint) hint.textContent = paidHint;
+        if (ai) ai.textContent = 'Upgrade to Mastery to run help prompts with AI.';
+      } else {
+        if (lockedWrap) lockedWrap.style.display = 'none';
+
+        if (runBtn) {
+          runBtn.textContent = 'Run with AI';
+          runBtn.onclick = runCurrentPromptWithAI;
+        }
+
+        if (hint) hint.textContent = "Tip: Browse the help library, then run the prompt when you want targeted guided support.";
+      }
+
+      if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initDirectoryToggles();
+      loadFromUrl();
+      await configureAccess();
+
+      window.addEventListener('popstate', loadFromUrl);
+
+      const signOutBtn = document.getElementById('nav-signout-btn');
+      if (signOutBtn && typeof signOutUser === 'function') {
+        signOutBtn.addEventListener('click', signOutUser);
+      }
+
+      typeset();
+    });
+  </script>
+
+  <!-- Preserve post-auth return behavior for the shared sign-in/register links -->
+  <script>
+    document.addEventListener('click', (event) => {
+      const authLink = event.target.closest('#nav-login-btn, #nav-register-btn');
+      if (authLink && typeof PS_setPostAuthRedirect === 'function') {
+        PS_setPostAuthRedirect();
+      }
+    });
+  </script>
+
+</body>
+</html>
