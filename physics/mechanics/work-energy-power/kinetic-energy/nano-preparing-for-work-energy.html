@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Preparing for Work–Energy | PromptSchola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Once you know kinetic energy, you can connect forces to motion changes using net work and ΔK. Build the energy-change viewpoint before the work-energy theorem."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+
+  <style>
+    :root {
+      --bg-body: #f3f4f6;
+      --bg-surface: #f9fafb;
+      --bg-card: #ffffff;
+
+      --navy: #00255D;
+      --navy-strong: #001c47;
+      --navy-deep: #001833;
+      --navy-soft: rgba(0, 37, 93, 0.10);
+      --navy-soft2: rgba(0, 37, 93, 0.06);
+      --navy-border: rgba(0, 37, 93, 0.22);
+
+      --accent: #7e22ce;
+      --accent-strong: #6d28d9;
+      --accent-soft: rgba(126, 34, 206, 0.10);
+      --accent-soft2: rgba(129, 140, 248, 0.12);
+
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-subtle: #9ca3af;
+      --text-strong: #020617;
+
+      --border-subtle: rgba(209, 213, 219, 0.55);
+      --radius-card: 18px;
+      --radius-pill: 999px;
+
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 16px 35px rgba(15, 23, 42, 0.12);
+
+      --font-heading: 'Lora', serif;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --fs-micro: 0.78rem;
+      --fs-ui: 0.88rem;
+      --fs-body: 1.03rem;
+      --fs-card: 0.96rem;
+      --fs-lede: 1.14rem;
+
+      --lh-body: 1.72;
+      --lh-card: 1.62;
+      --lh-tight: 1.12;
+
+      --transition-fast: 0.25s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    body {
+      font-family: var(--font-body);
+      background: radial-gradient(circle at top, #e5e7eb, #f9fafb 45%, #f3f4f6);
+      color: var(--text-main);
+      line-height: var(--lh-body);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16.5px;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2 { font-family: var(--font-heading); color: var(--text-strong); line-height: var(--lh-tight); letter-spacing: -0.02em; }
+    h3 { font-family: var(--font-heading); color: var(--text-strong); line-height: 1.15; letter-spacing: -0.01em; }
+
+    :focus-visible {
+      outline: 3px solid rgba(129, 140, 248, 0.45);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.4rem; }
+
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(
+        to bottom,
+        rgba(249, 250, 251, 0.96),
+        rgba(249, 250, 251, 0.94),
+        rgba(249, 250, 251, 0.9)
+      );
+      border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+    }
+
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; gap: 1rem; }
+    .nav-left { display:flex; align-items:center; gap:0.75rem; }
+
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 40%;
+      background:
+        radial-gradient(circle at 70% 0%, rgba(168, 85, 247, 0.26), transparent 60%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; color: #f9fafb;
+      font-family: var(--font-body);
+      box-shadow: 0 12px 30px rgba(0, 37, 93, 0.20);
+    }
+
+    .logo-text span:first-child {
+      display: block; font-weight: 800; font-size: 1.02rem; letter-spacing: 0.01em;
+      color: var(--text-strong); font-family: var(--font-body); line-height: 1.1;
+    }
+    .logo-text span:last-child {
+      display: block; font-size: 0.76rem; color: var(--text-subtle); font-family: var(--font-body);
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 1.3rem; font-size: var(--fs-ui); font-family: var(--font-body); }
+    .nav-links a {
+      color: var(--text-muted); opacity: 0.92;
+      transition: opacity var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      padding: 0.25rem 0.1rem;
+      letter-spacing: -0.005em;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--accent-strong); transform: translateY(-1px); }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: var(--fs-ui); font-family: var(--font-body);
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.48rem 0.98rem;
+      font-size: var(--fs-ui);
+      border: 1px solid var(--navy-border);
+      background: #ffffff;
+      color: var(--navy);
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center;
+      white-space: nowrap;
+      font-weight: 650;
+      letter-spacing: -0.005em;
+    }
+    .btn-pill:hover {
+      background: rgba(0, 37, 93, 0.06);
+      transform: translateY(-1px);
+      border-color: rgba(0, 37, 93, 0.34);
+      box-shadow: 0 10px 22px rgba(0, 37, 93, 0.12);
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.62rem 1.32rem;
+      font-size: var(--fs-ui); font-weight: 800;
+      border: none; cursor: pointer;
+      background: radial-gradient(circle at 30% 0%, #a855f7, #7e22ce, #4c1d95);
+      color: #f9fafb;
+      box-shadow: 0 12px 26px rgba(79,70,229,0.22);
+      transition: transform var(--transition-fast), filter var(--transition-fast), box-shadow var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow: 0 16px 34px rgba(79,70,229,0.28);
+    }
+
+    .btn-primary[disabled], .btn-pill[disabled], .btn-ghost[disabled] {
+      opacity: 0.55; cursor: not-allowed;
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .btn-ghost {
+      padding: 0.44rem 0.95rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.84rem;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      background: #ffffff;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      font-family: var(--font-body);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.25rem;
+      white-space: nowrap;
+      color: var(--text-main);
+    }
+    .btn-ghost:hover { background: #f3f4f6; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25); }
+    .btn-copy { font-size: 0.80rem; padding: 0.34rem 0.9rem; }
+
+    .hero {
+      padding: 4.8rem 0 3.0rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.10), transparent 55%),
+        radial-gradient(circle at 82% 22%, rgba(168, 85, 247, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--navy) 0%, var(--navy-strong) 78%, var(--navy-deep) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: -160px; pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(129, 140, 248, 0.22), transparent 62%),
+        radial-gradient(circle at 92% 30%, rgba(168, 85, 247, 0.18), transparent 58%),
+        radial-gradient(circle at 50% 110%, rgba(255,255,255,0.10), transparent 62%);
+      opacity: 0.95; filter: blur(12px); z-index: 0;
+    }
+    .hero .container { position: relative; z-index: 1; }
+
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: var(--fs-micro);
+      font-weight: 900;
+      margin-bottom: 1.05rem;
+      font-family: var(--font-body);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.92);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-kicker span.label {
+      padding: 0.18rem 0.7rem; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.10);
+      color: rgba(226, 232, 240, 0.95);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+    }
+    .hero-kicker span:not(.label) {
+      color: rgba(226, 232, 240, 0.88);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .hero-title {
+      font-size: clamp(2.35rem, 4.0vw, 3.0rem);
+      line-height: 1.07;
+      font-weight: 720;
+      margin: 0 auto 0.95rem;
+      max-width: 56rem;
+      color: #ffffff;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: var(--fs-lede);
+      max-width: 52rem;
+      color: rgba(226, 232, 240, 0.92);
+      margin: 0 auto;
+      line-height: 1.7;
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+
+    .hero-breadcrumbs {
+      margin-top: 1.05rem;
+      font-size: 0.90rem;
+      color: rgba(226, 232, 240, 0.72);
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+    .hero-breadcrumbs a { color: rgba(199, 210, 254, 0.92); text-decoration: underline; text-decoration-color: rgba(199, 210, 254, 0.35); }
+    .hero-breadcrumbs a:hover { color: #ffffff; text-decoration-color: rgba(255,255,255,0.50); }
+
+    .access-band {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 28px;
+      padding: 1.55rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .access-band::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.22), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(129, 140, 248, 0.20), transparent 58%);
+      filter: blur(16px);
+      opacity: 0.9;
+    }
+    .access-band-inner { position: relative; z-index: 1; display: flex; gap: 1.2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .access-band-title { font-family: var(--font-heading); font-size: 1.40rem; color: #ffffff; margin-bottom: 0.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .access-band-desc { font-family: var(--font-body); color: #cbd5e1; font-size: 0.98rem; line-height: 1.65; max-width: 52rem; }
+
+    .access-chips { display: flex; gap: 0.55rem; flex-wrap: wrap; align-items: center; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 900;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      white-space: nowrap;
+    }
+    .chip.free { background: #10b981; color: #ffffff; }
+    .chip.mastery { background: #6366f1; color: #ffffff; }
+
+    main { padding-bottom: 2.6rem; }
+    section { padding: 1.4rem 0; }
+
+    .lesson-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(280px, 1.1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 0.9rem;
+    }
+
+    .steps-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+
+    .step-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      font-size: var(--fs-card);
+      border-left: 4px solid rgba(126, 34, 206, 0.55);
+      padding: 1rem 1.15rem 1.05rem;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+    .step-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(0, 37, 93, 0.14);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+    }
+
+    .step-header { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
+    .step-header-left { display: flex; flex-direction: column; gap: 0.28rem; min-width: 0; }
+
+    .step-index {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #4c1d95;
+      background: #ede9fe;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.7rem;
+      font-weight: 900;
+      font-family: var(--font-body);
+      width: fit-content;
+    }
+
+    .step-title {
+      font-size: 1.06rem;
+      font-weight: 700;
+      color: #111827;
+      font-family: var(--font-heading);
+      line-height: 1.25;
+      word-break: break-word;
+      letter-spacing: -0.01em;
+    }
+
+    .step-header-right { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; justify-content: flex-end; }
+
+    .step-access-pill {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      border: 1px solid rgba(22, 163, 74, 0.9);
+      background: #dcfce7;
+      color: #166534;
+      white-space: nowrap;
+      font-family: var(--font-body);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .step-access-pill.mastery { border-color: rgba(99, 102, 241, 0.9); background: rgba(99, 102, 241, 0.12); color: #3730a3; }
+
+    .toggle-btn {
+      width: 30px; height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      background: #eef2ff;
+      color: #4c1d95;
+      font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 3px 7px rgba(148, 163, 184, 0.5);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      font-family: var(--font-body);
+    }
+    .toggle-btn:hover { transform: translateY(-1px) scale(1.07); box-shadow: 0 5px 12px rgba(129, 140, 248, 0.75); background: #e0e7ff; }
+
+    .step-content { margin-top: 0.35rem; display: block; }
+    .step-body { font-size: 0.92rem; color: var(--text-muted); font-family: var(--font-body); line-height: 1.7; }
+
+    .prompt-preview {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid rgba(229, 231, 235, 0.8);
+      font-size: 0.83rem;
+      color: var(--text-subtle);
+      font-family: var(--font-body);
+      min-height: 2.2rem;
+      white-space: pre-wrap;
+      display: none;
+    }
+
+    .ai-response {
+      margin-top: 0.6rem;
+      padding: 1.05rem 1.15rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      font-size: 0.98rem;
+      color: #111827;
+      white-space: pre-wrap;
+      line-height: 1.75;
+      font-family: var(--font-body);
+      min-height: 1.2rem;
+    }
+
+    .ai-response p { margin-bottom: 0.9rem; }
+    .ai-response ul, .ai-response ol { margin: 0.7rem 0 0.7rem 1.3rem; }
+    .ai-response strong { font-weight: 800; color: inherit; }
+    .ai-response em { font-style: italic; }
+
+    .ai-response details.answer-toggle {
+      margin: 0.55rem 0 0.75rem;
+      border: 1px solid rgba(209, 213, 219, 0.85);
+      background: #f9fafb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .ai-response details.answer-toggle summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.55rem 0.75rem;
+      font-weight: 800;
+      color: #4c1d95;
+      background: linear-gradient(to bottom, rgba(126, 34, 206, 0.06), rgba(129, 140, 248, 0.06));
+      border-bottom: 1px solid rgba(209, 213, 219, 0.7);
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+    .ai-response details.answer-toggle summary::-webkit-details-marker { display:none; }
+    .ai-response .answer-body { padding: 0.75rem 0.85rem 0.85rem; color: #111827; font-size: 0.95rem; line-height: 1.7; }
+
+    .copy-row { margin-top: 0.55rem; display: flex; justify-content: flex-end; gap: 0.45rem; flex-wrap: wrap; }
+
+    .step-footer {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(209, 213, 219, 0.7);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+      font-family: var(--font-body);
+      letter-spacing: -0.004em;
+    }
+
+    .step-footer .left-actions { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+
+    .locked-panel {
+      margin-top: 0.55rem;
+      border-radius: 16px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), rgba(126, 34, 206, 0.06));
+      padding: 0.95rem 1rem;
+      color: #111827;
+      font-family: var(--font-body);
+    }
+    .locked-title { font-family: var(--font-heading); font-size: 1.05rem; color: var(--text-strong); margin-bottom: 0.25rem; font-weight: 700; }
+    .locked-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin-bottom: 0.7rem; }
+    .locked-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    .help-panel-inner { position: sticky; top: 6rem; }
+
+    .help-panel-toggle {
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(30, 58, 138, 0.28);
+      background: radial-gradient(circle at 0 0, #f9fafb, rgba(30, 58, 138, 0.10));
+      color: var(--text-main);
+      padding: 0.48rem 0.98rem;
+      font-size: 0.84rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 0.6rem;
+      box-shadow: 0 6px 16px rgba(30, 58, 138, 0.12);
+      font-family: var(--font-body);
+      letter-spacing: -0.006em;
+    }
+
+    .nano-help-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.12rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.32);
+      color: #1e40af;
+      background: rgba(30, 58, 138, 0.06);
+      font-size: 0.82rem;
+      font-weight: 900;
+      font-family: var(--font-body);
+    }
+    .help-panel-toggle-icon { font-size: 0.95rem; opacity: 0.85; }
+
+    .help-lock-wrap { position: relative; }
+    .help-panel-body {
+      border-radius: 1.1rem;
+      border: 1px solid rgba(30, 58, 138, 0.22);
+      background: radial-gradient(circle at 0 0, #ffffff, rgba(30, 58, 138, 0.08));
+      box-shadow: 0 16px 35px rgba(30, 58, 138, 0.10);
+      padding: 0.9rem 0.95rem;
+      font-size: 0.82rem;
+      font-family: var(--font-body);
+      position: relative;
+      overflow: hidden;
+    }
+    .help-panel-body p { color: var(--text-muted); line-height: 1.65; }
+
+    .help-cta {
+      margin-top: 0.65rem;
+      padding: 0.7rem 0.75rem;
+      border-radius: 14px;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.88));
+      color: #f8fafc;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.18);
+      display: none;
+    }
+
+    .help-category { padding-top: 0.65rem; border-top: 1px solid rgba(209, 213, 219, 0.7); margin-top: 0.65rem; }
+    .help-category:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+    .help-category-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 138, 0.35);
+      background: rgba(30, 58, 138, 0.10);
+      font-size: 0.72rem;
+      color: #1e40af;
+      font-family: var(--font-body);
+      font-weight: 900;
+    }
+
+    .help-category-desc { margin: 0.28rem 0 0; font-size: 0.78rem; color: var(--text-subtle); font-family: var(--font-body); }
+
+    .help-prompts-bulleted { list-style: none; padding-left: 1.2rem; }
+    .help-prompts-bulleted li { position: relative; margin-bottom: 0.35rem; }
+    .help-prompts-bulleted li::before {
+      content: "▶";
+      position: absolute;
+      left: -1.1rem;
+      top: 0.18rem;
+      transform: scale(0.9);
+      transform-origin: left top;
+      color: #1e40af;
+    }
+
+    .help-prompt-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.2rem;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      background: transparent;
+      color: #1e40af;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, text-decoration-color 0.2s ease;
+      font-family: var(--font-body);
+    }
+    .help-prompt-btn:hover { background: rgba(30, 58, 138, 0.08); color: #0b1220; text-decoration: underline; }
+
+    footer { margin-top: auto; padding: 1.8rem 0 2.1rem; text-align: center; font-size: 0.86rem; color: var(--text-subtle); font-family: var(--font-body); letter-spacing: -0.004em; }
+
+    @media (max-width: 980px) {
+      .lesson-layout { grid-template-columns: minmax(0, 1fr); }
+      .help-panel-inner { position: static; }
+      .help-panel-toggle { margin-top: 1.25rem; }
+    }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+
+    .help-lock-disabled { pointer-events: none; user-select: none; opacity: 0.92; filter: grayscale(0.08); }
+
+    .help-lock-overlay {
+      position: absolute; inset: 0;
+      border-radius: 1.1rem;
+      background: linear-gradient(to bottom, rgba(249,250,251,0.55), rgba(249,250,251,0.88));
+      border: 1px dashed rgba(37, 99, 235, 0.45);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0.85rem 0.85rem;
+      z-index: 5;
+    }
+
+    .help-lock-overlay .teaser-card {
+      width: 100%;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.94);
+      color: #f8fafc;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      padding: 0.85rem 0.9rem;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.22);
+    }
+
+    .teaser-kicker {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em;
+      font-weight: 900; color: #c7d2fe; margin-bottom: 0.35rem;
+      font-family: var(--font-body);
+    }
+
+    .teaser-title { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.2; margin-bottom: 0.25rem; font-weight: 700; color: #ffffff; letter-spacing: -0.02em; }
+    .teaser-desc { font-size: 0.9rem; color: #cbd5e1; line-height: 1.55; margin-bottom: 0.7rem; font-family: var(--font-body); }
+    .teaser-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+
+    .help-toggle-disabled { opacity: 0.75; cursor: not-allowed; }
+
+    .help-locked-clickcatcher{
+      position: absolute; inset: 0; z-index: 20; display: none;
+      border-radius: 18px; background: transparent; cursor: pointer;
+    }
+  </style>
+  <!-- Shared site navigation -->
+  <link rel="stylesheet" href="/shared/shared-nav.css">
+  <script src="/shared/shared-nav.js" defer></script>
+</head>
+
+<body>
+  <div class="page">
+        <header id="site-header"></header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-kicker">
+            <span class="label">Nano</span>
+            <span>PHYSICS . MECHANICS . WORK AND ENERGY . KINETIC ENERGY</span>
+          </div>
+
+          <h1 class="hero-title">Preparing for Work–Energy</h1>
+
+          <p class="hero-subtitle">Once you know kinetic energy, you can connect forces to motion changes using net work and ΔK. Build the energy-change viewpoint before the work-energy theorem.</p>
+
+          <div class="hero-breadcrumbs">
+            
+              
+                <a href="/physics/physics.html">Physics</a>
+              
+               · 
+            
+              
+                <a href="#">Mechanics</a>
+              
+               · 
+            
+              
+                <a href="#">Work and Energy</a>
+              
+               · 
+            
+              
+                <a href="#">Kinetic Energy</a>
+              
+               · 
+            
+              
+                <span>Preparing for Work–Energy</span>
+              
+              
+            
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="access-band">
+            <div class="access-band-inner">
+              <div>
+                <div class="access-band-title">Access for this nano-lesson</div>
+                <div class="access-band-desc">Unsigned visitors can <strong>show &amp; copy prompts</strong> for Steps 1-3. Signed-in free accounts can also <strong>Run with AI</strong> for Steps 1-2. Paid accounts unlock everything (Steps 1-6 + Help prompts + AI).</div>
+              </div>
+
+              <div class="access-chips">
+                <span class="chip free">Steps 1-3 Free</span>
+                <span class="chip mastery">Steps 4-6 Paid</span>
+                <span class="chip mastery" id="ps-progress-chip" style="display:none;" title="">
+                  Progress: Step 0/6
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="lesson-layout">
+            <div class="lesson-main">
+              <div class="steps-grid">
+                
+                <article class="step-card" data-step="1">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 1</div>
+                      <div class="step-title">Orient: preparing for work–energy</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill">
+                        Free
+                      </span>
+                      <button class="toggle-btn" id="toggle-btn-1" onclick="toggleStep(1)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-1">
+                    <div class="step-unlocked" id="step-unlocked-1">
+                      <div class="step-body">Establish kinetic energy as the scalar energy associated with motion.</div>
+
+                      <div class="prompt-preview" id="preview-step1">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step1"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(1)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-1" onclick="copyAnswer(1)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(1)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-1" type="button">Try with AI</button>
+
+                          
+                        </div>
+                        <span>Goal: define kinetic energy using mass, speed, scalar meaning, and units.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-1" style="display:none;">
+                      <div class="locked-title">Locked</div>
+                      <div class="locked-desc">This step is not available for your account level.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">
+                          View plans
+                        </a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                
+                <article class="step-card" data-step="2">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 2</div>
+                      <div class="step-title">Conceptual grounding: build the kinetic-energy model</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill">
+                        Free
+                      </span>
+                      <button class="toggle-btn" id="toggle-btn-2" onclick="toggleStep(2)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-2">
+                    <div class="step-unlocked" id="step-unlocked-2">
+                      <div class="step-body">Build a workflow for mass, speed, components, frame choice, and units.</div>
+
+                      <div class="prompt-preview" id="preview-step2">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step2"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(2)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-2" onclick="copyAnswer(2)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(2)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-2" type="button">Try with AI</button>
+
+                          
+                        </div>
+                        <span>Goal: compute and compare kinetic energy using speed or velocity components.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-2" style="display:none;">
+                      <div class="locked-title">Locked</div>
+                      <div class="locked-desc">This step is not available for your account level.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">
+                          View plans
+                        </a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                
+                <article class="step-card" data-step="3">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 3</div>
+                      <div class="step-title">Real-world connection: interpret motion energy</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill">
+                        Free
+                      </span>
+                      <button class="toggle-btn" id="toggle-btn-3" onclick="toggleStep(3)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-3">
+                    <div class="step-unlocked" id="step-unlocked-3">
+                      <div class="step-body">Apply kinetic-energy reasoning to carts, projectiles, frames, systems, and energy changes.</div>
+
+                      <div class="prompt-preview" id="preview-step3">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step3"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(3)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-3" onclick="copyAnswer(3)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(3)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-3" type="button">Try with AI</button>
+
+                          
+                        </div>
+                        <span>Goal: explain how kinetic energy depends on frame, components, and system choice.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-3" style="display:none;">
+                      <div class="locked-title">Locked</div>
+                      <div class="locked-desc">This step is not available for your account level.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">
+                          View plans
+                        </a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                
+                <article class="step-card" data-step="4">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 4</div>
+                      <div class="step-title">Check your understanding: diagnostic mini-quiz</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill mastery">
+                        Paid
+                      </span>
+                      <button class="toggle-btn" id="toggle-btn-4" onclick="toggleStep(4)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-4">
+                    <div class="step-unlocked" id="step-unlocked-4">
+                      <div class="step-body">Attempt each question before revealing the kinetic-energy reasoning.</div>
+
+                      <div class="prompt-preview" id="preview-step4">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step4"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(4)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-4" onclick="copyAnswer(4)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(4)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-4" type="button">Run with AI</button>
+
+                          
+                        </div>
+                        <span>Goal: identify and correct speed, velocity, frame, component, and scaling errors before they become calculation errors.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-4" style="display:none;">
+                      <div class="locked-title">Paid step</div>
+                      <div class="locked-desc">Steps 4-6 are part of paid access.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">
+                          Unlock full access
+                        </a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                
+                <article class="step-card" data-step="5">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 5</div>
+                      <div class="step-title">Practice: solve increasingly rich kinetic-energy situations</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill mastery">
+                        Paid
+                      </span>
+                      <button class="toggle-btn" id="toggle-btn-5" onclick="toggleStep(5)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-5">
+                    <div class="step-unlocked" id="step-unlocked-5">
+                      <div class="step-body">Apply the model to situations that grow in complexity.</div>
+
+                      <div class="prompt-preview" id="preview-step5">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step5"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(5)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-5" onclick="copyAnswer(5)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(5)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-5" type="button">Run with AI</button>
+
+                          
+                        </div>
+                        <span>Goal: write concise, physically justified kinetic-energy calculations and explanations.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-5" style="display:none;">
+                      <div class="locked-title">Paid step</div>
+                      <div class="locked-desc">Steps 4-6 are part of paid access.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">
+                          Unlock full access
+                        </a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                
+                <article class="step-card" data-step="6">
+                  <div class="step-header">
+                    <div class="step-header-left">
+                      <div class="step-index">STEP 6</div>
+                      <div class="step-title">Summary & reflection + explorations</div>
+                    </div>
+                    <div class="step-header-right">
+                      <span class="step-access-pill mastery">
+                        Paid
+                      </span>
+                      <button class="toggle-btn" id="toggle-btn-6" onclick="toggleStep(6)">−</button>
+                    </div>
+                  </div>
+
+                  <div class="step-content" id="step-content-6">
+                    <div class="step-unlocked" id="step-unlocked-6">
+                      <div class="step-body">Consolidate the model and explore changing speed, frame, components, and system boundaries.</div>
+
+                      <div class="prompt-preview" id="preview-step6">Prompt preview will appear here.</div>
+                      <div class="ai-response" id="response-step6"></div>
+
+                      <div class="copy-row">
+                        <button class="btn-ghost btn-copy" onclick="copyPrompt(6)">Copy prompt</button>
+                        <button class="btn-ghost btn-copy" id="copy-answer-6" onclick="copyAnswer(6)" style="display:none;">Copy answer</button>
+                      </div>
+
+                      <div class="step-footer">
+                        <div class="left-actions">
+                          <button class="btn-ghost" onclick="showPrompt(6)">Show prompt</button>
+                          <button class="btn-primary" id="run-btn-6" type="button">Run with AI</button>
+
+                          
+                          <a class="btn-pill"
+                             href="#"
+                             style="border-color: rgba(129,140,248,0.45); color:#4f46e5; font-weight:700;">
+                            🔒 ▶ Explore interactive simulation
+                          </a>
+                          
+                        </div>
+                        <span>Goal: carry the model forward into net work, the work-energy theorem, and energy methods.</span>
+                      </div>
+                    </div>
+
+                    <div class="locked-panel" id="step-locked-6" style="display:none;">
+                      <div class="locked-title">Paid step</div>
+                      <div class="locked-desc">Steps 4-6 are part of paid access.</div>
+                      <div class="locked-actions">
+                        <a class="btn-primary" href="/pricing.html">
+                          Unlock full access
+                        </a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                        
+                        <a class="btn-pill" href="#" style="border-color: rgba(129,140,248,0.45); color:#4f46e5; font-weight:700;">
+                          🔒 ▶ Explore interactive simulation
+                        </a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                
+              </div>
+            </div>
+
+            <aside class="help-panel">
+              <div class="help-panel-inner" id="help-panel-inner">
+                <div class="help-locked-clickcatcher" id="help-locked-clickcatcher" aria-hidden="true"></div>
+
+                <button class="help-panel-toggle" id="help-panel-toggle" type="button">
+                  <span class="nano-help-title">Deepen your understanding</span>
+                  <span class="help-panel-toggle-icon">▾</span>
+                </button>
+
+                <div class="help-lock-wrap" id="help-lock-wrap">
+                  <div class="help-panel-body" id="help-panel-body">
+                    <p>Use these help topics when preparing for work–energy problems mix speed, velocity, reference frames, components, system choice, and energy change.</p>
+
+                    <div class="help-cta" id="help-cta" aria-hidden="true">
+                      <div class="kicker">Mastery feature</div>
+                      <div class="title">Help Library + guided prompt paths</div>
+                      <div class="desc">Upgrade to Mastery to unlock the Help Library for this lesson.</div>
+                      <div class="actions">
+                        <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
+
+                    
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">Confusions & look-alikes</span>
+                        <p class="help-category-desc">Separate related kinetic-energy, speed, velocity, frame, and system ideas.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=CL01">Speed versus velocity in kinetic energy</a>
+                        </li>
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=CL02">Kinetic energy versus momentum</a>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                    
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">Tricky areas & exam traps</span>
+                        <p class="help-category-desc">Handle squared-speed scaling, reference frames, components, and systems carefully.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=ET01">Squared-speed scaling traps</a>
+                        </li>
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=ET02">Reference-frame dependence traps</a>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                    
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">Common mistakes</span>
+                        <p class="help-category-desc">Diagnose formula, unit, vector, frame, and bookkeeping errors.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=CM01">Using velocity components incorrectly</a>
+                        </li>
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=CM02">Forgetting units and nonnegative kinetic energy</a>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                    
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">When you feel stuck</span>
+                        <p class="help-category-desc">Use a repeatable workflow for kinetic-energy calculations and interpretations.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=PS01">A kinetic-energy calculation checklist</a>
+                        </li>
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=PS02">A system bookkeeping routine</a>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                    
+                    <div class="help-category">
+                      <div>
+                        <span class="help-category-label">Concept bridges</span>
+                        <p class="help-category-desc">Connect kinetic energy to work, reference frames, projectiles, systems, and energy methods.</p>
+                      </div>
+                      <ul class="help-prompts-bulleted">
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=EX01">Kinetic energy and the work-energy theorem</a>
+                        </li>
+                        
+                        <li>
+                          <a class="help-prompt-btn" href="help-preparing-for-work-energy.html?id=EX02">Kinetic energy and multi-particle systems</a>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                    
+                  </div>
+
+                  <div class="help-lock-overlay" id="help-lock-overlay" aria-hidden="true">
+                    <div class="teaser-card">
+                      <div class="teaser-kicker">Mastery feature</div>
+                      <div class="teaser-title">Unlock the Help Library</div>
+                      <div class="teaser-desc">
+                        The Help panel (topics + prompts) is part of Mastery. Upgrade to access these help paths and prompts.
+                      </div>
+                      <div class="teaser-actions">
+                        <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+                        <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Sign In</a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </aside>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a href="/about.html">About.</a> © 2025 PromptSchola. All rights reserved.
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/auth.js"></script>
+
+  <script>
+    (function PS_markLastLearningPage(){
+      try{
+        const p = location.pathname || '';
+        if (p === '/' || p.endsWith('/index.html') || p.endsWith('/auth.html') || p.endsWith('/pricing.html')) return;
+        const t = (document.title || '').replace(/\s+–\s+PromptSchola.*$/i,'').trim();
+        localStorage.setItem('ps_last_page_path', p);
+        localStorage.setItem('ps_last_page_label', t || 'Continue Learning');
+        localStorage.setItem('ps_last_seen_ts', String(Date.now()));
+      } catch(e){}
+    })();
+
+    function PS_setPostAuthRedirect(){
+      try{
+        localStorage.setItem('ps_post_auth_redirect', location.pathname + location.search + location.hash);
+      } catch(e){}
+    }
+    window.PS_setPostAuthRedirect = PS_setPostAuthRedirect;
+
+    const NANO_SLUG = "preparing-for-work-energy";
+    const STORAGE_KEY = "ps_preparing_for_work_energy";
+    const TRACK_ENDPOINT = "/api/track";
+
+    const lastAiResponses = {};
+    let collapseState = {};
+
+    const PS_CTX = { loggedIn: false, tier: 'anon', isPaid: false };
+    const $ = (id) => document.getElementById(id);
+    const typeset = (nodes) =>
+      window.MathJax?.typesetPromise
+        ? MathJax.typesetPromise(nodes ? [].concat(nodes) : undefined).catch(()=>{})
+        : null;
+
+    const PROGRESS_CACHE_KEY = `ps_progress_${NANO_SLUG}_v1`;
+
+    function PS_readProgressCache(){
+      try{
+        const t = localStorage.getItem(PROGRESS_CACHE_KEY);
+        return t ? JSON.parse(t) : null;
+      } catch { return null; }
+    }
+
+    function PS_writeProgressCache(p){
+      try{ localStorage.setItem(PROGRESS_CACHE_KEY, JSON.stringify(p || null)); } catch(e){}
+    }
+
+    function PS_clearProgressCache(){
+      try{ localStorage.removeItem(PROGRESS_CACHE_KEY); } catch(e){}
+    }
+
+    function PS_applyProgress(p){
+      const chip = $('ps-progress-chip');
+      if (!chip) return;
+
+      if (!p || typeof p !== 'object'){
+        chip.style.display = 'none';
+        chip.title = '';
+        return;
+      }
+
+      const max = Number(p?.max_step_completed ?? 0);
+      const runs = Number(p?.ai_runs_count ?? 0);
+      const last = (p?.last_ai_run_step != null) ? Number(p.last_ai_run_step) : null;
+      const step = Number.isFinite(max) ? Math.max(0, Math.min(6, max)) : 0;
+
+      if (!step && !runs && !last){
+        chip.style.display = 'none';
+        chip.title = '';
+        return;
+      }
+
+      chip.textContent = `Progress: Step ${step}/6`;
+      chip.style.display = 'inline-flex';
+      chip.title = `AI runs: ${Number.isFinite(runs) ? runs : 0}${Number.isFinite(last) ? ` • Last AI run: Step ${last}` : ''}`;
+    }
+
+    async function PS_trackAnon(event){
+      try{
+        if (PS_CTX.loggedIn) return;
+        const body = { event, nano_slug: NANO_SLUG, is_anon: true };
+        fetch(TRACK_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }).catch(()=>{});
+      } catch(e){}
+    }
+
+    const prompts = {
+  "1": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\n    Topic: Preparing for Work–Energy.\n\n    STEP 1 (Orient/Definition): Establish the central kinetic-energy idea before using energy methods.\n\nExplain with precision:\n- Define kinetic energy as the energy associated with motion.\n- Connect this topic to: energy change viewpoint, net work idea, setup for the work-energy theorem.\n- Explain why speed, not velocity direction by itself, enters translational kinetic energy.\n- State that kinetic energy is measured in joules.\n- Explain that kinetic energy is a scalar and is never negative in the introductory model.\n- Identify one common intuition that this topic corrects.\n\nFirst anchor scene:\nA cart of known mass moves along a track with a measurable speed.\n\n    Formatting rules:\n    - Use short paragraphs plus bullets\n    - Bold key terms sparingly\n    - Use simple display LaTeX only when useful\n    - Do NOT use markdown headings such as # or ###.",
+  "2": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\n    Topic: Preparing for Work–Energy.\n\n    STEP 2 (Conceptual grounding): Build a dependable kinetic-energy workflow.\n\nExplain with precision:\n- State the object or system whose kinetic energy is being analyzed.\n- Identify mass and speed, or compute speed from velocity components.\n- Distinguish speed from velocity direction.\n- Interpret how changing mass or speed changes kinetic energy.\n- State units and physical meaning clearly.\n\nInclude ONE worked anchor example:\nA 2 kg cart moves at 3 m/s and then at 6 m/s. Compare its kinetic energies and explain why doubling speed does not merely double kinetic energy.\n\nIn the worked anchor:\n- State the chosen object.\n- Identify mass and speed in each case.\n- Use the squared-speed dependence explicitly.\n- Give step-by-step reasoning and a one-sentence physical conclusion.\n- Identify one tempting wrong conclusion and explain why it fails.\n\n    Formatting rules:\n    - Use short paragraphs plus bullets\n    - Bold key terms sparingly\n    - Use simple display LaTeX only when useful\n    - Do NOT use markdown headings such as # or ###.",
+  "3": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\n    Topic: Preparing for Work–Energy.\n\n    STEP 3 (Real-world connection): Apply kinetic-energy reasoning to familiar situations.\n\n        For each situation:\n        - State the object or system.\n        - Identify mass and speed information.\n        - Decide whether the motion is 1D, 2D, frame-dependent, or multi-particle.\n        - Explain how kinetic energy changes or is computed.\n        - Identify one likely misconception.\n        - State what additional information would be needed for a numerical calculation if it is not supplied.\n\n        Situations:\n        - a push speeds up a cart\n- friction slows a sliding box\n- gravity speeds up a falling object\n- several forces act while only net work predicts the kinetic-energy change\n- a force-position graph predicts a change in kinetic energy\n\n        End with a compact decision routine for analyzing kinetic energy.\n\n    Formatting rules:\n    - Use short paragraphs plus bullets\n    - Bold key terms sparingly\n    - Use simple display LaTeX only when useful\n    - Do NOT use markdown headings such as # or ###.",
+  "4": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\n    Topic: Preparing for Work–Energy.\n\n    STEP 4 (Check your understanding - diagnostic mini-quiz):\n\nPART A — Check Your Understanding:\nCreate exactly 7 questions total:\n- 4 multiple-choice questions with options A-D\n- 2 short-answer questions\n- 1 reasoning question described in words, with no images\n\nCoverage must include:\n- kinetic energy as a scalar\n- speed versus velocity\n- squared-speed scaling\n- joule units\n- reference-frame dependence\n- 1D and 2D speed from components\n- system kinetic-energy bookkeeping\n\nMake the questions conceptually demanding but appropriate for the stated audience.\nInclude at least two questions that distinguish speed from velocity and at least two questions that require squared-speed reasoning.\n\nCRITICAL OUTPUT FORMAT (so the site can hide answers):\nFor each question, write the question first, then put the answer and a 1-2 sentence explanation inside these exact markers on their own lines:\n[[[ANSWER]]]\n...answer + 1-2 sentence explanation...\n[[[/ANSWER]]]\n\nFor multiple-choice questions, state the correct letter and explain why the tempting choices use a wrong speed, component, frame, sign, or scaling idea.\n\n    Formatting rules:\n    - Use short paragraphs plus bullets\n    - Bold key terms sparingly\n    - Use simple display LaTeX only when useful\n    - Do NOT use markdown headings such as # or ###.",
+  "5": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\n    Topic: Preparing for Work–Energy.\n\n    STEP 5 (Practice): Create exactly 4 problems with increasing difficulty.\n\n        Problem progression:\n        - Identify whether kinetic energy increases, decreases, or stays the same.\n- Connect positive net work to increasing kinetic energy.\n- Connect negative net work to decreasing kinetic energy.\n- Preview how ΔK can replace some acceleration-and-time calculations.\n\n        For each problem:\n        - State the scenario precisely.\n        - Identify the object or system.\n        - Identify mass, speed, components, frame, or particle list as needed.\n        - Compute or compare kinetic energy.\n        - Interpret whether kinetic energy increases, decreases, stays the same, or depends on frame choice.\n        - Give a complete step-by-step solution.\n        - Identify one common incorrect approach and why it fails.\n        - End with a concise physical conclusion including units where appropriate.\n\n    Formatting rules:\n    - Use short paragraphs plus bullets\n    - Bold key terms sparingly\n    - Use simple display LaTeX only when useful\n    - Do NOT use markdown headings such as # or ###.",
+  "6": "You are a friendly, rigorous Physics tutor for final-year high school and first-year university students.\n\n    Topic: Preparing for Work–Energy.\n\n    STEP 6 (Summary & reflection + Exploration prompts):\n\n        PART A — Summary & reflection:\n        - Give a concise summary of the central kinetic-energy model.\n        - Contrast it with the most common speed, velocity, frame, or system-bookkeeping mistake.\n        - State the assumptions that make the introductory model appropriate.\n        - Provide a 7-item yes/no reflection checklist for reviewing a kinetic-energy explanation.\n\n        PART B — Exploration:\n        Provide 5 paper-based “what if” explorations:\n        - make net work positive\n- make net work negative\n- make positive and negative work cancel\n- compare work by one force with net work\n- connect a graph area to a predicted change in kinetic energy\n\n        For each exploration:\n        - Ask the learner to state what changes and what remains unchanged.\n        - Ask for a prediction before the explanation.\n        - Ask the learner to update the speed, frame, component, system, or energy-change interpretation in words.\n        - Ask the learner to name the principle supporting the revised model.\n\n    Formatting rules:\n    - Use short paragraphs plus bullets\n    - Bold key terms sparingly\n    - Use simple display LaTeX only when useful\n    - Do NOT use markdown headings such as # or ###."
+};
+
+    function loadCollapse(){
+      try { collapseState = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {}; }
+      catch { collapseState = {}; }
+    }
+    function saveCollapse(){
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collapseState)); } catch(e){}
+    }
+    function toggleStep(step){
+      const content = $(`step-content-${step}`);
+      const btn = $(`toggle-btn-${step}`);
+      if (!content || !btn) return;
+
+      const isNowHidden = content.style.display !== 'none';
+      content.style.display = isNowHidden ? 'none' : 'block';
+      btn.textContent = isNowHidden ? '+' : '−';
+
+      collapseState[String(step)] = !isNowHidden;
+      saveCollapse();
+    }
+
+    function esc(s){
+      return String(s || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+    }
+
+    function inlineFmt(s){
+      return s
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/^\s*[-*]\s+/gm,'• ');
+    }
+
+    function paras(s){
+      const x = s.replace(/\r\n/g,'\n');
+      return '<p>' + x.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+    }
+
+    function formatOutput(raw){
+      return paras(inlineFmt(esc(raw)));
+    }
+
+    function formatQuizWithToggles(raw){
+      const OPEN = '[[[ANSWER]]]';
+      const CLOSE = '[[[/ANSWER]]]';
+
+      let out = '';
+      let i = 0;
+
+      while (true){
+        const a = raw.indexOf(OPEN, i);
+        if (a === -1){
+          out += formatOutput(raw.slice(i));
+          break;
+        }
+
+        const b = raw.indexOf(CLOSE, a + OPEN.length);
+        if (b === -1){
+          out += formatOutput(raw.slice(i));
+          break;
+        }
+
+        out += formatOutput(raw.slice(i, a));
+
+        const inner = raw.slice(a + OPEN.length, b).trim();
+        out += `
+          <details class="answer-toggle">
+            <summary>Reveal answer</summary>
+            <div class="answer-body">${paras(inlineFmt(esc(inner)))}</div>
+          </details>
+        `;
+
+        i = b + CLOSE.length;
+      }
+
+      return out;
+    }
+
+    function showPrompt(step){
+      const preview = $(`preview-step${step}`);
+      if (!preview) return;
+      preview.textContent = prompts[step] || 'Prompt coming soon.';
+      preview.style.display = 'block';
+      typeset([preview]);
+      PS_trackAnon('PROMPT_SHOWN');
+    }
+
+    async function copyText(t, okMsg, failMsg){
+      if (!t) return alert(failMsg || 'Nothing to copy.');
+      if (!navigator.clipboard?.writeText) return alert('Clipboard not supported in this browser.');
+      try { await navigator.clipboard.writeText(t); alert(okMsg || 'Copied.'); }
+      catch { alert(failMsg || 'Could not copy.'); }
+    }
+
+    function copyPrompt(step){
+      PS_trackAnon('PROMPT_COPIED');
+      return copyText(prompts[step], 'Prompt copied.', 'No prompt defined for this step yet.');
+    }
+
+    function copyAnswer(step){
+      return copyText(lastAiResponses[step], 'Answer copied.', 'No AI answer to copy yet.');
+    }
+
+    function redirectToSignupForRunAI(){
+      PS_trackAnon('RUN_AI_CLICK_ANON');
+      try { PS_setPostAuthRedirect(); } catch(e){}
+      const redirectTarget = encodeURIComponent(location.href);
+      location.href = `/auth.html?mode=signup&reason=run-ai&redirect=${redirectTarget}`;
+    }
+
+    function setRunBtnRunning(step, running){
+      const btn = $(`run-btn-${step}`);
+      if (!btn) return;
+
+      if (running){
+        btn.dataset.prevText = btn.textContent;
+        btn.textContent = 'Running…';
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+      } else {
+        btn.disabled = false;
+        btn.textContent = btn.dataset.prevText || btn.textContent;
+        btn.removeAttribute('aria-busy');
+      }
+    }
+
+    function PS_buildDailyLimitPanel({ limit, used, resetsAt, timezone }){
+      const when = resetsAt ? `Resets ${resetsAt} (${timezone || 'local time'}).` : 'Resets tomorrow.';
+      const usedText = (typeof used === 'number' && typeof limit === 'number')
+        ? `You used ${used}/${limit} free AI runs today.`
+        : `You reached today’s free AI limit.`;
+
+      return `
+        <div class="locked-panel" style="border-color: rgba(245,158,11,0.35); background: linear-gradient(to bottom, rgba(245,158,11,0.10), rgba(126, 34, 206, 0.06));">
+          <div class="locked-title" style="color:#92400e;">Daily AI limit reached</div>
+          <div class="locked-desc">
+            ${usedText} ${when}
+            <br><span style="color: var(--text-subtle); font-size: 0.88rem;">
+              Upgrade to Mastery for full access (Steps 1–6 + Help + AI).
+            </span>
+          </div>
+          <div class="locked-actions">
+            <a class="btn-primary" href="/pricing.html">Upgrade to Mastery</a>
+            <a class="btn-pill" href="/auth.html" onclick="PS_setPostAuthRedirect && PS_setPostAuthRedirect()">Account</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function PS_disableRunAIButtons(reasonText){
+      for (let step = 1; step <= 6; step++){
+        const btn = $(`run-btn-${step}`);
+        if (!btn) continue;
+        btn.disabled = true;
+        btn.dataset.psDisabledReason = reasonText || 'Daily AI limit reached';
+        btn.title = btn.dataset.psDisabledReason;
+      }
+    }
+
+    function PS_showDailyLimitCTA(step, payload){
+      const content = $(`step-content-${step}`);
+      if (!content) return;
+
+      const existing = content.querySelector('[data-ps-daily-limit="1"]');
+      const html = `<div data-ps-daily-limit="1">${PS_buildDailyLimitPanel(payload || {})}</div>`;
+
+      if (existing) {
+        existing.outerHTML = html;
+        return;
+      }
+
+      const resp = $(`response-step${step}`);
+      if (resp) resp.insertAdjacentHTML('afterend', html);
+      else content.insertAdjacentHTML('beforeend', html);
+    }
+
+    async function runWithAI(step){
+      const prompt = prompts[step];
+      if (!prompt) return alert('No prompt defined for this step yet.');
+
+      const output = $(`response-step${step}`);
+      if (!output) return alert('No response area found for this step.');
+
+      const preview = $(`preview-step${step}`);
+      if (preview) preview.style.display = 'none';
+
+      if (typeof ensureLoggedInOrRedirect === 'function'){
+        const user = await ensureLoggedInOrRedirect();
+        if (!user) return;
+      } else {
+        redirectToSignupForRunAI();
+        return;
+      }
+
+      const token = (typeof PS_getAccessToken === 'function') ? await PS_getAccessToken() : null;
+      if (!token){
+        output.textContent = 'Session missing. Please sign in again.';
+        return;
+      }
+
+      setRunBtnRunning(step, true);
+
+      try{
+        output.textContent = 'Running with AI…';
+
+        const res = await fetch('/api/run-step', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ prompt, step, nano_slug: NANO_SLUG, mode: 'nano' })
+        });
+
+        const data = await res.json().catch(()=> ({}));
+
+        if (!res.ok){
+          let msg = data?.error || 'There was an error contacting the AI. Please try again later.';
+
+          if (data?.code === 'DAILY_LIMIT_REACHED'){
+            PS_disableRunAIButtons('Daily AI limit reached');
+            PS_showDailyLimitCTA(step, {
+              limit: data?.limit,
+              used: data?.used,
+              resetsAt: data?.resetsAt,
+              timezone: data?.timezone
+            });
+            output.textContent = data?.error || 'Daily AI limit reached. Upgrade to continue.';
+            return;
+          }
+
+          if (data?.code === 'PAYWALL') msg = 'This “Run with AI” requires Mastery (paid) access.';
+          if (data?.code === 'INVALID_SESSION') msg = 'Session expired. Please sign in again.';
+          if (data?.code === 'AUTH_REQUIRED') msg = 'Please sign in to use Run with AI.';
+          if (data?.code === 'PROMPT_INVALID') msg = 'Prompt failed validation.\n\nDetails: ' + JSON.stringify(data?.details || []);
+
+          output.textContent = msg;
+          return;
+        }
+
+        const raw = data?.content || 'No response received from AI.';
+        lastAiResponses[step] = raw;
+
+        output.innerHTML = (step === 4) ? formatQuizWithToggles(raw) : formatOutput(raw);
+        typeset([output]);
+
+        const copyBtn = $(`copy-answer-${step}`);
+        if (copyBtn) copyBtn.style.display = 'inline-flex';
+
+        const progress = data?.meta?.progress || null;
+        if (progress){
+          PS_writeProgressCache(progress);
+          PS_applyProgress(progress);
+        }
+
+      } catch(err){
+        console.error(err);
+        output.textContent = 'Unexpected error. Please try again.';
+      } finally {
+        setRunBtnRunning(step, false);
+      }
+    }
+
+    function configureHelpAccess(isPaid){
+      const toggleBtn = $('help-panel-toggle');
+      const body = $('help-panel-body');
+      const overlay = $('help-lock-overlay');
+      const wrap = $('help-lock-wrap');
+      const icon = document.querySelector('.help-panel-toggle-icon');
+      const clickCatcher = $('help-locked-clickcatcher');
+      const inner = $('help-panel-inner');
+
+      if (inner) inner.style.position = inner.style.position || 'sticky';
+      if (!toggleBtn || !body || !overlay || !wrap) return;
+
+      if (isPaid){
+        wrap.classList.remove('help-lock-disabled');
+        overlay.style.display = 'none';
+        overlay.setAttribute('aria-hidden','true');
+        toggleBtn.disabled = false;
+        toggleBtn.classList.remove('help-toggle-disabled');
+        toggleBtn.setAttribute('aria-disabled','false');
+        if (icon) icon.textContent = '▾';
+        if (clickCatcher){
+          clickCatcher.style.display = 'none';
+          clickCatcher.setAttribute('aria-hidden','true');
+        }
+      } else {
+        wrap.classList.add('help-lock-disabled');
+        overlay.style.display = 'flex';
+        overlay.setAttribute('aria-hidden','false');
+        toggleBtn.disabled = true;
+        toggleBtn.classList.add('help-toggle-disabled');
+        toggleBtn.setAttribute('aria-disabled','true');
+        if (icon) icon.textContent = '🔒';
+        body.style.display = 'block';
+
+        if (clickCatcher){
+          clickCatcher.style.display = 'block';
+          clickCatcher.setAttribute('aria-hidden','false');
+          clickCatcher.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            PS_trackAnon('HELP_LOCKED_ATTEMPT');
+            location.href = '/pricing.html';
+          };
+        }
+      }
+    }
+
+    function configureUI({ loggedIn, tier }){
+      const isPaid = tier === 'paid';
+      const isFreeSignedIn = loggedIn && !isPaid;
+
+      PS_CTX.loggedIn = !!loggedIn;
+      PS_CTX.tier = tier || (loggedIn ? 'free' : 'anon');
+      PS_CTX.isPaid = !!isPaid;
+
+      for (let step = 1; step <= 6; step++){
+        const unlocked = $(`step-unlocked-${step}`);
+        const locked = $(`step-locked-${step}`);
+        if (!unlocked || !locked) continue;
+
+        const lock = (step >= 4) && !isPaid;
+        unlocked.style.display = lock ? 'none' : 'block';
+        locked.style.display = lock ? 'block' : 'none';
+      }
+
+      configureHelpAccess(isPaid);
+
+      [1,2].forEach(step => {
+        const btn = $(`run-btn-${step}`);
+        if (!btn) return;
+        btn.style.display = 'inline-flex';
+        btn.textContent = 'Run with AI';
+        btn.onclick = () => {
+          if (!loggedIn) return redirectToSignupForRunAI();
+          return runWithAI(step);
+        };
+      });
+
+      const btn3 = $('run-btn-3');
+      if (btn3){
+        btn3.style.display = 'inline-flex';
+        btn3.textContent = 'Try with AI';
+        btn3.onclick = () => {
+          if (!loggedIn) return redirectToSignupForRunAI();
+          if (isFreeSignedIn) return (location.href = '/pricing.html');
+          return runWithAI(3);
+        };
+      }
+
+      for (let step = 4; step <= 6; step++){
+        const btn = $(`run-btn-${step}`);
+        if (!btn) continue;
+
+        if (isPaid){
+          btn.style.display = 'inline-flex';
+          btn.textContent = 'Run with AI';
+          btn.onclick = () => runWithAI(step);
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      if (loggedIn){
+        PS_applyProgress(PS_readProgressCache());
+      } else {
+        PS_clearProgressCache();
+        PS_applyProgress(null);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      loadCollapse();
+
+      for (let step = 1; step <= 6; step++){
+        const content = $(`step-content-${step}`);
+        const btn = $(`toggle-btn-${step}`);
+        if (!content || !btn) continue;
+
+        const expanded = (collapseState[String(step)] !== false);
+        content.style.display = expanded ? 'block' : 'none';
+        btn.textContent = expanded ? '−' : '+';
+      }
+
+      typeset();
+
+      if (typeof updateNavUserDisplay === 'function') updateNavUserDisplay();
+
+      let loggedIn = false;
+      let tier = 'anon';
+
+      if (typeof getCurrentUser === 'function'){
+        try { loggedIn = !!(await getCurrentUser()); }
+        catch(e){ loggedIn = false; }
+      }
+
+      if (loggedIn && typeof PS_getUserTier === 'function'){
+        try { tier = (await PS_getUserTier()) || 'free'; }
+        catch(e){ tier = 'free'; }
+      }
+
+      if (loggedIn && tier === 'anon') tier = 'free';
+
+      configureUI({ loggedIn, tier });
+
+      PS_trackAnon('PAGE_VIEW');
+
+      document.addEventListener('click', (ev) => {
+        try{
+          if (PS_CTX.loggedIn) return;
+          const a = ev.target?.closest ? ev.target.closest('a') : null;
+          if (!a) return;
+          const href = (a.getAttribute('href') || '').trim();
+          if (!href) return;
+
+          if (href.includes('/pricing.html')) PS_trackAnon('PRICING_CLICK');
+          else if (href.includes('/auth.html')) PS_trackAnon('SIGNUP_CLICK');
+        } catch(e){}
+      }, true);
+    });
+  </script>
+
+  <!-- Preserve post-auth return behavior for the shared sign-in/register links -->
+  <script>
+    document.addEventListener('click', (event) => {
+      const authLink = event.target.closest('#nav-login-btn, #nav-register-btn');
+      if (authLink && typeof PS_setPostAuthRedirect === 'function') {
+        PS_setPostAuthRedirect();
+      }
+    });
+  </script>
+
+</body>
+</html>
